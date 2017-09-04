@@ -5,7 +5,7 @@ var appConfig = {
 	'allowAnonymous': true,
 	'anonymousRole': 'NONE',
 
-	'authService': window.location.protocol + '//' + window.location.host + window.location.base + '/mockauth',
+	'authService': 'https://labs.library.tamu.edu/auth2',
 	'webService': window.location.protocol + '//' + window.location.host + window.location.base, 
 
 	'storageType': 'session',
