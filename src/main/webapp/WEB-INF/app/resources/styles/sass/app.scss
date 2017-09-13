@@ -500,6 +500,10 @@ sidebox ul.sidebox-list input {
   padding: 15px;
 }
 
+.sidebox-body ul.sidebox-list.status-list {
+  padding: 0px;
+}
+
 .hover-pointer:hover {
   cursor: pointer;
 }
@@ -1593,10 +1597,6 @@ input[type=color]:focus {
   overflow: hidden;
   -webkit-transition: max-height 0.5s ease-out;
   transition: max-height 0.5s ease-out;
-}
-
-ul.status-list{
-  padding:0px;
 }
 
 .further-filter-by .filter:hover {
