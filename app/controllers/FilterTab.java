@@ -15,16 +15,7 @@ import org.tdl.vireo.export.ExportService;
 import org.tdl.vireo.export.Packager;
 import org.tdl.vireo.job.JobManager;
 import org.tdl.vireo.job.JobMetadata;
-import org.tdl.vireo.model.ActionLog;
-import org.tdl.vireo.model.CustomActionDefinition;
-import org.tdl.vireo.model.DepositLocation;
-import org.tdl.vireo.model.EmailTemplate;
-import org.tdl.vireo.model.EmbargoType;
-import org.tdl.vireo.model.NameFormat;
-import org.tdl.vireo.model.NamedSearchFilter;
-import org.tdl.vireo.model.Person;
-import org.tdl.vireo.model.RoleType;
-import org.tdl.vireo.model.Submission;
+import org.tdl.vireo.model.*;
 import org.tdl.vireo.model.jpa.JpaNamedSearchFilterImpl;
 import org.tdl.vireo.search.ActiveSearchFilter;
 import org.tdl.vireo.search.SearchDirection;
@@ -1139,6 +1130,16 @@ public class FilterTab extends AbstractVireoController {
 				activeFilter.decode(cookie.value);
 			} catch (RuntimeException re) {
 				Logger.warn(re,"Unable to decode search filter: "+cookie.value);
+			}
+		}
+		if (context.isReviewer() && !context.isAdministrator()) {
+			List<Department> departments = settingRepo.findAllDepartments();
+			String userEmail = context.getPerson().getEmail();
+			for (Department dep : departments) {
+				activeFilter.removeDepartment(dep.getName());
+				if (dep.getEmails().containsValue(userEmail)) {
+					activeFilter.addDepartment(dep.getName());
+				}
 			}
 		}
 		return activeFilter;
