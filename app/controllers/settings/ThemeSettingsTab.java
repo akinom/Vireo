@@ -37,6 +37,7 @@ public class ThemeSettingsTab extends SettingsTab {
 		
 		renderArgs.put("FRONT_PAGE_INSTRUCTIONS", settingRepo.getConfigValue(FRONT_PAGE_INSTRUCTIONS));
 		renderArgs.put("SUBMIT_INSTRUCTIONS", settingRepo.getConfigValue(SUBMIT_INSTRUCTIONS));
+		renderArgs.put("STUDENT_SUBMISSION_LIST_INSTRUCTIONS", settingRepo.getConfigValue(STUDENT_SUBMISSION_LIST_INSTRUCTIONS));
 		renderArgs.put("CORRECTION_INSTRUCTIONS", settingRepo.getConfigValue(CORRECTION_INSTRUCTIONS));
 		
 		// Colors and CSS
@@ -68,6 +69,7 @@ public class ThemeSettingsTab extends SettingsTab {
 			List<String> textFields = new ArrayList<String>();
 			textFields.add(FRONT_PAGE_INSTRUCTIONS);
 			textFields.add(SUBMIT_INSTRUCTIONS);
+			textFields.add(STUDENT_SUBMISSION_LIST_INSTRUCTIONS);
 			textFields.add(CORRECTION_INSTRUCTIONS);
 			textFields.add(CUSTOM_CSS);
 			

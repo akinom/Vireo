@@ -85,6 +85,9 @@ public class AppConfig {
 
 	/** Instructions to show after submitting corrections */
 	public final static String CORRECTION_INSTRUCTIONS = "correction_instructions";
+
+	/** Instructions to show on students submission list/manage view */
+	public final static String STUDENT_SUBMISSION_LIST_INSTRUCTIONS = "student_submission_list";
 	
 	//ORCID settings
 	/** Whether or not to validate ORCID IDs when changed */

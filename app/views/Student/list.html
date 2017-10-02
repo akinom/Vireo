@@ -77,16 +77,24 @@ function startNewSub() {
 </div>
 <br />
 
-<div class="row">
+
+<p class="row">
+#{if subStatus.getSubmissionsOpen()}
+    <p class="red">Currently accepting submissions for the ${subStatus.getCurrentSemester()} semester.</p>
+#{/if}
+#{else}
+    <p class="alert alert-error">The system is currently closed for new submissions; please contact your thesis office for more information.</p>
+#{/else}
+</p>
+
+<p class="row">
+#{verbatim}${ instructions }#{/verbatim}
+</p>
+
+
+<p class="row">
     <table id="submissions-table" class="table table-striped table-bordered table-condensed">
-    <caption><h4>
-				#{if subStatus.getSubmissionsOpen()}
-						<p class="center red">Currently accepting submissions for the ${subStatus.getCurrentSemester()} semester.</p>
-				#{/if}
-				#{else}
-						<p class="alert alert-error">The system is currently closed for new submissions; please contact your thesis office for more information.</p>
-				#{/else}
-	</h4></caption>
+
 	<thead>
 		<tr class="sub-heading">
             <th>Author</th>
