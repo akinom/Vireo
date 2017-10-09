@@ -86,7 +86,12 @@ public class Confirm extends AbstractSubmitStep {
 				State nextState = prevState.getTransitions(sub).get(0);
 				// This will trigger emails being sent out if they are configured in email workflow rules
 				sub.setState(nextState);
-				
+
+				// wipe out department when degree does not contain the word Department - aka set to None
+				if ( (! sub.getDegree().contains("Department")) &&  (null != sub.getDepartment())) {
+					sub.setDepartment(null);
+				}
+
 				sub.save();
 
 				Logger.info("%s (%d: %s) has completed %s submission #%d.",
