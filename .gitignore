@@ -4,6 +4,9 @@
 # except for .gitignore
 !.gitignore
 
+# Ignore local/dev files 
+local 
+
 # Ignore Play! working directory #
 db
 eclipse
@@ -19,6 +22,11 @@ nbproject
 lib
 modules
 data
+
+# ignore monikas dev setup files
+sql/
+helper/
+play
 
 # Ignore dynamic plugins
 conf/db-1.1.1
