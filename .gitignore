@@ -16,8 +16,6 @@ eclipse
 server.pid
 nbproject
 
-lib
-modules
 data
 
 # Ignore dynamic plugins
