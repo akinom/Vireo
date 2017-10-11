@@ -91,10 +91,8 @@ function startNewSub() {
 		<tr class="sub-heading">
 			<th>Title</th>
 			<th>Manuscript</th>
-			<th>Status</th>
 			<th>Date Submitted</th>
-			<th>Assigned To</th>
-			<th>Actions</th>
+			<th>&nbsp;</th>
 		</tr>
 	</thead>
 		<tbody>
@@ -106,15 +104,7 @@ function startNewSub() {
 				    <a href="@{Student.viewAttachment(sub.getId(),sub.getPrimaryDocument().getId(),sub.getPrimaryDocument().getName())}">[view]</a>
 				#{/if}
 				</td>
-				<td ${sub.getState().isEditableByStudent() ? "class='red'" : ""}>
-				    ${sub.getState().getDisplayName()}
-				    #{if !subStatus.getSubmissionsOpen() && sub.getState().isInProgress() }
-				    <br/><span class="red">This submission was not completed by the deadline. Please contact the thesis office.</span>
-				    #{/if}
-				</td>
 				<td>${sub.getSubmissionDate() == null ? "n/a" : sub.getSubmissionDate().format('dd MMMM yyyy')}</td>
-				<td>${sub.getAssignee() == null ? "Unassigned" : sub.getAssignee().getDisplayName()}</td>
-				<td> 
 				#{if !subStatus.getSubmissionsOpen() && sub.getState().isInProgress() }
 				    *{ submissions closed before the user was able to finish their submission. }*
 				    <a id="submission-delete" class="btn btn-primary" href="@{Student.submissionDelete(sub.getId())}">Delete</a>
