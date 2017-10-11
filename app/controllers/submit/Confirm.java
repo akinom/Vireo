@@ -81,7 +81,7 @@ public class Confirm extends AbstractSubmitStep {
 					sub.setSubmissionDate(new Date());
 				}
 
-				// wipe out department when college does not contain the word Department - aka set to None
+				// wipe out department when college does not contain the word Department - aka set to null
 				if ( (! sub.getCollege().contains("Department")) &&  (null != sub.getDepartment())) {
 					sub.setDepartment(null);
 				}

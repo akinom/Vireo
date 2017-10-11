@@ -178,28 +178,7 @@ function abandonSub(){
   <form action="@{submit.PersonalInfo.personalInfo(subId)}" method="post" class="form-horizontal">
     <input type="hidden" name="step" value="personalInfo"/>
 
-  #{ifEnabled [DEGREE] }
-      <legend>Type of Thesis</legend>
-          <div class="control-group #{errorClass 'degree' /} #{fieldClass DEGREE /}">
-              <label class="control-label" for="degree"><span class="required-star">*</span> #{fieldLabel DEGREE /}:</label>
-              <div class="controls">
-				  #{if disabledFields.contains("degree")}
-                      <p>${degree}</p>
-				  #{/if}
-				  #{else}
-                      <select id="degree" name="degree">
-                          <option #{if degree == null}selected="true"#{/if} value="">...choose</option>
-						  #{list items:settingRepo.findAllDegrees(), as:'degreeObject'}
-                              <option #{if degree == degreeObject.getName()}selected="true"#{/if} value="${degreeObject.getName()}">${degreeObject.getName()}</option>
-						  #{/list}
-                      </select>
-                      <span class="tooltip-icon" title="#{fieldHelp DEGREE /}"><i class="icon-info-sign"></i></span>
-				  #{/else}
-              </div>
-          </div>
-  #{/ifEnabled}
-
-  #{ifEnabled [STUDENT_FIRST_NAME,STUDENT_MIDDLE_NAME,STUDENT_LAST_NAME,STUDENT_ORCID,STUDENT_EMAIL,STUDENT_BIRTH_YEAR,DEPARTMENT] }
+	#{ifEnabled [STUDENT_FIRST_NAME,STUDENT_MIDDLE_NAME,STUDENT_LAST_NAME,STUDENT_ORCID,STUDENT_EMAIL,STUDENT_BIRTH_YEAR,DEPARTMENT] }
     <fieldset>
         <legend>Personal Information</legend>
         #{ifEnabled STUDENT_FIRST_NAME }
@@ -342,7 +321,25 @@ function abandonSub(){
             </div>
         </div>
         #{/ifEnabled}
-
+        #{ifEnabled DEGREE  }
+		<div class="control-group #{errorClass 'degree' /} #{fieldClass DEGREE /}">
+			<label class="control-label" for="degree"><span class="required-star">*</span> #{fieldLabel DEGREE /}:</label>
+			<div class="controls">
+			    #{if disabledFields.contains("degree")}
+                <p>${degree}</p>
+                #{/if}
+                #{else}
+				<select id="degree" name="degree">
+				    <option #{if degree == null}selected="true"#{/if} value="">...choose</option>
+                    #{list items:settingRepo.findAllDegrees(), as:'degreeObject'}
+                    <option #{if degree == degreeObject.getName()}selected="true"#{/if} value="${degreeObject.getName()}">${degreeObject.getName()}</option>
+                    #{/list}
+				</select>
+				<span class="tooltip-icon" title="#{fieldHelp DEGREE /}"><i class="icon-info-sign"></i></span>
+				#{/else}
+			</div>
+		</div>
+		#{/ifEnabled}
 		#{ifEnabled MAJOR }
 		<div class="control-group #{errorClass 'major' /} #{fieldClass MAJOR /}">
 			<label class="control-label" for="major"><span class="required-star">*</span> #{fieldLabel MAJOR /}:</label>

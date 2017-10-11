@@ -113,7 +113,7 @@ Plus all the FieldConfig objects
 #{/if}
 #{/ifEnabled}
 
-#{ifEnabled [GRANTOR,MAJOR] }
+#{ifEnabled [GRANTOR,DEGREE,MAJOR] }
 <legend>Academic Affiliation</legend>
 
 #{ifEnabled GRANTOR }
@@ -129,6 +129,14 @@ Plus all the FieldConfig objects
     <label class="control-label">#{fieldLabel COLLEGE /}:</label>
     <div class="controls">
         <p>${ sub.getCollege() }</p>
+    </div>
+</div>
+#{/ifEnabled}
+#{ifEnabled DEGREE}
+<div class="control-group #{errorClass 'degree' /} ">
+    <label class="control-label">#{fieldLabel DEGREE /}:</label>
+    <div class="controls">
+        <p>${sub.getDegree()}</p>
     </div>
 </div>
 #{/ifEnabled}
