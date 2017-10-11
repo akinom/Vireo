@@ -15,9 +15,10 @@ Variables that must be defined:
 Plus all the FieldConfig objects
 
 }*
-#{ifEnabled DEGREE}
 
-<legend>${sub.getDegree()}</legend>
+#{ifEnabled COLLEGE}
+
+<legend>${sub.getCollege()}</legend>
 #{if showEditLinks}
 <div class="control-group">
     <label class="control-label"></label>
@@ -112,7 +113,7 @@ Plus all the FieldConfig objects
 #{/if}
 #{/ifEnabled}
 
-#{ifEnabled [GRANTOR,COLLEGE,MAJOR] }
+#{ifEnabled [GRANTOR,MAJOR] }
 <legend>Academic Affiliation</legend>
 
 #{ifEnabled GRANTOR }
