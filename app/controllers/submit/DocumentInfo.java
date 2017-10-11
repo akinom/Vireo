@@ -28,6 +28,7 @@ import org.tdl.vireo.model.CommitteeMember;
 import org.tdl.vireo.model.CommitteeMemberRoleType;
 import org.tdl.vireo.model.Configuration;
 import org.tdl.vireo.model.DocumentType;
+import org.tdl.vireo.model.Program;
 import org.tdl.vireo.model.EmbargoGuarantor;
 import org.tdl.vireo.model.EmbargoType;
 import org.tdl.vireo.model.GraduationMonth;
@@ -87,6 +88,7 @@ public class DocumentInfo extends AbstractSubmitStep {
 		}
 		
 		String docType = params.get("docType");
+		String program = params.get("program");
 		String abstractText = params.get("abstractText");
 		String keywords = params.get("keywords");
 		String subjectPrimary = params.get("subject-primary");
@@ -101,7 +103,7 @@ public class DocumentInfo extends AbstractSubmitStep {
 			if (docLanguage != null && docLanguage.trim().length() == 0)
 				docLanguage = null;
 		}
-		
+
 		Boolean publishedMaterialFlag = params.get("publishedMaterialFlag",Boolean.class);
 		if (publishedMaterialFlag == null)
 			publishedMaterialFlag = false;
@@ -109,9 +111,9 @@ public class DocumentInfo extends AbstractSubmitStep {
 		if (!publishedMaterialFlag)
 			publishedMaterial = null;
 		String chairEmail = params.get("chairEmail");
-		
-		
-		
+
+
+
 		List<String> embargos = new ArrayList<String>();
 		for(EmbargoGuarantor gaurantor : EmbargoGuarantor.values() ) {
 			String embargoString = params.get("embargo-"+gaurantor.name()); 
@@ -157,6 +159,9 @@ public class DocumentInfo extends AbstractSubmitStep {
 			
 			if (isFieldEnabled(DOCUMENT_TYPE))
 				sub.setDocumentType(docType);
+
+			if (isFieldEnabled(PROGRAM))
+				sub.setProgram(program);
 			
 			if (isFieldEnabled(DOCUMENT_ABSTRACT))
 				sub.setDocumentAbstract(abstractText);
@@ -180,7 +185,9 @@ public class DocumentInfo extends AbstractSubmitStep {
 			
 			if (isFieldEnabled(DOCUMENT_LANGUAGE))
 				sub.setDocumentLanguage(docLanguage);
-			
+
+			if (isFieldEnabled(PROGRAM))
+				sub.setProgram(program);
 			
 			if (isFieldEnabled(COMMITTEE_CONTACT_EMAIL))
 				sub.setCommitteeContactEmail(chairEmail);
@@ -226,6 +233,9 @@ public class DocumentInfo extends AbstractSubmitStep {
 			
 			if (isFieldEnabled(DOCUMENT_TYPE))
 				docType = sub.getDocumentType();
+
+			if (isFieldEnabled(PROGRAM))
+				program = sub.getProgram();
 			
 			if (isFieldEnabled(DOCUMENT_ABSTRACT))
 				abstractText = sub.getDocumentAbstract();
@@ -335,7 +345,7 @@ public class DocumentInfo extends AbstractSubmitStep {
 		renderTemplate("Submit/documentInfo.html", subId, sub, stickies,
 				title, degreeMonth, degreeYear, defenseDate, docType, abstractText, keywords, 
 				subjectPrimary, subjectSecondary, subjectTertiary, docLanguage, committeeSlots, 
-				committee, chairEmail, publishedMaterialFlag, publishedMaterial, embargos);
+				committee, chairEmail, publishedMaterialFlag, publishedMaterial, embargos, program);
 	}
 
 	/**
@@ -371,7 +381,13 @@ public class DocumentInfo extends AbstractSubmitStep {
 			validation.addError("defenseDate", "Please enter a defense date");
 		else if(sub.getDefenseDate()!=null && (!sub.getDefenseDate().after(min) || !sub.getDefenseDate().before(max)))
 			validation.addError("defenseDate", "Please enter a defense date between "+formatter.format(min)+" and "+formatter.format(max));
-		
+
+		// Program
+		if (sub.getProgram() != null && !isValidProgram(sub.getProgram()))
+			validation.addError("program", "The program selected is not valid");
+		if (isFieldRequired(PROGRAM) && isEmpty(sub.getProgram()))
+			validation.addError("program", "Program is required");
+
 		// Document Type
 		if (!isValidDocType(sub.getDocumentType()))
 			validation.addError("docType", "Please select a Document Type");
@@ -510,7 +526,32 @@ public class DocumentInfo extends AbstractSubmitStep {
 
 		return false;
 	}
-	
+
+	/**
+	 * @param programName
+	 *            The name of the program
+	 * @return True if the name is a valid program name.
+	 */
+	protected static boolean isValidProgram(String programName) {
+
+		if (programName == null || programName.trim().length() == 0)
+			if (isFieldRequired(PROGRAM))
+				return false;
+			else
+				return true;
+
+		if (settingRepo.findAllPrograms().size() > 0) {
+			// If there is a list of programs it must be in the list.
+			for (Program program : settingRepo.findAllPrograms() ) {
+				if (programName.equals(program.getName()))
+					return true;
+			}
+			return false;
+		}
+
+		// Otherwise, it can be anything
+		return true;
+	}
 	
 	/**
 	 * Determine if the provided roles are valid for this given degree level of the submission.

@@ -80,13 +80,19 @@ public class Confirm extends AbstractSubmitStep {
 					// Set the submission date
 					sub.setSubmissionDate(new Date());
 				}
-				
+
+				// wipe out department when college does not contain the word Department - aka set to null
+				if ( (! sub.getCollege().contains("Department")) &&  (null != sub.getDepartment())) {
+					sub.setDepartment(null);
+				}
+
+
 				// Transition to the next state
 				State prevState = sub.getState();
 				State nextState = prevState.getTransitions(sub).get(0);
 				// This will trigger emails being sent out if they are configured in email workflow rules
 				sub.setState(nextState);
-				
+
 				sub.save();
 
 				Logger.info("%s (%d: %s) has completed %s submission #%d.",

@@ -10,7 +10,6 @@ import static org.tdl.vireo.constant.FieldConfig.MAJOR;
 import static org.tdl.vireo.constant.FieldConfig.PERMANENT_EMAIL_ADDRESS;
 import static org.tdl.vireo.constant.FieldConfig.PERMANENT_PHONE_NUMBER;
 import static org.tdl.vireo.constant.FieldConfig.PERMANENT_POSTAL_ADDRESS;
-import static org.tdl.vireo.constant.FieldConfig.PROGRAM;
 import static org.tdl.vireo.constant.FieldConfig.STUDENT_BIRTH_YEAR;
 import static org.tdl.vireo.constant.FieldConfig.STUDENT_FIRST_NAME;
 import static org.tdl.vireo.constant.FieldConfig.STUDENT_LAST_NAME;
@@ -104,8 +103,6 @@ public class PersonalInfo extends AbstractSubmitStep {
 				sub.setStudentLastName(submitter.getLastName());
 			if (isFieldEnabled(STUDENT_BIRTH_YEAR))
 				sub.setStudentBirthYear(submitter.getBirthYear());
-			if (isFieldEnabled(PROGRAM))
-				sub.setProgram(submitter.getCurrentProgram());
 			if (isFieldEnabled(COLLEGE))
 				sub.setCollege(submitter.getCurrentCollege());
 			if (isFieldEnabled(DEPARTMENT))
@@ -188,10 +185,6 @@ public class PersonalInfo extends AbstractSubmitStep {
 		
 		// Should the affiliation group be locked.
 		if (isFieldGroupLocked("affiliation")) {
-			if (isValidProgram(submitter.getCurrentProgram())) {
-				disabledFields.add("program");
-				program = submitter.getCurrentProgram();
-			}
 			if (isValidCollege(submitter.getCurrentCollege())) {
 				disabledFields.add("college");
 				college = submitter.getCurrentCollege();
@@ -287,13 +280,7 @@ public class PersonalInfo extends AbstractSubmitStep {
 					sub.setStudentBirthYear(null);
 				}
 			}
-			
-			if (isFieldEnabled(PROGRAM)) {
-				if(program != null && program.trim().length() == 0)
-					sub.setProgram(null);
-				else
-					sub.setProgram(program);
-			}
+
 			if (isFieldEnabled(COLLEGE)) {
 				if(college != null && college.trim().length() == 0)
 					sub.setCollege(null);
@@ -475,12 +462,6 @@ public class PersonalInfo extends AbstractSubmitStep {
 			validation.addError("birthYear","Your birth year is invalid, please use a four digit year");
 		if (isFieldRequired(STUDENT_BIRTH_YEAR) && sub.getStudentBirthYear() == null)
 			validation.addError("birthYear","Your birth year is required");
-
-		// Program
-		if (sub.getProgram() != null && !isValidProgram(sub.getProgram()))
-			validation.addError("program", "The program selected is not valid");
-		if (isFieldRequired(PROGRAM) && isEmpty(sub.getProgram())) 
-			validation.addError("program", "Program is required");
 		
 		// College
 		if (sub.getCollege() != null && !isValidCollege(sub.getCollege()))
@@ -558,29 +539,6 @@ public class PersonalInfo extends AbstractSubmitStep {
 		return false;
 	}
 
-	/**
-	 * @param programName
-	 *            The name of the program
-	 * @return True if the name is a valid program name.
-	 */
-	protected static boolean isValidProgram(String programName) {
-		
-		if (programName == null || programName.trim().length() == 0)
-			return false;
-		
-		if (settingRepo.findAllPrograms().size() > 0) {
-			// If there is a list of programs it must be in the list.
-			for (Program program : settingRepo.findAllPrograms() ) {
-				if (programName.equals(program.getName()))
-					return true;
-			}
-			return false;
-		}
-		
-		// Otherwise, it can be anything
-		return true;
-	}
-	
 	/**
 	 * @param collegeName
 	 *            The name of the college
