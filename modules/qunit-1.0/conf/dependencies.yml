@@ -1,0 +1,4 @@
+self: play -> qunit 1.0
+
+require:
+    - play

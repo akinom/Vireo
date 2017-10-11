@@ -19,8 +19,6 @@ eclipse
 server.pid
 nbproject
 
-lib
-modules
 data
 
 # ignore monikas dev setup files
