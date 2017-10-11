@@ -264,15 +264,7 @@ jQuery(document).ready(function() {
 				</div>		
 			</div>
 		#{/if}
-		#{else}
-			<div id="correctionsWrap" class="alert">
-				<a href="#toggleDetails" class="doToggle">[-]</a>
-				<p><strong><h4>Current Submission State:</h4> ${sub.getState().getDisplayName()}</strong></p>
-				<div id="stateDetails">
-					<p>Your Submission cannot be changed at this time.</p>
-				</div>
-			</div>
-		#{/else}
+
 		#{if visibleActions.size() > 0}
 				<div id="customActionsWrap" class="alert alert-info">
 					<a href="#toggleDetails" class="doToggle">[-]</a>
@@ -418,45 +410,7 @@ jQuery(document).ready(function() {
 	        </div>
 	    </div>
 	    #{/if}
-	    
-	    
-	    
-		<legend>Application Activity</legend>
-		<div id="student-log-view" class="control-group control-group-tall">
-			<table class="span10 table table-striped table-bordered table-condensed">
-				<caption><h4><p class="center">Submission Action Log</p></h4></caption>
-				<thead>
-					<tr>
-						<th>Name</th>
-						<th>Action</th>
-						<th>Time</th>
-					</tr>
-				</thead>
-				<tbody>
-					#{list items:logs, as:'log'}
-					#{if !log.isPrivate() }
-					<tr>
-						<td>${log.getPerson()?.getFormattedName(org.tdl.vireo.model.NameFormat.FIRST_LAST)}</td>
-						<td>${log.getEntry()}</td>
-						<td>${log.getActionDate().format('dd/MM/yyyy hh:mm:ss a')}</td>
-					</tr>
-					#{/if}
-					#{/list}
-				</tbody>
-			</table>
-		</div>
-	
-		<legend>Leave a message</legend>
-		<div class="control-group">
-			<label for="studentMessage" class="control-label"><b>Message:</b></label>
-			<div class="controls">
-				<textarea id="studentMessage" class="span6" style="height:200px;" name="studentMessage"></textarea>
-	            <input class="btn" id="addmsg" name="submit_addMessage" type="submit" value="Add Message" />
-	            <div id="addmsgStatus"></div>
-	            
-	            <br/>
-			</div>
-		</div>			
+
 		<br/>
 		<br/>
 		<br/>
