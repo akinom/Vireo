@@ -105,7 +105,8 @@ function startNewSub() {
 				#{/if}
 				</td>
 				<td>${sub.getSubmissionDate() == null ? "n/a" : sub.getSubmissionDate().format('dd MMMM yyyy')}</td>
-				#{if !subStatus.getSubmissionsOpen() && sub.getState().isInProgress() }
+				<td>
+					#{if !subStatus.getSubmissionsOpen() && sub.getState().isInProgress() }
 				    *{ submissions closed before the user was able to finish their submission. }*
 				    <a id="submission-delete" class="btn btn-primary" href="@{Student.submissionDelete(sub.getId())}">Delete</a>
 				#{/if}
