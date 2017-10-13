@@ -5,9 +5,12 @@ CMD=$2
 
 cd "$(dirname "$0")"
 
-git stash;
-git pull;
-git stash apply;
+if [ $CMD == "start" ] 
+then 
+   git stash;
+   git pull;
+   git stash apply;
+fi 
 
 cd ..
 $PLAY $CMD
