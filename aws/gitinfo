@@ -1,0 +1,2 @@
+#!/bin/bash -f
+git branch  --no-color $*  2> /dev/null | grep '^*' | awk '{ print $2; }'

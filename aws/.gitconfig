@@ -1,0 +1,31 @@
+[color]
+    ui = always
+[push]
+    default = simple
+[pull]
+    rebase = true
+[core]
+    editor = vi
+    autocrlf = input
+    whitespace = -trailing-space,-indent-with-non-tab,-tab-in-indent
+    excludesfile = /Users/monikam/.gitignore_global
+[user]
+    name = Monika Mevenkamp
+    email = monikam@princeton.edu
+[alias]
+    co = checkout
+    cp = cherry-pick
+    ci = commit
+    cempty = commit --allow-empty
+    last = log -n 1
+    st = status
+    br = branch
+    df = diff -b
+    hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+[difftool "sourcetree"]
+    cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+    path =
+[merge]
+    renamelimit = 1600
+[fetch]
+    prune = true
