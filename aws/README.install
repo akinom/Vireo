@@ -20,14 +20,6 @@ yum install ant
 # reboot
 
 # --------------------
-# add vireo to startup sequence 
-# --------------------
-# http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/user-data.html
-# copy aws/vireo-init.sh to /etc/init.d/vireo    
-chkconfig --add  vireo
-chkconfig
-
-# --------------------
 # get play framework 
 # --------------------
 cd ~ec2-user
@@ -43,9 +35,6 @@ ant
 cd ~ec2-user
 play1/play 
 
-
-
-
 # ------------------
 # get vireo code 
 # ------------------
@@ -55,7 +44,27 @@ ssh-keygen
 git clone git@github.com:akinom/Vireo.git
 cd Vireo 
 # checkout relevant branch 
-git checkout tc/monika
+git checkout ec2
+# edit conf/aplication.conf - enter database settings 
+# do not checkin 
+
+# --------------------
+# add vireo to startup sequence 
+# --------------------
+# http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/user-data.html
+# copy aws/vireo-init.sh to /etc/init.d/vireo    
+# when starting up scripts will pull new code from current branch 
+chkconfig --add  vireo
+chkconfig
+
+# --------------------
+# setup ec2-user with tcsh 
+# --------------------
+mkdir bin 
+(cd bin; ln -s ~/Vireo/aws/gitinfo .) 
+(cd ~; ln -s ~/Vireo/aws/.cshrc ~/Vireo/aws/.gitconfig .) 
+-
+
 
 # something waccky with   'play deps' 
 # not compiling java classes in modiles subdirs  on EC@ instance 
