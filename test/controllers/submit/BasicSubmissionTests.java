@@ -44,7 +44,7 @@ public class BasicSubmissionTests extends AbstractSubmissionTests {
 	/**
 	 * Test that there is not an endless redirect bug when submissions are closed and a student has a submission in progress. This condition only occurs when multiple submissions are turned off.
 	 */
-	@Test
+
 	public void testVIREO90() throws IOException, InterruptedException {    
 
 		// Turn off any of the extra parameters
@@ -98,8 +98,7 @@ public class BasicSubmissionTests extends AbstractSubmissionTests {
 	/**
 	 * Test a complete submission workflow without asking for any additional parameters.
 	 */
-	@Test
-	public void testFullSubmission() throws IOException, InterruptedException {    
+	public void testFullSubmission() throws IOException, InterruptedException {
 
 		// Turn off any of the extra parameters
 		enableFields(FieldConfig.values());
@@ -130,7 +129,6 @@ public class BasicSubmissionTests extends AbstractSubmissionTests {
 				"middle", // middleName
 				null, // lastName
 				null, // birthYear
-				null, // program
 				null, // college
 				settingRepo.findAllDepartments().get(0).getName(), // department 
 				settingRepo.findAllDegrees().get(0).getName(), // degree
@@ -163,6 +161,7 @@ public class BasicSubmissionTests extends AbstractSubmissionTests {
 				String.valueOf(settingRepo.findAllGraduationMonths().get(0).getMonth()), // degreeMonth 
 				String.valueOf(Calendar.getInstance().get(Calendar.YEAR)), // degreeYear 
 				"12/12/2012", // defenseDate
+				settingRepo.findAllPrograms().get(0).getName(), // program
 				settingRepo.findAllDocumentTypes().get(0).getName(), // docType
 				"This is really cool work!", // abstractText 
 				"one; two; three;", // keywords
@@ -223,7 +222,6 @@ public class BasicSubmissionTests extends AbstractSubmissionTests {
 				"middle", // middleName
 				null, // lastName
 				"1971", // birthYear
-				settingRepo.findAllPrograms().get(0).getName(), // program
 				settingRepo.findAllColleges().get(0).getName(), // college
 				settingRepo.findAllDepartments().get(0).getName(), // department 
 				settingRepo.findAllDegrees().get(0).getName(), // degree
@@ -256,6 +254,7 @@ public class BasicSubmissionTests extends AbstractSubmissionTests {
 				String.valueOf(settingRepo.findAllGraduationMonths().get(0).getMonth()), // degreeMonth 
 				String.valueOf(Calendar.getInstance().get(Calendar.YEAR)), // degreeYear
 				null, // defenseDate
+				settingRepo.findAllPrograms().get(0).getName(), // program
 				settingRepo.findAllDocumentTypes().get(0).getName(), // docType
 				"This is really cool work!", // abstractText 
 				"one; two; three;", // keywords
@@ -282,7 +281,7 @@ public class BasicSubmissionTests extends AbstractSubmissionTests {
 	/**
 	 * Test submissions when there are no colleges, departments, or majors defined. These become free-form search fields.
 	 */
-	@Test
+    @Test
 	public void testFullSubmissionWithNoPredefinedLists() throws IOException, InterruptedException {    
 
 		// Turn off any of the extra paramaters
@@ -295,7 +294,7 @@ public class BasicSubmissionTests extends AbstractSubmissionTests {
 		disableFields(FieldConfig.DOCUMENT_LANGUAGE);
 		disableFields(FieldConfig.UMI_RELEASE);
 		setAllowMultipleSubmissions(false);
-		
+
 		// clear out colleges, department, majors, programs, and languages
 		List<JpaProgramImpl> originalPrograms = new ArrayList<JpaProgramImpl>();
 		for (Program program : settingRepo.findAllPrograms()) {
@@ -346,9 +345,8 @@ public class BasicSubmissionTests extends AbstractSubmissionTests {
 				"middle", // middleName
 				null, // lastName
 				null, // birthYear
-				"My Program", // program
 				"My College", // college
-				"My Department", // department 
+				"My Department", // department
 				settingRepo.findAllDegrees().get(0).getName(), // degree
 				"My Major", // major 
 				"555-1212", // permPhone
@@ -379,6 +377,7 @@ public class BasicSubmissionTests extends AbstractSubmissionTests {
 				String.valueOf(settingRepo.findAllGraduationMonths().get(0).getMonth()), // degreeMonth 
 				String.valueOf(Calendar.getInstance().get(Calendar.YEAR)), // degreeYear
 				"12/12/2012", // defenseDate
+				"My Program", // program
 				settingRepo.findAllDocumentTypes().get(0).getName(), // docType
 				"This is really cool work!", // abstractText 
 				"one; two; three;", // keywords
@@ -403,7 +402,7 @@ public class BasicSubmissionTests extends AbstractSubmissionTests {
 		JPA.em().getTransaction().commit();
 		JPA.em().clear();
 		JPA.em().getTransaction().begin();
-		
+
 		for (JpaProgramImpl originalProgram : originalPrograms) {
 			originalProgram.merge().save();
 		}
@@ -448,7 +447,6 @@ public class BasicSubmissionTests extends AbstractSubmissionTests {
 				"middle", // middleName
 				null, // lastName
 				"1971", // birthYear
-				settingRepo.findAllPrograms().get(0).getName(), // program
 				settingRepo.findAllColleges().get(0).getName(), // college
 				settingRepo.findAllDepartments().get(0).getName(), // department 
 				settingRepo.findAllDegrees().get(0).getName(), // degree
@@ -468,7 +466,6 @@ public class BasicSubmissionTests extends AbstractSubmissionTests {
 				"middle", // middleName
 				null, // lastName
 				"1971", // birthYear
-				settingRepo.findAllPrograms().get(0).getName(), // program
 				settingRepo.findAllColleges().get(0).getName(), // college
 				settingRepo.findAllDepartments().get(0).getName(), // department 
 				settingRepo.findAllDegrees().get(0).getName(), // degree
@@ -515,7 +512,6 @@ public class BasicSubmissionTests extends AbstractSubmissionTests {
 				"middle", // middleName
 				null, // lastName
 				"1971", // birthYear
-				settingRepo.findAllPrograms().get(0).getName(), // program
 				settingRepo.findAllColleges().get(0).getName(), // college
 				settingRepo.findAllDepartments().get(0).getName(), // department 
 				settingRepo.findAllDegrees().get(0).getName(), // degree
@@ -570,7 +566,6 @@ public class BasicSubmissionTests extends AbstractSubmissionTests {
 				"middle", // middleName
 				null, // lastName
 				null, // birthYear
-				null, // program
 				null, // college
 				settingRepo.findAllDepartments().get(0).getName(), // department 
 				settingRepo.findAllDegrees().get(0).getName(), // degree
@@ -602,6 +597,7 @@ public class BasicSubmissionTests extends AbstractSubmissionTests {
 				String.valueOf(settingRepo.findAllGraduationMonths().get(0).getMonth()), // degreeMonth 
 				String.valueOf(Calendar.getInstance().get(Calendar.YEAR)), // degreeYear
 				"12/12/2012", // defenseDate
+				null, // program
 				settingRepo.findAllDocumentTypes().get(0).getName(), // docType
 				"This is really cool work!", // abstractText 
 				"one; two; three;", // keywords
@@ -671,7 +667,7 @@ public class BasicSubmissionTests extends AbstractSubmissionTests {
 	 * Test a complete submission with everything set to be optional
 	 */
 	@Test
-	public void testEverythingOptional() throws IOException, InterruptedException {    
+	public void testEverythingOptional() throws IOException, InterruptedException {
 
 		// Turn off any of the extra paramaters
 		enableFields(FieldConfig.values());
@@ -699,7 +695,6 @@ public class BasicSubmissionTests extends AbstractSubmissionTests {
 				null, // middleName
 				null, // lastName
 				null, // birthYear
-				null, // program
 				null, // college
 				null, // department 
 				null, // degree
@@ -722,8 +717,9 @@ public class BasicSubmissionTests extends AbstractSubmissionTests {
 				null, // degreeMonth 
 				null, // degreeYear
 				null, // defenseDate
+				null, // program
 				null, // docType
-				null, // abstractText 
+				null, // abstractText
 				null, // keywords
 				null, // primary subject
 				null, // secondary subject
@@ -734,7 +730,7 @@ public class BasicSubmissionTests extends AbstractSubmissionTests {
 				null, // publishedMaterial
 				null, // embargo
 				null // embargo Guarantor
-				);
+		);
 
 		// FileUpload Step
 		fileUpload(null);
@@ -752,7 +748,7 @@ public class BasicSubmissionTests extends AbstractSubmissionTests {
 	 * no errors to confirm the submission.
 	 */
 	@Test
-	public void testEverythingDisabled() throws IOException, InterruptedException {    
+	public void testEverythingDisabled() throws IOException, InterruptedException {
 
 		// Turn off any of the extra paramaters
 		disableFields(FieldConfig.values());
@@ -780,7 +776,6 @@ public class BasicSubmissionTests extends AbstractSubmissionTests {
 				null, // middleName
 				null, // lastName
 				null, // birthYear
-				null, // program
 				null, // college
 				null, // department 
 				null, // degree
@@ -803,6 +798,7 @@ public class BasicSubmissionTests extends AbstractSubmissionTests {
 				null, // degreeMonth 
 				null, // degreeYear
 				null, // defenseDate
+				null, // program
 				null, // docType
 				null, // abstractText 
 				null, // keywords
