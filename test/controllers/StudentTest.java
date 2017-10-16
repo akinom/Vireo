@@ -529,8 +529,9 @@ public class StudentTest extends AbstractVireoFunctionalTest {
 		response = GET(VIEW_URL);
 		assertIsOk(response);
 		assertContentMatch("<title>View Application</title>",response);
-		assertContentMatch("This is an action log",response);
-		
+		// hiding the log messages from student
+		// assertContentMatch("This is an action log",response);
+
 		// Verify the submission
 		JPA.em().getTransaction().commit();
 		JPA.em().clear();
