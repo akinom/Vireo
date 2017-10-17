@@ -265,10 +265,15 @@ public class System extends AbstractVireoController {
 	@Security(RoleType.ADMINISTRATOR)
 	public static void clearStudents() {
 		PersonRepository personRepo = Spring.getBeanOfType(PersonRepository.class);
+		SubmissionRepository submissionRepo = Spring.getBeanOfType(SubmissionRepository.class);
 		for (Person p : personRepo.findPersonsByRole(RoleType.STUDENT)) {
 			try {
 				if (p.getRole() == RoleType.STUDENT) {
-					Logger.info("Delete " + p);
+					for (Submission s : submissionRepo.findSubmission(p)) {
+						Logger.info("Delete " + s);
+						Student.submissionDelete(s.getId());
+					}
+					Logger.info("Delete " + p.getNetId());
 					p.delete();
 				}
 			} catch (ConstraintViolationException e) {
