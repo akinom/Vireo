@@ -128,6 +128,17 @@
     <property name="securityContext" ref="SecurityContext" />
   </bean>
 
+  <bean id="PrepopulateStudentData" class="org.tdl.vireo.services.PrepopulateStudentData" scope="singleton">
+    <property name = "firstName" value = "Preferred Else Primary First Name"/>
+    <property name = "lastName" value = "Preferred Else Primary Last Name"/>
+    <property name = "netid" value = "Net ID"/>
+    <property name = "emailAddOn" value = "@princeton.edu"/>
+    <property name = "department" value = "Dept"/>
+    <property name = "uid" value="Emplid" />
+    <property name = "fileName" value = "conf/prepopulate/Student-Data.tsv"/>
+    <property name="securityContext" ref="SecurityContext" />
+  </bean>
+
 
   <!-- Search -->
   <bean id="Indexer" class="org.tdl.vireo.search.impl.LuceneIndexerImpl" scope="singleton">

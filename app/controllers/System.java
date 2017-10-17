@@ -12,15 +12,18 @@ import org.tdl.vireo.error.ErrorReport;
 import org.tdl.vireo.job.JobManager;
 import org.tdl.vireo.job.JobMetadata;
 import org.tdl.vireo.job.JobStatus;
-import org.tdl.vireo.model.EmailTemplate;
-import org.tdl.vireo.model.RoleType;
-import org.tdl.vireo.model.SettingsRepository;
+import org.tdl.vireo.model.*;
 import org.tdl.vireo.search.Indexer;
 
+import org.tdl.vireo.services.PrepopulateStudentData;
+import play.Logger;
 import play.Play;
 import play.jobs.Job;
+import play.jobs.OnApplicationStart;
 import play.modules.spring.Spring;
 import play.mvc.With;
+
+import org.hibernate.exception.ConstraintViolationException;
 
 /**
  * System administrator control panel.
@@ -239,7 +242,58 @@ public class System extends AbstractVireoController {
 		// Redirect back to the control pannel.
 		generalPanel();
 	}
-	
+
+	/**
+	 * Clear Submissions
+	 */
+	@Security(RoleType.ADMINISTRATOR)
+	public static void clearSubmissions() {
+		generalPanel();
+	}
+
+	/**
+	 * load Submissions from file
+	 */
+	@Security(RoleType.ADMINISTRATOR)
+	public static void loadSubmissions() {
+		generalPanel();
+	}
+
+	/**
+	 * Clear Students
+	 */
+	@Security(RoleType.ADMINISTRATOR)
+	public static void clearStudents() {
+		PersonRepository personRepo = Spring.getBeanOfType(PersonRepository.class);
+		for (Person p : personRepo.findPersonsByRole(RoleType.STUDENT)) {
+			try {
+				if (p.getRole() == RoleType.STUDENT) {
+					Logger.info("Delete " + p);
+					p.delete();
+				}
+			} catch (ConstraintViolationException e) {
+				Logger.error(e,  "Could not delete Person " + p.getNetId());
+			}
+		}
+		generalPanel();
+	}
+
+	/**
+	 * Load Students
+	 */
+	@Security(RoleType.ADMINISTRATOR)
+	public static void loadStudents() {
+		try {
+			Logger.info("prepopulateStudentData running...");
+			PrepopulateStudentData dataLoader = Spring.getBeanOfType(PrepopulateStudentData.class);
+			dataLoader.loadStudents();
+			Logger.info("prepopulateStudentData done!");
+		} catch (RuntimeException re) {
+			Logger.error(re, "Unable to initialize student data");
+		}
+		generalPanel();
+	}
+
 	/**
 	 * Background job to generate random submissions.
 	 */
