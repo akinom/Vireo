@@ -61,7 +61,7 @@ public class PrepopulateStudentData {
         fileName = file;
     }
 
-    public void loadStudents() {
+    public void loadStudentsCreateSubmissions() {
         Logger.info("Reading student data from " + fileName);
         PersonRepository personRepo = Spring.getBeanOfType(PersonRepository.class);
 
@@ -86,6 +86,9 @@ public class PrepopulateStudentData {
                     p = personRepo.createPerson(netId, email, firstName, lastName, RoleType.STUDENT);
                     p.setCurrentDepartment(dept);
                     p.setInstitutionalIdentifier(uid);
+                    // TODO remove in production
+                    p.save();
+                    p.setPassword("test");
                     p.save();
                     Logger.info("line " + lineno + ": " + p );
                     lineno += 1;

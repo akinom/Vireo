@@ -226,9 +226,8 @@ GET     /system/general/?                       System.generalPanel
 POST    /system/general/email                   System.testEmail
 GET		/system/general/submissions				System.testSubmissions
 POST    /system/general/submissions/clear       System.clearSubmissions
-POST    /system/general/submissions/load        System.loadSubmissions
 POST    /system/general/students/clear          System.clearStudents
-POST    /system/general/students/load           System.loadStudents
+POST    /system/general/students/load           System.loadStudentsCreateSubmissions
 POST    /system/general/index                   System.rebuildIndex
 GET     /system/jobs/?                          System.jobPanel
 GET     /system/errors/?                        System.errorPanel

@@ -287,11 +287,11 @@ public class System extends AbstractVireoController {
 	 * Load Students
 	 */
 	@Security(RoleType.ADMINISTRATOR)
-	public static void loadStudents() {
+	public static void loadStudentsCreateSubmissions() {
 		try {
 			Logger.info("prepopulateStudentData running...");
 			PrepopulateStudentData dataLoader = Spring.getBeanOfType(PrepopulateStudentData.class);
-			dataLoader.loadStudents();
+			dataLoader.loadStudentsCreateSubmissions();
 			Logger.info("prepopulateStudentData done!");
 		} catch (RuntimeException re) {
 			Logger.error(re, "Unable to initialize student data");

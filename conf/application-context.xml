@@ -132,7 +132,7 @@
     <property name = "firstName" value = "Preferred Else Primary First Name"/>
     <property name = "lastName" value = "Preferred Else Primary Last Name"/>
     <property name = "netid" value = "Net ID"/>
-    <property name = "emailAddOn" value = "@princeton.edu"/>
+    <property name = "emailAddOn" value = "@gmail.com"/>
     <property name = "department" value = "Dept"/>
     <property name = "uid" value="Emplid" />
     <property name = "fileName" value = "conf/prepopulate/Student-Data.tsv"/>
