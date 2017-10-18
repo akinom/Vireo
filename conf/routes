@@ -225,8 +225,7 @@ GET     /system/?                               System.controlPanelRedirect
 GET     /system/general/?                       System.generalPanel
 POST    /system/general/email                   System.testEmail
 GET		/system/general/submissions				System.testSubmissions
-POST    /system/general/submissions/clear       System.clearSubmissions
-POST    /system/general/students/clear          System.clearStudents
+POST    /system/general/students/clear          System.clearStudentsAndSubmission
 POST    /system/general/students/load           System.loadStudentsCreateSubmissions
 POST    /system/general/index                   System.rebuildIndex
 GET     /system/jobs/?                          System.jobPanel

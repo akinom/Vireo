@@ -23,8 +23,6 @@ import play.jobs.OnApplicationStart;
 import play.modules.spring.Spring;
 import play.mvc.With;
 
-import org.hibernate.exception.ConstraintViolationException;
-
 /**
  * System administrator control panel.
  * 
@@ -263,22 +261,12 @@ public class System extends AbstractVireoController {
 	 * Clear Students
 	 */
 	@Security(RoleType.ADMINISTRATOR)
-	public static void clearStudents() {
-		PersonRepository personRepo = Spring.getBeanOfType(PersonRepository.class);
-		SubmissionRepository submissionRepo = Spring.getBeanOfType(SubmissionRepository.class);
-		for (Person p : personRepo.findPersonsByRole(RoleType.STUDENT)) {
-			try {
-				if (p.getRole() == RoleType.STUDENT) {
-					for (Submission s : submissionRepo.findSubmission(p)) {
-						Logger.info("Delete " + s);
-						Student.submissionDelete(s.getId());
-					}
-					Logger.info("Delete " + p.getNetId());
-					p.delete();
-				}
-			} catch (ConstraintViolationException e) {
-				Logger.error(e,  "Could not delete Person " + p.getNetId());
-			}
+	public static void clearStudentsAndSubmission() {
+		try {
+			PrepopulateStudentData dataLoader = Spring.getBeanOfType(PrepopulateStudentData.class);
+			dataLoader.deleteAllStudentsAndSubmissions();
+		} catch (RuntimeException e) {
+			Logger.error(e, "Unable to deleteAllStudentsAndSubmissions");
 		}
 		generalPanel();
 	}
@@ -289,10 +277,8 @@ public class System extends AbstractVireoController {
 	@Security(RoleType.ADMINISTRATOR)
 	public static void loadStudentsCreateSubmissions() {
 		try {
-			Logger.info("prepopulateStudentData running...");
 			PrepopulateStudentData dataLoader = Spring.getBeanOfType(PrepopulateStudentData.class);
 			dataLoader.loadStudentsCreateSubmissions();
-			Logger.info("prepopulateStudentData done!");
 		} catch (RuntimeException re) {
 			Logger.error(re, "Unable to initialize student data");
 		}
