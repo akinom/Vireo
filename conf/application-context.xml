@@ -134,6 +134,7 @@
     <property name = "netid" value = "Net ID"/>
     <property name = "emailAddOn" value = "@gmail.com"/>
     <property name = "department" value = "Department Name"/>
+    <property name = "departmentCode" value = "Dept"/>
     <property name = "uid" value="Emplid" />
     <property name = "advisorLastName" value="Thesis Adviser 1 Last Name" />
     <property name = "advisorFirstName" value="Thesis Adviser 1 First Name" />
