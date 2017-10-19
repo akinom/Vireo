@@ -145,6 +145,7 @@
     <!-- TODO - remove password setting in production -->
     <property name = "password" value="test" />
     <property name="securityContext" ref="SecurityContext" />
+    <property name="settingsRepository" ref="SettingsRepository" />
   </bean>
 
 
@@ -517,7 +518,6 @@
   <bean id="Marc21" class="org.tdl.vireo.export.impl.TemplatePackagerImpl" scope="prototype">
     <property name="personRepository" ref="PersonRepository" />
     <property name="submissionRepository" ref="SubmissionRepository" />
-    <property name="settingsRepository" ref="SettingsRepository" />
     <property name="proquestVocabularyRepository" ref="ProquestVocabularyRepository" />
     <property name="displayName" value="MARC21" />
     <property name="mimeType" value="text/plain" />
