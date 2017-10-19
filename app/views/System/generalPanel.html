@@ -144,6 +144,15 @@ jQuery(document).ready(function() {
 		</form>
 	</div>
 
+	<div class="span6">
+        <h3> Populate / Clear Student Data  </h3>
+        <form class="form-inline" method="POST" action="@{System.loadStudentsCreateSubmissions()}">
+            <input type="submit" class="btn-info"  value="Load Student Accounts and Create Submissions"/>
+        </form>
+        <form class="form-inline" method="POST" action="@{System.clearStudentsAndSubmission()}">
+            <input type="submit" class="btn-info"  value="Delete Student Accounts and their Submissions"/>
+        </form>
+	</div>
 </div>
 
 <div class="row-fluid">

@@ -12,13 +12,14 @@ import org.tdl.vireo.error.ErrorReport;
 import org.tdl.vireo.job.JobManager;
 import org.tdl.vireo.job.JobMetadata;
 import org.tdl.vireo.job.JobStatus;
-import org.tdl.vireo.model.EmailTemplate;
-import org.tdl.vireo.model.RoleType;
-import org.tdl.vireo.model.SettingsRepository;
+import org.tdl.vireo.model.*;
 import org.tdl.vireo.search.Indexer;
 
+import org.tdl.vireo.services.PrepopulateStudentData;
+import play.Logger;
 import play.Play;
 import play.jobs.Job;
+import play.jobs.OnApplicationStart;
 import play.modules.spring.Spring;
 import play.mvc.With;
 
@@ -239,7 +240,51 @@ public class System extends AbstractVireoController {
 		// Redirect back to the control pannel.
 		generalPanel();
 	}
-	
+
+	/**
+	 * Clear Submissions
+	 */
+	@Security(RoleType.ADMINISTRATOR)
+	public static void clearSubmissions() {
+		generalPanel();
+	}
+
+	/**
+	 * load Submissions from file
+	 */
+	@Security(RoleType.ADMINISTRATOR)
+	public static void loadSubmissions() {
+		generalPanel();
+	}
+
+	/**
+	 * Clear Students
+	 */
+	@Security(RoleType.ADMINISTRATOR)
+	public static void clearStudentsAndSubmission() {
+		try {
+			PrepopulateStudentData dataLoader = Spring.getBeanOfType(PrepopulateStudentData.class);
+			dataLoader.deleteAllStudentsAndSubmissions();
+		} catch (RuntimeException e) {
+			Logger.error(e, "Unable to deleteAllStudentsAndSubmissions");
+		}
+		generalPanel();
+	}
+
+	/**
+	 * Load Students
+	 */
+	@Security(RoleType.ADMINISTRATOR)
+	public static void loadStudentsCreateSubmissions() {
+		try {
+			PrepopulateStudentData dataLoader = Spring.getBeanOfType(PrepopulateStudentData.class);
+			dataLoader.loadStudentsCreateSubmissions();
+		} catch (RuntimeException re) {
+			Logger.error(re, "Unable to initialize student data");
+		}
+		generalPanel();
+	}
+
 	/**
 	 * Background job to generate random submissions.
 	 */

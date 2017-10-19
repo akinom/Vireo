@@ -128,6 +128,26 @@
     <property name="securityContext" ref="SecurityContext" />
   </bean>
 
+  <bean id="PrepopulateStudentData" class="org.tdl.vireo.services.PrepopulateStudentData" scope="singleton">
+    <property name = "firstName" value = "Preferred Else Primary First Name"/>
+    <property name = "lastName" value = "Preferred Else Primary Last Name"/>
+    <property name = "netid" value = "Net ID"/>
+    <property name = "emailAddOn" value = "@gmail.com"/>
+    <property name = "department" value = "Department Name"/>
+    <property name = "departmentCode" value = "Dept"/>
+    <property name = "uid" value="Emplid" />
+    <property name = "advisorLastName" value="Thesis Adviser 1 Last Name" />
+    <property name = "advisorFirstName" value="Thesis Adviser 1 First Name" />
+    <property name = "advisorNetid" value="Thesis Adviser 1 NETID" />
+    <property name = "fileName" value = "conf/prepopulate/Student-Data.tsv"/>
+    <property name = "college" value = "Home Department Thesis"/>
+    <property name = "defaultTitle" value = "Home Department Thesis Title"/>
+    <!-- TODO - remove password setting in production -->
+    <property name = "password" value="test" />
+    <property name="securityContext" ref="SecurityContext" />
+    <property name="settingsRepository" ref="SettingsRepository" />
+  </bean>
+
 
   <!-- Search -->
   <bean id="Indexer" class="org.tdl.vireo.search.impl.LuceneIndexerImpl" scope="singleton">
@@ -498,7 +518,6 @@
   <bean id="Marc21" class="org.tdl.vireo.export.impl.TemplatePackagerImpl" scope="prototype">
     <property name="personRepository" ref="PersonRepository" />
     <property name="submissionRepository" ref="SubmissionRepository" />
-    <property name="settingsRepository" ref="SettingsRepository" />
     <property name="proquestVocabularyRepository" ref="ProquestVocabularyRepository" />
     <property name="displayName" value="MARC21" />
     <property name="mimeType" value="text/plain" />
