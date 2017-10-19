@@ -136,12 +136,11 @@ public class PrepopulateStudentData {
 
                     // TODO - remove when we have proper HR Data file
                     if (data.empty(data.dept)) {
-                        Logger.info("skipping record with missing department");
-                        action = "skipped";
+                        action = "skipping no department";
                         skipped++;
                     } else if (!data.valid()) {
                         Logger.warn("line " + lineno + ": Missing info in Student Record");
-                        action = "skipped";
+                        action = "skipping invalid";
                         skipped++;
                     } else {
                         p = data.createStudentWithSubmission(emailAddOn, defaultTitle, college);
