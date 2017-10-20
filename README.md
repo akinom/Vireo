@@ -1,85 +1,52 @@
-# Vireo Electronic Thesis and Dissertation Management System #
+# Princeton Universiy's THesis Central System  #
 
-## About Vireo  ##
+## About Thesis Central   ##
 
-Vireo is a turnkey Electronic Thesis and Dissertation (ETD) Management System
-addressing all steps of the ETD process, from submission to publication to 
-preservation. Vireo provides students the ability to submit their digital
-theses and dissertations via a simple online interface. Graduate offices can
-use Vireo to manage the ETD submission and approval process. 
+Thesis Central is used by Princeton University for  ungraduates to submit their senior thesis. 
 
-The project is organized by the [Texas Digital Library](https://www.tdl.org/)
-in collaboration with [Texas A&M University](http://www.tamu.edu/),
-[University of Illinois at Urbana-Champaign](http://illinois.edu/), and
-[Massachusetts Institute of Technology](http://web.mit.edu/).
-
-For more information on Vireo, visit the 
+Thes system is based on TDL Vireo's system. For more information on Vireo, visit the 
 [Github Project page for Vireo](https://github.com/TexasDigitalLibrary/Vireo)
 OR
 [Github Project wiki for Vireo](https://github.com/TexasDigitalLibrary/Vireo/wiki)
 OR
 [Github page for Vireo](http://texasdigitallibrary.github.io/Vireo/)
 
-## Vireo 3.0 - What's New ##
+##  Princeton Modifications  ##
 
-Vireo 3.0 is major feature upgrade to Vireo. It builds upon the past success of 
-2.0 and the Java Play Framework to enable new features. Here are some highlights
+Princeton expects that all seniors submit a Home Department Thesis. Some students submit a second thesis, a Dedicated Certificate Program thesis. 
+Administrators in the different departments review the theses submitted by seniors from their department. Reviewers want to see which students have already submitted and they want to know which students are still expected to submit. 
+Princeton wanted reviewers to not be able to access all thesis submissions in the system, instead they should only be able to 'see' 
+those they are reposnsible for. 
 
-**New Fields:**
-- ORCID
-- ProQuest Embargoes
+In addition Princeton wanted to collect some custom information.
 
-**New Features:**
-- Revised Needs Corrections workflow: Vireo 3 includes a more intuitive student workflow for submitting corrected manuscripts, including better validations to minimize student errors.
-- Email: Vireo 3 adds the ability to set up rules for sending automated emails to configurable groups of stakeholders.
-- Reporting and Exports: Vireo 3 allows administrative users to create custom, exportable Excel reports by using saved filters and columns. It also includes the addition of the Action Log to a file export package.
-- Multiple submissions: Vireo 3 overhauls the functionality for allowing multiple submissions by a single student. Specifically, it adds more sophisticated validations to prevent students from creating a new submission for the same degree, while allowing legitimate multiple submissions (for different degrees) by the same student.
-- Embargoes: Vireo 3 adds a separate, optional embargo period for submissions going to ProQuest.
-- Custom Action Checklist: In Vireo 3, administrative users have the ability to filter an ETD list by individual Custom Actions. Additionally, Vireo 3 can be configured to display certain Checklist items in the student view.
+**Data Prepopulation**
 
-**New Settings:**
-- Email "From" and "ReplyTo" are now in administrative settings instead of application.conf
-- Deposit locations can now be configured to have a timeout (defaulted to 60 seconds, used to be 10 seconds) for the SWORD client when depositing large items into DSpace
-- Email Workflow Rules
-- Administrative Groups
-- Separate "Default" and "ProQuest" embargoes
+The PrepopulateStudentData class loads data from a TAB separated spreadsheet. 
+Its parameters, that is the file to read and the columns to look for,  are defined in a bean definition in conf/application-context.xml, see 
+~~~
+    <bean id="PrepopulateStudentData" class="org.tdl.vireo.services.PrepopulateStudentData" scope="singleton">
+    ...
+~~~
 
-**Other New Features:**
-- An ADA-compliant student submission interface
-- Several bug fixes
+Addministrators trigger data loading from the User Interfaces's System page. 
+Existing student records and related submissions are deleted before new student records are created. 
+The data loader creates an 'In Progress' 'Home Department Submission', see college bean property, for each student. 
+It creates the related department, as defined by the student's current department setting, if the department is not yet defined.
 
-## Building and Deploying Vireo ##
+The data loader expects to find a netid for each sudent described in the the data file.
+It sets the students email to the netid followed by the value of the 'emailAddOn' property. 
+The optional 'password' property can be set to a string, which is used to set the password for all students.
 
-Refer to [the wiki pages](https://github.com/TexasDigitalLibrary/Vireo/wiki) 
-for instructions on deploying Vireo from scratch or updating a previous release. 
+The data file loaded during testing uses thesis.central.pu+[real-NETID] as the netid value. 
+The emailAddOn property of the data loader is set to '@gmail.com'. 
+Along with a constant password setting, we can log in on behalf of each student and we receive emails that are send to students at thesis.central.pu@gmail.com.
 
-## License and Copyright ##
+In production we will use the proper netids and '@princeton.edu' as emailAddOn property. 
 
-Copyright (c) 2015, Texas Digital Library
-All rights reserved.
-
-Redistribution and use in source and binary forms, with or without 
-modification, are permitted provided that the following conditions 
-are met:
-
-- Redistributions of source code must retain the above copyright notice, this
-  list of conditions and the following disclaimer.
-
-- Redistributions in binary form must reproduce the above copyright notice,
-  this list of conditions and the following disclaimer in the documentation 
-  and/or other materials provided with the distribution.
-
-- Neither the name of the Texas Digital Library nor the names of its
-  contributors may be used to endorse or promote products derived from this
-  software without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS AS IS AND
-ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
-FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+**Repurposed Fields:**
+- ORCID  - used for department code
+- College - used to indicate whether student submits a Home department Thesis or a dedicated Certificate Program thesis 
+- Program - used to indicate a certificate program - this field is moved from the personal info section to the document info section 
+ 
+ 
