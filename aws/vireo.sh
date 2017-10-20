@@ -10,7 +10,7 @@ then
    git stash;
    git pull;
    git stash apply;
-   git log --merges --author Mevenkamp | fgrep issue | mail -s 'Vireo- issue list' monikam@princeton.edu ldurgin@princeton.edu
+   git log --merges --author Mevenkamp | fgrep issue | mail -s 'Vireo- issue list' monikam@princeton.edu 
 fi 
 
 cd ..
