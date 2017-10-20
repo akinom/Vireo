@@ -231,6 +231,8 @@ class Record {
     }
 
     public Person createStudentWithSubmission(String emailAddOn, String defaultTitle, String college) {
+        dept = dept + " (" + deptCode + ")";
+
         Person p = personRepo.createPerson(netId, email, firstName, lastName, RoleType.STUDENT);
         p.setCurrentDepartment(dept);
         p.setInstitutionalIdentifier(uid);
