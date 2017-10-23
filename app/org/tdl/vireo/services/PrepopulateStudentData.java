@@ -221,7 +221,7 @@ public class PrepopulateStudentData {
             }
             // TODO fix up middle name to be just the initial
             if (null != record[ADV_MIDDLE_NAME] && record[ADV_MIDDLE_NAME].length() > 1) {
-                record[ADV_MIDDLE_NAME] =  record[ADV_MIDDLE_NAME].substring(0, 2);
+                record[ADV_MIDDLE_NAME] =  record[ADV_MIDDLE_NAME].substring(0, 1);
             }
             email = toStr(record[NETID]) + populator.emailAddOn;
         }
