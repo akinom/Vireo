@@ -138,6 +138,7 @@
     <property name = "uid" value="Emplid" />
     <property name = "advisorLastName" value="Thesis Adviser 1 Last Name" />
     <property name = "advisorFirstName" value="Thesis Adviser 1 First Name" />
+    <property name = "advisorMiddleName" value="Thesis Adviser 2" />
     <property name = "advisorNetid" value="Thesis Adviser 1 NETID" />
     <property name = "fileName" value = "conf/prepopulate/Student-Data.tsv"/>
     <property name = "college" value = "Home Department Thesis"/>
