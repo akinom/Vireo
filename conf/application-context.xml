@@ -142,7 +142,8 @@
     <property name = "advisorNetid" value="Thesis Adviser 1 NETID" />
     <property name = "fileName" value = "conf/prepopulate/Student-Data.tsv"/>
     <property name = "college" value = "Home Department Thesis"/>
-    <property name = "defaultTitle" value = "Home Department Thesis Title"/>
+    <property name = "defaultTitle" value = "---"/>
+    <property name = "defaultLanguage" value = "en"/>
     <!-- TODO - remove password setting in production -->
     <property name = "password" value="test" />
     <property name="securityContext" ref="SecurityContext" />

@@ -33,6 +33,7 @@ public class PrepopulateStudentData {
     String college;
     String emailAddOn;
     String defaultTitle;
+    String defaultLanguage;
     String password = null;
     String fileName;
 
@@ -107,6 +108,8 @@ public class PrepopulateStudentData {
     public void setDefaultTitle(String colheader) {
         defaultTitle = colheader;
     }
+
+    public void setDefaultLanguage(String lang)  { defaultLanguage = lang; }
 
     public void setPassword(String pwd) {
         password = pwd;
@@ -270,6 +273,7 @@ public class PrepopulateStudentData {
 
             // document info step
             s.setDocumentTitle(defaultTitle);
+            s.setDocumentLanguage(defaultLanguage);
             if (!empty(record[ADV_FIRST_NAME]) && !empty(record[ADV_LAST_NAME])) {
                 s.addCommitteeMember(record[ADV_FIRST_NAME], record[ADV_LAST_NAME], record[ADV_MIDDLE_NAME]);
             }
