@@ -138,10 +138,12 @@
     <property name = "uid" value="Emplid" />
     <property name = "advisorLastName" value="Thesis Adviser 1 Last Name" />
     <property name = "advisorFirstName" value="Thesis Adviser 1 First Name" />
+    <property name = "advisorMiddleName" value="Thesis Adviser 2" />
     <property name = "advisorNetid" value="Thesis Adviser 1 NETID" />
     <property name = "fileName" value = "conf/prepopulate/Student-Data.tsv"/>
     <property name = "college" value = "Home Department Thesis"/>
-    <property name = "defaultTitle" value = "Home Department Thesis Title"/>
+    <property name = "defaultTitle" value = "---"/>
+    <property name = "defaultLanguage" value = "en"/>
     <!-- TODO - remove password setting in production -->
     <property name = "password" value="test" />
     <property name="securityContext" ref="SecurityContext" />
@@ -518,6 +520,7 @@
   <bean id="Marc21" class="org.tdl.vireo.export.impl.TemplatePackagerImpl" scope="prototype">
     <property name="personRepository" ref="PersonRepository" />
     <property name="submissionRepository" ref="SubmissionRepository" />
+    <property name="settingsRepository" ref="SettingsRepository" />
     <property name="proquestVocabularyRepository" ref="ProquestVocabularyRepository" />
     <property name="displayName" value="MARC21" />
     <property name="mimeType" value="text/plain" />

@@ -1,38 +1,39 @@
 package org.tdl.vireo.services;
 
-import controllers.Student;
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVRecord;
+import au.com.bytecode.opencsv.CSVReader;
+
 import org.tdl.vireo.model.*;
 import org.tdl.vireo.security.SecurityContext;
 import play.Logger;
 import play.modules.spring.Spring;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
+import java.io.*;
+import java.util.Hashtable;
 
 /**
  * Created by monikam on 10/17/17.
  */
 public class PrepopulateStudentData {
 
-    String firstNameColHeader;
-    String lastNameColHeader;
-    String netidColHeader;
-    String uidColHeader;
-    String departmentColHeader;
-    String departmentCodeColHeader;
+    static final int FIRST_NAME = 0;
+    static final int LAST_NAME = 1;
+    static final int NETID = 2;
+    static final int ADV_FIRST_NAME = 3;
+    static final int ADV_LAST_NAME = 4;
+    static final int ADV_MIDDLE_NAME = 5;
+    static final int UID = 6;
+    static final int DEPARTMENT = 7;
+    static final int DEPT_CODE = 8;
+    static final int NCOLUMNS = 9;
 
-    String advisorLastNameColHeader;
-    String advisorFirstNameColHeader;
-    String advisorMiddleNameColHeader;
-    String advisorNetidColHeader;
+    String[] colHeaderName = new String[NCOLUMNS];
+
+    Hashtable<String, Integer> headerIndex;
 
     String college;
     String emailAddOn;
     String defaultTitle;
+    String defaultLanguage;
     String password = null;
     String fileName;
 
@@ -45,6 +46,7 @@ public class PrepopulateStudentData {
         personRepo = Spring.getBeanOfType(PersonRepository.class);
         submissionRepo = Spring.getBeanOfType(SubmissionRepository.class);
         settingsRepo = Spring.getBeanOfType(SettingsRepository.class);
+        headerIndex = new Hashtable<String, Integer>(NCOLUMNS);
     }
 
     public void setSecurityContext(SecurityContext context) {
@@ -56,39 +58,43 @@ public class PrepopulateStudentData {
     }
 
     public void setFirstName(String colheader) {
-        firstNameColHeader = colheader;
+        colHeaderName[FIRST_NAME] = colheader;
     }
 
     public void setLastName(String colheader) {
-        lastNameColHeader = colheader;
+        colHeaderName[LAST_NAME] = colheader;
     }
 
     public void setNetid(String netidColHeader) {
-        this.netidColHeader = netidColHeader;
+        colHeaderName[NETID] = netidColHeader;
     }
 
     public void setDepartment(String department) {
-        this.departmentColHeader = department;
+        colHeaderName[DEPARTMENT] = department;
     }
 
     public void setDepartmentCode(String deptCode) {
-        this.departmentCodeColHeader = deptCode;
+        colHeaderName[DEPT_CODE] = deptCode;
     }
 
     public void setUid(String uid) {
-        this.uidColHeader = uid;
+        colHeaderName[UID] = uid;
     }
 
     public void setAdvisorFirstName(String colheader) {
-        advisorFirstNameColHeader = colheader;
+        colHeaderName[ADV_FIRST_NAME] = colheader;
     }
 
     public void setAdvisorLastName(String colheader) {
-        advisorLastNameColHeader = colheader;
+        colHeaderName[ADV_LAST_NAME] = colheader;
     }
 
-    public void setAdvisorNetid(String colheader) {
-        advisorNetidColHeader = colheader;
+    public void setAdvisorMiddleName(String colheader) {
+        colHeaderName[ADV_MIDDLE_NAME] = colheader;
+    }
+
+    public void setAdvisorNetid(String colheader) {   /*noop */
+        ;
     }
 
     public void setCollege(String college) {
@@ -103,6 +109,8 @@ public class PrepopulateStudentData {
         defaultTitle = colheader;
     }
 
+    public void setDefaultLanguage(String lang)  { defaultLanguage = lang; }
+
     public void setPassword(String pwd) {
         password = pwd;
     }
@@ -114,60 +122,73 @@ public class PrepopulateStudentData {
     public void loadStudentsCreateSubmissions() {
         Logger.info("Reading student data from " + fileName);
 
+        CSVReader in = null;
+        try {
+            in = new CSVReader(new FileReader(fileName), '\t');
+            String fileHeaders[] = in.readNext();
+            int index = 0;
+            for (String key : fileHeaders) {
+                headerIndex.put(key, index);
+                index++;
+            }
+            for (int i = 0; i < NCOLUMNS; i++) {
+                if (null == headerIndex.get(colHeaderName[i])) {
+                    Logger.error(" prop-" + i + " : Missing column for " + colHeaderName[i]);
+                    // TODO raise error ?
+                } else {
+                    Logger.debug(" prop-" + i + " : headerIndex(" + colHeaderName[i] + ") -> " + headerIndex.get(colHeaderName[i]));
+                }
+            }
+        } catch (FileNotFoundException e) {
+            Logger.error(e, fileName + ": Unable to open for reading ");
+            return;
+        } catch (IOException e) {
+            Logger.error(fileName + ": Could not read header line ");
+            return;
+        }
+
         deleteAllStudentsAndSubmissions();
 
-        Person p;
-        String action = null;
-        Reader in = null;
-        int lineno = 0;
+        Person p = null;
+        String action = "noop";
+        int lineno = 1;
         int skipped = 0;
         try {
-            in = new FileReader(fileName);
-            p = null;
-            action = "noop";
-            try {
-                // TODO - remove ? turn off authorization so we can add person entries
-                context.turnOffAuthorization();
+            // TODO - remove ? turn off authorization so we can add person entries
+            context.turnOffAuthorization();
 
-                Iterable<CSVRecord> records = CSVFormat.TDF.withFirstRecordAsHeader().parse(in);
-                for (CSVRecord record : records) {
-                    lineno++;
-                    Record data = new Record(record, this);
+            for (String[] line = in.readNext(); line != null; line = in.readNext()) {
+                lineno++;
+                Record data = new Record(line, this);
 
-                    // TODO - remove when we have proper HR Data file
-                    if (data.empty(data.dept)) {
-                        action = "skipping no department";
-                        skipped++;
-                    } else if (!data.valid()) {
-                        Logger.warn("line " + lineno + ": Missing info in Student Record");
-                        action = "skipping invalid";
-                        skipped++;
-                    } else {
-                        p = data.createStudentWithSubmission(emailAddOn, defaultTitle, college);
-                        if (null != password) {
-                            p.setPassword(password);
-                            p.save();
-                        }
-                        action = "created";
+                // TODO - remove when we have proper HR Data file
+                if (data.empty(data.record[DEPARTMENT])) {
+                    action = "skipping no department";
+                    skipped++;
+                } else if (!data.valid()) {
+                    Logger.warn("line " + lineno + ": Missing info in Student Record");
+                    action = "skipping invalid";
+                    skipped++;
+                } else {
+                    p = data.createStudentWithSubmission(emailAddOn, defaultTitle, college);
+                    if (null != password) {
+                        p.setPassword(password);
+                        p.save();
                     }
-                    Logger.info(String.format("%s line %d: %s %s", fileName, lineno, action, data));
+                    action = "created";
                 }
-                Logger.info(String.format("%s: %d total lines;  %d skipped lines ", fileName, lineno, skipped));
+                Logger.info(String.format("%s line %d: %s %s", fileName, lineno, action, data));
+            }
+            Logger.info(String.format("%s: %d total lines;  %d skipped lines ", fileName, lineno, skipped));
         } catch (IOException e) {
             Logger.error(e, fileName + "line " + lineno + ": can't read csv line");
         } finally {
-
             // turn back on
             context.restoreAuthorization();
         }
-    } catch(
-    FileNotFoundException e)
 
-    {
-        Logger.error(e, "Unable to read student data file " + fileName);
+        Logger.info(String.format("file %s: %d lines - skipped %d", fileName, lineno, skipped));
     }
-        Logger.info(String.format("file %s: %d lines - skipped %d",fileName,lineno,skipped));
-}
 
     public void deleteAllStudentsAndSubmissions() {
         Logger.info("deleting all students and their submissions");
@@ -177,86 +198,89 @@ public class PrepopulateStudentData {
                 for (Submission s : submissionRepo.findSubmission(p)) {
                     s.delete();
                 }
-                Logger.info("Delete " + p.getNetId());
+                Logger.info("Delete Student " + p.getNetId());
                 p.delete();
             }
         }
     }
 
 
-class Record {
-    CSVRecord record;
+    class Record {
+        String[] record;
+        String email;
 
-    String netId;
-    String email;
-    String lastName;
-    String firstName;
-    String dept;
-    String deptCode;
-    String uid;
-    String advFirstName;
-    String advMiddleName;  // TODO actually get the middle names
-    String advLastName;
-    String advNetid;
-
-    Record(CSVRecord csv, PrepopulateStudentData populator) {
-        record = csv;
-        netId = record.get(populator.netidColHeader);
-        email = netId + populator.emailAddOn;
-        lastName = record.get(populator.lastNameColHeader);
-        firstName = record.get(populator.firstNameColHeader);
-        dept = record.get(populator.departmentColHeader);
-        deptCode = record.get(populator.departmentCodeColHeader);
-        uid = record.get(populator.uidColHeader);
-        advFirstName = record.get(populator.advisorFirstNameColHeader);
-        advMiddleName = lastName.substring(0, 1);  // TODO actually get the middle names
-        advLastName = record.get(populator.advisorLastNameColHeader);
-        advNetid = record.get(populator.advisorNetidColHeader);
-    }
-
-    boolean valid() {
-        return !(empty(dept) && empty(deptCode) && empty(firstName) && empty(lastName) && empty(netId) && empty(uid));
-    }
-
-    boolean empty(String s) {
-        return null == s || s.trim().equals("");
-    }
-
-    String toStr(String s) {
-        return (empty(s)) ? "" : s;
-    }
-
-    public String toString() {
-        return String.format("CSV[D:%s(%s),S:(%s,%s),A:(%s)]", toStr(deptCode), toStr(dept), toStr(netId), toStr(lastName), toStr(advNetid));
-    }
-
-    public Person createStudentWithSubmission(String emailAddOn, String defaultTitle, String college) {
-        Person p = personRepo.createPerson(netId, email, firstName, lastName, RoleType.STUDENT);
-        p.setCurrentDepartment(dept);
-        p.setInstitutionalIdentifier(uid);
-        p.save();
-
-        if (null == settingsRepo.findDepartmentByName(dept)) {
-            settingsRepo.createDepartment(dept).save();
+        Record(String[] csv, PrepopulateStudentData populator) {
+            record = new String[NCOLUMNS];
+            for (int i = 0; i < NCOLUMNS; i++) {
+                try {
+                    // Logger.info("Record.Prop " + i + " " + populator.colHeaderName[i] );
+                    if (populator.colHeaderName[i] != null)
+                        record[i] = csv[populator.headerIndex.get(populator.colHeaderName[i])];
+                    // Logger.info("Record.Prop " + i + " " + populator.colHeaderName[i] + " " +  populator.headerIndex.get(populator.colHeaderName[i])  + " --" + record[i]);
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    // Logger.info("Record.Prop " + i );
+                    record[i] = null;
+                }
+            }
+            // TODO fix up middle name to be just the initial
+            if (null != record[ADV_MIDDLE_NAME] && record[ADV_MIDDLE_NAME].length() > 1) {
+                record[ADV_MIDDLE_NAME] =  record[ADV_MIDDLE_NAME].substring(0, 1);
+            }
+            email = toStr(record[NETID]) + populator.emailAddOn;
         }
 
-        Submission s = submissionRepo.createSubmission(p);
-        // personal Info step
-        s.setStudentFirstName(p.getFirstName());
-        s.setStudentLastName(p.getLastName());
-        s.setDepartment(p.getCurrentDepartment());
-        s.setOrcid(deptCode);
-
-        // document info step
-        s.setDocumentTitle(defaultTitle);
-        if (!empty(advNetid) && !empty(advFirstName) && !empty(advLastName)) {
-            s.setCommitteeContactEmail(advNetid + emailAddOn);
-            s.addCommitteeMember(advFirstName, advLastName, advMiddleName);
+        boolean valid() {
+            return !(empty(record[DEPARTMENT]) && empty(record[DEPT_CODE]) && empty(record[FIRST_NAME]) && empty(record[LAST_NAME]) &&
+                    empty(record[NETID]) && empty(record[UID]));
         }
-        s.setCollege(college);
-        s.save();
 
-        return p;
+        boolean empty(String s) {
+            return null == s || s.trim().equals("");
+        }
+
+        String toStr(String s) {
+            return (empty(s)) ? "" : s;
+        }
+
+        public String toString() {
+            return String.format("CSV[D:%s(%s),S:(%s,%s),A:(%s)]", toStr(record[DEPT_CODE]), toStr(record[DEPARTMENT]), toStr(record[NETID]),
+                    toStr(record[LAST_NAME]), toStr(record[ADV_LAST_NAME]));
+        }
+
+        public Person createStudentWithSubmission(String emailAddOn, String defaultTitle, String college) {
+            String dept = "";
+            if (record[DEPT_CODE].length() > 4) {
+                dept = record[DEPT_CODE].substring(4);
+                dept = record[DEPARTMENT] + " (" + dept + ")";
+            } else {
+                dept = record[DEPARTMENT];
+            }
+
+            Person p = personRepo.createPerson(record[NETID], email, record[FIRST_NAME], record[LAST_NAME], RoleType.STUDENT);
+            p.setCurrentDepartment(dept);
+            p.setInstitutionalIdentifier(record[UID]);
+            p.save();
+
+            if (null == settingsRepo.findDepartmentByName(dept)) {
+                settingsRepo.createDepartment(dept).save();
+            }
+
+            Submission s = submissionRepo.createSubmission(p);
+            // personal Info step
+            s.setStudentFirstName(p.getFirstName());
+            s.setStudentLastName(p.getLastName());
+            s.setDepartment(p.getCurrentDepartment());
+
+            // document info step
+            s.setDocumentTitle(defaultTitle);
+            s.setDocumentLanguage(defaultLanguage);
+            if (!empty(record[ADV_FIRST_NAME]) && !empty(record[ADV_LAST_NAME])) {
+                s.addCommitteeMember(record[ADV_FIRST_NAME], record[ADV_LAST_NAME], record[ADV_MIDDLE_NAME]);
+            }
+            s.setCollege(college);
+            s.save();
+
+            return p;
+        }
     }
-}
 }
