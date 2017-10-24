@@ -245,7 +245,13 @@ public class PrepopulateStudentData {
         }
 
         public Person createStudentWithSubmission(String emailAddOn, String defaultTitle, String college) {
-            String dept = record[DEPARTMENT] + " (" + record[DEPT_CODE] + ")";
+            String dept = "";
+            if (record[DEPT_CODE].length() > 4) {
+                dept = record[DEPT_CODE].substring(4);
+                dept = record[DEPARTMENT] + " (" + dept + ")";
+            } else {
+                dept = record[DEPARTMENT];
+            }
 
             Person p = personRepo.createPerson(record[NETID], email, record[FIRST_NAME], record[LAST_NAME], RoleType.STUDENT);
             p.setCurrentDepartment(dept);
