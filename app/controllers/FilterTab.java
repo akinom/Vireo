@@ -1133,12 +1133,31 @@ public class FilterTab extends AbstractVireoController {
 			}
 		}
 		if (context.isReviewer() && !context.isAdministrator()) {
-			List<Department> departments = settingRepo.findAllDepartments();
 			String userEmail = context.getPerson().getEmail();
-			for (Department dep : departments) {
-				activeFilter.removeDepartment(dep.getName());
-				if (dep.getEmails().containsValue(userEmail)) {
-					activeFilter.addDepartment(dep.getName());
+			// restrict department reviwers to their departments
+			for (Department stp : settingRepo.findAllDepartments()) {
+				activeFilter.removeDepartment(stp.getName());
+				if (stp.getEmails().containsValue(userEmail)) {
+					activeFilter.addDepartment(stp.getName());
+				}
+			}
+
+			// restrict program reviewers college with names that do not contain Department
+			// and to their programs
+			Boolean restricted = false;
+			for (Program stp : settingRepo.findAllPrograms()) {
+				activeFilter.removeProgram(stp.getName());
+				if (stp.getEmails().containsValue(userEmail)) {
+					activeFilter.addProgram(stp.getName());
+					restricted = true;
+				}
+			}
+			if (restricted) {
+				for (College stp : settingRepo.findAllColleges()) {
+					activeFilter.removeCollege(stp.getName());
+					if (!stp.getName().contains("Department")) {
+						activeFilter.addCollege(stp.getName());
+					}
 				}
 			}
 		}
