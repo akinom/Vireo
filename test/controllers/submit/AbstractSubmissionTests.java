@@ -244,7 +244,6 @@ public abstract class AbstractSubmissionTests extends AbstractVireoFunctionalTes
 	 *            The students's last name.
 	 * @param birthYear
 	 *            The student's birth year.
-	 * @param program
 	 * @param college
 	 * @param department
 	 * @param degree
@@ -255,7 +254,7 @@ public abstract class AbstractSubmissionTests extends AbstractVireoFunctionalTes
 	 * @param currentPhone
 	 * @param currentAddress
 	 */
-	public void personalInfo(String firstName, String middleName, String lastName, String birthYear, String program, String college, String department, String degree, String major, String permPhone, 
+	public void personalInfo(String firstName, String middleName, String lastName, String birthYear, String college, String department, String degree, String major, String permPhone,
 			String permAddress, String permEmail, String currentPhone, String currentAddress) {
 
 
@@ -308,8 +307,6 @@ public abstract class AbstractSubmissionTests extends AbstractVireoFunctionalTes
 		if (birthYear != null)
 			params.put("birthYear", birthYear);
 
-		if (program != null)
-			params.put("program", program);
 		if (college != null)
 			params.put("college", college);
 		if (department != null)
@@ -367,11 +364,6 @@ public abstract class AbstractSubmissionTests extends AbstractVireoFunctionalTes
 
 
 		// Academic Affiliation
-		if (program == null)
-			assertEquals(submitter.getCurrentProgram(), sub.getProgram());
-		else
-			assertEquals(program,sub.getProgram());
-		
 		if (college == null)
 			assertEquals(submitter.getCurrentCollege(), sub.getCollege());
 		else
@@ -488,11 +480,9 @@ public abstract class AbstractSubmissionTests extends AbstractVireoFunctionalTes
 	 *            The committee contact email.
 	 * @param embargo
 	 *            The embargo settings.
-	 * @param embargoGuarantor 
-	 * @param umi
-	 *            UMI release flag.
+	 * @param embargoGuarantor
 	 */
-	public void documentInfo(String title, String degreeMonth, String degreeYear, String defenseDate, String docType, String abstractText, String keywords,
+	public void documentInfo(String title, String degreeMonth, String degreeYear, String defenseDate, String program, String docType, String abstractText, String keywords,
 			String subjectPrimary, String subjectSecondary, String subjectTertiary, String language, List<Map<String,String>> committee, String chairEmail, 
 			String publishedMaterial, String embargo, EmbargoGuarantor embargoGuarantor)  {
 
@@ -512,6 +502,8 @@ public abstract class AbstractSubmissionTests extends AbstractVireoFunctionalTes
 			params.put("degreeYear",degreeYear);
 		if (defenseDate != null)
 			params.put("defenseDate", defenseDate);
+		if (program != null)
+			params.put("program", program);
 		if (docType != null)
 			params.put("docType", docType);
 		if (abstractText != null)
@@ -530,6 +522,7 @@ public abstract class AbstractSubmissionTests extends AbstractVireoFunctionalTes
 			params.put("chairEmail", chairEmail);
 		if (publishedMaterial != null) {
 			params.put("publishedMaterialFlag", "true");
+			params.put("publishedMaterial", publishedMaterial);
 			params.put("publishedMaterial", publishedMaterial);
 		}
 		if (embargo != null)
@@ -567,6 +560,9 @@ public abstract class AbstractSubmissionTests extends AbstractVireoFunctionalTes
 		if (defenseDate != null) {
 			DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
 			assertEquals(defenseDate,formatter.format(sub.getDefenseDate()));
+		}
+		if (program != null) {
+			assertEquals(program,sub.getProgram());
 		}
 		if (docType != null)
 			assertEquals(docType,sub.getDocumentType());

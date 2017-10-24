@@ -82,7 +82,7 @@ public class Confirm extends AbstractSubmitStep {
 				}
 
 				// wipe out department when college does not contain the word Department - aka set to null
-				if ( (! sub.getCollege().contains("Department")) &&  (null != sub.getDepartment())) {
+				if ( null != sub.getDepartment() && null != sub.getCollege() && !sub.getCollege().contains("Department")) {
 					sub.setDepartment(null);
 				}
 
