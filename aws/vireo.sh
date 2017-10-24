@@ -7,11 +7,12 @@ cd "$(dirname "$0")"
 
 if [ $CMD == "start" ] 
 then 
-   git stash;
-   git pull;
-   git stash apply;
-   git log --merges --author Mevenkamp | fgrep issue | mail -s 'Vireo- issue list' monikam@princeton.edu 
-fi 
+   git fetch;
+   git reset --hard origin/ec2
+   cp ../application.conf ../conf
+   git log --merges --author Mevenkamp | fgrep issue  | mail -s 'Vireo- issue list' monikam@princeton.edu
+   git diff | mail -s 'Vireo-diff' monikam@princeton.edu
+fi
 
 cd ..
 $PLAY $CMD
