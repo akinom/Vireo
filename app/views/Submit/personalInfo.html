@@ -263,7 +263,23 @@ function abandonSub(){
             <div class="control-group #{errorClass 'department' /} #{fieldClass DEPARTMENT /}">
                 <label class="control-label" for="department"><span class="required-star">*</span> #{fieldLabel DEPARTMENT /}:</label>
                 <div class="controls">
+					#{if disabledFields.contains("department")}
                         <p>${department}</p>
+					#{/if}
+					#{else}
+						#{if settingRepo.findAllDepartments().size() > 0 }
+                            <select name="department" id="department">
+                                <option #{if department == null}selected="true"#{/if} value="">...choose</option>
+								#{list items:settingRepo.findAllDepartments(), as:'dept'}
+                                    <option #{if department == dept.getName()}selected="true"#{/if} value="${dept.getName()}">${dept.getName()}</option>
+								#{/list}
+                            </select>
+						#{/if}
+						#{else}
+                            <input name="department" id="department" value="${department}"/>
+						#{/else}
+                        <span class="tooltip-icon" title="#{fieldHelp DEPARTMENT /}"><i class="icon-info-sign"></i></span>
+					#{/else}
                 </div>
             </div>
 		#{/ifEnabled}

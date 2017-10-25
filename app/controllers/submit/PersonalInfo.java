@@ -181,6 +181,10 @@ public class PersonalInfo extends AbstractSubmitStep {
 
 				disabledFields.add("birthYear");
 			}
+			if (isValidDepartment(submitter.getCurrentDepartment())) {
+				disabledFields.add("department");
+				department = submitter.getCurrentDepartment();
+			}
 		}
 		
 		// Should the affiliation group be locked.
@@ -188,10 +192,6 @@ public class PersonalInfo extends AbstractSubmitStep {
 			if (isValidCollege(submitter.getCurrentCollege())) {
 				disabledFields.add("college");
 				college = submitter.getCurrentCollege();
-			}
-			if (isValidDepartment(submitter.getCurrentDepartment())) {
-				disabledFields.add("department");
-				department = submitter.getCurrentDepartment();
 			}
 			if (isValidDegree(submitter.getCurrentDegree())) {
 				disabledFields.add("degree");
