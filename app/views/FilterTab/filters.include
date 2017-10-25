@@ -396,7 +396,7 @@ different blocks this gets around this problem because each is independent.
             #{/list}
         </ul>
         #{/if}
-        #{if facet == FACET_GRADUATION_SEMESTER }
+        #{if false && facet == FACET_GRADUATION_SEMESTER }
         <div class="sub-heading">&{nav.toUpperCase()+'_FACET_'+facet.name()}</div>
         <ul class="unstyled">
             %{ shown = 0 }%
