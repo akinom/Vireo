@@ -60,8 +60,33 @@ public enum SearchOrder {
 	LAST_EVENT_TIME(36),
 	
 	ORCID(37);
-	
-	
+
+	static SearchOrder[] enabled = { ID,
+			STUDENT_EMAIL,
+			STUDENT_NAME,
+			STUDENT_ID,
+
+			STATE,
+
+			ASSIGNEE,
+
+			DOCUMENT_TITLE,
+			DOCUMENT_LANGUAGE,
+
+			PRIMARY_DOCUMENT,
+
+			SUBMISSION_DATE,
+			APPROVAL_DATE,
+
+			COMMITTEE_MEMBERS,
+			COMMITTEE_CONTACT_EMAIL,
+
+			PROGRAM,
+			COLLEGE,
+			DEPARTMENT,
+
+			LAST_EVENT_TIME   };
+
 	// The id for this search order.
 	private int id;
 
@@ -97,5 +122,9 @@ public enum SearchOrder {
 		}
 
 		return null;
+	}
+
+	public static SearchOrder[] enabledValues() {
+		return enabled;
 	}
 }

@@ -1181,14 +1181,15 @@ public class FilterTab extends AbstractVireoController {
 			columns.add(SearchOrder.LAST_EVENT_ENTRY);
 			columns.add(SearchOrder.LAST_EVENT_TIME);			
 		} else {
-			columns.add(SearchOrder.ID);
 			columns.add(SearchOrder.STUDENT_NAME);
+			columns.add(SearchOrder.STUDENT_EMAIL);
 			columns.add(SearchOrder.STATE);
-			columns.add(SearchOrder.ASSIGNEE);
-			columns.add(SearchOrder.DOCUMENT_TITLE);
 			columns.add(SearchOrder.SUBMISSION_DATE);
-			columns.add(SearchOrder.APPROVAL_DATE);
-			columns.add(SearchOrder.EMBARGO_TYPE);
+			columns.add(SearchOrder.DOCUMENT_TITLE);
+			columns.add(SearchOrder.PRIMARY_DOCUMENT);
+			//columns.add(SearchOrder.DEPARTMENT);
+			//columns.add(SearchOrder.PROGRAM);
+			//columns.add(SearchOrder.COLLEGE);
 		}
 		
 		return columns;
