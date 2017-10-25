@@ -506,8 +506,8 @@ public class FilterTabTest extends AbstractVireoFunctionalTest {
 			Response response = null;
 			
 			// To save test run time instead of searching all possible search orders, we'll just check one.
-			//for(SearchOrder order : SearchOrder.values()) {
-				SearchOrder order = SearchOrder.ID;
+			//for(SearchOrder order : SearchOrder.enabledValues()) {
+				SearchOrder order = SearchOrder.STATE;
 			
 			
 				// Test each column as ascending and decending
@@ -551,9 +551,7 @@ public class FilterTabTest extends AbstractVireoFunctionalTest {
 			
 			assertContentMatch("customize-search-form",response);
 			// The default tables shared between list and log tabs.
-			assertContentMatch("<li id=\"column_"+SearchOrder.ID.getId()+"\" class=\"originally-shown\"", response);
 			assertContentMatch("<li id=\"column_"+SearchOrder.STATE.getId()+"\" class=\"originally-shown\"", response);
-			assertContentMatch("<li id=\"column_"+SearchOrder.ASSIGNEE.getId()+"\" class=\"originally-shown\"", response);
 			
 			// The default results per page.
 			assertContentMatch("<option selected=\"true\" value=\"100\">100</option>",response);
@@ -568,13 +566,11 @@ public class FilterTabTest extends AbstractVireoFunctionalTest {
 			POST(CUSTOMIZE_URL,params);
 			
 			response = GET(FILTER_URL);
-			
-			assertContentMatch("<li id=\"column_"+SearchOrder.ID.getId()+"\" class=\"originally-shown\"", response);
+
 			assertContentMatch("<li id=\"column_"+SearchOrder.DOCUMENT_TITLE.getId()+"\" class=\"originally-shown\"", response);
 			assertContentMatch("<li id=\"column_"+SearchOrder.STATE.getId()+"\" class=\"originally-shown\"", response);
 			
 			assertContentMatch("<li id=\"column_"+SearchOrder.ASSIGNEE.getId()+"\" class=\"originally-hidden\"", response);
-			assertContentMatch("<li id=\"column_"+SearchOrder.LAST_EVENT_ENTRY.getId()+"\" class=\"originally-hidden\"", response);
 			assertContentMatch("<li id=\"column_"+SearchOrder.LAST_EVENT_TIME.getId()+"\" class=\"originally-hidden\"", response);
 	
 			assertContentMatch("<option selected=\"true\" value=\"20\">20</option>",response);
