@@ -320,11 +320,11 @@ public class DocumentInfo extends AbstractSubmitStep {
 		renderArgs.put("docLanguages", languages);
 		
 		// Figure out how mayn committee spots to show.
-		int committeeSlots = 4;
-		if (committee.size() > 3)
+		int committeeSlots = 1;
+		if (committee.size() > 1)
 			committeeSlots = committee.size();
 		if (params.get("submit_add") != null)
-			committeeSlots += 4;
+			committeeSlots += 1;
 		
 		List<String> stickies = new ArrayList<String>();
 		String stickiesRaw = settingRepo.getConfigValue(SUBMIT_DOCUMENT_INFO_STICKIES);
