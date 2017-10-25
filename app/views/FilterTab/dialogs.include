@@ -320,7 +320,7 @@ jQuery(document).ready(function() {
                 <div class="span3">
                     <h4>Disabled Columns</h4>
                     <ul id="hiddenColumns" class="columnsSortable">
-                        #{list items:org.tdl.vireo.search.SearchOrder.values(), as:'column'}
+                        #{list items:org.tdl.vireo.search.SearchOrder.enabledValues(), as:'column'}
                         #{if !columns.contains(column) }
                         <li id="column_${column.getId()}" class="originally-hidden">&{nav.toUpperCase()+'_COLUMN_'+column.name()}</li>
                         #{/if}
