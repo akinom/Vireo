@@ -34,8 +34,8 @@ if ($?prompt) then                      # if this is an interactive shell
     alias gitbrlog git log --merges
     alias gitnffmerge   git merge --no-ff
 
-    alias cwdcmd  'set prompt = "%{\033]0;${HOST}:%n %~\007%}%B%n:vireo-dev: `gitinfo` %c1%#%b "'
-    set prompt = "%{\033]0;${HOST}:%n %~\007%}%n:vireo-dev:%B`gitinfo` %c1%#%b "
+    alias cwdcmd  'set prompt = "%{\033]0;${HOST}:%n %~\007%}%n `gitinfo` %c1%# %BA%b> "'
+    set prompt = "%{\033]0;${HOST}:%n %~\007%}%n `gitinfo` %c1%# %BA%b> " 
 
 endif
 
