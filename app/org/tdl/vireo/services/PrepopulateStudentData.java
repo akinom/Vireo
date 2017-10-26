@@ -17,13 +17,14 @@ public class PrepopulateStudentData {
 
     static final int FIRST_NAME = 0;
     static final int LAST_NAME = 1;
-    static final int NETID = 2;
-    static final int ADV_FIRST_NAME = 3;
-    static final int ADV_LAST_NAME = 4;
-    static final int ADV_MIDDLE_NAME = 5;
-    static final int UID = 6;
-    static final int DEPARTMENT = 7;
-    static final int DEPT_CODE = 8;
+    static final int MIDDLE_NAME = 2;
+    static final int NETID = 3;
+    static final int UID = 4;
+    static final int DEPARTMENT = 5;
+    static final int DEPT_CODE = 6;
+    static final int ADV_FIRST_NAME = 7;
+    static final int ADV_LAST_NAME = 8;
+
     static final int NCOLUMNS = 9;
 
     String[] colHeaderName = new String[NCOLUMNS];
@@ -65,6 +66,10 @@ public class PrepopulateStudentData {
         colHeaderName[LAST_NAME] = colheader;
     }
 
+    public void setMiddleName(String colheader) {
+        colHeaderName[MIDDLE_NAME] = colheader;
+    }
+
     public void setNetid(String netidColHeader) {
         colHeaderName[NETID] = netidColHeader;
     }
@@ -87,10 +92,6 @@ public class PrepopulateStudentData {
 
     public void setAdvisorLastName(String colheader) {
         colHeaderName[ADV_LAST_NAME] = colheader;
-    }
-
-    public void setAdvisorMiddleName(String colheader) {
-        colHeaderName[ADV_MIDDLE_NAME] = colheader;
     }
 
     public void setAdvisorNetid(String colheader) {   /*noop */
@@ -222,10 +223,6 @@ public class PrepopulateStudentData {
                     record[i] = null;
                 }
             }
-            // TODO fix up middle name to be just the initial
-            if (null != record[ADV_MIDDLE_NAME] && record[ADV_MIDDLE_NAME].length() > 1) {
-                record[ADV_MIDDLE_NAME] =  record[ADV_MIDDLE_NAME].substring(0, 1);
-            }
             email = toStr(record[NETID]) + populator.emailAddOn;
         }
 
@@ -257,6 +254,7 @@ public class PrepopulateStudentData {
             }
 
             Person p = personRepo.createPerson(record[NETID], email, record[FIRST_NAME], record[LAST_NAME], RoleType.STUDENT);
+            p.setMiddleName(record[MIDDLE_NAME]);
             p.setCurrentDepartment(dept);
             p.setInstitutionalIdentifier(record[UID]);
             p.save();
@@ -275,7 +273,7 @@ public class PrepopulateStudentData {
             s.setDocumentTitle(defaultTitle);
             s.setDocumentLanguage(defaultLanguage);
             if (!empty(record[ADV_FIRST_NAME]) && !empty(record[ADV_LAST_NAME])) {
-                s.addCommitteeMember(record[ADV_FIRST_NAME], record[ADV_LAST_NAME], record[ADV_MIDDLE_NAME]);
+                s.addCommitteeMember(record[ADV_FIRST_NAME], record[ADV_LAST_NAME], "");
             }
             s.setCollege(college);
             s.save();

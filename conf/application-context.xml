@@ -129,23 +129,26 @@
   </bean>
 
   <bean id="PrepopulateStudentData" class="org.tdl.vireo.services.PrepopulateStudentData" scope="singleton">
-    <property name = "firstName" value = "Preferred Else Primary First Name"/>
-    <property name = "lastName" value = "Preferred Else Primary Last Name"/>
+    <property name = "firstName" value = "Student First"/>
+    <property name = "lastName" value = "Student Last"/>
+    <property name = "middleName" value = "Student Middle Initial"/>
     <property name = "netid" value = "Net ID"/>
-    <property name = "emailAddOn" value = "@gmail.com"/>
-    <property name = "department" value = "Department Name"/>
-    <property name = "departmentCode" value = "Dept"/>
+    <property name = "department" value = "Dept"/>
+    <property name = "departmentCode" value = "Dept Code"/>
     <property name = "uid" value="Emplid" />
-    <property name = "advisorLastName" value="Thesis Adviser 1 Last Name" />
-    <property name = "advisorFirstName" value="Thesis Adviser 1 First Name" />
-    <property name = "advisorMiddleName" value="Thesis Adviser 2" />
+    <property name = "advisorLastName" value="Adviser 1 Last Name" />
+    <property name = "advisorFirstName" value="Adviser 1 First Name" />
     <property name = "advisorNetid" value="Thesis Adviser 1 NETID" />
-    <property name = "fileName" value = "conf/prepopulate/Student-Data.tsv"/>
+
+    <property name = "emailAddOn" value = "@gmail.com"/>
     <property name = "college" value = "Home Department Thesis"/>
-    <property name = "defaultTitle" value = "---"/>
+    <property name = "defaultTitle" value = "n/a"/>
     <property name = "defaultLanguage" value = "en"/>
     <!-- TODO - remove password setting in production -->
     <property name = "password" value="test" />
+
+    <property name = "fileName" value = "conf/prepopulate/Student-Data.tsv"/>
+
     <property name="securityContext" ref="SecurityContext" />
     <property name="settingsRepository" ref="SettingsRepository" />
   </bean>
