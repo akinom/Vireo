@@ -71,7 +71,43 @@ mkdir bin
 # so copying from Monika's MAC 
 
 
+# --------------------
+# setup email 
+# --------------------
+# ask Chris Krantz to make sure service account that connectes to smtp.princeton.edu 
+# is enabled for the smtp service 
+# see  https://www.easy-smtp.com/smtp-sendmail
 
+yum install telnet 
+yum install  sendmail-cf 
 
+# test 
+telnet localhost 25
+# should return something like 
+# 220 YourServer.Princeton.EDU ESMTP Sendmail 8.14.4/8.12.9; Tue, 24 Oct 2017 15:10:55 -0400
 
+cd /etc/mail
+git init . 
+git add `find . -name f`
+git commit 'original files' 
 
+# back to this directory -  
+cp sendmail.authinfo /etc/mail/authinfo 
+# add lines from sendmail.mc.lines   to /etc/mail/sendmail.mc 
+# add before MAIL(smtp)dnl  directive 
+
+cd /etc/mail 
+chmod 600 /etc/mail/authinfo
+makemap hash /etc/mail/authinfo < /etc/mail/authinfo
+newaliases
+make -C /etc/mail
+/etc/init.d/sendmail restart
+# test 
+sendmail -Am -v -t
+To: monikam@princeton.edu
+From: noreply@princeton.edu
+Subject: An Easy SMTP test
+testing testing 
+.
+
+# commit changes if success 
