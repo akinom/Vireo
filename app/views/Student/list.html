@@ -89,8 +89,8 @@ function startNewSub() {
 	</h4></caption>
 	<thead>
 		<tr class="sub-heading">
-			<th>Title</th>
-			<th>Manuscript</th>
+            <th>Author</th>
+            <th>Title</th>
 			<th>Date Submitted</th>
 			<th>&nbsp;</th>
 		</tr>
@@ -98,12 +98,8 @@ function startNewSub() {
 		<tbody>
         #{list items:submissions, as:"sub"}
 	        <tr${ (sub.getState().isInProgress() || sub.getState().isEditableByStudent()) ? " class='sub-inprogress'" : ""}>
-	            <td>${sub.getDocumentTitle()}</td>
-				<td>${sub.getPrimaryDocument() == null ? "none" : sub.getPrimaryDocument().getName()}
-				#{if sub.getPrimaryDocument() != null}
-				    <a href="@{Student.viewAttachment(sub.getId(),sub.getPrimaryDocument().getId(),sub.getPrimaryDocument().getName())}">[view]</a>
-				#{/if}
-				</td>
+                <td>${sub.getStudentLastName()}, ${sub.getStudentFirstName()}</td>
+                <td>${sub.getDocumentTitle()}</td>
 				<td>${sub.getSubmissionDate() == null ? "n/a" : sub.getSubmissionDate().format('dd MMMM yyyy')}</td>
 				<td>
 					#{if !subStatus.getSubmissionsOpen() && sub.getState().isInProgress() }
