@@ -1,0 +1,38 @@
+Dept Code	Net ID	Emplid	Student Last	Student First	Student Middle Initial	Class Year	Dept	CERT 1	Thesis Adviser 1 	Adviser 1 Last Name	Adviser 1 First Name	Thesis Adviser 1 NETID
+DEPT	thesiscentralpu+mabbas	920191498	Abbas	Maham	 	2018	Molecular Biology					
+DEPT	thesiscentralpu+jabbate	961069491	Abbate	Joe	 	2018	Physics	Engineering Physics				
+DEPT	thesiscentralpu+oaboaba	960800873	Aboaba	Tobi	 	2018	Chemical and Biological Engr		"Benziger,Jay Burton"	Benziger	Jay	benziger
+DEPT	thesiscentralpu+mabousy	960981997	Abousy	Mya	 	2018	Spanish and Portuguese	Global Health & Health Policy				
+DEPT	thesiscentralpu+miromida	960877826	Abrishamchian	Omid	 	2018	Ops Research & Financial Engr	Finance				
+DEPT	thesiscentralpu+rabrol	960982047	Abrol	Reva	 	2018	Politics	History &Practice of Diplomacy	"Kapstein,Ethan B."	Kapstein	Ethan	kapstein
+DEPT	thesiscentralpu+eda3	960954043	Achterkirch	Emily	D	2018	Mechanical & Aerospace Engr					
+DEPT	thesiscentralpu+aaddison	960830345	Addison	Austin	A	2018	Politics		"Davis,Christina"	Davis	Christina	cldavis
+DEPT	thesiscentralpu+anaddo	961078011	Addo	Amy	N	2018	English	Humanistic Studies				
+DEPT	thesiscentralpu+radjei	960980362	Adjei	Richard	K	2018	Computer Science					
+DEPT	thesiscentralpu+rjkadler	960961975	Adler	Rachel	J	2018	History	Technology and Society	"Shawcross,Teresa"	Shawcross	Teresa	cshawcro
+DEPT	thesiscentralpu+oagada	960956599	Agada	Ojima	 	2018	Civil & Environmental Engr		"Lin,Ning"	Lin	Ning	nlin
+DEPT	thesiscentralpu+nwbrady	960893897	Brady	Nick	 	2018	Electrical Engineering					
+DEPT	thesiscentralpu+alecb	960955193	Brennan	Alec	 	2018	Politics	Technology and Society	"Wasow,Omar"	Wasow	Omar	owasow
+DEPT	thesiscentralpu+sscox	961078552	Cox	Samuel	S	2018	English					
+DEPT	thesiscentralpu+icraciun	961076257	Craciun	Iustina	 	2018	Economics	Statistics & Machine Learning				
+DEPT	thesiscentralpu+cferri	961012797	Ferri	Chris	 	2018	Computer Science	Statistics & Machine Learning				
+DEPT	thesiscentralpu+fiechter	960955548	Fiechter	Olivia	H	2018	Anthropology					
+DEPT	thesiscentralpu+jhamel	960860819	Hamel	Jacob	G	2018	Woodrow Wilson School	Urban Studies				
+DEPT	thesiscentralpu+ryanh	961061111	Hammarskjold	Ryan	P	2018	Computer Science	Statistics & Machine Learning	"Fellbaum,Christiane Dorothea"	Fellbaum	Christiane	fellbaum
+DEPT	thesiscentralpu+kaj3	960859584	Johnson	Kristen	A	2018	Near Eastern Studies					
+DEPT	thesiscentralpu+cj10	960948176	Jones	Caroline	D	2018	Woodrow Wilson School	Latin Amer Studies				
+DEPT	thesiscentralpu+lanchang	960856777	Lanchang	Brandon	L	2018	Computer Science					
+DEPT	thesiscentralpu+bhlange	960956477	Lange	Blakeley	H	2018	Economics	Finance				
+DEPT	thesiscentralpu+lmarrone	960822771	Marrone	Lindsay	 	2018	History		"Hartog,Hendrik Arnold"	Hartog	Hendrik	hartog
+DEPT	thesiscentralpu+cfm3	960961029	Marsh	Clayton	F	2018	Politics		"Ikenberry,G. John"	Ikenberry	G.	gji3
+DEPT	thesiscentralpu+lfn	960922151	Novak	Lukas	F	2018	Philosophy					
+DEPT	thesiscentralpu+julieen	960961598	Novick-Lederer	Julie	E	2018	Computer Science	Linguistics				
+DEPT	thesiscentralpu+pristo	960956386	Pristo	Ryan	J	2018	Anthropology					
+DEPT	thesiscentralpu+dqi	960808130	Qi	Di	 	2018	Computer Science	Statistics & Machine Learning	"Singer,Yoram"	Singer	Yoram	ysinger
+DEPT	thesiscentralpu+rschnell	960962712	Schnell	Rebecca	L	2018	English	Creative Writing				
+DEPT	thesiscentralpu+tristans	960773864	Schrader	Tristan	 	2018	Astrophysical Sciences	Materials Sci & Engineering	"Bahcall,Neta A."	Bahcall	Neta	neta
+DEPT	thesiscentralpu+kjsun	960961776	Sun	Kevin	J	2018	Ops Research & Financial Engr	Finance				
+DEPT	thesiscentralpu+els3	960955161	Swartwout	Erica	L	2018	Ecology & Evolutionary Biology					
+DEPT	thesiscentralpu+elsaw	960953674	Welshofer	Elsa	C	2018	History	European Cult Studies	"Weiss,Max David"	Weiss	Max	maxweiss
+DEPT	thesiscentralpu+rweng	961038943	Weng	Rebecca	C	2018	Sociology	Technology and Society				
+DEPT	thesiscentralpu+tw5	960832072	Weng	Thomas	 	2018	Ops Research & Financial Engr					
