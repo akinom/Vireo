@@ -90,8 +90,12 @@ public class Student extends AbstractVireoController {
 		List<Submission> submissions = subRepo.findSubmission(context.getPerson());
 		
 		SubmissionStatus subStatus = new SubmissionStatus();
-		
-		renderTemplate("Student/list.html",submissions, subStatus);
+
+		// Get the instructions for the Manage Submissions page
+		String instructions = settingRepo.getConfigValue(AppConfig.STUDENT_SUBMISSION_LIST_INSTRUCTIONS);
+		instructions = text2html(instructions);
+
+		renderTemplate("Student/list.html",submissions, subStatus, instructions);
 	}
 	
 	/**
