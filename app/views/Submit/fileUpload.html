@@ -53,10 +53,17 @@
 		
 		#{ifEnabled [SUPPLEMENTAL_ATTACHMENT,SOURCE_ATTACHMENT,ADMINISTRATIVE_ATTACHMENT]}
 		<fieldset id="additionalFileUpload">
-			<legend>Upload Additional Files</legend>            
-			<div class="control-group #{errorClass 'additionalDocument' /} #{fieldClass SUPPLEMENTAL_ATTACHMENT /} #{fieldClass SOURCE_ATTACHMENT /} #{fieldClass ADMINISTRATIVE_ATTACHMENT /}">
-			#{ifEnabled SUPPLEMENTAL_ATTACHMENT}
-            <label class="control-label #{fieldClass SUPPLEMENTAL_ATTACHMENT /}"><span class="required-star">*</span> #{fieldLabel SUPPLEMENTAL_ATTACHMENT /}:</label>
+			<legend>Upload Additional Files</legend>
+
+			<div class="control-group #{errorClass 'additionalDocument' /}
+                    #{fieldClass SUPPLEMENTAL_ATTACHMENT /} #{fieldClass SOURCE_ATTACHMENT /} #{fieldClass ADMINISTRATIVE_ATTACHMENT /}">
+
+<div class="hidden">
+            #{ifEnabled SUPPLEMENTAL_ATTACHMENT}
+            <label class="control-label #{fieldClass SUPPLEMENTAL_ATTACHMENT /}">
+                <span class="required-star">*</span>
+                #{fieldLabel SUPPLEMENTAL_ATTACHMENT /}:
+            </label>
             <div class="controls"><p>#{fieldHelp SUPPLEMENTAL_ATTACHMENT /}</p></div>
             #{/ifEnabled}
             #{ifEnabled SOURCE_ATTACHMENT}
@@ -67,12 +74,13 @@
             <label class="control-label #{fieldClass ADMINISTRATIVE_ATTACHMENT /}"><span class="required-star">*</span> #{fieldLabel ADMINISTRATIVE_ATTACHMENT /}:</label>
             <div class="controls"><p>#{fieldHelp ADMINISTRATIVE_ATTACHMENT /}</p></div>
             #{/ifEnabled}
+
 				<label class="control-label" for="documentType"><span class="required-star">*</span>Document Type:</label>
 					<div class="controls">
 						<select id="documentType" class="input-select" name="attachmentType" style="margin-bottom:7px;">
                     	<option value="">choose type...</option>
                     	#{ifEnabled SUPPLEMENTAL_ATTACHMENT}
-                    	<option value="SUPPLEMENTAL">#{fieldLabel SUPPLEMENTAL_ATTACHMENT /}</option>
+                    	<option value="SUPPLEMENTAL" selected="true">#{fieldLabel SUPPLEMENTAL_ATTACHMENT /}</option>
                     	#{/ifEnabled}
                     	#{ifEnabled SOURCE_ATTACHMENT}
                     	<option value="SOURCE">#{fieldLabel SOURCE_ATTACHMENT /}</option>
@@ -82,6 +90,8 @@
                     	#{/ifEnabled}
                     </select>
                 </div>
+</div>
+
                 <label class="control-label" for="additionalFile"><span class="required-star">*</span>Browse for Additional Document:</label>
                 <div class="controls">
                     <input type="file" id="additionalFile" class="input-file" name="additionalDocument"><br/>
