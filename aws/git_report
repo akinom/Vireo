@@ -1,0 +1,8 @@
+#!/bin/tcsh -f
+git diff --stat --no-color 
+
+echo ""
+echo "--------------------------"
+echo ""
+
+git log --abbrev-commit '--pretty=%h %cn %s' --graph --author Mevenkamp --no-color 
