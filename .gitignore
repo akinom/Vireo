@@ -26,6 +26,8 @@ sql/
 helper/
 play
 
+*.pyc 
+
 # Ignore dynamic plugins
 conf/db-1.1.1
 conf/qunit-1.0
