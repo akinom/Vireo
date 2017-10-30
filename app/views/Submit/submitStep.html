@@ -2,12 +2,9 @@
 
 <div class="row">
 
-    #{if SUBMISSIONS_OPEN}
-    	<p class="center red large">Currently accepting submissions for the ${CURRENT_SEMESTER} semester.</p>
-    #{/if}
-    #{else}
+    #{if ! SUBMISSIONS_OPEN}
         <p class="alert alert-error">Submissions are currently closed; please contact your thesis office for more information.</p>
-    #{/else}
+    #{/if}
     
     <ul id="submitSteps" class="unstyled span11">
 		<li id="step1Btn" ${"personalInfo".equals(request.actionMethod) ? "class='current'" : ""}>
