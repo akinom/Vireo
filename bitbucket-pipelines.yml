@@ -5,4 +5,5 @@ pipelines:
     custom: # Pipelines that are triggered manually
         deploy_B:
             - step:
-                script: ssh ec2-user@ec2-34-235-93-123.compute-1.amazonaws.com bin/bitbucket.sh $BITBUCKET_COMMIT
+                script: 
+                  - ssh ec2-user@ec2-34-235-93-123.compute-1.amazonaws.com bin/bitbucket.sh $BITBUCKET_COMMIT
