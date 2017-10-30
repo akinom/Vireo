@@ -3,7 +3,7 @@
 
 <br />
 <div class="row pageHead">
-	<h3 class="span11">License Agreement</h3> 
+	<h3 class="span11">Honor Code</h3>
 </div>
 <br />
 
@@ -22,16 +22,12 @@
 		<input type="hidden" name="step" value="license"/>
 		
 		#{ifEnabled LICENSE_AGREEMENT}
-		<h4>#{fieldLabel LICENSE_AGREEMENT /}</h4>
-		
 		#{ifRequired LICENSE_AGREEMENT }
 		<div class="row">
-			<p class="span">You must agree to the non-exclusive license below in order to continue:</p>
+			<p class="span">You must agree to the honor cofe statement below in order to continue:</p>
 		</div>
 		#{/ifRequired}
-		
-		<div class="well">#{verbatim}${licenseText}#{/verbatim}</div>
-		
+
 		<div class="row center">
 			<div style="margin:0 0 10px;">
 				<label id="lalabel" class="checkbox #{if errors.forKey('licenseAgreement')}red#{/if}">
