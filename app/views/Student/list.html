@@ -79,13 +79,11 @@ function startNewSub() {
 
 
 <p class="row">
-#{if subStatus.getSubmissionsOpen()}
-    <p class="red">Currently accepting submissions for the ${subStatus.getCurrentSemester()} semester.</p>
-#{/if}
-#{else}
+#{if ! subStatus.getSubmissionsOpen()}
     <p class="alert alert-error">The system is currently closed for new submissions; please contact your thesis office for more information.</p>
-#{/else}
-</p>
+	</p>
+#{/if}
+
 
 <p class="row">
 #{verbatim}${ instructions }#{/verbatim}
