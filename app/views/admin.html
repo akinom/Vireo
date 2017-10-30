@@ -15,7 +15,7 @@
         #{get 'moreScripts' /}                   
     </head>
     <body>
-    	<div id="mainContainer" class="container-fluid">
+    	<div id="mainContainer" class="container-fluid ${currentUser ? currentUser.getRole() : "ANONYMOUS"}">
 	    	<div id="header">	    		
 	    		<span id="logo">&nbsp;</span>
 	    		
