@@ -30,7 +30,7 @@ Plus all the FieldConfig objects
 #{/ifEnabled}
 
 #{ifEnabled [STUDENT_FIRST_NAME,STUDENT_MIDDLE_NAME,STUDENT_EMAIL,STUDENT_ORCID,STUDENT_BIRTH_YEAR,DEPARTMENT]}
-<legend>About You</legend>
+<legend>Student Information</legend>
 #{ifEnabled [STUDENT_FIRST_NAME,STUDENT_MIDDLE_NAME]}
 <div class="control-group #{errorClass 'firstName' /} #{errorClass 'lastName' /} #{errorClass 'middleName' /} #{errorClass 'birthYear' /} ">
     <label class="control-label ">Name:</label>
@@ -159,7 +159,7 @@ Plus all the FieldConfig objects
 #{/ifEnabled}
 
 #{ifEnabled [DOCUMENT_TITLE,PROGRAM,GRADUATION_DATE,DEFENSE_DATE,DOCUMENT_TYPE,DOCUMENT_ABSTRACT,DOCUMENT_KEYWORDS,DOCUMENT_SUBJECTS,DOCUMENT_LANGUAGE,COMMITTEE,COMMITTEE_CONTACT_EMAIL,EMBARGO_TYPE,UMI_RELEASE]}
-<legend>Document Information</legend>
+<legend>Senior Thesis Information</legend>
 
 #{ifEnabled DOCUMENT_TITLE}
 <div class="control-group #{errorClass 'title' /} ">
