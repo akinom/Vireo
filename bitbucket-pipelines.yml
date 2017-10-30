@@ -1,0 +1,16 @@
+# bitbucket pipelines for  manually deploying code 
+image: python:3.5.1
+
+pipelines:
+  default:
+    - step:
+        caches:
+          - pip
+        script: # Modify the commands below to build your repository.
+          - pip install -r requirements.txt
+    - step:
+        name: Deploy B
+        type: manual 
+        script: 
+          -  ssh ec2-user@ec2-34-235-93-123.compute-1.amazonaws.com bin/bitbucket.sh $BITBUCKET_COMMIT
+
