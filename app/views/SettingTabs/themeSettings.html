@@ -173,6 +173,37 @@ jQuery(document).ready(function(){
     <p class="info">These instructions are show on the front page of Vireo to all users. The following HTML tags are allowed: h1 - h5, p, a, b, i, u, ol, li, img. New lines are converted to paragraphs automatically.</p>
 </div>
 
+<h2>STUDENT SUBMISSION STEPS</h2>
+
+<h3> PERSONAL INFO STEP </h3>
+<div class="wrap theme-protected">
+    <p class="lock-control"><a href="#${org.tdl.vireo.constant.AppConfig.STUDENT_SUBMISSION_PERSONAL_INFO_STEP}"><em class="icon-lock"></em> This field is locked to prevent accidental editing, click to unlock.</a></p>
+    <textarea class="input-xxlarge theme-textarea" id="${org.tdl.vireo.constant.AppConfig.STUDENT_SUBMISSION_PERSONAL_INFO_STEP}" name="${org.tdl.vireo.constant.AppConfig.STUDENT_SUBMISSION_PERSONAL_INFO_STEP}" readonly="true">#{verbatim}${STUDENT_SUBMISSION_PERSONAL_INFO_STEP}#{/verbatim}</textarea>
+</div>
+
+<h3> LICENSE INFO STEP </h3>
+<div class="wrap theme-protected">
+    <p class="lock-control"><a href="#${org.tdl.vireo.constant.AppConfig.STUDENT_SUBMISSION_LICENSE_STEP}"><em class="icon-lock"></em> This field is locked to prevent accidental editing, click to unlock.</a></p>
+    <textarea class="input-xxlarge theme-textarea" id="${org.tdl.vireo.constant.AppConfig.STUDENT_SUBMISSION_LICENSE_STEP}" name="${org.tdl.vireo.constant.AppConfig.STUDENT_SUBMISSION_LICENSE_STEP}" readonly="true">#{verbatim}${STUDENT_SUBMISSION_LICENSE_STEP}#{/verbatim}</textarea>
+</div>
+
+<h3> DOCUMENT INFO STEP </h3>
+<div class="wrap theme-protected">
+    <p class="lock-control"><a href="#${org.tdl.vireo.constant.AppConfig.STUDENT_SUBMISSION_DOCUMENT_STEP}"><em class="icon-lock"></em> This field is locked to prevent accidental editing, click to unlock.</a></p>
+    <textarea class="input-xxlarge theme-textarea" id="${org.tdl.vireo.constant.AppConfig.STUDENT_SUBMISSION_DOCUMENT_STEP}" name="${org.tdl.vireo.constant.AppConfig.STUDENT_SUBMISSION_DOCUMENT_STEP}" readonly="true">#{verbatim}${STUDENT_SUBMISSION_DOCUMENT_STEP}#{/verbatim}</textarea>
+</div>
+
+<h3> UPLOAD FILES STEP </h3>
+<div class="wrap theme-protected">
+    <p class="lock-control"><a href="#${org.tdl.vireo.constant.AppConfig.STUDENT_SUBMISSION_UPLOAD_STEP}"><em class="icon-lock"></em> This field is locked to prevent accidental editing, click to unlock.</a></p>
+    <textarea class="input-xxlarge theme-textarea" id="${org.tdl.vireo.constant.AppConfig.STUDENT_SUBMISSION_UPLOAD_STEP}" name="${org.tdl.vireo.constant.AppConfig.STUDENT_SUBMISSION_UPLOAD_STEP}" readonly="true">#{verbatim}${STUDENT_SUBMISSION_UPLOAD_STEP}#{/verbatim}</textarea>
+</div>
+
+<h3> CONFIRM AND SUBMIT STEP </h3>
+<div class="wrap theme-protected">
+    <p class="lock-control"><a href="#${org.tdl.vireo.constant.AppConfig.STUDENT_SUBMISSION_CONFIRM_STEP}"><em class="icon-lock"></em> This field is locked to prevent accidental editing, click to unlock.</a></p>
+    <textarea class="input-xxlarge theme-textarea" id="${org.tdl.vireo.constant.AppConfig.STUDENT_SUBMISSION_CONFIRM_STEP}" name="${org.tdl.vireo.constant.AppConfig.STUDENT_SUBMISSION_CONFIRM_STEP}" readonly="true">#{verbatim}${STUDENT_SUBMISSION_CONFIRM_STEP}#{/verbatim}</textarea>
+</div>
 
 <h2>POST CORRECTION INSTRUCTIONS</h2>
 

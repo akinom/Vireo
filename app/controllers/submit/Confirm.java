@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Random;
 
 import org.apache.commons.codec.binary.Base64;
+import org.tdl.vireo.constant.AppConfig;
 import org.tdl.vireo.model.ActionLog;
 import org.tdl.vireo.model.Attachment;
 import org.tdl.vireo.model.AttachmentType;
@@ -115,9 +116,12 @@ public class Confirm extends AbstractSubmitStep {
 		List<Attachment> additionalDocuments = sub.getAttachmentsByType(AttachmentType.SUPPLEMENTAL,AttachmentType.SOURCE,AttachmentType.ADMINISTRATIVE);
 		String grantor = settingRepo.getConfigValue(GRANTOR,"Unknown Institution");
 
+		// Get the instructions for display
+		String instructions = settingRepo.getConfigValue(AppConfig.STUDENT_SUBMISSION_CONFIRM_STEP);
+		instructions = text2html(instructions);
 		boolean showEditLinks = true;
 
-		renderTemplate("Submit/confirm.html",subId, sub, grantor, showEditLinks, submitter, logs, 
+		renderTemplate("Submit/confirm.html",subId, sub, grantor, showEditLinks, submitter, logs, instructions,
 				primaryDocument,
 				additionalDocuments);		
 	}

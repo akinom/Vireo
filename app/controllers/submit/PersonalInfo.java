@@ -413,8 +413,10 @@ public class PersonalInfo extends AbstractSubmitStep {
 			}
 		}
 
-		renderTemplate("Submit/personalInfo.html",submitter, subId, disabledFields, stickies, disabledDegMaj,
-
+		// Get the instructions for display
+		String instructions = settingRepo.getConfigValue(AppConfig.STUDENT_SUBMISSION_PERSONAL_INFO_STEP);
+		instructions = text2html(instructions);
+		renderTemplate("Submit/personalInfo.html",submitter, subId, instructions, disabledFields, stickies, disabledDegMaj,
 				// Form data
 				firstName, middleName, lastName, orcid, birthYear, grantor, program, college, department, 
 				degree, major, permPhone, permAddress, permEmail, currentPhone, currentAddress

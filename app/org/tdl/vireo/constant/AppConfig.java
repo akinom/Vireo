@@ -88,7 +88,14 @@ public class AppConfig {
 
 	/** Instructions to show on students submission list/manage view */
 	public final static String STUDENT_SUBMISSION_LIST_INSTRUCTIONS = "student_submission_list";
-	
+
+	/** Instructions to show on students submission steps */
+	public final static String STUDENT_SUBMISSION_PERSONAL_INFO_STEP = "student_submission_personal_info_step";
+	public final static String STUDENT_SUBMISSION_LICENSE_STEP = "student_submission_lisense_Step";
+	public final static String STUDENT_SUBMISSION_DOCUMENT_STEP = "student_submission_document_step";
+	public final static String STUDENT_SUBMISSION_UPLOAD_STEP = "student_submission_upload_step";
+	public final static String STUDENT_SUBMISSION_CONFIRM_STEP = "student_submission_confirm_step";
+
 	//ORCID settings
 	/** Whether or not to validate ORCID IDs when changed */
 	public final static String ORCID_VALIDATION = "orcid_validation";
