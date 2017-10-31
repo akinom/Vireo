@@ -73,7 +73,7 @@
         </style>
     </head>
     <body>
-    	<div class="container">
+    	<div class="container ${currentUser ? currentUser.getRole() : "ANONYMOUS"}">
 	    	<div id="header">	    
 			<a id="left-logo" href="@{Application.index}">
 				#{if new java.io.File(controllers.settings.ThemeSettingsTab.LEFT_LOGO_PATH).exists()}<img alt="Home" src="@{Application.index()}theme/left-logo" />#{/if}

@@ -180,7 +180,7 @@ function abandonSub(){
 
 	#{ifEnabled [STUDENT_FIRST_NAME,STUDENT_MIDDLE_NAME,STUDENT_LAST_NAME,STUDENT_ORCID,STUDENT_EMAIL,STUDENT_BIRTH_YEAR,DEPARTMENT] }
     <fieldset>
-        <legend>Personal Information</legend>
+        <legend>Student Information</legend>
         #{ifEnabled STUDENT_FIRST_NAME }
         <div class="control-group #{errorClass 'firstName'/} #{fieldClass STUDENT_FIRST_NAME /}">
             <label class="control-label" for="firstName"><span class="required-star">*</span> #{fieldLabel STUDENT_FIRST_NAME /}:</label>
@@ -288,7 +288,7 @@ function abandonSub(){
 	
 	#{ifEnabled [GRANTOR,COLLEGE,MAJOR] }
 	<fieldset>
-		<legend>Affiliation</legend>
+		<legend>Senior Thesis Type</legend>
 		#{ifEnabled GRANTOR }
 		<div class="control-group #{errorClass 'grantor' /} #{fieldClass GRANTOR /}">
 			<label class="control-label" for="school"><span class="required-star">*</span> #{fieldLabel GRANTOR /}</b>:</label>

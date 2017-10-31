@@ -120,13 +120,13 @@ jQuery(document).ready(function(){
 
 <br />
 <div class="row pageHead">
-	<h3 class="span11">Document Information </h3>
+	<h3 class="span11">Senior Thesis Information</h3>
 </div>
 <br />
 <div id="stickyNotes" class="span3">
      #{list items:stickies, as:'sticky'}
        <div class="sticky-top"></div>
-       <div class="sticky-bottom">#{verbatim}${sticky}#{/verbatim}</div>
+       <div class="sticky-bottom">${sticky}</div>
     #{/list}
 </div>
 <div class="row">
@@ -147,7 +147,7 @@ jQuery(document).ready(function(){
 
 	#{ifEnabled [DOCUMENT_TITLE,GRADUATION_DATE,DEFENSE_DATE,DOCUMENT_TYPE,DOCUMENT_ABSTRACT,DOCUMENT_KEYWORDS,DOCUMENT_SUBJECTS,DOCUMENT_LANGUAGE]}
 	<fieldset class="form-horizontal">
-		<legend>Document Information</legend>
+		<legend>Senior Thesis Information</legend>
 		#{ifEnabled DOCUMENT_TITLE}
 		<div class="control-group #{errorClass 'title' /} #{fieldClass DOCUMENT_TITLE /}">
 			<label class="control-label" for="title"><span class="required-star">*</span> #{fieldLabel DOCUMENT_TITLE /}:</label>
@@ -290,10 +290,9 @@ jQuery(document).ready(function(){
 	#{/ifEnabled}
 
 	#{ifEnabled PROGRAM}
-        <legend>#{fieldLabel PROGRAM /}</legend>
-
+        <!-- TODO fix alignment -->
         <div class="control-group #{errorClass 'docLanguage'/} #{fieldClass PROGRAM /}">
-            <label class="control-label" for="program"><span class="required-star">*</span> #{fieldLabel PROGRAM /}:</label>
+            <label class="control-label" for="program"><span class="required-star">*</span> #{fieldLabel PROGRAM /} (if applicable):</label>
             <div class="controls">
 				#{ifRequired PROGRAM}
 					#{if settingRepo.findAllPrograms().size() > 0 }
