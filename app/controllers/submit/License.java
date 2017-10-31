@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import org.tdl.vireo.constant.AppConfig;
 import org.tdl.vireo.model.Attachment;
 import org.tdl.vireo.model.AttachmentType;
 import org.tdl.vireo.model.Configuration;
@@ -94,7 +95,10 @@ public class License extends AbstractSubmitStep {
 		licenseText = text2html(licenseText);
 		proquestText = text2html(proquestText);
 
-		renderTemplate("Submit/license.html",subId,licenseText,licenseAgreement,proquestText,proquestAgreement);
+		// Get the instructions for display
+		String instructions = settingRepo.getConfigValue(AppConfig.STUDENT_SUBMISSION_LICENSE_STEP);
+		instructions = text2html(instructions);
+		renderTemplate("Submit/license.html",subId,instructions, licenseText,licenseAgreement,proquestText,proquestAgreement);
 
 	}
 
