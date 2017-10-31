@@ -5,5 +5,14 @@ pipelines:
     custom: # Pipelines that are triggered manually
         deploy_B:
             - step:
-                script: 
-                  - ssh ec2-user@ec2-34-235-93-123.compute-1.amazonaws.com bin/bitbucket.sh $BITBUCKET_COMMIT
+                script:
+                  - VIREOHOME=/home/ec2-user/Vireo
+                  - ssh ec2-user@ec2-34-235-93-123.compute-1.amazonaws.com  $VIREOHOME/reset.sh $BITBUCKET_COMMIT
+                  - ssh ec2-user@ec2-34-235-93-123.compute-1.amazonaws.com  $VIREOHOME/play.sh restart
+
+        test_at_B:
+              - step:
+                  script:
+                    - VIREOHOME=/home/ec2-user/Vireo
+                    - ssh ec2-user@ec2-34-235-93-123.compute-1.amazonaws.com  $VIREOHOME/reset.sh $BITBUCKET_COMMIT
+                    - ssh ec2-user@ec2-34-235-93-123.compute-1.amazonaws.com  $VIREOHOME/play_autotest.sh restart
