@@ -24,7 +24,7 @@
 		#{ifEnabled LICENSE_AGREEMENT}
 		#{ifRequired LICENSE_AGREEMENT }
 		<div class="row">
-			<p class="span">You must agree to the honor code statement below in order to continue:</p>
+			<p class="span">#{verbatim}${instructions}#{/verbatim}</p>
 		</div>
 		#{/ifRequired}
 

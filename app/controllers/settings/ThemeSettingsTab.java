@@ -38,6 +38,11 @@ public class ThemeSettingsTab extends SettingsTab {
 		renderArgs.put("FRONT_PAGE_INSTRUCTIONS", settingRepo.getConfigValue(FRONT_PAGE_INSTRUCTIONS));
 		renderArgs.put("SUBMIT_INSTRUCTIONS", settingRepo.getConfigValue(SUBMIT_INSTRUCTIONS));
 		renderArgs.put("STUDENT_SUBMISSION_LIST_INSTRUCTIONS", settingRepo.getConfigValue(STUDENT_SUBMISSION_LIST_INSTRUCTIONS));
+		renderArgs.put("STUDENT_SUBMISSION_PERSONAL_INFO_STEP", settingRepo.getConfigValue(STUDENT_SUBMISSION_PERSONAL_INFO_STEP));
+		renderArgs.put("STUDENT_SUBMISSION_LICENSE_STEP", settingRepo.getConfigValue(STUDENT_SUBMISSION_LICENSE_STEP));
+		renderArgs.put("STUDENT_SUBMISSION_DOCUMENT_STEP", settingRepo.getConfigValue(STUDENT_SUBMISSION_DOCUMENT_STEP));
+		renderArgs.put("STUDENT_SUBMISSION_UPLOAD_STEP", settingRepo.getConfigValue(STUDENT_SUBMISSION_UPLOAD_STEP));
+		renderArgs.put("STUDENT_SUBMISSION_CONFIRM_STEP", settingRepo.getConfigValue(STUDENT_SUBMISSION_CONFIRM_STEP));
 		renderArgs.put("CORRECTION_INSTRUCTIONS", settingRepo.getConfigValue(CORRECTION_INSTRUCTIONS));
 		
 		// Colors and CSS
@@ -70,6 +75,11 @@ public class ThemeSettingsTab extends SettingsTab {
 			textFields.add(FRONT_PAGE_INSTRUCTIONS);
 			textFields.add(SUBMIT_INSTRUCTIONS);
 			textFields.add(STUDENT_SUBMISSION_LIST_INSTRUCTIONS);
+			textFields.add(STUDENT_SUBMISSION_PERSONAL_INFO_STEP);
+			textFields.add(STUDENT_SUBMISSION_LICENSE_STEP);
+			textFields.add(STUDENT_SUBMISSION_DOCUMENT_STEP);
+			textFields.add(STUDENT_SUBMISSION_UPLOAD_STEP);
+			textFields.add(STUDENT_SUBMISSION_CONFIRM_STEP);
 			textFields.add(CORRECTION_INSTRUCTIONS);
 			textFields.add(CUSTOM_CSS);
 			

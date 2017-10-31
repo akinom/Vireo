@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.tdl.vireo.constant.AppConfig;
 import org.tdl.vireo.constant.FieldConfig;
 
 import static org.tdl.vireo.constant.AppConfig.SUBMIT_UPLOAD_FILES_STICKIES;
@@ -106,8 +107,10 @@ public class FileUpload extends AbstractSubmitStep {
 		for(AttachmentType type : AttachmentType.values()){
 			attachmentTypes.add(type.toString());
 		}
-		
-		renderTemplate("Submit/fileUpload.html",subId, primaryAttachment, additionalAttachments, attachmentTypes, stickies);
+		// Get the instructions for display
+		String instructions = settingRepo.getConfigValue(AppConfig.STUDENT_SUBMISSION_UPLOAD_STEP);
+		instructions = text2html(instructions);
+		renderTemplate("Submit/fileUpload.html",subId, instructions,primaryAttachment, additionalAttachments, attachmentTypes, stickies);
 	}
 	
 	/**

@@ -23,6 +23,7 @@ import org.apache.commons.lang.LocaleUtils;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 
+import org.tdl.vireo.constant.AppConfig;
 import org.tdl.vireo.constant.FieldConfig;
 import org.tdl.vireo.model.CommitteeMember;
 import org.tdl.vireo.model.CommitteeMemberRoleType;
@@ -340,9 +341,11 @@ public class DocumentInfo extends AbstractSubmitStep {
 		
 		if (publishedMaterial != null)
 			publishedMaterialFlag = true;
-		
-		
-		renderTemplate("Submit/documentInfo.html", subId, sub, stickies,
+
+		// Get the instructions for display
+		String instructions = settingRepo.getConfigValue(AppConfig.STUDENT_SUBMISSION_DOCUMENT_STEP);
+		instructions = text2html(instructions);
+		renderTemplate("Submit/documentInfo.html", subId, sub, instructions, stickies,
 				title, degreeMonth, degreeYear, defenseDate, docType, abstractText, keywords, 
 				subjectPrimary, subjectSecondary, subjectTertiary, docLanguage, committeeSlots, 
 				committee, chairEmail, publishedMaterialFlag, publishedMaterial, embargos, program);
