@@ -12,14 +12,16 @@ VIREOHOME=/home/ec2-user/Vireo
 
 case "$1" in
     start)
-	sudo -u $VIREOUSER $VIREOHOME/reset.sh  ec2
+	sudo -u $VIREOUSER $VIREOHOME/reset.sh  origin/ec2
+	sudo -u $VIREOUSER $VIREOHOME/aws/git_report | mail -s 'Vireo Restart' monikam@princeton.edu
         ;;
     stop)
         ;;
     status)
         ;;
     restart)
-	sudo -u $VIREOUSER $VIREOHOME/reset.sh  ec2
+	sudo -u $VIREOUSER $VIREOHOME/reset.sh  origin/ec2
+	sudo -u $VIREOUSER $VIREOHOME/aws/git_report | mail -s 'Vireo Restart' monikam@princeton.edu
         ;;
     *)
         echo "Usage:  {start|stop|status|restart"
