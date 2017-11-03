@@ -31,12 +31,13 @@ public class PrepopulateStudentData {
 
     Hashtable<String, Integer> headerIndex;
 
-    String college;
-    String emailAddOn;
+    String defaultCollege;  // abused as thesis type - eg home department versus certificate thesis
     String defaultTitle;
     String defaultLanguage;
+    String defaultDocType = "no";  // abused as multiAuthor value
+    String emailAddOn;
     String password = null;
-    String fileName;
+    String fileName;  // file tat contains data to be imported
 
     private SecurityContext context;
     PersonRepository personRepo;
@@ -99,7 +100,7 @@ public class PrepopulateStudentData {
     }
 
     public void setCollege(String college) {
-        this.college = college;
+        this.defaultCollege = college;
     }
 
     public void setEmailAddOn(String emailAddOn) {
@@ -110,7 +111,13 @@ public class PrepopulateStudentData {
         defaultTitle = colheader;
     }
 
-    public void setDefaultLanguage(String lang)  { defaultLanguage = lang; }
+    public void setDefaultLanguage(String lang) {
+        defaultLanguage = lang;
+    }
+
+    public void setDefaultDocType(String type) {
+        defaultDocType = type;
+    }
 
     public void setPassword(String pwd) {
         password = pwd;
@@ -136,7 +143,7 @@ public class PrepopulateStudentData {
                 if (null == headerIndex.get(colHeaderName[i])) {
                     Logger.error(" prop-" + i + " : Missing column for " + colHeaderName[i]);
                     // TODO raise error ?
-                } else {
+                } else if (Logger.isDebugEnabled()) {
                     Logger.debug(" prop-" + i + " : headerIndex(" + colHeaderName[i] + ") -> " + headerIndex.get(colHeaderName[i]));
                 }
             }
@@ -154,11 +161,13 @@ public class PrepopulateStudentData {
         String action = "noop";
         int lineno = 1;
         int skipped = 0;
+        boolean invalid = false;
         try {
             // TODO - remove ? turn off authorization so we can add person entries
             context.turnOffAuthorization();
 
             for (String[] line = in.readNext(); line != null; line = in.readNext()) {
+                invalid = true;
                 lineno++;
                 Record data = new Record(line, this);
 
@@ -171,14 +180,22 @@ public class PrepopulateStudentData {
                     action = "skipping invalid";
                     skipped++;
                 } else {
-                    p = data.createStudentWithSubmission(emailAddOn, defaultTitle, college);
+                    p = data.createStudentWithSubmission();
                     if (null != password) {
                         p.setPassword(password);
                         p.save();
                     }
                     action = "created";
+                    invalid = false;
                 }
-                Logger.info(String.format("%s line %d: %s %s", fileName, lineno, action, data));
+                if (invalid)
+                    Logger.info(String.format("%s line %d: %s %s", fileName, lineno, action, data));
+                else if (Logger.isDebugEnabled())
+                    Logger.debug(String.format("%s line %d: %s %s", fileName, lineno, action, data));
+
+                if (0 == lineno % 50) {
+                    Logger.info(String.format("%s line %d: skipped %d", fileName, lineno, skipped));
+                }
             }
             Logger.info(String.format("%s: %d total lines;  %d skipped lines ", fileName, lineno, skipped));
         } catch (IOException e) {
@@ -192,19 +209,24 @@ public class PrepopulateStudentData {
     }
 
     public void deleteAllStudentsAndSubmissions() {
-        Logger.info("deleting all students and their submissions");
-
+        Logger.info("Start Deleting all students and their submissions");
+        int n = 0;
         for (Person p : personRepo.findPersonsByRole(RoleType.STUDENT)) {
             if (p.getRole() == RoleType.STUDENT) {
                 for (Submission s : submissionRepo.findSubmission(p)) {
                     s.delete();
                 }
-                Logger.info("Delete Student " + p.getNetId());
+                if (Logger.isDebugEnabled())
+                    Logger.debug("Delete Student " +  n + " "  + p.getNetId());
                 p.delete();
+                n++;
+                if (0 == n % 50 ) {
+                    Logger.info("Delete " + n + " Students ...");
+                }
             }
         }
+        Logger.info("Finished Deleting all students and their submissions: Deleted total of " + n + " Students ");
     }
-
 
     class Record {
         String[] record;
@@ -244,7 +266,7 @@ public class PrepopulateStudentData {
                     toStr(record[LAST_NAME]), toStr(record[ADV_LAST_NAME]));
         }
 
-        public Person createStudentWithSubmission(String emailAddOn, String defaultTitle, String college) {
+        public Person createStudentWithSubmission() {
             String dept = "";
             if (record[DEPT_CODE].length() > 4) {
                 dept = record[DEPT_CODE].substring(4);
@@ -275,7 +297,8 @@ public class PrepopulateStudentData {
             if (!empty(record[ADV_FIRST_NAME]) && !empty(record[ADV_LAST_NAME])) {
                 s.addCommitteeMember(record[ADV_FIRST_NAME], record[ADV_LAST_NAME], "");
             }
-            s.setCollege(college);
+            s.setCollege(defaultCollege);
+            s.setDocumentType(defaultDocType);
             s.save();
 
             return p;

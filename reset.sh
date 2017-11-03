@@ -6,5 +6,3 @@ git fetch --all
 git reset --hard  
 git reset --hard  $1 
 cp application.conf conf
-
-
