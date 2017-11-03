@@ -159,8 +159,9 @@ public class PersonalInfo extends AbstractSubmitStep {
 				disabledFields.add("firstName");
 				firstName = submitter.getFirstName();
 			}
+			// consider middleInitial null a valid setting --> uneditable
+			disabledFields.add("middleName");
 			if (submitter.getMiddleName() != null) {
-				disabledFields.add("middleName");
 				middleName = submitter.getMiddleName();
 			}
 			if (submitter.getLastName() != null) {
