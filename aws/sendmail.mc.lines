@@ -1,0 +1,3 @@
+define(`confAUTH_MECHANISMS', `PLAIN')dnl
+define(`SMART_HOST', `smtp.princeton.edu')dnl
+FEATURE(`authinfo', `hash /etc/mail/authinfo.db')dnl
