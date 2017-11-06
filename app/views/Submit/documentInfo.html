@@ -126,7 +126,7 @@ jQuery(document).ready(function(){
 <div id="stickyNotes" class="span3">
      #{list items:stickies, as:'sticky'}
        <div class="sticky-top"></div>
-       <div class="sticky-bottom">${sticky}</div>
+         <div class="sticky-bottom">#{verbatim}${sticky}#{/verbatim}</div>
     #{/list}
 </div>
 <div class="row">
