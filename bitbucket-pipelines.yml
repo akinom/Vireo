@@ -3,9 +3,9 @@ image: python:3.5.1
 
 pipelines:
     custom: # Pipelines that are triggered manually
-        test_at_B:
-              - step:
-                  script:
-                    - VIREOHOME=/home/ec2-user/Vireo
-                    - ssh ec2-user@ec2-34-235-93-123.compute-1.amazonaws.com  $VIREOHOME/reset.sh $BITBUCKET_COMMIT
-                    - ssh ec2-user@ec2-34-235-93-123.compute-1.amazonaws.com  $VIREOHOME/play_autotest.sh restart
+        deploy_B:
+            - step:
+                script:
+                  - VIREOHOME=/home/ec2-user/Vireo
+                  - ssh ec2-user@ec2-34-235-93-123.compute-1.amazonaws.com  $VIREOHOME/reset.sh $BITBUCKET_COMMIT
+                  - ssh ec2-user@ec2-34-235-93-123.compute-1.amazonaws.com  $VIREOHOME/play.sh restart
