@@ -270,16 +270,18 @@ jQuery(document).ready(function(){
 		
 </div>
 
-
 %{
-    if (org.tdl.vireo.model.RoleType.getPersonRole(currentUser) == org.tdl.vireo.model.RoleType.ADMINISTRATOR ) {
-    	editKlass = 'edit'
-    	pencil = 'icon-pencil';
-    } else {
-	    editKlass = 'noedit'
-    	pencil = 'icon-none'
-    }
+if (org.tdl.vireo.model.RoleType.getPersonRole(currentUser) == org.tdl.vireo.model.RoleType.ADMINISTRATOR ) {
+editKlass = 'edit'
+pencil = 'icon-pencil'
+hideFromReviewers = ''
+} else {
+editKlass = 'noedit'
+pencil = 'icon-none'
+hideFromReviewers = 'hidden'
+}
 }%
+
 
 <div id="right-column">
 	<div class="inner">
@@ -298,36 +300,35 @@ jQuery(document).ready(function(){
 		
 		<div class="edit-holder pull-left">
 			<ul class="nav nav-tabs">
-				<li class="active"><a class="personalInfo" href="javascript:;">Personal Info</a></li>
-				<li><a class="docInfo" href="javascript:;">Document Info</a></li>
-				<li><a class="degreeInfo" href="javascript:;">Degree Info</a></li>
+				<li class="active"><a class="docInfo" href="javascript:;">Document Info</a></li>
+                <li><a class="personalInfo" href="javascript:;">Personal Info</a></li>
+				<li class="${hideFromReviewers}"><a class="degreeInfo" href="javascript:;">Unsued Fields</a></li>
 			</ul>
-			<div id="personalInfo" class="edit-box-holder">
+			<div id="personalInfo" class="edit-box-holder hidden">
 			<div class="edit-box pull-left">
 				<ul class="unstyled">
-					<li class="${editKlass} firstName"><label>Student First Name:</label><span id="firstName"
+					<li class="${editKlass}"><label>First Name:</label><span id="firstName"
 						#{if submission.getStudentFirstName()}
 							><i class="${pencil}"></i> ${submission.getStudentFirstName()}
 						#{/if}#{else}
 							class="empty"><i class="${pencil}"></i> none
 						#{/else}
 						</span></li>
-
-					<li class="${editKlass} middleName"><label>Student Middle Initial:</label><span id="middleName"
+					<li class="${editKlass}"><label>Middle Initial:</label><span id="middleName"
 						#{if submission.getStudentMiddleName()}
 							><i class="${pencil}"></i> ${submission.getStudentMiddleName()}
 						#{/if}#{else}
 							class="empty"><i class="${pencil}"></i> none
 						#{/else}
 						</span></li>							
-					<li class="${editKlass} lastName"><label>Student Last Name:</label><span id="lastName"
+					<li class="${editKlass}"><label>Last Name:</label><span id="lastName"
 						#{if submission.getStudentLastName()}
 							><i class="${pencil}"></i> ${submission.getStudentLastName()}
 						#{/if}#{else}
 							class="empty"><i class="${pencil}"></i> none
 						#{/else}
 						</span></li>
-					<li class="${editKlass} email"><label>Student Email:</label><span id="email"
+					<li class="${editKlass}"><label>Email:</label><span id="email"
 						#{if submitter.getCurrentEmailAddress()}
 							><i class="${pencil}"></i> ${submitter.getCurrentEmailAddress()}
 						#{/if}#{elseif submitter.getEmail()}
@@ -336,21 +337,7 @@ jQuery(document).ready(function(){
 							class="empty"><i class="${pencil}"></i> none
 						#{/else}
 						</span></li>
-					<li class="hidden birthYear"><label>Year of Birth:</label><span id="birthYear"
-						#{if submission.getStudentBirthYear()}
-							><i class="icon-pencil"></i> ${submission.getStudentBirthYear()}
-						#{/if}#{else}
-							class="empty"><i class="icon-pencil"></i> none
-						#{/else}
-					</span></li>
-                    <li class="hidden orcid"><label>ORCID:</label><span id="orcid"
-						#{if submission.getOrcid()}
-							><i class="icon-pencil"></i> ${submission.getOrcid()}
-						#{/if}#{else}
-							class="empty"><i class="icon-pencil"></i> none
-						#{/else}
-					</span></li>
-					<li class="institutionalIdentifier"><label>Student ID:</label><span id="institutionalIdentifier"
+					<li><label>Institutional ID:</label><span id="institutionalIdentifier"
                         #{if submission.getSubmitter().getInstitutionalIdentifier()}
                             ><i class="icon-none"></i>${submission.getSubmitter().getInstitutionalIdentifier()}
                         #{/if}#{else}
@@ -359,41 +346,55 @@ jQuery(document).ready(function(){
                     </span></li>
 				</ul>
 			</div>
-                <div class="edit-box pull-left">
-                    <ul class="unstyled">
-					<li class="noedit"><label>Permanent Phone:</label><span id="permPhone"
+			<div class="edit-box pull-left ${hideFromReviewers}">
+				<ul class="unstyled">
+                    <li class="edit"><label>Year of Birth:</label><span id="birthYear"
+					#{if submission.getStudentBirthYear()}
+                    ><i class="icon-pencil"></i> ${submission.getStudentBirthYear()}
+					#{/if}#{else}
+                        class="empty"><i class="icon-pencil"></i> none
+					#{/else}
+                    </span></li>
+                    <li class="edit"><label>ORCID:</label><span id="orcid"
+					#{if submission.getOrcid()}
+                    ><i class="icon-pencil"></i> ${submission.getOrcid()}
+					#{/if}#{else}
+                        class="empty"><i class="icon-pencil"></i> none
+					#{/else}
+                    </span></li>
+					<li class="edit"><label>Permanent Phone:</label><span id="permPhone"
 						#{if submitter.getPermanentPhoneNumber()}
-							><i class="icon-none"></i> ${submitter.getPermanentPhoneNumber()}
+							><i class="icon-pencil"></i> ${submitter.getPermanentPhoneNumber()}
 						#{/if}#{else}
-							class="empty"><i class="icon-none"></i> none
+							class="empty"><i class="icon-pencil"></i> none
 						#{/else}
 						</span></li>
-					<li class="noedit"><label>Permanent Email:</label><span id="permEmail"
+					<li class="edit"><label>Permanent Email:</label><span id="permEmail"
 						#{if submitter.getPermanentEmailAddress()}
-							><i class="icon-none"></i> ${submitter.getPermanentEmailAddress()}
+							><i class="icon-pencil"></i> ${submitter.getPermanentEmailAddress()}
 						#{/if}#{else}
-							class="empty"><i class="icon-none"></i> none
+							class="empty"><i class="icon-pencil"></i> none
 						#{/else}
 						</span></li>
-					<li class="noedit"><label>Permanent Address:</label><span id="permAddress"
+					<li class="edit"><label>Permanent Address:</label><span id="permAddress"
 						#{if submitter.getPermanentPostalAddress()}
 							class="textarea"><i class="icon-pencil"></i> ${submitter.getPermanentPostalAddress()}
 						#{/if}#{else}
-							class="textarea empty"><i class="icon-none"></i> none
+							class="textarea empty"><i class="icon-pencil"></i> none
 						#{/else}
 						</span></li>
-					<li class="noedit"><label>Current Phone:</label><span id="currentPhone"
+					<li class="edit"><label>Current Phone:</label><span id="currentPhone"
 						#{if submitter.getCurrentPhoneNumber()}
-							><i class="icon-none"></i> ${submitter.getCurrentPhoneNumber()}
+							><i class="icon-pencil"></i> ${submitter.getCurrentPhoneNumber()}
 						#{/if}#{else}
-							class="empty"><i class="icon-none"></i> none
+							class="empty"><i class="icon-pencil"></i> none
 						#{/else}
 						</span></li>
-					<li class="noedit"><label>Current Address:</label><span id="currentAddress"
+					<li class="edit"><label>Current Address:</label><span id="currentAddress"
 						#{if submitter.getCurrentPostalAddress()}
-							class="textarea"><i class="icon-none"></i> ${submitter.getCurrentPostalAddress()}
+							class="textarea"><i class="icon-pencil"></i> ${submitter.getCurrentPostalAddress()}
 						#{/if}#{else}
-							class="textarea empty"><i class="icon-none"></i> none
+							class="textarea empty"><i class="icon-pencil"></i> none
 						#{/else}
 					</span></li>
 				</ul>
@@ -401,7 +402,7 @@ jQuery(document).ready(function(){
 			<div class="clear"></div>
 			</div>
 			
-			<div id="docInfo" class="edit-box-holder hidden">
+			<div id="docInfo" class="edit-box-holder">
 				<div class="edit-box pull-left">
 					<ul class="unstyled">
 						<li class="edit"><label>Title:</label><span id="title"
@@ -411,32 +412,7 @@ jQuery(document).ready(function(){
 								class="empty"><i class="icon-pencil"></i> none
 							#{/else}
 							</span></li>
-						<li id="embargos">
-							<label>Embargos:</label>
-							<ul>
-								#{if submission.getEmbargoTypes()}
-								#{list items:submission.getEmbargoTypes(), as:'embargo'}
-									
-									%{
-										def guarantor = embargo.getGuarantor().toString() != "DEFAULT" ? ["(",embargo.getGuarantor(),")"].join(""): "";
-									}%
 
-                                                                       <li class="embargo" data-id="${embargo.getId()}">${embargo.getName()} ${guarantor} #{if embargo.isSystemRequired()}<em class="icon-globe"></em>#{/if}#{else}<em class="icon-user"></em>#{/else}</li>
-								#{/list}
-								#{/if}
-								<li id="addEmbargoSelect"></li>
-								<li id="add_new_embargo"><button class="btn btn-mini">Add New Embargo</button></li>
-							</ul>
-						</span>
-						</li>
-
-						<li class="${editKlass}"><label>UMI Release:</label><span id="umiRelease"
-							#{if submission.getUMIRelease() != null}
-								class="select"><i class="icon-pencil"></i> ${submission.getUMIRelease() ? "yes" : "no"}
-							#{/if}#{else}
-								class="select empty"><i class="icon-pencil"></i> none
-							#{/else}
-							</span></li>
 						<li class="edit"><label>Multi-Author</label><span id="docType"
 							#{if submission.getDocumentType()}
 								class="select"><i class="icon-pencil"></i> ${submission.getDocumentType()}
@@ -444,51 +420,45 @@ jQuery(document).ready(function(){
 								class="select empty"><i class="icon-pencil"></i> none
 							#{/else}
 							</span></li>
-					</ul>
-			    </div>
-            <div class="edit-box pull-left">
-                <ul class="unstyled">
-					<li class="edit"><label>Keywords:</label><span id="keywords"
-						#{if submission.getDocumentKeywords()}
-							class="textarea"><i class="icon-pencil"></i> ${submission.getDocumentKeywords()}
+                        <li class="edit"><label>Language:</label><span id="docLanguage"
+						#{if submission.getDocumentLanguage()}
+                                                                       class="select"><i class="icon-pencil"></i> ${submission.getDocumentLanguageLocale().getDisplayName()}
 						#{/if}#{else}
-							class="textarea empty"><i class="icon-pencil"></i> none
+                            class="select empty"><i class="icon-pencil"></i> none
 						#{/else}
-					</span></li>
-					<li class="edit"><label>Subjects:</label><span id="subjects"
-					    data-primary=  "${ submission.getDocumentSubjects().size() > 0 ? submission.getDocumentSubjects().get(0) : ''}"
-					    data-secondary="${ submission.getDocumentSubjects().size() > 1 ? submission.getDocumentSubjects().get(1) : ''}"
-					    data-tertiary= "${ submission.getDocumentSubjects().size() > 2 ? submission.getDocumentSubjects().get(2) : ''}"
-                        #{if submission.getDocumentSubjects().size() > 0}
-                            class="subject"><i class="icon-pencil"></i>
-                            <ul>
-                            #{list items:submission.getDocumentSubjects(), as:'subject'}
-                                <li>${subject}</li>
-                            #{/list}
-                            </ul>
-                        #{/if}#{else}
-                            class="subject empty"><i class="icon-pencil"></i> none
-                        #{/else}
-                    </span></li>
-                    <li class="edit"><label>Language:</label><span id="docLanguage"
-                    	#{if submission.getDocumentLanguage()}
-                    		class="select"><i class="icon-pencil"></i> ${submission.getDocumentLanguageLocale().getDisplayName()}
-                    	#{/if}#{else}
-                    		class="select empty"><i class="icon-pencil"></i> none
-                    	#{/else}
-                    </span></li>
-				</ul>
-			</div>
-			
-			<div class="edit-box full-width">
-				<ul class="unstyled">
-				    <li class="edit"><label>Published Material:</label><span id="publishedMaterial"
-                        #{if submission.getPublishedMaterial()}
-                            class="textarea"><i class="icon-pencil"></i> Yes - ${ submission.getPublishedMaterial()?.nl2br() }
-                        #{/if}#{else}
-                            class="textarea empty"><i class="icon-pencil"></i> No -
-                        #{/else}
-                    </span></li>
+                        </span></li>
+
+					</ul>
+				</div>
+
+                <div id="committeeMembers" class="edit-box pull-left" data-roles='[#{list items:roles, as:'role'}"${role}"${ role_isLast ? "" : ","}#{/list}]'>
+                    <ul class="unstyled">
+                        <li><b>Advisors:</b>
+                            <ul class="unstyled" style="padding:10px 0 0 30px;">
+							#{if submission.getCommitteeMembers()}
+								#{list items:submission.getCommitteeMembers(), as:'value'}
+
+                                    <li class="${value.getId()}">
+                                        <div class="editCommitteeMember">
+                                            <i class="icon-pencil"></i>
+                                            <span class="lastName">${value.getLastName()}</span><span class="seperator">,</span>
+                                            <span class="firstName">${value.getFirstName()}</span>
+                                            <span class="middleName">${value.getMiddleName()}</span>
+											#{list items:value.getRoles(), as:'role'}
+                                                <span class="role label label-info">${role}</span>
+											#{/list}
+                                        </div>
+                                    </li>
+
+								#{/list}
+							#{/if}
+                                <li id="add_new_member"><button class="btn">Add New Member</button></li>
+                            </ul></li>
+                    </ul>
+                </div>
+
+                <div class="edit-box full-width">
+					<ul class="unstyled">
 					<li class="edit"><label>Abstract:</label><span id="abstract"
 						#{if submission.getDocumentAbstract()}
 							class="textarea"><i class="icon-pencil"></i> ${ submission.getDocumentAbstract()?.nl2br() }
@@ -497,7 +467,37 @@ jQuery(document).ready(function(){
 						#{/else}
 					</span></li>
 				</ul>
-			</div>
+				</div>
+
+                <div class="edit-box full-width">
+                    <ul class="unstyled">
+						<li> &nbsp;</li>
+                        <li class="edit"><label>Certificate Program:</label><span id="program"
+						#{if submission.getProgram()}
+                                                                                  class="autocomplete"><i class="icon-pencil"></i> ${submission.getProgram()}
+						#{/if}#{else}
+                            class="autocomplete empty"><i class="icon-pencil"></i> none
+						#{/else}
+                        </span></li>
+                        <li class="edit"><label>Department:</label><span id="department"
+						#{if submission.getDepartment()}
+                                                                         class="autocomplete"><i class="icon-pencil"></i> ${submission.getDepartment()}
+						#{/if}#{else}
+                            class="autocomplete empty"><i class="icon-pencil"></i> none
+						#{/else}
+                        </span></li>
+                        <li class="edit"><label>Thesis Type:</label><span id="college"
+						#{if submission.getCollege()}
+                                                                          class="autocomplete"><i class="icon-pencil"></i> ${submission.getCollege()}
+						#{/if}#{else}
+                            class="autocomplete empty"><i class="icon-pencil"></i> none
+						#{/else}
+                        </span></li>
+                    </ul>
+                </div>
+
+
+
             <div class="clear"></div>
 
 			</div>
@@ -505,27 +505,41 @@ jQuery(document).ready(function(){
 			<div id="degreeInfo" class="edit-box-holder hidden">
 			<div class="edit-box pull-left">
 				<ul class="unstyled">
-					<li class="edit"><label>College:</label><span id="college"
-						#{if submission.getCollege()}
-							class="autocomplete"><i class="icon-pencil"></i> ${submission.getCollege()}
-						#{/if}#{else}
-							class="autocomplete empty"><i class="icon-pencil"></i> none
-						#{/else}
-						</span></li>
-					<li class="edit"><label>Program:</label><span id="program"
-						#{if submission.getProgram()}
-							class="autocomplete"><i class="icon-pencil"></i> ${submission.getProgram()}
-						#{/if}#{else}
-							class="autocomplete empty"><i class="icon-pencil"></i> none
-						#{/else}
-						</span></li>
-					<li class="edit"><label>Department:</label><span id="department"
-						#{if submission.getDepartment()}
-							class="autocomplete"><i class="icon-pencil"></i> ${submission.getDepartment()}
-						#{/if}#{else}
-							class="autocomplete empty"><i class="icon-pencil"></i> none
-						#{/else}
-						</span></li>
+                    <li id="embargos">
+                        <label>Embargos:</label>
+                        <ul>
+						#{if submission.getEmbargoTypes()}
+							#{list items:submission.getEmbargoTypes(), as:'embargo'}
+
+							%{
+                                def guarantor = embargo.getGuarantor().toString() != "DEFAULT" ? ["(",embargo.getGuarantor(),")"].join(""): "";
+                                }%
+
+                                <li class="embargo" data-id="${embargo.getId()}">${embargo.getName()} ${guarantor} #{if embargo.isSystemRequired()}<em class="icon-globe"></em>#{/if}#{else}<em class="icon-user"></em>#{/else}</li>
+							#{/list}
+						#{/if}
+                            <li id="addEmbargoSelect"></li>
+                            <li id="add_new_embargo"><button class="btn btn-mini">Add New Embargo</button></li>
+                        </ul>
+                        </span>
+                    </li>
+
+                    <li class="edit"><label>UMI Release:</label><span id="umiRelease"
+					#{if submission.getUMIRelease() != null}
+                                                                      class="select"><i class="icon-pencil"></i> ${submission.getUMIRelease() ? "yes" : "no"}
+					#{/if}#{else}
+                        class="select empty"><i class="icon-pencil"></i> none
+					#{/else}
+                    </span></li>
+
+                    <li class="edit"><label>Published Material:</label><span id="publishedMaterial"
+					#{if submission.getPublishedMaterial()}
+                                                                             class="textarea"><i class="icon-pencil"></i> Yes - ${ submission.getPublishedMaterial()?.nl2br() }
+					#{/if}#{else}
+                        class="textarea empty"><i class="icon-pencil"></i> No -
+					#{/else}
+                    </span></li>
+
 					<li class="edit"><label>Degree:</label><span id="degree"
 						#{if submission.getDegree()}
 							class="select"><i class="icon-pencil"></i> ${submission.getDegree()}
@@ -573,32 +587,35 @@ jQuery(document).ready(function(){
 					#{/if}
 				</ul>				
 			</div>
-			<div id="committeeMembers" class="edit-box pull-left" data-roles='[#{list items:roles, as:'role'}"${role}"${ role_isLast ? "" : ","}#{/list}]'>
-				<ul class="unstyled">
-					<li><b>Committee Members:</b>
-					<ul class="unstyled" style="padding:10px 0 0 30px;">
-					#{if submission.getCommitteeMembers()}
-					#{list items:submission.getCommitteeMembers(), as:'value'}
-						
-						<li class="${value.getId()}">
-							<div class="editCommitteeMember">
-								<i class="icon-pencil"></i>
-								<span class="lastName">${value.getLastName()}</span><span class="seperator">,</span>
-								<span class="firstName">${value.getFirstName()}</span> 
-								<span class="middleName">${value.getMiddleName()}</span>
-								#{list items:value.getRoles(), as:'role'}
-								<span class="role label label-info">${role}</span>								
+
+                <div class="edit-box pull-left">
+                    <ul class="unstyled">
+                        <li class="edit"><label>Keywords:</label><span id="keywords"
+						#{if submission.getDocumentKeywords()}
+                                                                       class="textarea"><i class="icon-pencil"></i> ${submission.getDocumentKeywords()}
+						#{/if}#{else}
+                            class="textarea empty"><i class="icon-pencil"></i> none
+						#{/else}
+                        </span></li>
+                        <li class="edit"><label>Subjects:</label><span id="subjects"
+                                                                       data-primary=  "${ submission.getDocumentSubjects().size() > 0 ? submission.getDocumentSubjects().get(0) : ''}"
+                                                                       data-secondary="${ submission.getDocumentSubjects().size() > 1 ? submission.getDocumentSubjects().get(1) : ''}"
+                                                                       data-tertiary= "${ submission.getDocumentSubjects().size() > 2 ? submission.getDocumentSubjects().get(2) : ''}"
+						#{if submission.getDocumentSubjects().size() > 0}
+                                                                       class="subject"><i class="icon-pencil"></i>
+                            <ul>
+								#{list items:submission.getDocumentSubjects(), as:'subject'}
+                                    <li>${subject}</li>
 								#{/list}
-							</div>
-						</li>
-						
-					#{/list}												
-					#{/if}
-					<li id="add_new_member"><button class="btn">Add New Member</button></li>
-					</ul></li>
-				</ul>				
-			</div>
-			#{if (isManager || isReviewer) && advisorUrl != null }
+                            </ul>
+						#{/if}#{else}
+                            class="subject empty"><i class="icon-pencil"></i> none
+						#{/else}
+                        </span></li>
+                    </ul>
+                </div>
+
+			#{if (advisorUrl != null) }
 			<div class="edit-box full-width">
 			    <ul class="unstyled">
                     <li><label>Faculty Review URL:</label><span><a href="${advisorUrl}">${advisorUrl}</a></span></li>
@@ -776,7 +793,8 @@ jQuery(document).ready(function(){
                 #{/else}
             </span>
         </div>
-		
+
+		<div class="${hideFromReviewers}">
 		<h2>ACTION LOG</h2>
 		<table id="actionLog" class="table table-striped table-bordered table-condensed">
 			<thead>
@@ -788,7 +806,8 @@ jQuery(document).ready(function(){
 			</thead>
 			#{include 'ViewTab/actionLogTable.include' /}
 		</table>
-		
+		</div>
+
 		<a id="fileList"></a>
 		<h2>ALL FILES</h2>
 		<table class="table table-striped table-bordered table-condensed">
