@@ -60,7 +60,7 @@
 			#{/else}
 			</li>
 		</ul>
-		<ul class="unstyled">
+		<ul class="unstyled ${hideFromReviewers}">
 			<li>UMI Release:</li>
 			<li><b>#{if submission.getUMIRelease() != null}
 				${submission.getUMIRelease() ? "yes" : "no"}
@@ -69,7 +69,7 @@
 			#{/else}
 			</b></li>
 		</ul>
-		<ul class="unstyled">
+		<ul class="unstyled ${hideFromReviewers}">
 			<li>Embargo Options</li>
 			#{if submission.getEmbargoTypes() != null && submission.getEmbargoTypes().size() > 0}
 				#{list items:submission.getEmbargoTypes(), as:'embargo'}

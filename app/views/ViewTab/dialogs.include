@@ -271,14 +271,8 @@
 				<li><input type="radio" class="radio" name="uploadType" value="additional"> Add additional documents</input>
 					<ul class="unstyled fileContainer" style="padding-left:15px; display:none;">
 						<li class="well">
-							<select name="attachmentType" class="input-select" style="margin-bottom:7px;">
-								<option value="">choose type...</option>
-		                    	#{list items:attachmentTypes, as:"type"}
-		                    		#{if !"PRIMARY".equals(type)}
-		                    			<option value="${type}">${type}</option>
-		                    		#{/if}
-		                    	#{/list}
-							</select><br />
+						    <input type="hidden" value="SUPPLEMENTAL" name="attachmentType" />
+
 							Choose file: <input type="file" name="additionalAttachment" />
 						</li>
 					</ul>
@@ -381,7 +375,7 @@
 					</ul>
 					</div>
 				</li>
-				<li><input type="checkbox" class="checkbox" name="status_change" value="true"
+				<li class="hidden"><input type="checkbox" class="checkbox" name="status_change" value="true"
 				#{if currentUser.getPreference("attachment_flag_submission_as_needs_corrections_by_default") != null}
 		         checked="true"
 		        #{/if}

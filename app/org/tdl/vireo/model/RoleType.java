@@ -50,4 +50,8 @@ public enum RoleType {
 
 		return null;
 	}
+
+	public static RoleType getPersonRole(Person person) {
+		return (person != null) ? person.getRole() : NONE;
+	}
 }
