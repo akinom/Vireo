@@ -142,7 +142,6 @@
 
     <property name = "emailAddOn" value = "@gmail.com"/>
     <property name = "college" value = "Home Department Thesis"/>
-    <property name = "defaultTitle" value = "n/a"/>
     <property name = "defaultDocType" value = "no"/>
     <property name = "defaultLanguage" value = "en"/>
     <!-- TODO - remove password setting in production -->
