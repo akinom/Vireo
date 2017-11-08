@@ -155,8 +155,6 @@ public class PrepopulateStudentData {
             return;
         }
 
-        deleteAllStudentsAndSubmissions();
-
         Person p = null;
         String action = "noop";
         int lineno = 1;
