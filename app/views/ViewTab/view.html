@@ -264,24 +264,24 @@ jQuery(document).ready(function(){
 </script>
 #{/set}
 
+%{
+if (org.tdl.vireo.model.RoleType.getPersonRole(currentUser) == org.tdl.vireo.model.RoleType.ADMINISTRATOR ) {
+	editKlass = 'edit'
+	pencil = 'icon-pencil'
+	hideFromReviewers = ''
+} else {
+	editKlass = 'noedit'
+	pencil = 'icon-none'
+	hideFromReviewers = 'hidden'
+}
+}%
+
+
 <div id="left-column" class="pull-left">
 
 	#{include 'ViewTab/leftColumn.include' /}	
 		
 </div>
-
-%{
-if (org.tdl.vireo.model.RoleType.getPersonRole(currentUser) == org.tdl.vireo.model.RoleType.ADMINISTRATOR ) {
-editKlass = 'edit'
-pencil = 'icon-pencil'
-hideFromReviewers = ''
-} else {
-editKlass = 'noedit'
-pencil = 'icon-none'
-hideFromReviewers = 'hidden'
-}
-}%
-
 
 <div id="right-column">
 	<div class="inner">
