@@ -187,20 +187,6 @@ jQuery(document).ready(function(){
 			</div>			
 		</div>
 		#{/ifEnabled}
-		#{ifEnabled DOCUMENT_TYPE}
-		<div class="control-group #{errorClass 'docType'/} #{fieldClass DOCUMENT_TYPE /}">
-			<label class="control-label" for="docType"><span class="required-star">*</span> #{fieldLabel DOCUMENT_TYPE /}:</label>
-			<div class="controls">
-	            <select class="span4" id="docType" name="docType">
-	                <option #{if null == docType || docType.equals("")}selected="true"#{/if} value="">...choose</option>
-	                #{list docTypes, as: 'type'}
-	                    <option #{if null != type && docType.equals(type)}selected="true"#{/if} value="${type}">${type}</option>
-	                #{/list}
-	            </select>
-	            <span class="tooltip-icon" title="#{fieldHelp DOCUMENT_TYPE /}"><i class="icon-info-sign"></i></span>
-			</div>
-		</div>
-		#{/ifEnabled}
 		#{ifEnabled DOCUMENT_ABSTRACT}
 		<div class="control-group #{errorClass 'abstractText'/} #{fieldClass DOCUMENT_ABSTRACT /}">
 			<label class="control-label" for="abstractText"><span class="required-star">*</span> #{fieldLabel DOCUMENT_ABSTRACT /}:</label>
@@ -209,6 +195,20 @@ jQuery(document).ready(function(){
 				<span class="tooltip-icon" title="#{fieldHelp DOCUMENT_ABSTRACT /}"><i class="icon-info-sign"></i></span>
 			</div>
 		</div>
+		#{/ifEnabled}
+		#{ifEnabled DOCUMENT_TYPE}
+            <div class="control-group #{errorClass 'docType'/} #{fieldClass DOCUMENT_TYPE /}">
+                <label class="control-label" for="docType"><span class="required-star">*</span> #{fieldLabel DOCUMENT_TYPE /}:</label>
+                <div class="controls">
+                    <select class="span4" id="docType" name="docType">
+                        <option #{if null == docType || docType.equals("")}selected="true"#{/if} value="">...choose</option>
+						#{list docTypes, as: 'type'}
+                            <option #{if null != type && docType.equals(type)}selected="true"#{/if} value="${type}">${type}</option>
+						#{/list}
+                    </select>
+                    <span class="tooltip-icon" title="#{fieldHelp DOCUMENT_TYPE /}"><i class="icon-info-sign"></i></span>
+                </div>
+            </div>
 		#{/ifEnabled}
 		#{ifEnabled DOCUMENT_KEYWORDS}
 		<div class="control-group #{errorClass 'keywords'/} #{fieldClass DOCUMENT_KEYWORDS /}">
