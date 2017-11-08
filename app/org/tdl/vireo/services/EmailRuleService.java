@@ -53,9 +53,11 @@ public class EmailRuleService {
 						// get the college out of JPA
 						College ruleCollege = settingRepo.findCollege(collegeId);
 						// compare the rule's college with the submission's college
-						if (ruleCollege != null && ruleCollege.getName().equals(submission.getCollege())) {
-							// send the email
-							sendEmail(ewflRule, submission);
+						if (ruleCollege != null) {
+							if (ruleCollege.getName().equals(submission.getCollege())) {
+								// send the email
+								sendEmail(ewflRule, submission);
+							}
 						} else {
 							Logger.error("This rule's college with id #%d doesn't exist! ", collegeId);
 						}
@@ -66,9 +68,11 @@ public class EmailRuleService {
 						// get the department out of JPA
 						Department ruleDepartment = settingRepo.findDepartment(departmentId);
 						// compare the rule's department with the submission's department
-						if (ruleDepartment != null && ruleDepartment.getName().equals(submission.getDepartment())) {
-							// send the email
-							sendEmail(ewflRule, submission);
+						if (ruleDepartment != null) {
+							if (ruleDepartment.getName().equals(submission.getDepartment())) {
+								// send the email
+								sendEmail(ewflRule, submission);
+							}
 						} else {
 							Logger.error("This rule's department with id #%d doesn't exist! ", departmentId);
 						}
@@ -79,9 +83,11 @@ public class EmailRuleService {
 						// get the program out of JPA
 						Program ruleProgram = settingRepo.findProgram(programId);
 						// compare the rule's program with the submission's program
-						if (ruleProgram != null && ruleProgram.getName().equals(submission.getProgram())) {
-							// send the email
-							sendEmail(ewflRule, submission);
+						if (ruleProgram != null) {
+							if (ruleProgram.getName().equals(submission.getProgram())) {
+								// send the email
+								sendEmail(ewflRule, submission);
+							}
 						} else {
 							Logger.error("This rule's program with id #%d doesn't exist! ", programId);
 						}
