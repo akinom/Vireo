@@ -106,7 +106,7 @@ function startNewSub() {
         #{list items:submissions, as:"sub"}
 	        <tr${ (sub.getState().isInProgress() || sub.getState().isEditableByStudent()) ? " class='sub-inprogress'" : ""}>
                 <td>${sub.getStudentLastName()}, ${sub.getStudentFirstName()}</td>
-                <td>${sub.getDocumentTitle()}</td>
+                <td>${sub.getDocumentTitle() == null ? "n/a" : sub.getDocumentTitle() }</td>
 				<td>${sub.getPrimaryDocument() == null ? "n/a" : sub.getPrimaryDocument().getName()}
 				#{if sub.getPrimaryDocument() != null}
 				    <a href="@{Student.viewAttachment(sub.getId(),sub.getPrimaryDocument().getId(),sub.getPrimaryDocument().getName())}">[view]</a>

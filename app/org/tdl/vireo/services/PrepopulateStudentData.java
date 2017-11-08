@@ -32,7 +32,7 @@ public class PrepopulateStudentData {
     Hashtable<String, Integer> headerIndex;
 
     String defaultCollege;  // abused as thesis type - eg home department versus certificate thesis
-    String defaultTitle;
+    String defaultTitle = null;
     String defaultLanguage;
     String defaultDocType = "no";  // abused as multiAuthor value
     String emailAddOn;
@@ -105,10 +105,6 @@ public class PrepopulateStudentData {
 
     public void setEmailAddOn(String emailAddOn) {
         this.emailAddOn = emailAddOn;
-    }
-
-    public void setDefaultTitle(String colheader) {
-        defaultTitle = colheader;
     }
 
     public void setDefaultLanguage(String lang) {
