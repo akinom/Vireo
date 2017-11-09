@@ -468,9 +468,9 @@ public class PersonalInfo extends AbstractSubmitStep {
 		
 		// College
 		if (sub.getCollege() != null && !isValidCollege(sub.getCollege()))
-			validation.addError("college","The college selected is not valid");
+			validation.addError("college","The Senior Thesis Type selected is not valid");
 		if (isFieldRequired(COLLEGE) && isEmpty(sub.getCollege()))
-			validation.addError("college","College is required");
+			validation.addError("college","Senior Thesis Type is required");
 		
 		// Department
 		if (sub.getDepartment() != null && !isValidDepartment(sub.getDepartment()))
