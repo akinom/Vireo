@@ -120,7 +120,7 @@ public class License extends AbstractSubmitStep {
 			}
 			
 			if (hasLicense == false) {
-				validation.addError("licenseAgreement","You must agree to the license agreement before continuing");				
+				validation.addError("licenseAgreement","You must affirm the honor code before continuing");
 			}
 		} // isRequired
 		
