@@ -387,13 +387,13 @@ public class DocumentInfo extends AbstractSubmitStep {
 
 		// Program
 		if (sub.getProgram() != null && !isValidProgram(sub.getProgram()))
-			validation.addError("program", "The program selected is not valid");
+			validation.addError("program", "The certificate program selected is not valid");
 		if (isFieldRequired(PROGRAM) && isEmpty(sub.getProgram()))
-			validation.addError("program", "Program is required");
+			validation.addError("program", "Certificate Program is required");
 
-		// Document Type
+		// Document Type // Multi Author
 		if (!isValidDocType(sub.getDocumentType()))
-			validation.addError("docType", "Please select a Document Type");
+			validation.addError("docType", "Please select a Multi Author value");
 		
 		// Document Abstract
 		if (isFieldRequired(DOCUMENT_ABSTRACT) && isEmpty(sub.getDocumentAbstract()))
@@ -676,7 +676,7 @@ public class DocumentInfo extends AbstractSubmitStep {
 
 			// Check that if we have a first name, then we have a last name.
 			if (isEmpty(member.firstName) && isEmpty(member.lastName)) {
-				validation.addError("member"+i,"Please provide a first or last name for all committee members.");
+				validation.addError("member"+i,"Please provide a first or last name for all advisors.");
 			} else {
 				atLeastOneMember = true;
 			}
@@ -687,7 +687,7 @@ public class DocumentInfo extends AbstractSubmitStep {
 		}
 
 		if (!atLeastOneMember)
-			validation.addError("committee", "You must specify who is on your committee.");
+			validation.addError("committee", "You must specify at least one advisor.");
 		
 		return true;
 	}
