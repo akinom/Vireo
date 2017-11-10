@@ -134,7 +134,7 @@
     <property name = "middleName" value = "Student Middle Initial"/>
     <property name = "netid" value = "Net ID"/>
     <property name = "department" value = "Dept"/>
-    <property name = "departmentCode" value = "Dept Code"/>
+    <property name = "departmentCode" value = "Academic Plan"/>
     <property name = "uid" value="Emplid" />
     <property name = "advisorLastName" value="Adviser 1 Last Name" />
     <property name = "advisorFirstName" value="Adviser 1 First Name" />
