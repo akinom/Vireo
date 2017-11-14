@@ -1,57 +1,57 @@
-Emplid	Student Last	Student First	Student Middle Initial	Class Year	Net ID	Academic Plan	Dept	CERT 1	CERT 2	CERT 3	CERT 4	CERT 5	Thesis Adviser 1 	Adviser 1 Last Name	Adviser 1 First Name	Thesis Adviser 1 NETID	Thesis Adviser 2	Adviser 2 Last Name	Adviser 2 First Name	Thesis Adviser 2 NETID
-920191498	Abbas	Maham	 	2018	mabbas	UMOL	Molecular Biology													
-960724240	Zhao	Shelley	 	2018	shelleyz	UCOSAB	Computer Science	Entrepreneurship					"Rusinkiewicz,Szymon M."	Rusinkiewicz	Szymon	smr				
-960758909	Frain	Katherine	R	2018	kfrain	UENG	English	Creative Writing	Gender and Sexuality Studies											
-960771999	Angier	Katherine	I	2018	kia	UEEB	Ecology & Evolutionary Biology	Quantitative/Computational Bio												
-960805649	Zhou	Andrew	J	2018	ajzhou	UCOSAB	Computer Science						"Rusinkiewicz,Szymon M."	Rusinkiewicz	Szymon	smr				
-960811812	Yu	Jonathan	 	2018	jy11	UCOSBSE	Computer Science	Engineering Biology												
-960830360	Xie	Jing	 	2018	jingx	UCOSBSE	Computer Science	Finance												
-960831878	Aparicio	Alex	 	2018	aka	UPOL	Politics	Environmt Studies	Latin Amer Studies				"Yashar,Deborah J."	Yashar	Deborah	dyashar				
-960835737	Athill	Justin	C	2018	jca4	UCOSBSE	Computer Science													
-960846854	Blaine	Logan	J	2018	lblaine	UMOL	Molecular Biology	Quantitative/Computational Bio												
-960864986	Ho	Beatrice	 	2018	bh7	UENG	English	Urban Studies	American Studies											
-960875316	Bosetti	Isabella	J	2018	ibosetti	UCOSBSE	Computer Science	Technology and Society												
-960886932	Cousins	Graham	M	2018	gcousins	UENG	English	Theater	Dance											
-960887602	Azhar	Kabbas	 	2018	kazhar	UPOL	Politics	Technology and Society	Values and Public Life	Cognitive Science			"Beitz,Charles R."	Beitz	Charles	cbeitz				
-960895650	Zeng	Lindy	 	2018	lindy	UCOSAB	Computer Science	Environmt Studies	Statistics & Machine Learning				"Dobkin,David Paul"	Dobkin	David	dpd				
-960915243	Albrecht	Kristen	M	2018	kristena	UMOL	Molecular Biology	Global Health & Health Policy												
-960937127	Cardenas-Osorio	Luis	J	2018	ljc3	UEEB	Ecology & Evolutionary Biology													
-960945373	Baber	Sarah	K	2018	skb3	UENG	English													
-960948559	Baron	Jonathan	A	2018	jab5	UMOL	Molecular Biology													
-960952653	Chambers	Jessica	L	2018	jlc2	UMOL	Molecular Biology	Neuroscience												
-960953669	Duseau	Danielle	M	2018	dduseau	UENG	English													
-960955442	Curtis	Melissa	 	2018	mc24	UENG	English													
-960955964	Baker	Ian	T	2018	ibaker	UPOL	Politics	Finance					"Ahmed,Faisal Zahiruddin"	Ahmed	Faisal	fzahmed				
-960956027	Badalamenti	Nicholas	T	2018	ntb2	UPOL	Politics						"Frymer,Paul"	Frymer	Paul	pfrymer				
-960956145	Beck	Wolfgang	A	2018	wabeck	UMOL	Molecular Biology													
-960956560	Bollen	Sam	 	2018	sbollen	UENG	English													
-960956665	Carpenter	Sandra	L	2018	sandralc	UMOL	Molecular Biology	Visual Arts												
-960956736	Bermudez	Francisca	I	2018	fib	UEEB	Ecology & Evolutionary Biology	Global Health & Health Policy												
-960960836	Zainulabadeen	Aamir	A	2018	aamirz	UCOSAB	Computer Science						"LaPaugh,Andrea Suzanne"	LaPaugh	Andrea	aslp				
-960960941	Barger	Rebeccah	 	2018	rdb2	UPOL	Politics	History &Practice of Diplomacy					"Yarhi-Milo,Keren"	Yarhi-Milo	Keren	kyarhi				
-960960948	De La Garza	Alejandro	S	2018	asgarza	UENG	English													
-960961670	Balev	Metodi	I	2018	mbalev	UMOL	Molecular Biology	Global Health & Health Policy												
-960962060	Charles	Mitchel	A	2018	mitchelc	UEEB	Ecology & Evolutionary Biology													
-960962596	Akiti	Korle	 	2018	makiti	UCOSAB	Computer Science						"Li,Xiaoyan"	Li	Xiaoyan	xiaoyan				
-960963500	Yeung	Kristy	E	2018	keyeung	UCOSBSE	Computer Science	Finance												
-960964201	Chae	Ricky	 	2018	rchae	UEEB	Ecology & Evolutionary Biology	Global Health & Health Policy												
-960964420	Duran	Cande	 	2018	cyduran	UENG	English													
-960964646	Yang	Jonathan	J	2018	jjy	UCOSAB	Computer Science						"Chetty,Marshini"	Chetty	Marshini	marshini				
-960978214	Bryan	Jack	M	2018	jmbryan	UENG	English													
-960978495	Gamble	Luke	J	2018	ljgamble	UENG	English	European Cult Studies												
-960978971	Ayala	Ramon	 	2018	ra4	UCOSBSE	Computer Science	Statistics & Machine Learning												
-960980362	Adjei	Richard	K	2018	radjei	UCOSBSE	Computer Science													
-960984143	Carey	Miles	D	2018	mdc6	UENG	English	Theater	Dance	Gender and Sexuality Studies	Environmt Studies									
-960989669	Berman	Adam	G	2018	agberman	UCOSBSE	Computer Science	Technology and Society	Quantitative/Computational Bio	Creative Writing			"Singh,Mona"	Singh	Mona	msingh				
-960990060	Azoba	Chinenye	 	2018	cazoba	UMOL	Molecular Biology	Global Health & Health Policy	Latin Amer Studies											
-960990145	Bayless	Nico	 	2018	nbayless	UCOSAB	Computer Science						"Engelhardt,Barbara"	Engelhardt	Barbara	bee				
-960990389	Bankston	Mikaela	E	2018	mikaelab	UMOL	Molecular Biology	Global Health & Health Policy	Environmt Studies											
-961037144	Xie	Alice	Z	2018	azxie	UCOSBSE	Computer Science													
-961037222	Yu	Xiao Yang	 	2018	xyyu	UCOSBSE	Computer Science	Values and Public Life	Statistics & Machine Learning											
-961039597	Zong	Jonathan	 	2018	jz7	UCOSBSE	Computer Science	Visual Arts					"Matias,Jorge Nathan"	Matias	Jorge	jmatias				
-961070098	Yue	Alex	C	2018	acyue	UCOSBSE	Computer Science	Statistics & Machine Learning	Technology and Society											
-961070454	Bayol	Ogulcan	 	2018	obayol	UCOSBSE	Computer Science	Finance	Engineering & Management Systm											
-961070545	Davies	Katrina	E	2018	kdavies	UENG	English													
-961077696	Boroughs	Paddy	 	2018	boroughs	UCOSBSE	Computer Science	Theater	Dance											
-961078170	Zhang	Jonathan	 	2018	jz6	UCOSBSE	Computer Science													
-961078552	Cox	Samuel	S	2018	sscox	UENG	English													
+Net ID	Emplid	Student Last	Student First	Student Middle Initial	Class Year	Academic Plan	Dept	CERT 1	CERT 2	CERT 3	CERT 4	CERT 5	Thesis Adviser 1 	Adviser 1 Last Name	Adviser 1 First Name	Thesis Adviser 1 NETID	Thesis Adviser 2	Adviser 2 Last Name	Adviser 2 First Name	Thesis Adviser 2 NETID
+thesis.central.pu+mabbas	920191498	Abbas	Maham	 	2018	UMOL	Molecular Biology													
+thesis.central.pu+shelleyz	960724240	Zhao	Shelley	 	2018	UCOSAB	Computer Science	Entrepreneurship					"Rusinkiewicz,Szymon M."	Rusinkiewicz	Szymon	smr				
+thesis.central.pu+kfrain	960758909	Frain	Katherine	R	2018	UENG	English	Creative Writing	Gender and Sexuality Studies											
+thesis.central.pu+kia	960771999	Angier	Katherine	I	2018	UEEB	Ecology & Evolutionary Biology	Quantitative/Computational Bio												
+thesis.central.pu+ajzhou	960805649	Zhou	Andrew	J	2018	UCOSAB	Computer Science						"Rusinkiewicz,Szymon M."	Rusinkiewicz	Szymon	smr				
+thesis.central.pu+jy11	960811812	Yu	Jonathan	 	2018	UCOSBSE	Computer Science	Engineering Biology												
+thesis.central.pu+jingx	960830360	Xie	Jing	 	2018	UCOSBSE	Computer Science	Finance												
+thesis.central.pu+aka	960831878	Aparicio	Alex	 	2018	UPOL	Politics	Environmt Studies	Latin Amer Studies				"Yashar,Deborah J."	Yashar	Deborah	dyashar				
+thesis.central.pu+jca4	960835737	Athill	Justin	C	2018	UCOSBSE	Computer Science													
+thesis.central.pu+lblaine	960846854	Blaine	Logan	J	2018	UMOL	Molecular Biology	Quantitative/Computational Bio												
+thesis.central.pu+bh7	960864986	Ho	Beatrice	 	2018	UENG	English	Urban Studies	American Studies											
+thesis.central.pu+ibosetti	960875316	Bosetti	Isabella	J	2018	UCOSBSE	Computer Science	Technology and Society												
+thesis.central.pu+gcousins	960886932	Cousins	Graham	M	2018	UENG	English	Theater	Dance											
+thesis.central.pu+kazhar	960887602	Azhar	Kabbas	 	2018	UPOL	Politics	Technology and Society	Values and Public Life	Cognitive Science			"Beitz,Charles R."	Beitz	Charles	cbeitz				
+thesis.central.pu+lindy	960895650	Zeng	Lindy	 	2018	UCOSAB	Computer Science	Environmt Studies	Statistics & Machine Learning				"Dobkin,David Paul"	Dobkin	David	dpd				
+thesis.central.pu+kristena	960915243	Albrecht	Kristen	M	2018	UMOL	Molecular Biology	Global Health & Health Policy												
+thesis.central.pu+ljc3	960937127	Cardenas-Osorio	Luis	J	2018	UEEB	Ecology & Evolutionary Biology													
+thesis.central.pu+skb3	960945373	Baber	Sarah	K	2018	UENG	English													
+thesis.central.pu+jab5	960948559	Baron	Jonathan	A	2018	UMOL	Molecular Biology													
+thesis.central.pu+jlc2	960952653	Chambers	Jessica	L	2018	UMOL	Molecular Biology	Neuroscience												
+thesis.central.pu+dduseau	960953669	Duseau	Danielle	M	2018	UENG	English													
+thesis.central.pu+mc24	960955442	Curtis	Melissa	 	2018	UENG	English													
+thesis.central.pu+ibaker	960955964	Baker	Ian	T	2018	UPOL	Politics	Finance					"Ahmed,Faisal Zahiruddin"	Ahmed	Faisal	fzahmed				
+thesis.central.pu+ntb2	960956027	Badalamenti	Nicholas	T	2018	UPOL	Politics						"Frymer,Paul"	Frymer	Paul	pfrymer				
+thesis.central.pu+wabeck	960956145	Beck	Wolfgang	A	2018	UMOL	Molecular Biology													
+thesis.central.pu+sbollen	960956560	Bollen	Sam	 	2018	UENG	English													
+thesis.central.pu+sandralc	960956665	Carpenter	Sandra	L	2018	UMOL	Molecular Biology	Visual Arts												
+thesis.central.pu+fib	960956736	Bermudez	Francisca	I	2018	UEEB	Ecology & Evolutionary Biology	Global Health & Health Policy												
+thesis.central.pu+aamirz	960960836	Zainulabadeen	Aamir	A	2018	UCOSAB	Computer Science						"LaPaugh,Andrea Suzanne"	LaPaugh	Andrea	aslp				
+thesis.central.pu+rdb2	960960941	Barger	Rebeccah	 	2018	UPOL	Politics	History &Practice of Diplomacy					"Yarhi-Milo,Keren"	Yarhi-Milo	Keren	kyarhi				
+thesis.central.pu+asgarza	960960948	De La Garza	Alejandro	S	2018	UENG	English													
+thesis.central.pu+mbalev	960961670	Balev	Metodi	I	2018	UMOL	Molecular Biology	Global Health & Health Policy												
+thesis.central.pu+mitchelc	960962060	Charles	Mitchel	A	2018	UEEB	Ecology & Evolutionary Biology													
+thesis.central.pu+makiti	960962596	Akiti	Korle	 	2018	UCOSAB	Computer Science						"Li,Xiaoyan"	Li	Xiaoyan	xiaoyan				
+thesis.central.pu+keyeung	960963500	Yeung	Kristy	E	2018	UCOSBSE	Computer Science	Finance												
+thesis.central.pu+rchae	960964201	Chae	Ricky	 	2018	UEEB	Ecology & Evolutionary Biology	Global Health & Health Policy												
+thesis.central.pu+cyduran	960964420	Duran	Cande	 	2018	UENG	English													
+thesis.central.pu+jjy	960964646	Yang	Jonathan	J	2018	UCOSAB	Computer Science						"Chetty,Marshini"	Chetty	Marshini	marshini				
+thesis.central.pu+jmbryan	960978214	Bryan	Jack	M	2018	UENG	English													
+thesis.central.pu+ljgamble	960978495	Gamble	Luke	J	2018	UENG	English	European Cult Studies												
+thesis.central.pu+ra4	960978971	Ayala	Ramon	 	2018	UCOSBSE	Computer Science	Statistics & Machine Learning												
+thesis.central.pu+radjei	960980362	Adjei	Richard	K	2018	UCOSBSE	Computer Science													
+thesis.central.pu+mdc6	960984143	Carey	Miles	D	2018	UENG	English	Theater	Dance	Gender and Sexuality Studies	Environmt Studies									
+thesis.central.pu+agberman	960989669	Berman	Adam	G	2018	UCOSBSE	Computer Science	Technology and Society	Quantitative/Computational Bio	Creative Writing			"Singh,Mona"	Singh	Mona	msingh				
+thesis.central.pu+cazoba	960990060	Azoba	Chinenye	 	2018	UMOL	Molecular Biology	Global Health & Health Policy	Latin Amer Studies											
+thesis.central.pu+nbayless	960990145	Bayless	Nico	 	2018	UCOSAB	Computer Science						"Engelhardt,Barbara"	Engelhardt	Barbara	bee				
+thesis.central.pu+mikaelab	960990389	Bankston	Mikaela	E	2018	UMOL	Molecular Biology	Global Health & Health Policy	Environmt Studies											
+thesis.central.pu+azxie	961037144	Xie	Alice	Z	2018	UCOSBSE	Computer Science													
+thesis.central.pu+xyyu	961037222	Yu	Xiao Yang	 	2018	UCOSBSE	Computer Science	Values and Public Life	Statistics & Machine Learning											
+thesis.central.pu+jz7	961039597	Zong	Jonathan	 	2018	UCOSBSE	Computer Science	Visual Arts					"Matias,Jorge Nathan"	Matias	Jorge	jmatias				
+thesis.central.pu+acyue	961070098	Yue	Alex	C	2018	UCOSBSE	Computer Science	Statistics & Machine Learning	Technology and Society											
+thesis.central.pu+obayol	961070454	Bayol	Ogulcan	 	2018	UCOSBSE	Computer Science	Finance	Engineering & Management Systm											
+thesis.central.pu+kdavies	961070545	Davies	Katrina	E	2018	UENG	English													
+thesis.central.pu+boroughs	961077696	Boroughs	Paddy	 	2018	UCOSBSE	Computer Science	Theater	Dance											
+thesis.central.pu+jz6	961078170	Zhang	Jonathan	 	2018	UCOSBSE	Computer Science													
+thesis.central.pu+sscox	961078552	Cox	Samuel	S	2018	UENG	English													
