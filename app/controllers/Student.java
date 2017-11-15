@@ -294,47 +294,25 @@ public class Student extends AbstractVireoController {
 		// Locate the submission
 		Submission sub = subRepo.findSubmissionByHash(token);
 
-		if(sub == null){
+		if (sub == null) {
 			error("Submission with hash: " + token + " was not found!");
 		}
 		notFoundIfNull(sub);
 
 		Person submitter = sub.getSubmitter();
+		Attachment attachment = sub.getPrimaryDocument();
 
-		Logger.info("Anonymous reviewing %s (%d: %s) has reviwing submission #%d.",
-				submitter.getFormattedName(NameFormat.FIRST_LAST),
-				submitter.getId(),
-				submitter.getEmail(),
-				sub.getId());
+		response.setContentTypeIfNotSet(attachment.getMimeType());
 
-		String grantor = settingRepo.getConfigValue(AppConfig.GRANTOR,"Unknown Institution");
-		List<Submission> allSubmissions = subRepo.findSubmission(submitter);
-		List<ActionLog> logs = subRepo.findActionLog(sub);
-		Attachment primaryDocument = sub.getPrimaryDocument();
-		List<Attachment> additionalDocuments = sub.getAttachmentsByType(AttachmentType.SUPPLEMENTAL,AttachmentType.SOURCE,AttachmentType.ADMINISTRATIVE);
-		List<Attachment> feedbackDocuments = sub.getAttachmentsByType(AttachmentType.FEEDBACK);
+		// Fix problem with no-cache headers and ie8
+		response.setHeader("Pragma", "public");
+		response.setHeader("Cache-Control", "public");
 
-		for(FieldConfig field : FieldConfig.values()) {
-			renderArgs.put(field.name(),field );
+		try {
+			renderBinary(new FileInputStream(attachment.getFile()), attachment.getName(), attachment.getFile().length(), true);
+		} catch (FileNotFoundException ex) {
+			error("File not found");
 		}
-
-		List<String> attachmentTypes = new ArrayList<String>();
-		for(AttachmentType type : AttachmentType.values()){
-			attachmentTypes.add(type.toString());
-		}
-
-		// get all the custom actions available in the system
-		List<CustomActionDefinition> allActions = settingRepo.findAllCustomActionDefinition();
-		List<CustomActionDefinition> visibleActions = new ArrayList<CustomActionDefinition>();
-
-		for(CustomActionDefinition action : allActions) {
-			if(action.isStudentVisible()) {
-				visibleActions.add(action);
-			}
-		}
-        Long subId = sub.getId();
-		boolean allowMultiple = false;
-		renderTemplate("Student/view.html", subId, sub, submitter, logs, primaryDocument, additionalDocuments, feedbackDocuments, allSubmissions, grantor, allowMultiple, attachmentTypes, visibleActions);
 	}
 
 	/**
