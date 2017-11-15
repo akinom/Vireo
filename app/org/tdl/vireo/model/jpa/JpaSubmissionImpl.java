@@ -1,16 +1,14 @@
 package org.tdl.vireo.model.jpa;
 
+import org.apache.commons.codec.binary.Base64;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
@@ -120,6 +118,9 @@ public class JpaSubmissionImpl extends JpaAbstractModel<JpaSubmissionImpl> imple
 	@Column(unique = true, length=255)
 	public String committeeEmailHash;
 
+	@Column(unique = true, length=255)
+	public String submissionHash;
+
 	@Temporal(TemporalType.TIMESTAMP)
 	public Date committeeApprovalDate;
 	@Temporal(TemporalType.TIMESTAMP)
@@ -225,7 +226,7 @@ public class JpaSubmissionImpl extends JpaAbstractModel<JpaSubmissionImpl> imple
 		this.customActions = new ArrayList<CustomActionValue>();
 		this.actionLogs = new ArrayList<ActionLog>();
 		this.stateName = (Spring.getBeanOfType(StateManager.class).getInitialState()).getBeanName();
-		
+		this.setSubmissionHash(generateUniqueHash("" + (System.currentTimeMillis() / 1000)));
 		generateLog("Submission created", true);
 	}
 
@@ -1184,6 +1185,29 @@ public class JpaSubmissionImpl extends JpaAbstractModel<JpaSubmissionImpl> imple
 			if (this.approvalDate == null && state.isApproved())
 				this.setApprovalDate(new Date());
 		}
+	}
+
+	@Override
+	public void setSubmissionHash(String hash) {
+		assertReviewerOrOwner(submitter);
+
+		if (!equals(this.submissionHash,hash)) {
+			this.submissionHash = hash;
+			generateLog("Submission hash stored", false);
+		}
+	}
+
+	@Override
+	public String getSubmissionHash() {
+
+		return submissionHash;
+	}
+
+	private String generateUniqueHash(String prefix) {
+			byte[] randomBytes = new byte[8];
+			new Random().nextBytes(randomBytes);
+			String proposed = Base64.encodeBase64URLSafeString(randomBytes);
+			return prefix + proposed.replaceAll("[^A-Za-z0-9]","");
 	}
 
 	@Override

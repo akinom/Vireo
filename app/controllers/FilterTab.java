@@ -1,11 +1,8 @@
 package controllers;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
+import controllers.submit.Confirm;
 import org.tdl.vireo.batch.AssignService;
 import org.tdl.vireo.batch.CommentService;
 import org.tdl.vireo.batch.DeleteService;
@@ -30,6 +27,7 @@ import play.libs.F.Promise;
 import play.modules.spring.Spring;
 import play.mvc.Catch;
 import play.mvc.Http.Cookie;
+import play.mvc.Router;
 import play.mvc.With;
 
 /**
@@ -1219,5 +1217,25 @@ public class FilterTab extends AbstractVireoController {
 		}
 		
 		return facets;
+	}
+
+	/**
+	 * Retrieve the url where advisors may approve the submission.
+	 *
+	 * @param sub
+	 *            The submission.
+	 * @return the url
+	 */
+	public static String getReviewUrl(Submission sub) {
+		if (sub.getSubmissionHash() == null) {
+			return null;
+		}
+		Map<String,Object> routeArgs = new HashMap<String,Object>();
+		routeArgs.put("token", sub.getSubmissionHash());
+
+		Router.ActionDefinition action = Router.reverse("Student.review",routeArgs);
+		action.absolute();
+
+		return action.url;
 	}
 }

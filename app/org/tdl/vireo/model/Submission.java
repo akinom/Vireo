@@ -319,7 +319,20 @@ public interface Submission extends AbstractModel {
 	public void setCommitteeContactEmail(String email);
 
 	/**
-	 * 
+	 *
+	 * @return The secret submission hash for sharing
+	 */
+	public String getSubmissionHash();
+
+	/**
+	 *
+	 * @return The new secret submission hash.
+	 */
+	public void setSubmissionHash(String hash);
+
+
+	/**
+	 *
 	 * @return The secrete committee email hash for approvals.
 	 */
 	public String getCommitteeEmailHash();

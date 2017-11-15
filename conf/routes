@@ -36,6 +36,8 @@ GET     /profile                                Authentication.profile
 ### Student Interface
 * 		/submit/?								Student.submissionList
 *		/submit/{subId}/view					Student.submissionView
+GET     /submit/review/{token}                  Student.submissionReview
+GET     /submit/review/?                        Student.submissionReview
 *       /submit/{subId}/corrections             Student.correctionsComplete
 *       /submit/{subId}/delete                  Student.submissionDelete
 POST    /submit/{subId}/addMessage				Student.submissionAddMessageJSON

@@ -38,6 +38,7 @@ in results.
         %{
         int sql = 0;
         String viewTabUrl = play.mvc.Router.reverse("ViewTab.view").url;
+        String reviewUrl = play.mvc.Router.getFullUrl("Student.submissionReview");
         
         def navArgs = new HashMap<String,Object>();
         navArgs.put("nav",nav);
@@ -158,7 +159,7 @@ in results.
                         out.print(sub.getPrimaryDocument().getName());
                      break;
                  case GRADUATION_DATE:
-                     String monthName = null;
+                     java.lang.String monthName = null;
                      if (sub.getGraduationMonth() != null && sub.getGraduationMonth() >= 0 && sub.getGraduationMonth() <= 11)
                         monthName = new java.text.DateFormatSymbols().getMonths()[sub.getGraduationMonth()]; 
                      if (sub.getGraduationYear() != null)
@@ -294,11 +295,11 @@ in results.
                  	if (sub.getOrcid() != null)
                  		out.print(sub.getOrcid());
                      break;
-
                      
              } // switch (column)
              out.print("</a></td>");
            } // for columns
+            out.print("<td>" + reviewUrl + "/" + sub.getSubmissionHash() + "</td>");
            out.print("</tr>");
         } // for results.getResults()
         }%
