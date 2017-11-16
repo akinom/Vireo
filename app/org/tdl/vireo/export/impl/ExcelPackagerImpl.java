@@ -45,6 +45,16 @@ import play.modules.spring.Spring;
  */
 public class ExcelPackagerImpl extends AbstractExcelPackagerImpl {
 
+	public String primaryDocUrl;
+	/**
+	 * @param pattern
+	 *            Set the searcher used for identify batch of submissions to be processed.
+	 */
+	public void setPrimaryDocUrl(String pattern) {
+		this.primaryDocUrl = pattern;
+	}
+
+
 	/* Spring injected paramaters */
 	public List<AttachmentType> attachmentTypes = new ArrayList<AttachmentType>();
 	public Boolean aggregated = false;
@@ -196,6 +206,16 @@ public class ExcelPackagerImpl extends AbstractExcelPackagerImpl {
 				j++;
 				break;
 
+			case PRIMARY_DOCUMENT_URL:
+				header.createCell(j).setCellValue("Primary document url");
+				if (null != sub.getPrimaryDocument()) {
+					String url = primaryDocUrl.replace("/token", "/" + sub.getSubmissionHash());
+					url = url.replace("/attachmentId", "/" + sub.getPrimaryDocument().getId());
+					url = url.replace("/name", "/" + sub.getPrimaryDocument().getName());
+					row.createCell(j).setCellValue(url);
+				}
+				j++;
+				break;
 			case GRADUATION_DATE:
 				header.createCell(j).setCellValue("Graduation date");
 				StringBuilder sb = new StringBuilder();

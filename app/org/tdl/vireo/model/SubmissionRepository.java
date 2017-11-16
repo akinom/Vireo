@@ -53,12 +53,22 @@ public interface SubmissionRepository {
 
 	/**
 	 * Find a submission by email hash
-	 * 
-	 * @param id
+	 *
+	 * @param emailHash
 	 *            The email hash of the submission.
 	 * @return The submission object or null if not found.
 	 */
 	public Submission findSubmissionByEmailHash(String emailHash);
+
+	/**
+	 * Find a submission by submission hash
+	 *
+	 * @param hash
+	 *            The  hash of the submission.
+	 * @return The submission object or null if not found.
+	 */
+	public Submission findSubmissionByHash(String hash);
+
 
 	/**
 	 * Find all submissions for a particular submitter.

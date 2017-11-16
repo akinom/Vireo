@@ -17,7 +17,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.io.IOUtils;
 import org.tdl.vireo.constant.AppConfig;
 import org.tdl.vireo.constant.FieldConfig;
 import org.tdl.vireo.model.ActionLog;
@@ -177,63 +176,63 @@ public class Student extends AbstractVireoController {
 	/**
 	 * Student view of the submission. The form in all cases allows the student
 	 * to leave comments for reviewers.
-	 * 
+	 *
 	 * However, if the submission is in a state that allows editing by students
 	 * then they may modify the documents associated with the submission, before
 	 * confirming their corrections.
-	 * 
+	 *
 	 * @param subId The submission id.
 	 */
 	@Security(RoleType.STUDENT)
-	public static void submissionView(Long subId) {		
+	public static void submissionView(Long subId) {
 
 		// Locate the submission 
 		Submission sub = subRepo.findSubmission(subId);
-		
+
 		if(sub == null){
 			error("Submission with id: " + subId + " was not found!");
 		}
-		
+
 		// Check that we are the owner of the submission.
 		Person submitter = context.getPerson();
 		if (sub.getSubmitter() != submitter)
-		    unauthorized();		
-		
+			unauthorized();
+
 		Logger.info("%s (%d: %s) has viewed submission #%d.",
-				submitter.getFormattedName(NameFormat.FIRST_LAST), 
-				submitter.getId(), 
+				submitter.getFormattedName(NameFormat.FIRST_LAST),
+				submitter.getId(),
 				submitter.getEmail(),
 				sub.getId());
-		
+
 		boolean allowMultiple = settingRepo.getConfigBoolean(AppConfig.ALLOW_MULTIPLE_SUBMISSIONS);
-		
+
 		if (sub.getState().isEditableByStudent()) {
 			// If the replace manuscript button is pressed - then delete the manuscript 
 			if (params.get("replacePrimary") != null) {
-				Attachment primaryDoc = sub.getPrimaryDocument();   
+				Attachment primaryDoc = sub.getPrimaryDocument();
 				if (primaryDoc != null) {
 					primaryDoc.archive();
 					primaryDoc.save();
 					sub.save();
 				}
 			}
-			
+
 			// Handle the remove supplementary document button 
 			if (params.get("removeAdditional") != null) {
-				removeAdditional(sub);           	            	
+				removeAdditional(sub);
 			}
-			
+
 			if(params.get("primaryDocument",File.class) != null) {
 				uploadPrimaryDocument(sub);
 				renderArgs.put("formSubmitter","replacePrimary");
-			}			
+			}
 			if(params.get("additionalDocument",File.class) != null) {
 				uploadAdditional(sub);
 				renderArgs.put("formSubmitter","removeAdditional");
 			}
-			
+
 			verify(sub);
-			
+
 			if (params.get("submit_corrections") != null && !validation.hasErrors()) {
 				try {
 					context.turnOffAuthorization();
@@ -242,7 +241,7 @@ public class Student extends AbstractVireoController {
 					sub.save();
 
 					correctionsComplete(sub.getId());
-					
+
 				} finally {
 					context.restoreAuthorization();
 
@@ -256,46 +255,46 @@ public class Student extends AbstractVireoController {
 		Attachment primaryDocument = sub.getPrimaryDocument();
 		List<Attachment> additionalDocuments = sub.getAttachmentsByType(AttachmentType.SUPPLEMENTAL,AttachmentType.SOURCE,AttachmentType.ADMINISTRATIVE);
 		List<Attachment> feedbackDocuments = sub.getAttachmentsByType(AttachmentType.FEEDBACK);
-		
+
 		for(FieldConfig field : FieldConfig.values()) {
 			renderArgs.put(field.name(),field );
 		}
-		
+
 		List<String> attachmentTypes = new ArrayList<String>();
 		for(AttachmentType type : AttachmentType.values()){
 			attachmentTypes.add(type.toString());
 		}
-		
+
 		// get all the custom actions available in the system
 		List<CustomActionDefinition> allActions = settingRepo.findAllCustomActionDefinition();
 		List<CustomActionDefinition> visibleActions = new ArrayList<CustomActionDefinition>();
-		
+
 		for(CustomActionDefinition action : allActions) {
 			if(action.isStudentVisible()) {
 				visibleActions.add(action);
 			}
 		}
-		
-		renderTemplate("Student/view.html",subId, sub, submitter, logs, primaryDocument, additionalDocuments, feedbackDocuments, allSubmissions, grantor, allowMultiple, attachmentTypes, visibleActions);		
+
+		renderTemplate("Student/view.html",subId, sub, submitter, logs, primaryDocument, additionalDocuments, feedbackDocuments, allSubmissions, grantor, allowMultiple, attachmentTypes, visibleActions);
 	}
 
 	/**
 	 * Splash screen after a student has submitted corrections.
-	 * 
+	 *
 	 * @param subId The submission
 	 */
 	@Security(RoleType.STUDENT)
 	public static void correctionsComplete(Long subId) {
-		
-		
+
+
 		// Get the post corrections instructions for display
 		String instructions = settingRepo.getConfigValue(AppConfig.CORRECTION_INSTRUCTIONS);
 		instructions = text2html(instructions);
-		
+
 		renderTemplate("Student/complete.html",instructions);
-		
+
 	}
-	
+
 	/**
 	 * Delete a given submission
 	 * 
@@ -490,7 +489,52 @@ public class Student extends AbstractVireoController {
 			error("File not found");
 		}
 	}
-	
+
+	/**
+	 * Student view of the submission. The form in all cases allows the student
+	 * to leave comments for reviewers.
+	 *
+	 * However, if the submission is in a state that allows editing by students
+	 * then they may modify the documents associated with the submission, before
+	 * confirming their corrections.
+	 *
+	 * @param token The submission id.
+	 */
+	@Security(RoleType.NONE)
+	public static void reviewAttachment(String token, Long attachmentId, String name) {
+		notFoundIfNull(token);
+
+		if (attachmentId == null)
+			error();
+
+		// Locate the submission
+		Submission sub = subRepo.findSubmissionByHash(token);
+		if (sub == null) {
+			error("Submission with hash: " + token + " was not found!");
+		}
+		notFoundIfNull(sub);
+
+		Attachment attachment = subRepo.findAttachment(attachmentId);
+		if (attachment == null)
+			error();
+		if (attachment.getSubmission() != sub)
+			unauthorized();
+		if (! attachment.getName().equals(name))
+			unauthorized();
+
+		response.setContentTypeIfNotSet(attachment.getMimeType());
+
+		// Fix problem with no-cache headers and ie8
+		response.setHeader("Pragma", "public");
+		response.setHeader("Cache-Control", "public");
+
+		try {
+			renderBinary(new FileInputStream(attachment.getFile()), attachment.getName(), attachment.getFile().length(), true);
+		} catch (FileNotFoundException ex) {
+			error("File not found");
+		}
+	}
+
 	/**
 	 * Verify that the user has supplied a primary document. This will be used
 	 * from both the fileUpload form and the confirmation page.

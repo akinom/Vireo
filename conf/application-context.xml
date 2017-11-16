@@ -516,6 +516,7 @@
   </bean>
   <bean id="ExcelExport" class="org.tdl.vireo.export.impl.ExcelPackagerImpl" scope="prototype">
     <property name="displayName" value="Excel Export" />
+    <property name="primaryDocUrl" value="http://localhost:9000/submit/review/token/attachmentId/name" />
     <property name="aggregated">
       <value type="java.lang.Boolean">true</value>
     </property>

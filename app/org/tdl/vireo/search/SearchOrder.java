@@ -59,7 +59,10 @@ public enum SearchOrder {
 	LAST_EVENT_ENTRY(35),
 	LAST_EVENT_TIME(36),
 	
-	ORCID(37);
+	ORCID(37),
+
+	PRIMARY_DOCUMENT_URL(38),
+	;
 
 	static SearchOrder[] enabled = { ID,
 			STUDENT_EMAIL,
@@ -74,6 +77,7 @@ public enum SearchOrder {
 			DOCUMENT_LANGUAGE,
 
 			PRIMARY_DOCUMENT,
+			PRIMARY_DOCUMENT_URL,
 
 			SUBMISSION_DATE,
 			APPROVAL_DATE,

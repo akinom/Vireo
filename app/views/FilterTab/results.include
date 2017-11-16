@@ -38,11 +38,11 @@ in results.
         %{
         int sql = 0;
         String viewTabUrl = play.mvc.Router.reverse("ViewTab.view").url;
-        
+
         def navArgs = new HashMap<String,Object>();
         navArgs.put("nav",nav);
         String modifyFilterURL = play.mvc.Router.reverse("FilterTab.ModifyFilters",navArgs).url;
-        
+
         
         for(def object : results.getResults()) {
                       
@@ -54,7 +54,7 @@ in results.
               log = object;
               sub = log.getSubmission();
            }
-           
+
            if("log".equals(nav)) {
            		if(log.isPrivate()) {
            			out.print("<tr class='private'>");
@@ -157,8 +157,20 @@ in results.
                      if (sub.getPrimaryDocument() != null)
                         out.print(sub.getPrimaryDocument().getName());
                      break;
+                 case PRIMARY_DOCUMENT_URL:
+                    String attachmentUrl = null;
+                    if (null != sub.getPrimaryDocument()) {
+                        def attachArgs = new HashMap<String,Object>();
+                        attachArgs.put("token",sub.getSubmissionHash());
+                        attachArgs.put("attachmentId",sub.getPrimaryDocument().getId());
+                        attachArgs.put("name",sub.getPrimaryDocument().getName());
+                        attachmentUrl = play.mvc.Router.getFullUrl("Student.reviewAttachment",attachArgs);
+                        out.print(attachmentUrl);
+                    }
+                    break;
+
                  case GRADUATION_DATE:
-                     String monthName = null;
+                     java.lang.String monthName = null;
                      if (sub.getGraduationMonth() != null && sub.getGraduationMonth() >= 0 && sub.getGraduationMonth() <= 11)
                         monthName = new java.text.DateFormatSymbols().getMonths()[sub.getGraduationMonth()]; 
                      if (sub.getGraduationYear() != null)
@@ -294,11 +306,11 @@ in results.
                  	if (sub.getOrcid() != null)
                  		out.print(sub.getOrcid());
                      break;
-
                      
              } // switch (column)
              out.print("</a></td>");
            } // for columns
+
            out.print("</tr>");
         } // for results.getResults()
         }%

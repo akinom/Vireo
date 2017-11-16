@@ -80,11 +80,16 @@ public class JpaSubmissionRepositoryImpl implements SubmissionRepository {
 	}
 
 	@Override
+	public Submission findSubmissionByHash(String hash) {
+		return JpaSubmissionImpl.find("submissionHash = (?1)", hash).first();
+	}
+
+	@Override
 	public List<Submission> findSubmission(Person submitter) {
 		return JpaSubmissionImpl.find("submitter = (?1)", submitter).fetch();
 
 	}
-	
+
 	@Override
 	public Iterator<Submission> findAllSubmissions() {
 		return new JpaIterator() {
