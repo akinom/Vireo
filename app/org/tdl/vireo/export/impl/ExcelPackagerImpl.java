@@ -35,6 +35,7 @@ import org.tdl.vireo.model.Submission;
 import org.tdl.vireo.search.SearchOrder;
 import org.tdl.vireo.services.StringVariableReplacement;
 
+import play.Play;
 import play.modules.spring.Spring;
 
 /**
@@ -209,7 +210,8 @@ public class ExcelPackagerImpl extends AbstractExcelPackagerImpl {
 			case PRIMARY_DOCUMENT_URL:
 				header.createCell(j).setCellValue("Primary document url");
 				if (null != sub.getPrimaryDocument()) {
-					String url = primaryDocUrl.replace("/token", "/" + sub.getSubmissionHash());
+					String url = Play.configuration.getProperty("base.url","http://localhost:9000");
+					url = (url + primaryDocUrl).replace("/token", "/" + sub.getSubmissionHash());
 					url = url.replace("/attachmentId", "/" + sub.getPrimaryDocument().getId());
 					url = url.replace("/name", "/" + sub.getPrimaryDocument().getName());
 					row.createCell(j).setCellValue(url);
