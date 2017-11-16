@@ -288,6 +288,7 @@ public class Student extends AbstractVireoController {
 	 *
 	 * @param token The submission id.
 	 */
+	@Security(RoleType.NONE)
 	public static void submissionReview(String token) {
 		notFoundIfNull(token);
 
