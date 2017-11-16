@@ -279,44 +279,6 @@ public class Student extends AbstractVireoController {
 	}
 
 	/**
-	 * Student view of the submission. The form in all cases allows the student
-	 * to leave comments for reviewers.
-	 *
-	 * However, if the submission is in a state that allows editing by students
-	 * then they may modify the documents associated with the submission, before
-	 * confirming their corrections.
-	 *
-	 * @param token The submission id.
-	 */
-	@Security(RoleType.NONE)
-	public static void submissionReview(String token) {
-		notFoundIfNull(token);
-
-		// Locate the submission
-		Submission sub = subRepo.findSubmissionByHash(token);
-
-		if (sub == null) {
-			error("Submission with hash: " + token + " was not found!");
-		}
-		notFoundIfNull(sub);
-
-		Person submitter = sub.getSubmitter();
-		Attachment attachment = sub.getPrimaryDocument();
-
-		response.setContentTypeIfNotSet(attachment.getMimeType());
-
-		// Fix problem with no-cache headers and ie8
-		response.setHeader("Pragma", "public");
-		response.setHeader("Cache-Control", "public");
-
-		try {
-			renderBinary(new FileInputStream(attachment.getFile()), attachment.getName(), attachment.getFile().length(), true);
-		} catch (FileNotFoundException ex) {
-			error("File not found");
-		}
-	}
-
-	/**
 	 * Splash screen after a student has submitted corrections.
 	 *
 	 * @param subId The submission
@@ -527,7 +489,52 @@ public class Student extends AbstractVireoController {
 			error("File not found");
 		}
 	}
-	
+
+	/**
+	 * Student view of the submission. The form in all cases allows the student
+	 * to leave comments for reviewers.
+	 *
+	 * However, if the submission is in a state that allows editing by students
+	 * then they may modify the documents associated with the submission, before
+	 * confirming their corrections.
+	 *
+	 * @param token The submission id.
+	 */
+	@Security(RoleType.NONE)
+	public static void reviewAttachment(String token, Long attachmentId, String name) {
+		notFoundIfNull(token);
+
+		if (attachmentId == null)
+			error();
+
+		// Locate the submission
+		Submission sub = subRepo.findSubmissionByHash(token);
+		if (sub == null) {
+			error("Submission with hash: " + token + " was not found!");
+		}
+		notFoundIfNull(sub);
+
+		Attachment attachment = subRepo.findAttachment(attachmentId);
+		if (attachment == null)
+			error();
+		if (attachment.getSubmission() != sub)
+			unauthorized();
+		if (! attachment.getName().equals(name))
+			unauthorized();
+
+		response.setContentTypeIfNotSet(attachment.getMimeType());
+
+		// Fix problem with no-cache headers and ie8
+		response.setHeader("Pragma", "public");
+		response.setHeader("Cache-Control", "public");
+
+		try {
+			renderBinary(new FileInputStream(attachment.getFile()), attachment.getName(), attachment.getFile().length(), true);
+		} catch (FileNotFoundException ex) {
+			error("File not found");
+		}
+	}
+
 	/**
 	 * Verify that the user has supplied a primary document. This will be used
 	 * from both the fileUpload form and the confirmation page.
