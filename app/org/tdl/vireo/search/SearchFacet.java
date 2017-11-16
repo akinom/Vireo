@@ -29,6 +29,8 @@ public enum SearchFacet {
 	// The id for this search facet.
 	private int id;
 
+	static SearchFacet[] enabled = { TEXT, STATE, DEPARTMENT, PROGRAM, DOCUMENT_TYPE, DATE_RANGE, ASSIGNEE };
+
 	/**
 	 * Private constructor for the defined search facet listed above.
 	 * 
@@ -62,4 +64,9 @@ public enum SearchFacet {
 
 		return null;
 	}
+
+	public static SearchFacet[] enabledValues() {
+		return enabled;
+	}
+
 }

@@ -280,7 +280,7 @@ jQuery(document).ready(function() {
                 <div class="span3">
                     <h4>Disabled Filters</h4>
                     <ul id="hiddenFacets" class="facetsSortable">
-                        #{list items:org.tdl.vireo.search.SearchFacet.values(), as:'facet'}
+                        #{list items:org.tdl.vireo.search.SearchFacet.enabledValues(), as:'facet'}
                         #{if !facets.contains(facet) }
                         <li id="facet_${facet.getId()}" class="originally-hidden">&{nav.toUpperCase()+'_FACET_'+facet.name()}</li>
                         #{/if}
