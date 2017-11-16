@@ -370,32 +370,6 @@
       </map>
     </property>
   </bean>
-  <bean id="ExcelPackageExport" class="org.tdl.vireo.export.impl.ExcelPackagerImpl" scope="prototype">
-    <property name="displayName" value="Excel Package Export" />
-    <property name="primaryDocUrl" value="/submit/review/token/attachmentId/name" />
-    <property name="aggregated">
-      <value type="java.lang.Boolean">false</value>
-    </property>
-    <property name="attachmentTypeNames">
-      <map>
-        <entry key="UNKNOWN">
-          <props></props>
-        </entry>
-        <entry key="PRIMARY">
-          <props></props>
-        </entry>
-        <entry key="SUPPLEMENTAL">
-          <props></props>
-        </entry>
-        <entry key="ARCHIVED">
-          <props></props>
-        </entry>
-        <entry key="SOURCE">
-          <props></props>
-        </entry>
-      </map>
-    </property>
-  </bean>
   <bean id="ExcelExport" class="org.tdl.vireo.export.impl.ExcelPackagerImpl" scope="prototype">
     <property name="displayName" value="Excel Export (with Document URLs)" />
     <property name="primaryDocUrl" value="/submit/review/token/attachmentId/name" />
