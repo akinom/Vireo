@@ -316,75 +316,6 @@
 			    </property>
 		    
      -->
-  <bean id="VireoExport" class="org.tdl.vireo.export.impl.TemplatePackagerImpl" scope="prototype">
-    <property name="personRepository" ref="PersonRepository" />
-    <property name="submissionRepository" ref="SubmissionRepository" />
-    <property name="settingsRepository" ref="SettingsRepository" />
-    <property name="proquestVocabularyRepository" ref="ProquestVocabularyRepository" />
-    <property name="displayName" value="Vireo Export" />
-    <property name="format" value="http://purl.org/dc/elements/1.1/" />
-    <property name="manifestTemplatePath" value="conf/formats/vireo.xml" />
-    <property name="manifestName" value="vireo.xml" />
-    <property name="attachmentTypeNames">
-      <map>
-        <entry key="UNKNOWN">
-          <props></props>
-        </entry>
-        <entry key="PRIMARY">
-          <props></props>
-        </entry>
-        <entry key="SUPPLEMENTAL">
-          <props></props>
-        </entry>
-        <entry key="LICENSE">
-          <props></props>
-        </entry>
-        <entry key="ARCHIVED">
-          <props></props>
-        </entry>
-        <entry key="FEEDBACK">
-          <props></props>
-        </entry>
-        <entry key="SOURCE">
-          <props></props>
-        </entry>
-        <entry key="ADMINISTRATIVE">
-          <props></props>
-        </entry>
-      </map>
-    </property>
-  </bean>
-  <bean id="DSpaceMETS" class="org.tdl.vireo.export.impl.TemplatePackagerImpl" scope="prototype">
-    <property name="personRepository" ref="PersonRepository" />
-    <property name="submissionRepository" ref="SubmissionRepository" />
-    <property name="settingsRepository" ref="SettingsRepository" />
-    <property name="proquestVocabularyRepository" ref="ProquestVocabularyRepository" />
-    <property name="displayName" value="DSpace METS" />
-    <property name="format" value="http://purl.org/net/sword-types/METSDSpaceSIP" />
-    <property name="manifestTemplatePath" value="conf/formats/dspace_mets.xml" />
-    <property name="manifestName" value="mets.xml" />
-    <property name="manifestTemplateArguments">
-      <util:map>
-        <entry key="agent" value="Vireo DSpace METS packager" />
-      </util:map>
-    </property>
-    <property name="attachmentTypeNames">
-      <map>
-        <entry key="PRIMARY">
-          <props></props>
-        </entry>
-        <entry key="SUPPLEMENTAL">
-          <props></props>
-        </entry>
-        <entry key="LICENSE">
-          <props></props>
-        </entry>
-        <entry key="SOURCE">
-          <props></props>
-        </entry>
-      </map>
-    </property>
-  </bean>
   <bean id="DSpaceSimpleArchive" class="org.tdl.vireo.export.impl.MultipleTemplatePackagerImpl" scope="prototype">
     <property name="personRepository" ref="PersonRepository" />
     <property name="submissionRepository" ref="SubmissionRepository" />
@@ -400,32 +331,6 @@
         <entry key="contents" value="conf/formats/dspace_simple.xml" />
       </util:map>
     </property>
-    <property name="attachmentTypeNames">
-      <map>
-        <entry key="PRIMARY">
-          <props></props>
-        </entry>
-        <entry key="SUPPLEMENTAL">
-          <props></props>
-        </entry>
-        <entry key="LICENSE">
-          <props></props>
-        </entry>
-        <entry key="SOURCE">
-          <props></props>
-        </entry>
-      </map>
-    </property>
-  </bean>
-  <bean id="GenericQDC" class="org.tdl.vireo.export.impl.TemplatePackagerImpl" scope="prototype">
-    <property name="personRepository" ref="PersonRepository" />
-    <property name="submissionRepository" ref="SubmissionRepository" />
-    <property name="settingsRepository" ref="SettingsRepository" />
-    <property name="proquestVocabularyRepository" ref="ProquestVocabularyRepository" />
-    <property name="displayName" value="Generic Qualified Dublin Core" />
-    <property name="format" value="http://purl.org/dc/elements/1.1/" />
-    <property name="manifestTemplatePath" value="conf/formats/qdc.xml" />
-    <property name="manifestName" value="metadata.xml" />
     <property name="attachmentTypeNames">
       <map>
         <entry key="PRIMARY">
@@ -462,23 +367,12 @@
         <entry key="ARCHIVED">
           <props></props>
         </entry>
-        <entry key="FEEDBACK">
-          <props></props>
-        </entry>
-        <entry key="SOURCE">
-          <props></props>
-        </entry>
-        <entry key="ADMINISTRATIVE">
-          <props></props>
-        </entry>
-        <entry key="ACTIONLOG">
-          <props></props>
-        </entry>
       </map>
     </property>
   </bean>
   <bean id="ExcelPackageExport" class="org.tdl.vireo.export.impl.ExcelPackagerImpl" scope="prototype">
     <property name="displayName" value="Excel Package Export" />
+    <property name="primaryDocUrl" value="/submit/review/token/attachmentId/name" />
     <property name="aggregated">
       <value type="java.lang.Boolean">false</value>
     </property>
@@ -493,123 +387,20 @@
         <entry key="SUPPLEMENTAL">
           <props></props>
         </entry>
-        <entry key="LICENSE">
-          <props></props>
-        </entry>
         <entry key="ARCHIVED">
           <props></props>
         </entry>
-        <entry key="FEEDBACK">
-          <props></props>
-        </entry>
         <entry key="SOURCE">
-          <props></props>
-        </entry>
-        <entry key="ADMINISTRATIVE">
-          <props></props>
-        </entry>
-        <entry key="ACTIONLOG">
           <props></props>
         </entry>
       </map>
     </property>
   </bean>
   <bean id="ExcelExport" class="org.tdl.vireo.export.impl.ExcelPackagerImpl" scope="prototype">
-    <property name="displayName" value="Excel Export" />
+    <property name="displayName" value="Excel Export (with Document URLs)" />
     <property name="primaryDocUrl" value="/submit/review/token/attachmentId/name" />
     <property name="aggregated">
       <value type="java.lang.Boolean">true</value>
     </property>
   </bean>
-  <bean id="Marc21" class="org.tdl.vireo.export.impl.TemplatePackagerImpl" scope="prototype">
-    <property name="personRepository" ref="PersonRepository" />
-    <property name="submissionRepository" ref="SubmissionRepository" />
-    <property name="settingsRepository" ref="SettingsRepository" />
-    <property name="proquestVocabularyRepository" ref="ProquestVocabularyRepository" />
-    <property name="displayName" value="MARC21" />
-    <property name="mimeType" value="text/plain" />
-    <property name="format" value="http://www.loc.gov/marc/umb/um11to12.html" />
-    <property name="manifestTemplatePath" value="conf/formats/marc21.xml" />
-    <property name="manifestName" value="marc21.bib" />
-  </bean>
-  <bean id="MarcXML21" class="org.tdl.vireo.export.impl.TemplatePackagerImpl" scope="prototype">
-    <property name="personRepository" ref="PersonRepository" />
-    <property name="submissionRepository" ref="SubmissionRepository" />
-    <property name="settingsRepository" ref="SettingsRepository" />
-    <property name="proquestVocabularyRepository" ref="ProquestVocabularyRepository" />
-    <property name="displayName" value="MARC21 XML" />
-    <property name="mimeType" value="text/xml" />
-    <property name="format" value="http://www.loc.gov/MARC21/slim" />
-    <property name="manifestTemplatePath" value="conf/formats/marc21slim.xml" />
-    <property name="manifestName" value="marc.xml" />
-  </bean>
-  <bean id="MODS" class="org.tdl.vireo.export.impl.TemplatePackagerImpl" scope="prototype">
-    <property name="personRepository" ref="PersonRepository" />
-    <property name="submissionRepository" ref="SubmissionRepository" />
-    <property name="settingsRepository" ref="SettingsRepository" />
-    <property name="proquestVocabularyRepository" ref="ProquestVocabularyRepository" />
-    <property name="displayName" value="MODS" />
-    <property name="format" value="http://www.loc.gov/standards/mods/v3/mods.xsd" />
-    <property name="manifestTemplatePath" value="conf/formats/mods.xml" />
-    <property name="manifestName" value="mods.xml" />
-    <property name="attachmentTypeNames">
-      <map>
-        <entry key="PRIMARY">
-          <props></props>
-        </entry>
-        <entry key="SUPPLEMENTAL">
-          <props></props>
-        </entry>
-        <entry key="LICENSE">
-          <props></props>
-        </entry>
-        <entry key="SOURCE">
-          <props></props>
-        </entry>
-      </map>
-    </property>
-  </bean>
-  <bean id="Proquest" class="org.tdl.vireo.export.impl.TemplatePackagerImpl" scope="prototype">
-    <property name="personRepository" ref="PersonRepository" />
-    <property name="submissionRepository" ref="SubmissionRepository" />
-    <property name="settingsRepository" ref="SettingsRepository" />
-    <property name="packageType" value="zip" />
-    <property name="proquestVocabularyRepository" ref="ProquestVocabularyRepository" />
-    <property name="displayName" value="ProQuest UMI" />
-    <property name="format" value="http://www.proquest.com/assets/downloads/products/ftp_submissions.pdf" />
-    <property name="manifestTemplatePath" value="conf/formats/ProquestUMI.xml" />
-    <property name="manifestName" value="{LAST_NAME}_{FIRST_NAME}_DATA.xml" />
-    <property name="entryName" value="upload_{LAST_NAME}_{FIRST_NAME}" />
-    <property name="attachmentTypeNames">
-      <map>
-        <entry key="PRIMARY">
-          <props>
-            <prop key="customName">{LAST_NAME}_{FIRST_NAME}</prop>
-          </props>
-        </entry>
-        <entry key="SUPPLEMENTAL">
-          <props>
-            <prop key="customName">supp_file_{FILE_NAME}</prop>
-            <prop key="directory">{LAST_NAME}_{FIRST_NAME}_media{SEPARATOR}</prop>
-          </props>
-        </entry>
-        <entry key="LICENSE">
-          <props>
-            <prop key="directory">{LAST_NAME}_{FIRST_NAME}_permission{SEPARATOR}</prop>
-          </props>
-        </entry>
-      </map>
-    </property>
-  </bean>
-  <bean id="ORCID" class="org.tdl.vireo.export.impl.TemplatePackagerImpl" scope="prototype">
-    <property name="personRepository" ref="PersonRepository" />
-    <property name="submissionRepository" ref="SubmissionRepository" />
-    <property name="settingsRepository" ref="SettingsRepository" />
-    <property name="proquestVocabularyRepository" ref="ProquestVocabularyRepository" />
-    <property name="displayName" value="ORCID Work" />
-    <property name="mimeType" value="text/xml" />
-    <property name="format" value="http://orcid.github.com/ORCID-Parent/schemas/orcid-message/1.0.10/orcid-message-1.0.10.xsd" />
-    <property name="manifestTemplatePath" value="conf/formats/orcid.xml" />
-    <property name="manifestName" value="orcid.xml" />
-  </bean>
-</beans>
+ </beans>
