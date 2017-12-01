@@ -100,6 +100,8 @@ cp sendmail.authinfo /etc/mail/authinfo
 # add before MAIL(smtp)dnl  directive 
 
 cd /etc/mail
+edit  /etc/sysconfig/sendmail
+decrease QUEUE value  eg 2m for every 2 minutes 
 chmod 600 /etc/mail/authinfo
 makemap hash /etc/mail/authinfo < /etc/mail/authinfo
 newaliases
@@ -134,4 +136,11 @@ amzn-ami-hvm-2017.03.1.20170812-x86_64-gp2 (ami-4fffc834)
 Description Amazon Linux AMI 2017.03.1.20170812 x86_64 HVM GP2
 Platform Amazon Linux
 
+# --------------------
+# Shibboleth
+# --------------------
+https://github.com/TexasDigitalLibrary/Vireo/wiki/Install
+http://idmintegration.com/blog/shibboleth-sp-install-amazon-ami-linux/
+yum install rpmdevtools rpm-build
+yum install automake boost-devel chrpath doxygen gcc-c++ groff httpd-devel libidn-devel openldap-devel openssl-devel redhat-rpm-config stunnel unixODBC-devel
 

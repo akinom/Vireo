@@ -1,0 +1,88 @@
+<!--
+This is example metadata only. Do *NOT* supply it as is without review,
+and do *NOT* provide it in real time to your partners.
+ -->
+<md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" ID="_d3dfb5d6c3ecbfa9971fcc449a77e9773d2e6ffd" entityID="https://ec2-34-235-93-123.compute-1.amazonaws.com/shibboleth">
+
+  <md:Extensions xmlns:alg="urn:oasis:names:tc:SAML:metadata:algsupport">
+    <alg:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha512"/>
+    <alg:DigestMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#sha384"/>
+    <alg:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/>
+    <alg:DigestMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#sha224"/>
+    <alg:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+    <alg:SigningMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha512"/>
+    <alg:SigningMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha384"/>
+    <alg:SigningMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha256"/>
+    <alg:SigningMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha224"/>
+    <alg:SigningMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha512"/>
+    <alg:SigningMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha384"/>
+    <alg:SigningMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"/>
+    <alg:SigningMethod Algorithm="http://www.w3.org/2009/xmldsig11#dsa-sha256"/>
+    <alg:SigningMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha1"/>
+    <alg:SigningMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+    <alg:SigningMethod Algorithm="http://www.w3.org/2000/09/xmldsig#dsa-sha1"/>
+  </md:Extensions>
+
+  <md:SPSSODescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol urn:oasis:names:tc:SAML:1.1:protocol urn:oasis:names:tc:SAML:1.0:protocol">
+    <md:Extensions>
+      <init:RequestInitiator xmlns:init="urn:oasis:names:tc:SAML:profiles:SSO:request-init" Binding="urn:oasis:names:tc:SAML:profiles:SSO:request-init" Location="http://thesis-central-qa.aws.princeton.edu/Shibboleth.sso/Login"/>
+    </md:Extensions>
+    <md:KeyDescriptor>
+      <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+        <ds:KeyName>ec2-34-235-93-123.compute-1.amazonaws.com</ds:KeyName>
+        <ds:X509Data>
+          <ds:X509SubjectName>CN=ec2-34-235-93-123.compute-1.amazonaws.com</ds:X509SubjectName>
+          <ds:X509Certificate>MIIEQjCCAqqgAwIBAgIJAJcXnAxpb0D6MA0GCSqGSIb3DQEBCwUAMDQxMjAwBgNV
+BAMTKWVjMi0zNC0yMzUtOTMtMTIzLmNvbXB1dGUtMS5hbWF6b25hd3MuY29tMB4X
+DTE3MTIxMjIwNDYyMloXDTI3MTIxMDIwNDYyMlowNDEyMDAGA1UEAxMpZWMyLTM0
+LTIzNS05My0xMjMuY29tcHV0ZS0xLmFtYXpvbmF3cy5jb20wggGiMA0GCSqGSIb3
+DQEBAQUAA4IBjwAwggGKAoIBgQDhswuQx/Zyevb7Q0+I+h6jGAowY6KgsTsSqdp4
+BMmXkjHHnoGw+MZHpIZY65GwnGCZgkVcXET/Y87aFngm+fLamiuRb1uvNsY8aluH
+KPQmeRIYythJX1pMcBle3c5DkRqgOsC2NZSTqdnPl4P2581lyDiBxCECgq/Y1Ld/
+fvsL+CHXB2xnNlDnJQN0QbEstWR9etq3KM5wePC0o2ApQ4WFnTaXDfS5Kx3jGaDL
+39MYInyife6DzJfNVd7BxM4u0CvbSXr/zB0RExcer+ReEWYBIJrTCH6YCmJvjtJz
+1rY2cc/Fa1ZuTO9TzYslXxxB5uoV5Z19qGKzRTu1B8xS8QTVKCMvvDVTluykN5Ub
+roWF+4MENd0Ukx8gjLXqjjgFAgCoijDovSlspqGTKIBQBObzH9ZHVTENYHN0MMHi
+l4uRLFRCiQwOcm3+d+a0OyzqrMHhWJDnPtyDIcpalQOk68PAWNaDlJ9aOwW+vDRu
+AWyT3H0YHYeYypFuzZSqhta+59ECAwEAAaNXMFUwNAYDVR0RBC0wK4IpZWMyLTM0
+LTIzNS05My0xMjMuY29tcHV0ZS0xLmFtYXpvbmF3cy5jb20wHQYDVR0OBBYEFIi0
+ugiyHCTs/BTfFiS/O+a4/bPnMA0GCSqGSIb3DQEBCwUAA4IBgQCcsMT8aMiHCFXr
+tn56+hdBkT1UneS+DySwSymtiyoLh7kKIQFATlYJPcyMR0BfysEaWZROEij9v+Nj
+2KJwRGjNEIyQtk950JbQLrNgFWm9owr6MzpX3UHume1pxmt2LKruy0FHo/pXwE1H
+eyBj6jZX0nRtnU5ibobJmyljwVXAAzp1qnzqW4axLTrsCqwIswiIUMsFfFuVYtbw
+IZVJ2F8lixQPHWt2mKaiUz3U9bIADDhwzwHSA/lVENOxAVYaZeEVP6pzztcLrC9l
+pIBpT1vscZZz/aXzJud0o0UnNpD0SX/994qrhs7qAaTe+ZTlrZAaNVcM6HeoI/WJ
+B/PbqzbFlDt4NsQb+MiSnjXajIvxGdLVYTTnGoOmGAMc9kkg79I7Szi0i53T3Nyk
+NLZMVqtwDu+I1tgrLl4SstDAxHHoB9Lmq3vqMOQVJVXbVJ4Rt7+KaVJ2mip5azsQ
+RNIzmiOVjDCla6OW74eblEx1ll0Obxf8nNT7wE0oivUX+KfdIYU=
+</ds:X509Certificate>
+        </ds:X509Data>
+      </ds:KeyInfo>
+      <md:EncryptionMethod Algorithm="http://www.w3.org/2009/xmlenc11#aes128-gcm"/>
+      <md:EncryptionMethod Algorithm="http://www.w3.org/2009/xmlenc11#aes192-gcm"/>
+      <md:EncryptionMethod Algorithm="http://www.w3.org/2009/xmlenc11#aes256-gcm"/>
+      <md:EncryptionMethod Algorithm="http://www.w3.org/2001/04/xmlenc#aes128-cbc"/>
+      <md:EncryptionMethod Algorithm="http://www.w3.org/2001/04/xmlenc#aes192-cbc"/>
+      <md:EncryptionMethod Algorithm="http://www.w3.org/2001/04/xmlenc#aes256-cbc"/>
+      <md:EncryptionMethod Algorithm="http://www.w3.org/2001/04/xmlenc#tripledes-cbc"/>
+      <md:EncryptionMethod Algorithm="http://www.w3.org/2009/xmlenc11#rsa-oaep"/>
+      <md:EncryptionMethod Algorithm="http://www.w3.org/2001/04/xmlenc#rsa-oaep-mgf1p"/>
+    </md:KeyDescriptor>
+    <md:ArtifactResolutionService Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP" Location="http://thesis-central-qa.aws.princeton.edu/Shibboleth.sso/Artifact/SOAP" index="1"/>
+    <md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP" Location="http://thesis-central-qa.aws.princeton.edu/Shibboleth.sso/SLO/SOAP"/>
+    <md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="http://thesis-central-qa.aws.princeton.edu/Shibboleth.sso/SLO/Redirect"/>
+    <md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="http://thesis-central-qa.aws.princeton.edu/Shibboleth.sso/SLO/POST"/>
+    <md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact" Location="http://thesis-central-qa.aws.princeton.edu/Shibboleth.sso/SLO/Artifact"/>
+    <md:ManageNameIDService Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP" Location="http://thesis-central-qa.aws.princeton.edu/Shibboleth.sso/NIM/SOAP"/>
+    <md:ManageNameIDService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="http://thesis-central-qa.aws.princeton.edu/Shibboleth.sso/NIM/Redirect"/>
+    <md:ManageNameIDService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="http://thesis-central-qa.aws.princeton.edu/Shibboleth.sso/NIM/POST"/>
+    <md:ManageNameIDService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact" Location="http://thesis-central-qa.aws.princeton.edu/Shibboleth.sso/NIM/Artifact"/>
+    <md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="http://thesis-central-qa.aws.princeton.edu/Shibboleth.sso/SAML2/POST" index="1"/>
+    <md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST-SimpleSign" Location="http://thesis-central-qa.aws.princeton.edu/Shibboleth.sso/SAML2/POST-SimpleSign" index="2"/>
+    <md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact" Location="http://thesis-central-qa.aws.princeton.edu/Shibboleth.sso/SAML2/Artifact" index="3"/>
+    <md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:PAOS" Location="http://thesis-central-qa.aws.princeton.edu/Shibboleth.sso/SAML2/ECP" index="4"/>
+    <md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:1.0:profiles:browser-post" Location="http://thesis-central-qa.aws.princeton.edu/Shibboleth.sso/SAML/POST" index="5"/>
+    <md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:1.0:profiles:artifact-01" Location="http://thesis-central-qa.aws.princeton.edu/Shibboleth.sso/SAML/Artifact" index="6"/>
+  </md:SPSSODescriptor>
+
+</md:EntityDescriptor>
