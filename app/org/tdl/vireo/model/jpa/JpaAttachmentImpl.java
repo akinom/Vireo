@@ -415,15 +415,9 @@ public class JpaAttachmentImpl extends JpaAbstractModel<JpaAttachmentImpl> imple
 		if (namePart == null)
 			// Lastly fall back to the word primary if we don't have a student name;
 			namePart = "primary";
-		
-		String docPart = null;
-		if (submission.getDocumentType() != null && submission.getDocumentType().trim().length() > 0)
-			// Use the document type
-			docPart = submission.getDocumentType();
-		if (docPart == null)
-			// If no document type then, just use the word "document"
-			docPart = "document";
-		
+
+		String docPart = "thesis";
+
 		String yearPart = null;
 		if (submission.getGraduationYear() != null)
 			// Add the year if helpfull
