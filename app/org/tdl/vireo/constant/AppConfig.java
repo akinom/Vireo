@@ -88,6 +88,7 @@ public class AppConfig {
 
 	/** Instructions to show on students submission list/manage view */
 	public final static String STUDENT_SUBMISSION_LIST_INSTRUCTIONS = "student_submission_list";
+	public final static String STUDENT_SUBMISSION_START_NEW_INSTRUCTIONS = "student_submission_start_new";
 
 	/** Instructions to show on students submission steps */
 	public final static String STUDENT_SUBMISSION_PERSONAL_INFO_STEP = "student_submission_personal_info_step";
