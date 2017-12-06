@@ -86,6 +86,9 @@ telnet localhost 25
 # should return something like 
 # 220 YourServer.Princeton.EDU ESMTP Sendmail 8.14.4/8.12.9; Tue, 24 Oct 2017 15:10:55 -0400
 
+# configure retry interval in /etc/sysconfig/sendmail 
+QUEUE=2m
+ 
 cd /etc/mail
 git init . 
 git add `find . -name f`
