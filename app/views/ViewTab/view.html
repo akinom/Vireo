@@ -433,7 +433,7 @@ if (org.tdl.vireo.model.RoleType.getPersonRole(currentUser) == org.tdl.vireo.mod
 
                 <div id="committeeMembers" class="edit-box pull-left" data-roles='[#{list items:roles, as:'role'}"${role}"${ role_isLast ? "" : ","}#{/list}]'>
                     <ul class="unstyled">
-                        <li><b>Advisors:</b>
+                        <li><b>Advisers:</b>
                             <ul class="unstyled" style="padding:10px 0 0 30px;">
 							#{if submission.getCommitteeMembers()}
 								#{list items:submission.getCommitteeMembers(), as:'value'}
@@ -452,7 +452,7 @@ if (org.tdl.vireo.model.RoleType.getPersonRole(currentUser) == org.tdl.vireo.mod
 
 								#{/list}
 							#{/if}
-                                <li id="add_new_member"><button class="btn">Add New Member</button></li>
+                                <li id="add_new_member"><button class="btn">Add Adviser</button></li>
                             </ul></li>
                     </ul>
                 </div>
@@ -575,7 +575,7 @@ if (org.tdl.vireo.model.RoleType.getPersonRole(currentUser) == org.tdl.vireo.mod
 							class="date empty"><i class="icon-pencil"></i> none
 						#{/else}
 						</span></li>
-					<li class="edit"><label>Advisor Email:</label><span id="advisorEmail"
+					<li class="edit"><label>Adviser Email:</label><span id="advisorEmail"
 						#{if submission.getCommitteeContactEmail()}
 							><i class="icon-pencil"></i> ${submission.getCommitteeContactEmail()}
 						#{/if}#{else}
@@ -583,7 +583,7 @@ if (org.tdl.vireo.model.RoleType.getPersonRole(currentUser) == org.tdl.vireo.mod
 						#{/else}
 						</span></li>
 					#{if submission.getCommitteeContactEmail() && submission.getCommitteeEmailHash()}
-					<li><label></label><span><form action="@{ViewTab.sendAdvisorEmail(submission.getId())}" method="POST"><input type="submit" class="btn" value="Send Advisor Email" /></form></span></li>
+					<li><label></label><span><form action="@{ViewTab.sendAdvisorEmail(submission.getId())}" method="POST"><input type="submit" class="btn" value="Send Adviser Email" /></form></span></li>
 					#{/if}
 				</ul>				
 			</div>

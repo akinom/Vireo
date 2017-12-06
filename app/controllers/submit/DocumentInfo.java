@@ -687,7 +687,7 @@ public class DocumentInfo extends AbstractSubmitStep {
 		}
 
 		if (!atLeastOneMember)
-			validation.addError("committee", "You must specify at least one advisor.");
+			validation.addError("committee", "You must specify at least one adviser.");
 		
 		return true;
 	}
