@@ -109,7 +109,7 @@ jQuery(document).ready(function(){
 	/*
 	 * Remove a committee member
 	 */
-	 jQuery(".remove-committee-member").live("click", function(){
+	 jQuery(".remove-committee-member").live("click", function(){FFirst
 		 if (jQuery(this).text().indexOf("Are you sure?") >= 0) {
 			 removeCommitteeMemberHandler(removeCommitteeMemberJSONURL, jQuery(this));			 
 		 } else {
@@ -479,16 +479,16 @@ if (org.tdl.vireo.model.RoleType.getPersonRole(currentUser) == org.tdl.vireo.mod
                             class="autocomplete empty"><i class="icon-pencil"></i> none
 						#{/else}
                         </span></li>
-                        <li class="edit"><label>Department:</label><span id="department"
+                        <li class="${editKlass}"><label>Department:</label><span id="department"
 						#{if submission.getDepartment()}
-                                                                         class="autocomplete"><i class="icon-pencil"></i> ${submission.getDepartment()}
+                                                                         class="autocomplete"><i class="${pencil}"></i> ${submission.getDepartment()}
 						#{/if}#{else}
                             class="autocomplete empty"><i class="icon-pencil"></i> none
 						#{/else}
                         </span></li>
-                        <li class="edit"><label>Thesis Type:</label><span id="college"
+                        <li class="${editKlass}"><label>Thesis Type:</label><span id="college"
 						#{if submission.getCollege()}
-                                                                          class="autocomplete"><i class="icon-pencil"></i> ${submission.getCollege()}
+                                                                          class="autocomplete"><i class="${pencil}"></i> ${submission.getCollege()}
 						#{/if}#{else}
                             class="autocomplete empty"><i class="icon-pencil"></i> none
 						#{/else}
