@@ -84,6 +84,7 @@ public class ThemeSettingsTabTest extends AbstractVireoFunctionalTest {
 		fields.add(SUBMIT_INSTRUCTIONS);
 		fields.add(CORRECTION_INSTRUCTIONS);
 		fields.add(STUDENT_SUBMISSION_LIST_INSTRUCTIONS);
+		fields.add(STUDENT_SUBMISSION_START_NEW_INSTRUCTIONS);
 		fields.add(STUDENT_SUBMISSION_PERSONAL_INFO_STEP);
 		fields.add(STUDENT_SUBMISSION_LICENSE_STEP);
 		fields.add(STUDENT_SUBMISSION_DOCUMENT_STEP);

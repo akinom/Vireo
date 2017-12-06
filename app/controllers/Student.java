@@ -12,6 +12,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -93,8 +94,9 @@ public class Student extends AbstractVireoController {
 		// Get the instructions for the Manage Submissions page
 		String instructions = settingRepo.getConfigValue(AppConfig.STUDENT_SUBMISSION_LIST_INSTRUCTIONS);
 		instructions = text2html(instructions);
-
-		renderTemplate("Student/list.html",submissions, subStatus, instructions);
+		String instructions_start_new = settingRepo.getConfigValue(AppConfig.STUDENT_SUBMISSION_START_NEW_INSTRUCTIONS);
+		instructions_start_new = text2html(instructions_start_new);
+		renderTemplate("Student/list.html",submissions, subStatus, instructions, instructions_start_new);
 	}
 	
 	/**

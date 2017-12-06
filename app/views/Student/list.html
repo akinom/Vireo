@@ -129,20 +129,21 @@ function startNewSub() {
 				</td>
 	        </tr>
         #{/list}
+        <tr>
+            <td colspan="4">
+			#{verbatim}${ instructions_start_new }#{/verbatim}
+            </td>
+            <td>
+            #{if subStatus.getAllowMultiple() || !subStatus.getHasSubmissions()}
+                    <a href="javascript:void(0)" onclick="checkBeforeNewSub()" class="btn btn-primary">Make Additional Submission</a>
+            #{/if}
+            #{else}
+            <p class="alert alert-error">You've already submitted an ETD or have one in progress!</p>
+            #{/else}
+            </td>
+        </tr>
         </tbody>
 	</table>
-	#{if subStatus.getSubmissionsOpen()}
-		#{if subStatus.getAllowMultiple() || !subStatus.getHasSubmissions()}
-		<div class="form-actions row center">
-			<a href="javascript:void(0)" onclick="checkBeforeNewSub()" class="btn btn-primary">Start a new submission</a>
-		</div>
-		#{/if}
-		#{else}
-		<div class="form-actions row center">
-			<p class="alert alert-error">You've already submitted an ETD or have one in progress!</p>
-		</div>
-		#{/else}
-	#{/if}
 </div>
 
 <div class="modal fade" id="checkBeforeNewSub-modal">
