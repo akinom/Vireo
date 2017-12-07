@@ -114,3 +114,22 @@ testing testing
 .
 
 # commit changes if success 
+
+
+# ---------------
+# SHIBBOLETH 
+# ---------------
+I found info on installing Shibboleth on Amazon at http://idmintegration.com/blog/shibboleth-sp-install-amazon-ami-linux/
+
+t points to http://download.opensuse.org/repositories/security://shibboleth/RHEL_6/src/
+list el6  rpms - the latest is http://download.opensuse.org/repositories/security://shibboleth/RHEL_6/src/shibboleth-2.6.1-3.1.el6.src.rpm.mirrorlist
+
+on my EC2 instance uname tells me 
+Linux ec2-34-235-93-123.compute-1.amazonaws.com 4.9.43-17.38.amzn1.x86_64 #1 SMP Thu Aug 17 00:20:39 UTC 2017 x86_64 x86_64 x86_64 GNU/Linux
+
+On the AMAZON console my instale says, based on AMI: 
+amzn-ami-hvm-2017.03.1.20170812-x86_64-gp2 (ami-4fffc834)
+Description Amazon Linux AMI 2017.03.1.20170812 x86_64 HVM GP2
+Platform Amazon Linux
+
+
