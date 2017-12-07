@@ -1,10 +1,10 @@
-# Princeton Universiy's THesis Central System  #
+# Princeton Universiy's Thesis Central System  #
 
 ## About Thesis Central   ##
 
 Thesis Central is used by Princeton University for  undergraduates to submit their senior thesis. 
 
-Thes system is based on TDL Vireo's system. For more information on Vireo, visit the 
+This system is based on TDL Vireo's system. For more information on Vireo, visit the 
 [Github Project page for Vireo](https://github.com/TexasDigitalLibrary/Vireo)
 OR
 [Github Project wiki for Vireo](https://github.com/TexasDigitalLibrary/Vireo/wiki)
