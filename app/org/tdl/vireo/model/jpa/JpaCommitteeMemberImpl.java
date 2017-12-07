@@ -74,9 +74,9 @@ public class JpaCommitteeMemberImpl extends
 		if (lastName != null && lastName.trim().length() == 0)
 			lastName = null;
 
-		if (firstName == null && lastName == null)
+		if (firstName == null || lastName == null)
 			throw new IllegalArgumentException(
-					"Either a first or a last name is required.");
+					"A first and a last name is required.");
 
 		assertReviewerOrOwner(submission.getSubmitter());
 
@@ -96,9 +96,9 @@ public class JpaCommitteeMemberImpl extends
 		// Do the check to ensure that there it at least a first or a last name
 		// available.
 		if ((firstName == null || firstName.length() == 0)
-				&& (lastName == null || lastName.length() == 0))
+				|| (lastName == null || lastName.length() == 0))
 			throw new IllegalArgumentException(
-					"Either a first or a last name is required.");
+					"A first and a last name is required.");
 
 		boolean newObject = false;
 		if (id == null)

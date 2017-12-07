@@ -98,25 +98,21 @@ public class JpaCommitteeMemberImplTests extends UnitTest {
 	 */
 	@Test
 	public void testBadCreateMember() {
-		
+
 		try {
 			sub.addCommitteeMember(null, null, "middle");
 			fail("able to create a member without a first or last name.");
 		} catch (IllegalArgumentException iae) { /* yay */ }
+		try {
+			sub.addCommitteeMember("first", null, "middle");
+			fail("able to create a member with just a first name");
+		} catch (IllegalArgumentException iae) { /* yay */ }
+		try {
+			sub.addCommitteeMember(null, "last", "middle");
+			fail("able to create a member with just a last name");
+		} catch (IllegalArgumentException iae) { /* yay */ }
 	}
-	
-	/**
-	 * Test creating a member with just a first or last name.
-	 */
-	@Test
-	public void testCreateSingleNamedMember() {
-		CommitteeMember justFirst = sub.addCommitteeMember("first", null, null).save();
 
-		CommitteeMember justLast = sub.addCommitteeMember(null, "last", null).save();
-		
-		justFirst.delete();
-		justLast.delete();
-	}
 	
 	/**
 	 * Test that saved members have ids.
