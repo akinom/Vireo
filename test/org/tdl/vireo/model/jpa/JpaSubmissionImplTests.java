@@ -87,7 +87,7 @@ public class JpaSubmissionImplTests extends UnitTest {
 
 		assertNotNull(sub);
 		assertEquals(person,sub.getSubmitter());
-		
+		assertNotNull(sub.getSubmissionHash());
 		sub.delete();
 	}
 	

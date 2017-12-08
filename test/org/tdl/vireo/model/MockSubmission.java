@@ -42,6 +42,7 @@ public class MockSubmission extends AbstractMock implements Submission {
 	public String committeeEmailHash;
 	public Date committeeApprovalDate;
 	public Date committeeEmbargoApprovalDate;
+	public String submissionHash;
 	public Date submissionDate;
 	public Date approvalDate;
 	public Date licenseAgreementDate;
@@ -320,6 +321,17 @@ public class MockSubmission extends AbstractMock implements Submission {
 				return attachment;
 		}
 		return null;
+	}
+
+	@Override
+	public String getSubmissionHash() {
+		return submissionHash;
+
+	}
+
+	@Override
+	public void setSubmissionHash(String hash) {
+		submissionHash = hash;
 	}
 
 	@Override

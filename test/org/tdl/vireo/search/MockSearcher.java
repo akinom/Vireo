@@ -138,6 +138,11 @@ public class MockSearcher implements Searcher {
 		}
 
 		@Override
+		public Submission findSubmissionByHash(String hash) {
+			return null;
+		}
+
+		@Override
 		public Submission findSubmissionByEmailHash(String emailHash) {
 			return null;
 		}

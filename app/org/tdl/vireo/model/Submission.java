@@ -290,7 +290,19 @@ public interface Submission extends AbstractModel {
 	 * @return the specific attachment
 	 */
 	public Attachment findAttachmentByName(String name);
-	
+
+	/**
+	 *
+	 * @return Get secret submission hash for sharing
+	 */
+	public String getSubmissionHash();
+
+	/**
+	 *
+	 * @return Set secret submission hash.
+	 */
+	public void setSubmissionHash(String hash);
+
 	/**
 	 * 
 	 * @return The a list of all committee mebers associated with this submission.
@@ -317,19 +329,6 @@ public interface Submission extends AbstractModel {
 	 * @param email Set the committee's contact email address.
 	 */
 	public void setCommitteeContactEmail(String email);
-
-	/**
-	 *
-	 * @return The secret submission hash for sharing
-	 */
-	public String getSubmissionHash();
-
-	/**
-	 *
-	 * @return The new secret submission hash.
-	 */
-	public void setSubmissionHash(String hash);
-
 
 	/**
 	 *
