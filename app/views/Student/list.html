@@ -119,7 +119,7 @@ function startNewSub() {
 				    <a id="submission-delete" class="btn btn-primary" href="@{Student.submissionDelete(sub.getId())}">Delete</a>
 				#{/if}
 				#{elseif sub.getState().isInProgress() }
-				    <a id="submission-continue" class="btn btn-primary" href="@{submit.PersonalInfo.personalInfo(sub.getId())}">Continue Submission</a>
+				    <a id="submission-continue" class="btn btn-primary" href="@{submit.PersonalInfo.personalInfo(sub.getId())}">Begin/Resume Submission</a>
                 #{/elseif}
                 #{else}
 				     <a class="btn btn-primary" href="@{Student.submissionView(sub.getId())}">
