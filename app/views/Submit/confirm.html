@@ -41,49 +41,52 @@
     #{include 'viewSubmission.include' /}
 	
 	#{ifEnabled [PRIMARY_ATTACHMENT,SUPPLEMENTAL_ATTACHMENT,SOURCE_ATTACHMENT,ADMINISTRATIVE_ATTACHMENT] }
-	<legend>Uploaded File${ additionalDocuments.size() > 0 ? "s" : "" }</legend>
+	<fieldset>
+		<legend>Uploaded File${ additionalDocuments.size() > 0 ? "s" : "" }</legend>
 	
-	#{ifEnabled PRIMARY_ATTACHMENT }
-	<div class="control-group #{errorClass 'primaryDocument' /} ">
-		<label class="control-label">#{fieldLabel PRIMARY_ATTACHMENT /}:</label>
-		<div class="controls">
-		    #{if primaryDocument != null}
-			    <p>
-			         <a href="@{Student.viewAttachment(subId,primaryDocument.getId(),primaryDocument.getName())}" target="_blank">${primaryDocument.getName()}</a>
-			         (${primaryDocument.getDisplaySize()})
-			     </p>
-			#{/if}
-			#{else}
-			     <p><em>No primary document uploaded</em>
-			#{/else}
+		#{ifEnabled PRIMARY_ATTACHMENT }
+		<div class="control-group #{errorClass 'primaryDocument' /} ">
+			<label class="control-label">#{fieldLabel PRIMARY_ATTACHMENT /}:</label>
+			<div class="controls">
+			    #{if primaryDocument != null}
+				    <p>
+				         <a href="@{Student.viewAttachment(subId,primaryDocument.getId(),primaryDocument.getName())}" target="_blank">${primaryDocument.getName()}</a>
+				         (${primaryDocument.getDisplaySize()})
+				     </p>
+				#{/if}
+				#{else}
+				     <p><em>No primary document uploaded</em>
+				#{/else}
+			</div>
 		</div>
-	</div>
-	#{/ifEnabled}
-	#{ifEnabled [SUPPLEMENTAL_ATTACHMENT,SOURCE_ATTACHMENT,ADMINISTRATIVE_ATTACHMENT]}
-    #{if additionalDocuments.size() > 0}
-    <div class="control-group #{errorClass 'additonalDocument' /} ">
-        <label class="control-label">Additional Documents:</label>
-        <div class="controls">
-            #{list items:additionalDocuments, as:'attachment'}
-            <p>
-                <a href="@{Student.viewAttachment(subId,attachment.getId(),attachment.getName())}" target="_blank">${attachment.getName()}</a>
-                (${attachment.getType()} - ${attachment.getDisplaySize()})
-            </p>
-            #{/list}
-        </div>
-    </div>
-    #{/if}
-    #{/ifEnabled}
-	<div class="control-group">
-		<label class="control-label"></label>
-		<div class="controls">
-			<p><a href="@{submit.FileUpload.fileUpload(subId)}">[edit your uploaded files]</a></p>
+		#{/ifEnabled}
+		#{ifEnabled [SUPPLEMENTAL_ATTACHMENT,SOURCE_ATTACHMENT,ADMINISTRATIVE_ATTACHMENT]}
+	    #{if additionalDocuments.size() > 0}
+	    <div class="control-group #{errorClass 'additonalDocument' /} ">
+	        <label class="control-label">Additional Documents:</label>
+	        <div class="controls">
+	            #{list items:additionalDocuments, as:'attachment'}
+	            <p>
+	                <a href="@{Student.viewAttachment(subId,attachment.getId(),attachment.getName())}" target="_blank">${attachment.getName()}</a>
+	                (${attachment.getType()} - ${attachment.getDisplaySize()})
+	            </p>
+	            #{/list}
+	        </div>
+	    </div>
+	    #{/if}
+	    #{/ifEnabled}
+		<div class="control-group">
+			<label class="control-label"></label>
+			<div class="controls edit">
+				<p><a href="@{submit.FileUpload.fileUpload(subId)}">[edit your uploaded files]</a></p>
+			</div>
 		</div>
-	</div>
-	#{/ifEnabled}
+		#{/ifEnabled}
+	</fieldset>
+	
 	
 	<legend>Final Submission</legend>
-	
+
 	<div class="alert alert-warning span11 final-submission-warning">
 		<i class="fa fa-exclamation-circle" aria-hidden="true"></i>
 		<div class="alert-content">
@@ -91,6 +94,7 @@
 			<p>After pressing "Confirm and Submit" you cannot make any more changes to this submission.</p>
 		</div>
 	</div>
+	
 	<div class="span11 center"><input type="submit" name="submit_confirm" value="Confirm and Submit" class="btn btn-primary #{ifErrors} disabled #{/ifErrors}"/></div>
 	
 </form>

@@ -67,6 +67,18 @@ label {
 	padding-top: 5px;
 }
 
+.controls.edit {
+	margin: 1em;
+}
+
+.thesis-type .control-label:empty {
+	display: none;
+}
+
+.thesis-type .controls {
+	margin-top: 0;
+}
+
 /*****************
 FONTS COLORS ETC
 *****************/
@@ -203,6 +215,10 @@ SPECIFIC OVERIDES
 	display: block;
 }
 
+.btn-add {
+	padding: 0 0 10px 10px;
+}
+
 #confirmSubmit .control-group{
 	margin-bottom:0;
 }
@@ -279,6 +295,25 @@ SUBMIT STEP BUTTONS
 /********************
 INDIVIDUAL FIELDS
 ********************/
+
+
+fieldset {
+    margin: 8px;
+    border: 1px solid silver;
+    padding: 8px;    
+    border-radius: 4px;
+}
+
+legend {
+    padding: 0.5em;  
+    width: auto;
+    margin-bottom: 0;  
+    font-weight: bold
+}
+
+legend + .control-group {
+	margin-top: 0;
+}
 
 input[type=file] {
 	background-color: #ffffff;
