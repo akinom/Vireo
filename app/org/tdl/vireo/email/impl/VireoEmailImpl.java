@@ -75,8 +75,11 @@ public class VireoEmailImpl implements VireoEmail {
 
 		// Set the default from address
 		this.setFrom(settingRepo.getConfigValue(AppConfig.EMAIL_FROM));
-	 	this.setReplyTo(settingRepo.getConfigValue(AppConfig.EMAIL_REPLY_TO));
-		
+		this.setReplyTo(settingRepo.getConfigValue(AppConfig.EMAIL_REPLY_TO));
+		String bcc = settingRepo.getConfigValue(AppConfig.EMAIL_BCC);
+		if (null != bcc && ! bcc.isEmpty())
+			this.addBcc(settingRepo.getConfigValue(AppConfig.EMAIL_BCC));
+
 		// Check to see if the current person want's to be CC'ed
 		Person person = context.getPerson();
 		if (person != null && person.getPreference(AppPref.CC_EMAILS) != null) {
@@ -145,6 +148,7 @@ public class VireoEmailImpl implements VireoEmail {
 
 	@Override
 	public void addBcc(String email) {
+		System.out.println("BCC " + email);
 		addBcc(email, null);
 	}
 

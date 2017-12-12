@@ -51,10 +51,13 @@ public class AppConfig {
 	
 	/**The from address attached to every email by default **/
 	public final static String EMAIL_FROM = "email_from";
-	
+
 	/**The replyTo address attached to every email by default **/
 	public final static String EMAIL_REPLY_TO = "email_reply_to";
-	
+
+	/**The bcc address attached to every email by default **/
+	public final static String EMAIL_BCC = "email_bcc";
+
 	// Theme settings
 	/** Background main color */
 	public final static String BACKGROUND_MAIN_COLOR = "background_main_color";

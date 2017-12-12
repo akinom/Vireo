@@ -1,5 +1,6 @@
 package controllers.settings;
 
+import static org.tdl.vireo.constant.AppConfig.EMAIL_BCC;
 import static org.tdl.vireo.constant.AppConfig.EMAIL_FROM;
 import static org.tdl.vireo.constant.AppConfig.EMAIL_REPLY_TO;
 
@@ -60,6 +61,7 @@ public class EmailSettingsTab extends SettingsTab {
 
 		renderArgs.put("EMAIL_FROM", settingRepo.getConfigValue(EMAIL_FROM));
 		renderArgs.put("EMAIL_REPLY_TO", settingRepo.getConfigValue(EMAIL_REPLY_TO));
+		renderArgs.put("EMAIL_BCC", settingRepo.getConfigValue(EMAIL_BCC));
 
 		// List all templates
 		List<EmailTemplate> templates = settingRepo.findAllEmailTemplates();
@@ -453,6 +455,7 @@ public class EmailSettingsTab extends SettingsTab {
 			List<String> textFields = new ArrayList<String>();
 			textFields.add(EMAIL_FROM);
 			textFields.add(EMAIL_REPLY_TO);
+			textFields.add(EMAIL_BCC);
 
 			if (textFields.contains(field)) {
 				// This is a free-form text field
@@ -461,6 +464,10 @@ public class EmailSettingsTab extends SettingsTab {
 				}
 
 				if (EMAIL_REPLY_TO.toString().equals(field) && !Utilities.validateEmailAddress(value)) {
+					throw new IllegalArgumentException("The current email is invalid");
+				}
+
+				if (EMAIL_BCC.toString().equals(field) && !Utilities.validateEmailAddress(value)) {
 					throw new IllegalArgumentException("The current email is invalid");
 				}
 
