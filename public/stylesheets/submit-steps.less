@@ -1,0 +1,196 @@
+@import "../stylesheets/shared.less";
+
+.progress-container {
+  display: block;
+  // width: 932px;
+  margin: 0;
+  // padding: 2rem;
+}
+
+.progress-container a {
+    border: 0;
+    color: @gray;
+
+    &:visited {
+        color: @gray;
+    }
+
+    &:hover,
+    &:active {
+        color: @black;
+    }
+}
+
+.progress-container .current a {
+    color: @white;
+}
+
+.progress-bar {
+  padding: 0;
+  margin: 0 auto;
+  text-align: center;
+  list-style-type: none;
+}
+
+.progress-bar > .progress-step {
+  width: 20%;
+  margin-left: -1rem;
+  position: relative;
+  display: inline-block;
+  text-align: center;
+  // line-height: 3.8rem;
+  padding: 0;
+  // font-size: 1.3em;
+  font-weight: bold;
+  color: @gray;
+  vertical-align: baseline;
+}
+
+.progress-bar > .-first {
+  // width: 8%;
+  margin-left: 0;
+}
+
+.progress-bar > .-last {
+  border-right: 1px solid @grayLighter;
+}
+
+// .progress-bar > .current:before,
+// .progress-bar .current:after {
+//   content: '';
+//   display: block;
+//   position: absolute;
+//   top: 0;
+//   width: 0;
+//   height: 0;
+//   z-index: 15;
+// }
+
+.progress-bar > .current {
+  color: @white;
+}
+
+.progress-content {
+  background-color: @white;
+  border: 1px solid @grayLighter;
+  border-right: none;
+  border-left: none;
+  position: relative;
+  margin-left: 17px;
+  padding: 8px;
+  outline: 0;
+  vertical-align: baseline;
+}
+
+.-first > .progress-content {
+  border: 1px solid @grayLighter;
+  margin-left: 0;
+}
+
+.icon {
+  display: inline-block;
+  font-size: 1.6em;
+  margin: 0;
+  padding: 0;
+  vertical-align: middle;
+}
+
+.icon.-check {
+  color: @grayLighter;
+  display: none;
+}
+
+.progress-label {
+  vertical-align: middle;
+  padding: 10px 0 10px 15px;
+}
+
+.arrow-left {
+  position: absolute;
+  width: 0;
+  height: 0;
+  line-height: 0;
+  border: 20px dashed @grayLighter;
+  left: -1px;
+  top: -1px;
+  border-left-style: solid;
+  border-right: none;
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+}
+
+.arrow-left:after {
+  content: ' ';
+  position: absolute;
+  width: 0;
+  height: 0;
+  border: 20px dashed @white;
+  left: -21px;
+  top: -20px;
+  border-left-style: solid;
+  border-right: none;
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+}
+
+.arrow-right {
+  position: absolute;
+  width: 0;
+  height: 0;
+  line-height: 0;
+  border: 20px dashed @grayLighter;
+  right: -20px;
+  top: -1px;
+  border-left-style: solid;
+  border-right: none;
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+  z-index: 15;
+}
+
+.arrow-right:after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 0;
+  border: 19px dashed @white;
+  right: 1px;
+  top: -19px;
+  border-left-style: solid;
+  border-right: none;
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+  z-index: 15;
+}
+
+.current > .progress-content {
+  background-color: @black;
+  color: @white;
+}
+
+.current > .progress-content > .arrow-right:after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 0;
+  border: 19px dashed @black;
+  right: 1px;
+  top: -19px;
+  border-left-style: solid;
+  border-right: none;
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+  z-index: 15;
+}
+
+.-complete > .progress-content > .icon-label {
+  color: @gray;
+}
+
+.-complete > .progress-content > .icon {
+  display: none;
+}
+
+.-complete > .progress-content > .icon.-check {
+  display: inline-block;
+}

@@ -156,23 +156,33 @@ function abandonSub(){
 }
 </script>
 #{/set}
-<br />
 <div class="row pageHead">
 	<h3 class="span11">Verify Your Information</h3>
 </div>
-<br />
 <div class="row">
-	<div class="span7">
+	<div class="span8">
 		<h4>Instructions:</h4>
 		<p>#{verbatim}${instructions}#{/verbatim}</p>
-		<p>Required fields are indicated with an asterisk.</p>
+		<div class="alert alert-info">
+			<i class="fa fa-info-circle fa-small" aria-hidden="true"></i>
+			<div class="alert-content">
+				<p>Required fields are indicated with an asterisk.</p>
+			</div>
+		</div>
+		
 
 #{ifErrors}
-<ul class="red">
-    #{errors}
-    <li>${error}</li> 
-    #{/errors}
-</ul>
+<div class="alert alert-error">
+	<i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+	<div class="alert-content">
+		<h4>Error:</h4>
+		<ul>
+		    #{errors}
+		    <li>${error}</li> 
+		    #{/errors}
+		</ul>
+	</div>
+</div>
 #{/ifErrors}
 
   <form action="@{submit.PersonalInfo.personalInfo(subId)}" method="post" class="form-horizontal">
@@ -448,7 +458,7 @@ function abandonSub(){
 	</div>
 </form>            
 </div>
-	<div id="stickyNotes" class="span3">
+	<div id="stickyNotes" class="span4">
 	    #{list items:stickies, as:'sticky'}
 	       <div class="sticky-top"></div>
            <div class="sticky-bottom">#{verbatim}${sticky}#{/verbatim}</div>

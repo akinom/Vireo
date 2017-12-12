@@ -1,11 +1,9 @@
 #{extends 'Submit/submitStep.html' /}
 #{set title:'Vireo Thesis and Dissertation Submital System - Submission - Confirm & Submit' /}
 
-<br />
 <div class="row pageHead">
-	<h3 class="span11">Confirm & Submit</h3>
+	<h3 class="span11">Confirm &amp; Submit</h3>
 </div>
-<br />
 <div class="row">
        <div class="span11">
                <h4>Instructions:</h4>
@@ -14,25 +12,31 @@
 </div>
 
 #{ifErrors}
-<ul class="red">
-    #{if errors.forKey('personalInfo')}
-        <li>There are errors on the "Verify Your Information" step. <a href="@{submit.PersonalInfo.personalInfo(subId)}">[visit step]</a></li>
-    #{/if}
-    #{if errors.forKey('license')}
-        <li>There are errors on the "License Agreement" step. <a href="@{submit.License.license(subId)}">[visit step]</a></li>
-    #{/if}
-    #{if errors.forKey('documentInfo')}
-        <li>There are errors on the "Document Information" step. <a href="@{submit.DocumentInfo.documentInfo(subId)}">[visit step]</a></li>
-    #{/if}
-    #{if errors.forKey('fileUpload')}
-        <li>There are errors on the "File Upload" step. <a href="@{submit.FileUpload.fileUpload(subId)}">[visit step]</a></li>
-    #{/if}
-</ul>
-
-<p>You need to correct these errors before completing your submission.</p>
+<div class="alert alert-error">
+	<i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+	<div class="alert-content">
+		<h4>Error:</h4>
+		<ul>
+		    #{if errors.forKey('personalInfo')}
+		        <li>There are errors on the "Verify Your Information" step. <a href="@{submit.PersonalInfo.personalInfo(subId)}">[visit step]</a></li>
+		    #{/if}
+		    #{if errors.forKey('license')}
+		        <li>There are errors on the "License Agreement" step. <a href="@{submit.License.license(subId)}">[visit step]</a></li>
+		    #{/if}
+		    #{if errors.forKey('documentInfo')}
+		        <li>There are errors on the "Document Information" step. <a href="@{submit.DocumentInfo.documentInfo(subId)}">[visit step]</a></li>
+		    #{/if}
+		    #{if errors.forKey('fileUpload')}
+		        <li>There are errors on the "File Upload" step. <a href="@{submit.FileUpload.fileUpload(subId)}">[visit step]</a></li>
+		    #{/if}
+		</ul>
+		<p><strong>You need to correct these errors before completing your submission.</strong></p>
+	</div>
+	
+</div>
 #{/ifErrors}
 
-<div id="confirmSubmit" class="row">
+<div id="confirmSubmit">
 <form action="@{submit.Confirm.confirm(subId)}" method="post" class="form-horizontal">
     #{include 'viewSubmission.include' /}
 	
@@ -79,8 +83,10 @@
 	#{/ifEnabled}
 	
 	<legend>Final Submission</legend>
-	<div class="row">
-		<div class="span11">
+	
+	<div class="alert alert-warning span11 final-submission-warning">
+		<i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+		<div class="alert-content">
 			<h4>Warning:</h4>
 			<p>After pressing "Confirm and Submit" you cannot make any more changes to this submission.</p>
 		</div>
@@ -88,8 +94,5 @@
 	<div class="span11 center"><input type="submit" name="submit_confirm" value="Confirm and Submit" class="btn btn-primary #{ifErrors} disabled #{/ifErrors}"/></div>
 	
 </form>
-<br/>
-<br/>
-<br/>
 
 </div>

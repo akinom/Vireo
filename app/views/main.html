@@ -5,6 +5,7 @@
     <head>
         <title>#{get 'title' /}</title>
         <meta charset="${_response_encoding}">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="@{'/public/stylesheets/submission.less'}" rel="stylesheet" type="text/css">                       
         #{get 'moreStyles' /}
         <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}">
@@ -12,6 +13,7 @@
         <script src="@{'/public/javascripts/jquery-ui-1.8.21.min.js'}" type="text/javascript" charset="${_response_encoding}"></script>
         <script src="@{'/public/bootstrap/js/bootstrap.min.js'}" type="text/javascript" charset="${_response_encoding}"></script>
         <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+        <script src="https://use.fontawesome.com/2b52fabab7.js"></script>
         <script>
         
         jQuery(document).ready(function(){
@@ -32,7 +34,7 @@
         </script>
         
         #{get 'moreScripts' /}
-        <style type="text/css">
+        <!-- <style type="text/css">
         	html, #footer a {
 				background: ${settingRepo.getConfigValue(org.tdl.vireo.constant.AppConfig.BACKGROUND_MAIN_COLOR)}; /* Old browsers */
 				background: -moz-linear-gradient(top,  ${settingRepo.getConfigValue(org.tdl.vireo.constant.AppConfig.BACKGROUND_MAIN_COLOR)} 0%, ${settingRepo.getConfigValue(org.tdl.vireo.constant.AppConfig.BACKGROUND_HIGHLIGHT_COLOR)} 100%); /* FF3.6+ */
@@ -71,39 +73,45 @@
 			}
 			#{/if}
 			${settingRepo.getConfigValue(org.tdl.vireo.constant.AppConfig.CUSTOM_CSS)};
-        </style>
+        </style> -->
     </head>
     <body>
-    	<div class="container ${currentUser ? currentUser.getRole() : "ANONYMOUS"}">
-	    	<div id="header">	    
-			<a id="left-logo" href="@{Application.index}">
-				#{if new java.io.File(controllers.settings.ThemeSettingsTab.LEFT_LOGO_PATH).exists()}<img alt="Home" src="@{Application.index()}theme/left-logo" />#{/if}
-				#{else}<img alt="Home" src="@{Application.index()}public/images/vireo-logo-sm.png" />#{/else}
-			</a>
+    	<div class="navbar navbar-static-top">
+    		<div class="navbar-inner">
+    			<div id="header" class="container ${currentUser ? currentUser.getRole() : "ANONYMOUS"}">	    
+					<a id="left-logo" class="brand" href="@{Application.index}">
+						#{if new java.io.File(controllers.settings.ThemeSettingsTab.LEFT_LOGO_PATH).exists()}<img alt="Home" src="@{Application.index()}theme/left-logo" />#{/if}
+						#{else}<img alt="Home" src="@{Application.index()}public/images/vireo-logo-sm.png" />#{/else}
+						<span class="sr-only">Princeton University</span>
+					</a>
 
-	    		<div id="personal-bar">
-					#{if currentUser != null }
-						<a href="@{Authentication.profile()}">${currentUser.getDisplayName()}</a> |
-						#{if securityContext.isReviewer()}
-						<a href="@{FilterTab.list()}">Admin</a> |
+					<div id="right-logo">
+						Thesis Central Senior Thesis Submission System
+					</div>
+
+		    		<div id="personal-bar" class="pull-right">
+						#{if currentUser != null }
+							<a href="@{Authentication.profile()}">${currentUser.getDisplayName()}</a> |
+							#{if securityContext.isReviewer()}
+							<a href="@{FilterTab.list()}">Admin</a> |
+							#{/if}
+							<a href="@{Student.submissionList}">Submission History</a> |
+							<a href="@{Authentication.logout()}">Logout</a>
 						#{/if}
-						<a href="@{Student.submissionList}">Submission History</a> |
-						<a href="@{Authentication.logout()}">Logout</a>
-					#{/if}
-					#{else}
-					   <a href="@{Authentication.loginList()}">Login</a>
-					#{/else}
-				</div>    	
-				<div id=right-logo></div>
-	    	</div>
-	    	<div id="body">
-	       		#{doLayout /}
-	        </div>
-    	</div>	        
-	    <div id="footer">
+						#{else}
+						   <a href="@{Authentication.loginList()}">Login</a>
+						#{/else}
+					</div>
+		    	</div>
+    		</div>
+    	</div>
+    	
+    	<div id="body" class="container">
+       		#{doLayout /}
+        </div>
+	    <div id="footer" class="container">
                 <p class="pull-left">Vireo ${ play.Play.configuration.get("vireo.version") } &copy; ${ java.util.Calendar.getInstance().get(java.util.Calendar.YEAR) } <a href="http://www.tdl.org/">Texas Digital Library</a>. All Rights Reserved.</p>
        	</div>
-
     </body>
 </html>
 

@@ -1,20 +1,9 @@
 #{extends 'Submit/submitStep.html' /}
 #{set title:'Vireo Thesis and Dissertation Submital System - Submission - License Agreement' /}
 
-<br />
 <div class="row pageHead">
 	<h3 class="span11">Honor Code</h3>
 </div>
-<br />
-
-
-#{ifErrors}
-<ul class="red">
-    #{errors}
-    <li>${error}</li> 
-    #{/errors}
-</ul>
-#{/ifErrors}
 
 <div>
 	<form action="@{submit.License.license(subId)}" method="post" class="form-inline">
@@ -23,10 +12,23 @@
 		
 		#{ifEnabled LICENSE_AGREEMENT}
 		#{ifRequired LICENSE_AGREEMENT }
-		<div class="row">
-			<p class="span">#{verbatim}${instructions}#{/verbatim}</p>
-		</div>
+		<h4>Instructions:</h4>
+		<p class="span">#{verbatim}${instructions}#{/verbatim}</p>
 		#{/ifRequired}
+
+		#{ifErrors}
+		<div class="alert alert-error">
+			<i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+			<div class="alert-content">
+				<h4>Error:</h4>
+				<ul>
+				    #{errors}
+				    <li>${error}</li> 
+				    #{/errors}
+				</ul>
+			</div>
+		</div>
+		#{/ifErrors}
 
 		<div class="row center">
 			<div style="margin:0 0 10px;">
@@ -41,9 +43,7 @@
 		<h4>#{fieldLabel UMI_RELEASE /}</h4>
 		
 		#{ifRequired UMI_RELEASE }
-		<div class="row">
-			<p class="span">You must agree to the non-exclusive license below in order to continue:</p>
-		</div>
+		<p class="span">You must agree to the non-exclusive license below in order to continue:</p>
 		#{/ifRequired}
 		
 		<div class="well">#{verbatim}${proquestText}#{/verbatim}</div>
