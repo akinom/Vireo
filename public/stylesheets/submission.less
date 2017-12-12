@@ -9,8 +9,10 @@ body {
 	// padding-top: 90px;
 }
 
-h1 {
-	margin-bottom: 1.5rem;
+.intro h1 {
+	margin-bottom: 15px;
+	padding: 0 0 20px 0;
+	border-bottom: 1px solid #cccccc;
 }
 
 p:empty {
@@ -190,13 +192,15 @@ SPECIFIC OVERIDES
 
 .pageHead{
 	margin:0;
-	padding:0 0 10px 0;
+	padding: 0 0 10px 0;
 	border-bottom:1px solid @grayLighter;
 }
 
-.uploadBtn{
-	height:28px;
-	margin:0 0 0 10px;
+.uploadBtn.btn{
+	// height:28px;
+	// margin:0 0 0 10px;
+	clear: both;
+	display: block;
 }
 
 #confirmSubmit .control-group{
@@ -221,6 +225,10 @@ div.control-group.required label.control-label .required-star {
 }
 label.optional .required-star {
 	display:none!important;
+}
+
+.control-group.error p {
+	color: @red;
 }
 
 /********************
@@ -272,11 +280,40 @@ SUBMIT STEP BUTTONS
 INDIVIDUAL FIELDS
 ********************/
 
+input[type=file] {
+	background-color: #ffffff;
+	border: 1px solid #cccccc;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+	-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+	-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+	-webkit-transition: border linear .2s, box-shadow linear .2s;
+	-moz-transition: border linear .2s, box-shadow linear .2s;
+	-o-transition: border linear .2s, box-shadow linear .2s;
+	transition: border linear .2s, box-shadow linear .2s;
+	-webkit-transition: border linear .2s, box-shadow linear .2s;
+	-moz-transition: border linear .2s, box-shadow linear .2s;
+	-o-transition: border linear .2s, box-shadow linear .2s;
+	transition: border linear .2s, box-shadow linear .2s;
+	display: inline-block;
+	padding: 4px 6px;
+	margin-bottom: 9px;
+	font-size: 14px;
+	line-height: 1.2rem;
+	color: #666666;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+}
+
 textarea#abstractText,
 textarea#keywords,
 textarea#publishedMaterial {
-    max-width: 380px;
-    
+    max-width: 380px;  
 }
 
 .committee-member {
@@ -657,6 +694,16 @@ button.ui-multiselect.ui-widget.ui-state-default.ui-corner-all {
 	ul {
 		margin-left: 15px;
 		margin-top: 10px;
+	}
+}
+
+.form-horizontal input + .password.help-block {
+	font-size: 12px;
+	margin-top: 20px;
+
+	a {
+		color: @grayDarker;
+		font-weight: normal;
 	}
 }
 

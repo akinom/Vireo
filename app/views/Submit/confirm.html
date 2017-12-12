@@ -2,11 +2,11 @@
 #{set title:'Vireo Thesis and Dissertation Submital System - Submission - Confirm & Submit' /}
 
 <div class="row pageHead">
-	<h3 class="span11">Confirm &amp; Submit</h3>
+	<h1>Confirm &amp; Submit</h1>
 </div>
 <div class="row">
        <div class="span11">
-               <h4>Instructions:</h4>
+               <h2>Instructions:</h2>
 		   <p> #{verbatim}${instructions}#{/verbatim}</p>
 	   </div>
 </div>
@@ -15,7 +15,7 @@
 <div class="alert alert-error">
 	<i class="fa fa-exclamation-circle" aria-hidden="true"></i>
 	<div class="alert-content">
-		<h4>Error:</h4>
+		<h2>Error:</h2>
 		<ul>
 		    #{if errors.forKey('personalInfo')}
 		        <li>There are errors on the "Verify Your Information" step. <a href="@{submit.PersonalInfo.personalInfo(subId)}">[visit step]</a></li>
@@ -87,7 +87,7 @@
 	<div class="alert alert-warning span11 final-submission-warning">
 		<i class="fa fa-exclamation-circle" aria-hidden="true"></i>
 		<div class="alert-content">
-			<h4>Warning:</h4>
+			<h2>Warning:</h2>
 			<p>After pressing "Confirm and Submit" you cannot make any more changes to this submission.</p>
 		</div>
 	</div>

@@ -119,7 +119,7 @@ jQuery(document).ready(function(){
 #{/set}
 
 <div class="row pageHead">
-	<h3 class="span11">Senior Thesis Information</h3>
+	<h1>Senior Thesis Information</h1>
 </div>
 <div id="stickyNotes" class="span4">
      #{list items:stickies, as:'sticky'}
@@ -129,13 +129,13 @@ jQuery(document).ready(function(){
 </div>
 <div class="row">
 <div class="span8">
-<h4>Instructions:</h4>
+<h2>Instructions:</h2>
     <p> #{verbatim}${instructions}#{/verbatim}</p>
 #{ifErrors}
 <div class="alert alert-error">
 	<i class="fa fa-exclamation-circle" aria-hidden="true"></i>
 	<div class="alert-content">
-		<h4>Error:</h4>
+		<h2>Error:</h2>
 		<ul>
 		    #{errors}
 		    <li>${error}</li> 
@@ -155,7 +155,7 @@ jQuery(document).ready(function(){
 		<div class="control-group #{errorClass 'title' /} #{fieldClass DOCUMENT_TITLE /}">
 			<label class="control-label" for="title"><span class="required-star">*</span> #{fieldLabel DOCUMENT_TITLE /}:</label>
 			<div class="controls">
-				<input type="text" class="span5" id="title" name="title" value="${title}">
+				<input type="text" class="span5" id="title" name="title" value="${title}" required>
 				<span class="tooltip-icon" title="#{fieldHelp DOCUMENT_TITLE /}"><i class="icon-info-sign"></i></span>
 			</div>
 		</div>
@@ -204,7 +204,7 @@ jQuery(document).ready(function(){
             <div class="control-group #{errorClass 'docType'/} #{fieldClass DOCUMENT_TYPE /}">
                 <label class="control-label" for="docType"><span class="required-star">*</span> #{fieldLabel DOCUMENT_TYPE /}:</label>
                 <div class="controls">
-                    <select class="span5" id="docType" name="docType">
+                    <select class="span5" id="docType" name="docType" required>
                         <option #{if null == docType || docType.equals("")}selected="true"#{/if} value="">...choose</option>
 						#{list docTypes, as: 'type'}
                             <option #{if null != type && docType.equals(type)}selected="true"#{/if} value="${type}">${type}</option>
@@ -267,7 +267,7 @@ jQuery(document).ready(function(){
 	            		<p>${docLanguages.get(0).getLocale().getDisplayName()}</p>
 	            	#{/if}
 	            	#{else}
-		            	<select class="span5" id="docLanguage" name="docLanguage">
+		            	<select class="span5" id="docLanguage" name="docLanguage" required>
 			                <option #{if null == docLanguage || docLanguage.equals("")}selected="true"#{/if} value="">...choose</option>
 			                #{list docLanguages, as: 'language'}
 			                    <option #{if null != language && docLanguage.equals(language.getName())}selected="true"#{/if} value="${language.getName()}">${language.getLocale().getDisplayName()}</option>
@@ -324,7 +324,7 @@ jQuery(document).ready(function(){
 
 	#{ifEnabled COMMITTEE}
 	<fieldset class="form-inline">
-		<legend>#{fieldLabel COMMITTEE /}</legend>
+		<legend><span class="required-star">*</span>#{fieldLabel COMMITTEE /}</legend>
 		<p>#{fieldHelp COMMITTEE /}</p>
         <div id="committee-members">
 
@@ -467,7 +467,7 @@ jQuery(document).ready(function(){
 					#{if activeEmbargosMap.get(EMBARGO_TYPE).toString() != 'DEFAULT'} embargo-type-additional #{/if} 
 					#{ifRequired EMBARGO_TYPE}#{if activeEmbargosMap.get(EMBARGO_TYPE) != org.tdl.vireo.model.EmbargoGuarantor.DEFAULT}embargoReq#{/if}#{/ifRequired}">
 					
-					<h4 class="#{errorClass embargoErrorClass /}">#{ifRequired EMBARGO_TYPE}* #{/ifRequired}#{fieldLabel EMBARGO_TYPE /}</h4>
+					<h2 class="#{errorClass embargoErrorClass /}">#{ifRequired EMBARGO_TYPE}* #{/ifRequired}#{fieldLabel EMBARGO_TYPE /}</h2>
 					<p>#{fieldHelp EMBARGO_TYPE /}</p>
 					#{list embargoTypes, as: 'et'}
 		                #{if et.getGuarantor().toString() == activeEmbargosMap.get(EMBARGO_TYPE).toString()}

@@ -157,11 +157,11 @@ function abandonSub(){
 </script>
 #{/set}
 <div class="row pageHead">
-	<h3 class="span11">Verify Your Information</h3>
+	<h1>Verify Your Information</h1>
 </div>
 <div class="row">
 	<div class="span8">
-		<h4>Instructions:</h4>
+		<h2>Instructions:</h2>
 		<p>#{verbatim}${instructions}#{/verbatim}</p>
 		<div class="alert alert-info">
 			<i class="fa fa-info-circle fa-small" aria-hidden="true"></i>
@@ -175,7 +175,7 @@ function abandonSub(){
 <div class="alert alert-error">
 	<i class="fa fa-exclamation-circle" aria-hidden="true"></i>
 	<div class="alert-content">
-		<h4>Error:</h4>
+		<h2>Error:</h2>
 		<ul>
 		    #{errors}
 		    <li>${error}</li> 
@@ -199,7 +199,7 @@ function abandonSub(){
                 <p>${firstName}</p>
                 #{/if} 
                 #{else}
-                <input type="text" name="firstName" id="firstName" value="${firstName}">
+                <input type="text" name="firstName" id="firstName" value="${firstName}" required>
                 <span class="tooltip-icon" title="#{fieldHelp STUDENT_FIRST_NAME /}"><i class="icon-info-sign"></i></span>
                 #{/else}
             </div>
@@ -227,7 +227,7 @@ function abandonSub(){
                 <p>${lastName}</p>
                 #{/if} 
                 #{else}
-                <input type="text" name="lastName" id="lastName" value="${lastName}">
+                <input type="text" name="lastName" id="lastName" value="${lastName}" required>
                 <span class="tooltip-icon" title="#{fieldHelp STUDENT_LAST_NAME /}"><i class="icon-info-sign"></i></span>
                 #{/else}
             </div>
@@ -278,7 +278,7 @@ function abandonSub(){
 					#{/if}
 					#{else}
 						#{if settingRepo.findAllDepartments().size() > 0 }
-                            <select name="department" id="department">
+                            <select name="department" id="department" required>
                                 <option #{if department == null}selected="true"#{/if} value="">...choose</option>
 								#{list items:settingRepo.findAllDepartments(), as:'dept'}
                                     <option #{if department == dept.getName()}selected="true"#{/if} value="${dept.getName()}">${dept.getName()}</option>
@@ -286,7 +286,7 @@ function abandonSub(){
                             </select>
 						#{/if}
 						#{else}
-                            <input name="department" id="department" value="${department}"/>
+                            <input name="department" id="department" value="${department}" required/>
 						#{/else}
                         <span class="tooltip-icon" title="#{fieldHelp DEPARTMENT /}"><i class="icon-info-sign"></i></span>
 					#{/else}
@@ -316,7 +316,7 @@ function abandonSub(){
                 #{/if} 
                 #{else}
                     #{if settingRepo.findAllColleges().size() > 0 }
-		                <select name="college" id="college">
+		                <select name="college" id="college" required>
 		                    <option #{if college == null}selected="true"#{/if} value="">...choose</option>
 		                    #{list items:settingRepo.findAllColleges(), as:'collegeObject'}
 		                    <option #{if college == collegeObject.getName()}selected="true"#{/if} value="${collegeObject.getName()}">${collegeObject.getName()}</option>

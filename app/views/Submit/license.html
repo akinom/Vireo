@@ -2,7 +2,7 @@
 #{set title:'Vireo Thesis and Dissertation Submital System - Submission - License Agreement' /}
 
 <div class="row pageHead">
-	<h3 class="span11">Honor Code</h3>
+	<h1>Honor Code</h1>
 </div>
 
 <div>
@@ -12,7 +12,7 @@
 		
 		#{ifEnabled LICENSE_AGREEMENT}
 		#{ifRequired LICENSE_AGREEMENT }
-		<h4>Instructions:</h4>
+		<h2>Instructions:</h2>
 		<p class="span">#{verbatim}${instructions}#{/verbatim}</p>
 		#{/ifRequired}
 
@@ -20,7 +20,7 @@
 		<div class="alert alert-error">
 			<i class="fa fa-exclamation-circle" aria-hidden="true"></i>
 			<div class="alert-content">
-				<h4>Error:</h4>
+				<h2>Error:</h2>
 				<ul>
 				    #{errors}
 				    <li>${error}</li> 
@@ -33,14 +33,14 @@
 		<div class="row center">
 			<div style="margin:0 0 10px;">
 				<label id="lalabel" class="checkbox #{if errors.forKey('licenseAgreement')}red#{/if}">
-		            <input id="licenseAgreement" type="checkbox" name="licenseAgreement" ${ licenseAgreement != null ? "checked='true'" : "" }/> #{fieldHelp LICENSE_AGREEMENT /}
+		            <input id="licenseAgreement" type="checkbox" required name="licenseAgreement" ${ licenseAgreement != null ? "checked='true'" : "" }/> #{fieldHelp LICENSE_AGREEMENT /}
 				</label>
 			</div>
 		</div>
 		#{/ifEnabled}
 		
 		#{ifEnabled UMI_RELEASE}
-		<h4>#{fieldLabel UMI_RELEASE /}</h4>
+		<h2>#{fieldLabel UMI_RELEASE /}</h2>
 		
 		#{ifRequired UMI_RELEASE }
 		<p class="span">You must agree to the non-exclusive license below in order to continue:</p>
@@ -50,7 +50,7 @@
 		
 		<div class="row center">
 			<label id="palabel" class="checkbox #{if errors.forKey('proquestAgreement')}red#{/if}">
-				<input id="proquestAgreement" type="checkbox" name="proquestAgreement" ${ proquestAgreement != null ? "checked='true'" : "" }/> #{fieldHelp UMI_RELEASE /}
+				<input id="proquestAgreement" type="checkbox" required name="proquestAgreement" ${ proquestAgreement != null ? "checked='true'" : "" }/> #{fieldHelp UMI_RELEASE /}
 			</label>
 		</div>	
 	    #{/ifEnabled}

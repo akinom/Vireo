@@ -2,17 +2,17 @@
 #{set title:'Vireo Thesis and Dissertation Submital System - Submission - Upload Your Files' /}
 
 <div class="row pageHead">
-	<h3 class="span11">Upload Your Files</h3>
+	<h1>Upload Your Files</h1>
 </div>
 <div class="row">
 <div class="span8">
-       <h4>Instructions:</h4>
+       <h2>Instructions:</h2>
     <p> #{verbatim}${instructions}#{/verbatim}</p>
     #{ifErrors}
     <div class="alert alert-error">
         <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
         <div class="alert-content">
-            <h4>Error:</h4>
+            <h2>Error:</h2>
             <ul>
                 #{errors}
                     <li>${error}</li>
