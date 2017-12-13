@@ -1,18 +1,17 @@
 <!DOCTYPE html>
 
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en">
 
     <head>
         <title>#{get 'title' /}</title>
         <meta charset="${_response_encoding}">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="@{'/public/stylesheets/submission.less'}" rel="stylesheet" type="text/css">                       
         #{get 'moreStyles' /}
         <link rel="shortcut icon" type="image/png" href="@{'/public/images/libicon.ico'}">
         <script src="@{'/public/javascripts/jquery-1.7.2.min.js'}" type="text/javascript" charset="${_response_encoding}"></script>
         <script src="@{'/public/javascripts/jquery-ui-1.8.21.min.js'}" type="text/javascript" charset="${_response_encoding}"></script>
         <script src="@{'/public/bootstrap/js/bootstrap.min.js'}" type="text/javascript" charset="${_response_encoding}"></script>
-        <!-- <script async src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script> -->
+        <script async src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
         <script src="https://use.fontawesome.com/2b52fabab7.js"></script>
         <script>
         
@@ -34,46 +33,6 @@
         </script>
         
         #{get 'moreScripts' /}
-        <!-- <style type="text/css">
-        	html, #footer a {
-				background: ${settingRepo.getConfigValue(org.tdl.vireo.constant.AppConfig.BACKGROUND_MAIN_COLOR)}; /* Old browsers */
-				background: -moz-linear-gradient(top,  ${settingRepo.getConfigValue(org.tdl.vireo.constant.AppConfig.BACKGROUND_MAIN_COLOR)} 0%, ${settingRepo.getConfigValue(org.tdl.vireo.constant.AppConfig.BACKGROUND_HIGHLIGHT_COLOR)} 100%); /* FF3.6+ */
-				background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,${settingRepo.getConfigValue(org.tdl.vireo.constant.AppConfig.BACKGROUND_MAIN_COLOR)}), color-stop(100%,${settingRepo.getConfigValue(org.tdl.vireo.constant.AppConfig.BACKGROUND_HIGHLIGHT_COLOR)})); /* Chrome,Safari4+ */
-				background: -webkit-linear-gradient(top,  ${settingRepo.getConfigValue(org.tdl.vireo.constant.AppConfig.BACKGROUND_MAIN_COLOR)} 0%,${settingRepo.getConfigValue(org.tdl.vireo.constant.AppConfig.BACKGROUND_HIGHLIGHT_COLOR)} 100%); /* Chrome10+,Safari5.1+ */
-				background: -o-linear-gradient(top,  ${settingRepo.getConfigValue(org.tdl.vireo.constant.AppConfig.BACKGROUND_MAIN_COLOR)} 0%,${settingRepo.getConfigValue(org.tdl.vireo.constant.AppConfig.BACKGROUND_HIGHLIGHT_COLOR)} 100%); /* Opera 11.10+ */
-				background: -ms-linear-gradient(top,  ${settingRepo.getConfigValue(org.tdl.vireo.constant.AppConfig.BACKGROUND_MAIN_COLOR)} 0%,${settingRepo.getConfigValue(org.tdl.vireo.constant.AppConfig.BACKGROUND_HIGHLIGHT_COLOR)} 100%); /* IE10+ */
-				background: linear-gradient(top,  ${settingRepo.getConfigValue(org.tdl.vireo.constant.AppConfig.BACKGROUND_MAIN_COLOR)} 0%,${settingRepo.getConfigValue(org.tdl.vireo.constant.AppConfig.BACKGROUND_HIGHLIGHT_COLOR)} 100%); /* W3C */
-				filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='${settingRepo.getConfigValue(org.tdl.vireo.constant.AppConfig.BACKGROUND_MAIN_COLOR)}', endColorstr='${settingRepo.getConfigValue(org.tdl.vireo.constant.AppConfig.BACKGROUND_HIGHLIGHT_COLOR)}');
-				background-repeat: no-repeat;
-    			background-attachment: fixed;
-			}
-			#submitSteps li{
-				background: ${settingRepo.getConfigValue(org.tdl.vireo.constant.AppConfig.BUTTON_MAIN_COLOR_OFF)}; /* Old browsers */
-				background: -moz-linear-gradient(top,  ${settingRepo.getConfigValue(org.tdl.vireo.constant.AppConfig.BUTTON_MAIN_COLOR_OFF)} 0%, ${settingRepo.getConfigValue(org.tdl.vireo.constant.AppConfig.BUTTON_HIGHLIGHT_COLOR_OFF)} 50%, ${settingRepo.getConfigValue(org.tdl.vireo.constant.AppConfig.BUTTON_MAIN_COLOR_OFF)} 100%); /* FF3.6+ */
-				background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,${settingRepo.getConfigValue(org.tdl.vireo.constant.AppConfig.BUTTON_MAIN_COLOR_OFF)}), color-stop(50%,${settingRepo.getConfigValue(org.tdl.vireo.constant.AppConfig.BUTTON_HIGHLIGHT_COLOR_OFF)}), color-stop(100%,${settingRepo.getConfigValue(org.tdl.vireo.constant.AppConfig.BUTTON_MAIN_COLOR_OFF)})); /* Chrome,Safari4+ */
-				background: -webkit-linear-gradient(top,  ${settingRepo.getConfigValue(org.tdl.vireo.constant.AppConfig.BUTTON_MAIN_COLOR_OFF)} 0%,${settingRepo.getConfigValue(org.tdl.vireo.constant.AppConfig.BUTTON_HIGHLIGHT_COLOR_OFF)} 50%,${settingRepo.getConfigValue(org.tdl.vireo.constant.AppConfig.BUTTON_MAIN_COLOR_OFF)} 100%); /* Chrome10+,Safari5.1+ */
-				background: -o-linear-gradient(top,  ${settingRepo.getConfigValue(org.tdl.vireo.constant.AppConfig.BUTTON_MAIN_COLOR_OFF)} 0%,${settingRepo.getConfigValue(org.tdl.vireo.constant.AppConfig.BUTTON_HIGHLIGHT_COLOR_OFF)} 50%,${settingRepo.getConfigValue(org.tdl.vireo.constant.AppConfig.BUTTON_MAIN_COLOR_OFF)} 100%); /* Opera 11.10+ */
-				background: -ms-linear-gradient(top,  ${settingRepo.getConfigValue(org.tdl.vireo.constant.AppConfig.BUTTON_MAIN_COLOR_OFF)} 0%,${settingRepo.getConfigValue(org.tdl.vireo.constant.AppConfig.BUTTON_HIGHLIGHT_COLOR_OFF)} 50%,${settingRepo.getConfigValue(org.tdl.vireo.constant.AppConfig.BUTTON_MAIN_COLOR_OFF)} 100%); /* IE10+ */
-				background: linear-gradient(top,  ${settingRepo.getConfigValue(org.tdl.vireo.constant.AppConfig.BUTTON_MAIN_COLOR_OFF)} 0%,${settingRepo.getConfigValue(org.tdl.vireo.constant.AppConfig.BUTTON_HIGHLIGHT_COLOR_OFF)} 50%,${settingRepo.getConfigValue(org.tdl.vireo.constant.AppConfig.BUTTON_MAIN_COLOR_OFF)} 100%); /* W3C */
-				filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='${settingRepo.getConfigValue(org.tdl.vireo.constant.AppConfig.BUTTON_MAIN_COLOR_OFF)}', endColorstr='${settingRepo.getConfigValue(org.tdl.vireo.constant.AppConfig.BUTTON_HIGHLIGHT_COLOR_OFF)}');
-			}
-			#submitSteps li.current, #submitSteps li:hover{
-				background: ${settingRepo.getConfigValue(org.tdl.vireo.constant.AppConfig.BUTTON_MAIN_COLOR_ON)}; /* Old browsers */
-				background: -moz-linear-gradient(top,  ${settingRepo.getConfigValue(org.tdl.vireo.constant.AppConfig.BUTTON_MAIN_COLOR_ON)} 0%, ${settingRepo.getConfigValue(org.tdl.vireo.constant.AppConfig.BUTTON_HIGHLIGHT_COLOR_ON)} 50%, ${settingRepo.getConfigValue(org.tdl.vireo.constant.AppConfig.BUTTON_MAIN_COLOR_ON)} 100%); /* FF3.6+ */
-				background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,${settingRepo.getConfigValue(org.tdl.vireo.constant.AppConfig.BUTTON_MAIN_COLOR_ON)}), color-stop(50%,${settingRepo.getConfigValue(org.tdl.vireo.constant.AppConfig.BUTTON_HIGHLIGHT_COLOR_ON)}), color-stop(100%,${settingRepo.getConfigValue(org.tdl.vireo.constant.AppConfig.BUTTON_MAIN_COLOR_ON)})); /* Chrome,Safari4+ */
-				background: -webkit-linear-gradient(top,  ${settingRepo.getConfigValue(org.tdl.vireo.constant.AppConfig.BUTTON_MAIN_COLOR_ON)} 0%,${settingRepo.getConfigValue(org.tdl.vireo.constant.AppConfig.BUTTON_HIGHLIGHT_COLOR_ON)} 50%, ${settingRepo.getConfigValue(org.tdl.vireo.constant.AppConfig.BUTTON_MAIN_COLOR_ON)} 100%); /* Chrome10+,Safari5.1+ */
-				background: -o-linear-gradient(top,  ${settingRepo.getConfigValue(org.tdl.vireo.constant.AppConfig.BUTTON_MAIN_COLOR_ON)} 0%,${settingRepo.getConfigValue(org.tdl.vireo.constant.AppConfig.BUTTON_HIGHLIGHT_COLOR_ON)} 50%, ${settingRepo.getConfigValue(org.tdl.vireo.constant.AppConfig.BUTTON_MAIN_COLOR_ON)} 100%); /* Opera 11.10+ */
-				background: -ms-linear-gradient(top,  ${settingRepo.getConfigValue(org.tdl.vireo.constant.AppConfig.BUTTON_MAIN_COLOR_ON)} 0%,${settingRepo.getConfigValue(org.tdl.vireo.constant.AppConfig.BUTTON_HIGHLIGHT_COLOR_ON)} 50%, ${settingRepo.getConfigValue(org.tdl.vireo.constant.AppConfig.BUTTON_MAIN_COLOR_ON)} 100%); /* IE10+ */
-				background: linear-gradient(top,  ${settingRepo.getConfigValue(org.tdl.vireo.constant.AppConfig.BUTTON_MAIN_COLOR_ON)} 0%,${settingRepo.getConfigValue(org.tdl.vireo.constant.AppConfig.BUTTON_HIGHLIGHT_COLOR_ON)} 50%, ${settingRepo.getConfigValue(org.tdl.vireo.constant.AppConfig.BUTTON_MAIN_COLOR_ON)} 100%); /* W3C */
-				filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='${settingRepo.getConfigValue(org.tdl.vireo.constant.AppConfig.BUTTON_MAIN_COLOR_ON)}', endColorstr='${settingRepo.getConfigValue(org.tdl.vireo.constant.AppConfig.BUTTON_HIGHLIGHT_COLOR_ON)}');
-			}
-			#{if new java.io.File(controllers.settings.ThemeSettingsTab.RIGHT_LOGO_PATH).exists()}
-			#right-logo{
-				background-image:url("@{Application.index()}theme/right-logo");
-			}
-			#{/if}
-			${settingRepo.getConfigValue(org.tdl.vireo.constant.AppConfig.CUSTOM_CSS)};
-        </style> -->
     </head>
     <body>
     	<div class="navbar navbar-static-top">
@@ -82,7 +41,7 @@
 					<a id="left-logo" class="brand" href="@{Application.index}">
 						#{if new java.io.File(controllers.settings.ThemeSettingsTab.LEFT_LOGO_PATH).exists()}<img alt="Home" src="@{Application.index()}theme/left-logo" />#{/if}
 						#{else}<img alt="Home" src="@{Application.index()}public/images/vireo-logo-sm.png" />#{/else}
-						<span class="sr-only">Princeton University</span>
+						<span class="sr-only">Princeton University Library</span>
 					</a>
 
 					<div id="right-logo">

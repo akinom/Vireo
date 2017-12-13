@@ -123,7 +123,6 @@ jQuery(document).ready(function(){
 </div>
 <div id="stickyNotes" class="span4">
      #{list items:stickies, as:'sticky'}
-       <div class="sticky-top"></div>
          <div class="sticky-bottom">#{verbatim}${sticky}#{/verbatim}</div>
     #{/list}
 </div>
@@ -494,8 +493,8 @@ jQuery(document).ready(function(){
 	<!--The feature to hide additional embargos by default has been removed-->
 	<!--<a href="#" id="additional-embargos-btn">Additional Embargos</a>-->
 	
-	<div class="span10 center">
-		<input type="submit" name="submit_next" value="Save and Continue >>" class="btn btn-primary">
+	<div class="form-actions pull-right">
+		<input type="submit" name="submit_next" value="Save and Continue" class="btn btn-primary">
 	</div>
 	</form>
 </div>

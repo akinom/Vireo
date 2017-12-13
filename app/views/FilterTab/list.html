@@ -1,6 +1,6 @@
 #{extends 'admin.html' /}
 #{set title:'List Active Submissions' /}
-<div id="left-column" class="pull-left">
+<div id="left-column" class="span3">
 
 	#{include 'FilterTab/filters.include' /}
 	
@@ -24,7 +24,7 @@
 	</div>
 
 </div>
-<div id="right-column">
+<div id="right-column" class="span9">
 	<div class="inner">
 	    #{if flash.get("error") != null}
 	    <div class="alert alert-error">

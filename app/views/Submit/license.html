@@ -29,12 +29,10 @@
 		</div>
 		#{/ifErrors}
 
-		<div class="row center">
-			<div style="margin:0 0 10px;">
-				<label id="lalabel" class="checkbox #{if errors.forKey('licenseAgreement')}red#{/if}">
-		            <input id="licenseAgreement" type="checkbox" required name="licenseAgreement" ${ licenseAgreement != null ? "checked='true'" : "" }/> #{fieldHelp LICENSE_AGREEMENT /}
-				</label>
-			</div>
+		<div class="well center">
+			<label id="lalabel" class="checkbox #{if errors.forKey('licenseAgreement')}red#{/if}">
+	            <input id="licenseAgreement" type="checkbox" required name="licenseAgreement" ${ licenseAgreement != null ? "checked='true'" : "" }/> #{fieldHelp LICENSE_AGREEMENT /}
+			</label>
 		</div>
 		#{/ifEnabled}
 		
@@ -54,7 +52,7 @@
 		</div>	
 	    #{/ifEnabled}
 		
-		<div class="span10 center">
+		<div class="form-actions center">
 	        <input type="submit" class="btn btn-primary" name="submit_next" value="Save and Continue" />
 		</div>
 

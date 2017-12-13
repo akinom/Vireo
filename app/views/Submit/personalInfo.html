@@ -450,7 +450,7 @@ function abandonSub(){
 		#{/ifEnabled}
 	</fieldset>
 	#{/ifEnabled}
-	<div class="form-actions">
+	<div class="form-actions pull-right">
 		<input type="submit" class="btn btn-primary" name="submit_next" value="Save and Continue" />
 		<input type="submit" class="btn" name="submit_cancel" value="Cancel" />
 	</div>
@@ -458,7 +458,6 @@ function abandonSub(){
 </div>
 	<div id="stickyNotes" class="span4">
 	    #{list items:stickies, as:'sticky'}
-	       <div class="sticky-top"></div>
            <div class="sticky-bottom">#{verbatim}${sticky}#{/verbatim}</div>
 	    #{/list}
 	</div>

@@ -67,6 +67,14 @@ label {
 	padding-top: 5px;
 }
 
+.form-horizontal .form-actions {
+	padding-left: 20px;
+}
+
+.form-horizontal.login .form-actions {
+	padding-left: 180px;
+}
+
 .controls.edit {
 	margin: 1em;
 }
@@ -120,10 +128,6 @@ legend.strong {
 
 legend.alert-error {
     // background:url("../images/hdr_bg_red.jpg") repeat-x 3px;
-}
-
-fieldset{
-	margin:30px 0;
 }
 
 form table{
@@ -298,10 +302,9 @@ INDIVIDUAL FIELDS
 
 
 fieldset {
-    margin: 8px;
-    border: 1px solid silver;
-    padding: 8px;    
-    border-radius: 4px;
+	margin: 1em 8px;
+    border: 1px solid @grayLighter;
+    padding: 8px;
 }
 
 legend {
@@ -722,8 +725,7 @@ button.ui-multiselect.ui-widget.ui-state-default.ui-corner-all {
 }
 
 .alert {
-	border-bottom-right-radius: 2px;
-	border-top-right-radius: 2px;
+	border-radius: 0;
 	border-left: 4px solid;
 	margin: 0 8px 1.2rem;
 	padding: 1em;

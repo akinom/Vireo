@@ -13,8 +13,8 @@ OVERRIDE BOOTSTRAP VARIABLES
 @grayDark: #333;
 @gray: #666;
 @grayLight: #999;
-@grayLighter: #ccc;
-@grayLightest: #f8f8f8;
+@grayLighter: rgba(0, 0, 0, .125);
+@grayLightest: #f8f9fa;
 @white: #fff;
 
 
@@ -250,9 +250,13 @@ STICKY NOTES
 .sticky-bottom{
     // background:url("../images/sticky_bot.jpg") no-repeat scroll left bottom @stickyNoteColor;   
     display:block;
-    margin: 2em;
+    margin: 2em 1em;
     // padding:0 20px 30px;
     // margin:0 0 40px 0;
     // width:161px;
     // font-size:0.9em;
+}
+
+.well {
+    border-radius: 0;
 }

@@ -309,7 +309,7 @@ different blocks this gets around this problem because each is independent.
             <li><form action="@{FilterTab.modifyFilters(nav)}" method="POST" class="form-search">
                 <input type="hidden" name="type" value="text"/>
                 <input type="hidden" name="action" value="add"/>
-                <input type="text" name="value" class="input-small">
+                <input type="text" name="value" class="input-medium">
                 <button type="submit" class="btn btn-primary">Go</button>
             </form></li>
         </ul>
