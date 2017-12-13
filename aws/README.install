@@ -57,6 +57,13 @@ git checkout ec2
 chkconfig --add  vireo
 chkconfig
 
+# ---------------------
+# put behing http
+# ---------------------
+cp  vireo-v0.conf  /etc/httpd/conf.d/vireo.conf 
+chkconfig --add httpd
+#test in browser  http://server-name/ 
+
 # --------------------
 # setup ec2-user with tcsh 
 # --------------------
@@ -136,11 +143,121 @@ amzn-ami-hvm-2017.03.1.20170812-x86_64-gp2 (ami-4fffc834)
 Description Amazon Linux AMI 2017.03.1.20170812 x86_64 HVM GP2
 Platform Amazon Linux
 
+# -------------------
+# CREATE SWAP
+# -------------------
+# was need to run rpmbuild commands
+/bin/dd if=/dev/zero of=/var/swap.1 bs=1M count=250
+/sbin/mkswap /var/swap.1
+chmod 600 /var/swap.1
+/sbin/swapon /var/swap.1
+free
+
 # --------------------
 # Shibboleth
 # --------------------
-https://github.com/TexasDigitalLibrary/Vireo/wiki/Install
-http://idmintegration.com/blog/shibboleth-sp-install-amazon-ami-linux/
-yum install rpmdevtools rpm-build
-yum install automake boost-devel chrpath doxygen gcc-c++ groff httpd-devel libidn-devel openldap-devel openssl-devel redhat-rpm-config stunnel unixODBC-devel
+Following slightly modified instructions from
+I found info on installing Shibboleth on Amazon at http://idmintegration.com/blog/shibboleth-sp-install-amazon-ami-linux/
 
+yum install automake boost-devel chrpath doxygen gcc-c++ groff httpd-devel libidn-devel openldap-devel openssl-devel redhat-rpm-config stunnel unixODBC-devel
+yum install rpmdevtools rpm-build
+
+wget http://download.opensuse.org/repositories/security://shibboleth/RHEL_6/src/log4shib-1.0.9-3.1.el6.src.rpm
+rpmbuild --rebuild log4shib-1.0.9-3.1.el6.src.rpm
+rpm -ivh /usr/src/rpm/RPMS/x86_64/liblog4shib1-1.0.9-3.1.amzn1.x86_64.rpm
+rpm -ivh /usr/src/rpm/RPMS/x86_64/log4shib-debuginfo-1.0.9-3.1.amzn1.x86_64.rpm
+rpm -ivh /usr/src/rpm/RPMS/x86_64/liblog4shib-devel-1.0.9-3.1.amzn1.x86_64.rpm
+
+
+wget http://download.opensuse.org/repositories/security://shibboleth/RHEL_6/src/xerces-c-3.1.4-1.1.el6.src.rpm
+rpmbuild --rebuild  xerces*rpm
+rpm -ivh /usr/src/rpm/RPMS/x86_64/libxerces-c-3_1-3.1.4-1.1.amzn1.x86_64.rpm
+rpm -ivh /usr/src/rpm/RPMS/x86_64/libxerces-c-devel-3.1.4-1.1.amzn1.x86_64.rpm
+rpm -ivh /usr/src/rpm/RPMS/x86_64/xerces-c-bin-3.1.4-1.1.amzn1.x86_64.rpm
+rpm -ivh /usr/src/rpm/RPMS/x86_64/xerces-c-debuginfo-3.1.4-1.1.amzn1.x86_64.rpm
+
+
+wget http://download.opensuse.org/repositories/security://shibboleth/RHEL_6/src/xml-security-c-1.7.3-3.2.el6.src.rpm
+rpmbuild --rebuild  xml-security*rpm
+rpm -ivh /usr/src/rpm/RPMS/x86_64/libxml-security-c*
+# installs 2 pacakges
+
+wget http://download.opensuse.org/repositories/security://shibboleth/RHEL_6/src/curl-openssl-7.57.0-1.1.el6.src.rpm
+rpmbuild --rebuild curl-openssl-7*
+rpm -ivh /usr/src/rpm/RPMS/x86_64/*curl*
+# installs 4 pacakges
+
+wget http://download.opensuse.org/repositories/security://shibboleth/RHEL_6/src/xmltooling-1.6.2-3.1.el6.src.rpm
+#NO::  rpmbuild --rebuild curl-openssl-7* /xmltooling-1.6.2-3.1.el6.src.rpm
+#see https://wiki.umbc.edu/display/MW/Shibboleth+SP+RPM+Build+for+Amazon+AWS
+rpmbuild --rebuild -D 'xmltooling_options --with-curl=/opt/shibboleth' xmltooling-1.6.2-3.1.el6.src.rpm
+rpm -ivh /usr/src/rpm/RPMS/x86_64/*xmltooling*
+# installs 4 packages
+
+wget http://download.opensuse.org/repositories/security://shibboleth/RHEL_6/src/opensaml-2.6.1-3.1.el6.src.rpm
+rpmbuild --rebuild opensaml-2.6.1-3.1.el6.src.rpm
+rpm -ivh /usr/src/rpm/RPMS/x86_64/libsaml*
+# install 2 pacakges
+rpm -ivh /usr/src/rpm/RPMS/x86_64/opensaml-*
+# install 3 pacakges
+
+
+wget http://download.opensuse.org/repositories/security://shibboleth/RHEL_6/src/shibboleth-2.6.1-3.1.el6.src.rpm
+#NO rpmbuild --rebuild -D 'shib_options --enable-apache-24 --with-apxs24=/usr/sbin/apxs' shibboleth-2.6.1-3.1.el6.src.rpm
+
+#NO NO rpmbuild --rebuild -D 'shib_options --enable-apache-24 --with-apxs24=/usr/sbin/apxs' shibboleth-x.x.x-x.x.src.rpm
+#NO rpmbuild –-rebuild –-without=builtinapache -D ‘shib_options –with-apxs24=/usr/sbin/apxs –with-apr1=/usr/bin/apr-1-config –enable-apache24’ shibboleth-2.5.5-3.1.el6.src.rpm
+#NO rpmbuild –-rebuild -D ‘shib_options –-with-apxs24=/usr/sbin/apxs –-with-apr1=/usr/bin/apr-1-config -–enable-apache22’ shibboleth-2.5.5-3.1.el6.src.rpm
+
+
+xmltooling-schemas(x86-64) >= 1.6.0ERROR
+RPM build errors:
+    shibboleth-2.6.1-3.1.el6.src.rpm: Header V3 DSA/SHA1 Signature, key ID 7d0a1b3d: NOKEY
+    line 14: prereq is deprecated: PreReq:		xmltooling-schemas(x86-64) >= 1.6.0, opensaml-schemas(x86-64) >= 2.6.0
+    Bad exit status from /var/tmp/rpm-tmp.QGY4S6 (%build)
+
+
+rpmbuild  --rebuild shibboleth-2.6.1-3.1.el6.src.rpm
+Preparing...                          ################################# [100%]
+Updating / installing...
+   1:shibboleth-2.6.1-3.1.amzn1       ################################# [ 33%]
+   2:shibboleth-devel-2.6.1-3.1.amzn1 ################################# [ 67%]
+   3:shibboleth-debuginfo-2.6.1-3.1.am################################# [100%]
+
+
+
+
+# add to start up sequence 
+chkconfig --add shibd 
+#install mod_shib.so to apache 
+cd /etc/httpd/modules
+ln -s /usr/lib64/shibboleth/mod_shib_22.so .
+
+cp shibboleth2.xml /etc/shibboleth
+add definitions to /etc/shibboleth/attribute-map.xml
++    <Attribute name="urn:mace:dir:attribute-def:uid" id="uid" />
++    <Attribute name="urn:mace:dir:attribute-def:sn" id="sn"/>
++    <Attribute name="urn:mace:dir:attribute-def:givenName" id="givenName"/>
++    <Attribute name="urn:oid:0.9.2342.19200300.100.1.1" id="uid" aliases="PS_SSO_UID" />
++    <Attribute name="urn:oid:2.5.4.4" id="sn"/>
++    <Attribute name="urn:oid:2.5.4.42" id="givenName"/>
+
+#test config 
+export LD_LIBRARY_PATH=/opt/shibboleth/lib64
+shibd -t 
+#these warning are OK - says simon 
+2017-12-13 21:14:15 WARN Shibboleth.Application : insecure cookieProps setting, set to "https" for SSL/TLS-only usage
+2017-12-13 21:14:15 WARN Shibboleth.Application : handlerSSL should be enabled for SSL/TLS-enabled web sites
+2017-12-13 21:14:17 WARN Shibboleth.AttributeExtractor.XML : attribute mapping rule (uid) uses deprecated aliases feature, consider revising
+overall configuration is loadable, check console for non-fatal problems
+
+
+# shibd is listeingin to a socket 
+netstat -nlp | fgrep 3696
+unix  2      [ ACC ]     STREAM     LISTENING     17099  3696/shibd          /var/run/shibboleth/shibd.sock
+# httpd has shib module loaded  - not sure where it comes from through
+apachectl -t -D DUMP_MODULES
+
+
+ SHIBBOLETH ON UBUNTU
+ https://s3.amazonaws.com/awsiammedia/public/docs/OpenLDAPandShibboleth/SingleSign-On_IntegratingAWSOpenLDAPandShibboleth.pdf
