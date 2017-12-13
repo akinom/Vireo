@@ -1,23 +1,25 @@
 #{extends 'Submit/submitStep.html' /}
 #{set title:'Vireo Thesis and Dissertation Submital System - Submission - Upload Your Files' /}
 
-<br />
 <div class="row pageHead">
-	<h3 class="span11">Upload Your Files</h3>
+	<h1>Upload Your Files</h1>
 </div>
-<br/>
 <div class="row">
-<div class="span7">
-       <h4>Instructions:</h4>
-    <p> #{verbatim}${instructions}#{/verbatim}</p><br/>
+<div class="span8">
+       <h2>Instructions:</h2>
+    <p> #{verbatim}${instructions}#{/verbatim}</p>
     #{ifErrors}
-    <ul class="red">
-        #{errors}
-            <li>${error}</li>
-        #{/errors}
-    </ul>
+    <div class="alert alert-error">
+        <div class="alert-content">
+            <h2>Error:</h2>
+            <ul>
+                #{errors}
+                    <li>${error}</li>
+                #{/errors}
+            </ul>
+        </div>
+    </div>
     #{/ifErrors}
-    <br/>
     
 	<form action="@{submit.FileUpload.fileUpload(subId)}" method="POST" class="form-horizontal" enctype="multipart/form-data">
 		<input type="hidden" name="step" value="fileUpload"/>
@@ -31,7 +33,7 @@
 
                 #{if primaryAttachment == null}
                     <div class="controls">
-                        <input type="file" id="primaryFile" class="input-file" name="primaryDocument"><br/>
+                        <input type="file" id="primaryFile" class="input-file" name="primaryDocument">
                         <input type="submit" value="Upload" class="uploadBtn btn" name="uploadPrimary">
                         
                     </div>
@@ -61,7 +63,7 @@
                     </div>
                 <label class="control-label" for="additionalFile"><span class="required-star">*</span>Browse for Additional Document:</label>
                 <div class="controls">
-                    <input type="file" id="additionalFile" class="input-file" name="additionalDocument"><br/>
+                    <input type="file" id="additionalFile" class="input-file" name="additionalDocument">
                     <input type="submit" value="Upload" class="uploadBtn btn" name="uploadAdditional">
                 </div>
 			</div>
@@ -79,7 +81,7 @@
                                 <a href="@{Student.viewAttachment(subId,attachment.getId(),attachment.getName())}" target="_blank">
                                     ${attachment.getName()}
                                 </a> 
-                                <br />(${attachment.getType()} - ${attachment.getDisplaySize()})
+                                (${attachment.getType()} - ${attachment.getDisplaySize()})
                             </label>                                                     
                             </p>
                         #{/list}
@@ -90,15 +92,14 @@
 		#{/if}
 		#{/ifEnabled}
 		
-		<div class="pull-right">
-			<input type="submit" value="Save and Continue >>" class="btn btn-primary" name="submit_next">
+		<div class="form-actions pull-right">
+			<input type="submit" value="Save and Continue" class="btn btn-primary" name="submit_next">
 		</div>
 		
 	</form>
 </div>
-<div id="stickyNotes" class="span3">
+<div id="stickyNotes" class="span4">
     #{list items:stickies, as:'sticky'}
-       <div class="sticky-top"></div>
        <div class="sticky-bottom">#{verbatim}${sticky}#{/verbatim}</div>
     #{/list}
 </div>

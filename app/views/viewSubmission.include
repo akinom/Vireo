@@ -17,19 +17,21 @@ Plus all the FieldConfig objects
 }*
 
 #{ifEnabled COLLEGE}
-
+<fieldset class="thesis-type">
 <legend>${sub.getCollege()}</legend>
 #{if showEditLinks}
 <div class="control-group">
     <label class="control-label"></label>
-    <div class="controls">
+    <div class="controls edit">
         <p><a href="@{submit.PersonalInfo.personalInfo(subId)}">[edit thesis type]</a></p>
     </div>
 </div>
 #{/if}
 #{/ifEnabled}
+</fieldset>
 
 #{ifEnabled [STUDENT_FIRST_NAME,STUDENT_MIDDLE_NAME,STUDENT_EMAIL,STUDENT_ORCID,STUDENT_BIRTH_YEAR,DEPARTMENT]}
+<fieldset>
 <legend>Student Information</legend>
 #{ifEnabled [STUDENT_FIRST_NAME,STUDENT_MIDDLE_NAME]}
 <div class="control-group #{errorClass 'firstName' /} #{errorClass 'lastName' /} #{errorClass 'middleName' /} #{errorClass 'birthYear' /} ">
@@ -106,12 +108,13 @@ Plus all the FieldConfig objects
 #{if showEditLinks}
 <div class="control-group">
     <label class="control-label"></label>
-    <div class="controls">
+    <div class="controls edit">
         <p><a href="@{submit.PersonalInfo.personalInfo(subId)}">[edit your personal information]</a></p>
     </div>
 </div>
 #{/if}
 #{/ifEnabled}
+</fieldset>
 
 #{ifEnabled [GRANTOR,DEGREE,MAJOR] }
 <legend>Academic Affiliation</legend>
@@ -151,7 +154,7 @@ Plus all the FieldConfig objects
 #{if showEditLinks}
 <div class="control-group">
     <label class="control-label"></label>
-    <div class="controls">
+    <div class="controls edit">
         <p><a href="@{submit.PersonalInfo.personalInfo(subId)}">[edit your academic affiliation]</a></p>
     </div>
 </div>
@@ -159,6 +162,7 @@ Plus all the FieldConfig objects
 #{/ifEnabled}
 
 #{ifEnabled [DOCUMENT_TITLE,PROGRAM,GRADUATION_DATE,DEFENSE_DATE,DOCUMENT_TYPE,DOCUMENT_ABSTRACT,DOCUMENT_KEYWORDS,DOCUMENT_SUBJECTS,DOCUMENT_LANGUAGE,COMMITTEE,COMMITTEE_CONTACT_EMAIL,EMBARGO_TYPE,UMI_RELEASE]}
+<fieldset>
 <legend>Senior Thesis Information</legend>
 
 #{ifEnabled DOCUMENT_TITLE}
@@ -335,12 +339,11 @@ Plus all the FieldConfig objects
 #{if showEditLinks }
 <div class="control-group">
     <label class="control-label"></label>
-    <div class="controls">
+    <div class="controls edit">
         <p><a href="@{submit.DocumentInfo.documentInfo(subId)}">[edit your document information]</a></p>
     </div>
 </div>
 #{/if}
 #{/ifEnabled}
-
-
+</fieldset>
 

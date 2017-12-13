@@ -13,44 +13,44 @@ jQuery(document).ready(function(){
 <form>
 <fieldset class="default settings">
 	<legend class="default">When adding notes, which options should be checked by default?</legend>
-	<div>
+	<label>
 	   <input name="${org.tdl.vireo.constant.AppPref.NOTES_EMAIL_STUDENT}" type="checkbox" class="checkbox user-preference" #{if NOTES_EMAIL_STUDENT != null}checked="true"#{/if}>
 	       Email the student
 	   </input>
-	</div>
-	<div>
+	</label>
+	<label>
 	   <input name="${org.tdl.vireo.constant.AppPref.NOTES_CC_ADVISOR}"  type="checkbox" class="checkbox user-preference" #{if NOTES_CC_ADVISOR != null}checked="true"#{/if}>
 	       CC student's advisor
 	   </input>
-	</div>
-	<div>
+	</label>
+	<label>
 	   <input name="${org.tdl.vireo.constant.AppPref.NOTES_FLAG_NEEDS_CORRECTIONS}" type="checkbox" class="checkbox user-preference"#{if NOTES_FLAG_NEEDS_CORRECTIONS != null}checked="true"#{/if}>
 	       Flag submission as Needs Corrections
 	   </input>
-	</div>
-	<div>
+	</label>
+	<label>
 	   <input name="${org.tdl.vireo.constant.AppPref.NOTES_MARK_PRIVATE}" type="checkbox" class="checkbox user-preference" #{if NOTES_MARK_PRIVATE != null}checked="true"#{/if}>
 	       Mark comment as private
 	   </input>
-	</div>
+	</label>
 </fieldset>
 
 <fieldset class="default settings">
 	<legend class="default">When attaching files, which options should be checked by default?</legend>
-	<div>
+	<label>
 	   <input name="${org.tdl.vireo.constant.AppPref.ATTACHMENT_EMAIL_STUDENT}" type="checkbox" class="checkbox user-preference" #{if ATTACHMENT_EMAIL_STUDENT != null}checked="true"#{/if}>
 	       Email the student
 	   </input>
-	</div>
-	<div>
+	</label>
+	<label>
 	   <input name="${org.tdl.vireo.constant.AppPref.ATTACHMENT_CC_ADVISOR}" type="checkbox" class="checkbox user-preference" #{if ATTACHMENT_CC_ADVISOR != null}checked="true"#{/if}>
 	       CC student's advisor
 	   </input>
-	</div>
-	<div>
+	</label>
+	<label>
 	   <input name="${org.tdl.vireo.constant.AppPref.ATTACHMENT_FLAG_NEEDS_CORRECTIONS}" type="checkbox" class="checkbox user-preference" #{if ATTACHMENT_FLAG_NEEDS_CORRECTIONS != null}checked="true"#{/if}>
 	       Flag submission as Needs Corrections
 	   </input>
-	</div>
+	</label>
 </fieldset>
 </form>

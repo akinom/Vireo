@@ -1,20 +1,9 @@
 #{extends 'Submit/submitStep.html' /}
 #{set title:'Vireo Thesis and Dissertation Submital System - Submission - License Agreement' /}
 
-<br />
 <div class="row pageHead">
-	<h3 class="span11">Honor Code</h3>
+	<h1>Honor Code</h1>
 </div>
-<br />
-
-
-#{ifErrors}
-<ul class="red">
-    #{errors}
-    <li>${error}</li> 
-    #{/errors}
-</ul>
-#{/ifErrors}
 
 <div>
 	<form action="@{submit.License.license(subId)}" method="post" class="form-inline">
@@ -23,39 +12,47 @@
 		
 		#{ifEnabled LICENSE_AGREEMENT}
 		#{ifRequired LICENSE_AGREEMENT }
-		<div class="row">
-			<p class="span">#{verbatim}${instructions}#{/verbatim}</p>
-		</div>
+		<h2>Instructions:</h2>
+		<p class="span">#{verbatim}${instructions}#{/verbatim}</p>
 		#{/ifRequired}
 
-		<div class="row center">
-			<div style="margin:0 0 10px;">
-				<label id="lalabel" class="checkbox #{if errors.forKey('licenseAgreement')}red#{/if}">
-		            <input id="licenseAgreement" type="checkbox" name="licenseAgreement" ${ licenseAgreement != null ? "checked='true'" : "" }/> #{fieldHelp LICENSE_AGREEMENT /}
-				</label>
+		#{ifErrors}
+		<div class="alert alert-error">
+			<div class="alert-content">
+				<h2>Error:</h2>
+				<ul>
+				    #{errors}
+				    <li>${error}</li> 
+				    #{/errors}
+				</ul>
 			</div>
+		</div>
+		#{/ifErrors}
+
+		<div class="well center">
+			<label id="lalabel" class="checkbox #{if errors.forKey('licenseAgreement')}red#{/if}">
+	            <input id="licenseAgreement" type="checkbox" required name="licenseAgreement" ${ licenseAgreement != null ? "checked='true'" : "" }/> #{fieldHelp LICENSE_AGREEMENT /}
+			</label>
 		</div>
 		#{/ifEnabled}
 		
 		#{ifEnabled UMI_RELEASE}
-		<h4>#{fieldLabel UMI_RELEASE /}</h4>
+		<h2>#{fieldLabel UMI_RELEASE /}</h2>
 		
 		#{ifRequired UMI_RELEASE }
-		<div class="row">
-			<p class="span">You must agree to the non-exclusive license below in order to continue:</p>
-		</div>
+		<p class="span">You must agree to the non-exclusive license below in order to continue:</p>
 		#{/ifRequired}
 		
 		<div class="well">#{verbatim}${proquestText}#{/verbatim}</div>
 		
 		<div class="row center">
 			<label id="palabel" class="checkbox #{if errors.forKey('proquestAgreement')}red#{/if}">
-				<input id="proquestAgreement" type="checkbox" name="proquestAgreement" ${ proquestAgreement != null ? "checked='true'" : "" }/> #{fieldHelp UMI_RELEASE /}
+				<input id="proquestAgreement" type="checkbox" required name="proquestAgreement" ${ proquestAgreement != null ? "checked='true'" : "" }/> #{fieldHelp UMI_RELEASE /}
 			</label>
 		</div>	
 	    #{/ifEnabled}
 		
-		<div class="span10 center">
+		<div class="form-actions center">
 	        <input type="submit" class="btn btn-primary" name="submit_next" value="Save and Continue" />
 		</div>
 

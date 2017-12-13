@@ -13,7 +13,8 @@ OVERRIDE BOOTSTRAP VARIABLES
 @grayDark: #333;
 @gray: #666;
 @grayLight: #999;
-@grayLighter: #ccc;
+@grayLighter: rgba(0, 0, 0, .125);
+@grayLightest: #f8f9fa;
 @white: #fff;
 
 
@@ -24,7 +25,7 @@ OVERRIDE BOOTSTRAP VARIABLES
 @green: #46a546;
 @red: #BE1621;
 @yellow: #ffc40d;
-@orange: #f89406;
+@orange: #E87722;
 @pink: #c3325f;
 @purple: #7a43b6;
 
@@ -37,7 +38,7 @@ OVERRIDE BOOTSTRAP VARIABLES
 
 // Links
 // -------------------------
-@linkColor: #666;
+@linkColor: @grayDarker;
 @linkColorHover: @linkColor;
 
 
@@ -47,9 +48,9 @@ OVERRIDE BOOTSTRAP VARIABLES
 @serifFontFamily: Georgia, "Times New Roman", Times, serif;
 @monoFontFamily: Menlo, Monaco, Consolas, "Courier New", monospace;
 
-@baseFontSize: 13px;
+@baseFontSize: 14px;
 @baseFontFamily: @sansFontFamily;
-@baseLineHeight: 18px;
+@baseLineHeight: 1.2rem;
 @altFontFamily: @serifFontFamily;
 
 @headingsFontFamily: inherit; // empty to use BS default, @baseFontFamily
@@ -109,7 +110,6 @@ OVERRIDE BOOTSTRAP VARIABLES
 @dropdownDividerBottom: @white;
 
 
-
 // COMPONENT VARIABLES
 // --------------------------------------------------
 
@@ -144,8 +144,8 @@ OVERRIDE BOOTSTRAP VARIABLES
 // Navbar
 // -------------------------
 @navbarHeight: 40px;
-@navbarBackground: @grayDarker;
-@navbarBackgroundHighlight: @grayDark;
+@navbarBackground: @white;
+@navbarBackgroundHighlight: @white;
 
 @navbarText: @grayLight;
 @navbarLinkColor: @grayLight;
@@ -170,19 +170,19 @@ OVERRIDE BOOTSTRAP VARIABLES
 
 // Form states and alerts
 // -------------------------
-@warningText: #584521;
+@warningText: @orange;
 @warningBackground: #fcf8e3;
 @warningBorder: darken(spin(@warningBackground, -10), 3%);
 
-@errorText: #752e2d;
+@errorText: @red;
 @errorBackground: #f2dede;
 @errorBorder: darken(spin(@errorBackground, -10), 3%);
 
-@successText: #264926;
+@successText: #043804;
 @successBackground: #dff0d8;
 @successBorder: darken(spin(@successBackground, -10), 5%);
 
-@infoText: #225066;
+@infoText:@blueDark;
 @infoBackground: #d9edf7;
 @infoBorder: darken(spin(@infoBackground, -10), 7%);
 
@@ -193,10 +193,10 @@ OVERRIDE BOOTSTRAP VARIABLES
 
 // Default 940px grid
 // -------------------------
-@gridColumns: 12;
-@gridColumnWidth: 52px;
-@gridGutterWidth: 16px;
-@gridRowWidth: (@gridColumns * @gridColumnWidth) + (@gridGutterWidth * (@gridColumns - 1));
+// @gridColumns: 12;
+// @gridColumnWidth: 65px;
+// @gridGutterWidth: 16px;
+// @gridRowWidth: (@gridColumns * @gridColumnWidth) + (@gridGutterWidth * (@gridColumns - 1));
 
 // Fluid grid
 // -------------------------
@@ -223,6 +223,8 @@ CUSTOM VARIABLES
 @borderColor:		#778E9B;
 @stickyNoteColor:	#FAF0A8;
 
+@formActionsBackground: transparent;
+
 .clear{
 	clear:both;
 }
@@ -236,20 +238,25 @@ STICKY NOTES
 ********************/
 #stickyNotes{
     float:right;
-    margin:20px 10px 0 0;
+    // margin:20px 10px 0 0;
 }
 
 .sticky-top{
-    background:url("../images/sticky_top.jpg") no-repeat scroll 0 0 @stickyNoteColor;
+    // background:url("../images/sticky_top.jpg") no-repeat scroll 0 0 @stickyNoteColor;
     display:block;
-    width:201px;
-    height:27px;
+    // width:201px;
+    // height:27px;
 }
 .sticky-bottom{
-    background:url("../images/sticky_bot.jpg") no-repeat scroll left bottom @stickyNoteColor;   
+    // background:url("../images/sticky_bot.jpg") no-repeat scroll left bottom @stickyNoteColor;   
     display:block;
-    padding:0 20px 30px;
-    margin:0 0 40px 0;
-    width:161px;
-    font-size:0.9em;
+    margin: 2em 1em;
+    // padding:0 20px 30px;
+    // margin:0 0 40px 0;
+    // width:161px;
+    // font-size:0.9em;
+}
+
+.well {
+    border-radius: 0;
 }

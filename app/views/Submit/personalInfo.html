@@ -156,23 +156,31 @@ function abandonSub(){
 }
 </script>
 #{/set}
-<br />
 <div class="row pageHead">
-	<h3 class="span11">Verify Your Information</h3>
+	<h1>Verify Your Information</h1>
 </div>
-<br />
 <div class="row">
-	<div class="span7">
-		<h4>Instructions:</h4>
+	<div class="span8">
+		<h2>Instructions:</h2>
 		<p>#{verbatim}${instructions}#{/verbatim}</p>
-		<p>Required fields are indicated with an asterisk.</p>
+		<div class="alert alert-info">
+			<div class="alert-content">
+				<p>Required fields are indicated with an asterisk.</p>
+			</div>
+		</div>
+		
 
 #{ifErrors}
-<ul class="red">
-    #{errors}
-    <li>${error}</li> 
-    #{/errors}
-</ul>
+<div class="alert alert-error">
+	<div class="alert-content">
+		<h2>Error:</h2>
+		<ul>
+		    #{errors}
+		    <li>${error}</li> 
+		    #{/errors}
+		</ul>
+	</div>
+</div>
 #{/ifErrors}
 
   <form action="@{submit.PersonalInfo.personalInfo(subId)}" method="post" class="form-horizontal">
@@ -189,8 +197,8 @@ function abandonSub(){
                 <p>${firstName}</p>
                 #{/if} 
                 #{else}
-                <input type="text" name="firstName" id="firstName" value="${firstName}">
-                <span class="tooltip-icon" title="#{fieldHelp STUDENT_FIRST_NAME /}"><i class="icon-info-sign"></i></span>
+                <input type="text" name="firstName" id="firstName" value="${firstName}" required>
+                <span class="tooltip-icon" title="#{fieldHelp STUDENT_FIRST_NAME /}"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
                 #{/else}
             </div>
         </div>
@@ -204,7 +212,7 @@ function abandonSub(){
                 #{/if} 
                 #{else}
                 <input type="text" class="span1" id="middleName" name="middleName" value="${middleName}">
-                <span class="tooltip-icon" title="#{fieldHelp STUDENT_MIDDLE_NAME /}"><i class="icon-info-sign"></i></span>
+                <span class="tooltip-icon" title="#{fieldHelp STUDENT_MIDDLE_NAME /}"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
                 #{/else}
             </div>
         </div>
@@ -217,8 +225,8 @@ function abandonSub(){
                 <p>${lastName}</p>
                 #{/if} 
                 #{else}
-                <input type="text" name="lastName" id="lastName" value="${lastName}">
-                <span class="tooltip-icon" title="#{fieldHelp STUDENT_LAST_NAME /}"><i class="icon-info-sign"></i></span>
+                <input type="text" name="lastName" id="lastName" value="${lastName}" required>
+                <span class="tooltip-icon" title="#{fieldHelp STUDENT_LAST_NAME /}"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
                 #{/else}
             </div>
         </div>
@@ -254,7 +262,7 @@ function abandonSub(){
                 #{/if} 
                 #{else}
                                <input type="text" class="span3" id="birthYear" name="birthYear" value="${birthYear}">
-                <span class="tooltip-icon" title="#{fieldHelp STUDENT_BIRTH_YEAR /}"><i class="icon-info-sign"></i></span>
+                <span class="tooltip-icon" title="#{fieldHelp STUDENT_BIRTH_YEAR /}"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
                 #{/else}
             </div>
         </div>
@@ -268,7 +276,7 @@ function abandonSub(){
 					#{/if}
 					#{else}
 						#{if settingRepo.findAllDepartments().size() > 0 }
-                            <select name="department" id="department">
+                            <select name="department" id="department" required>
                                 <option #{if department == null}selected="true"#{/if} value="">...choose</option>
 								#{list items:settingRepo.findAllDepartments(), as:'dept'}
                                     <option #{if department == dept.getName()}selected="true"#{/if} value="${dept.getName()}">${dept.getName()}</option>
@@ -276,9 +284,9 @@ function abandonSub(){
                             </select>
 						#{/if}
 						#{else}
-                            <input name="department" id="department" value="${department}"/>
+                            <input name="department" id="department" value="${department}" required/>
 						#{/else}
-                        <span class="tooltip-icon" title="#{fieldHelp DEPARTMENT /}"><i class="icon-info-sign"></i></span>
+                        <span class="tooltip-icon" title="#{fieldHelp DEPARTMENT /}"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
 					#{/else}
                 </div>
             </div>
@@ -306,7 +314,7 @@ function abandonSub(){
                 #{/if} 
                 #{else}
                     #{if settingRepo.findAllColleges().size() > 0 }
-		                <select name="college" id="college">
+		                <select name="college" id="college" required>
 		                    <option #{if college == null}selected="true"#{/if} value="">...choose</option>
 		                    #{list items:settingRepo.findAllColleges(), as:'collegeObject'}
 		                    <option #{if college == collegeObject.getName()}selected="true"#{/if} value="${collegeObject.getName()}">${collegeObject.getName()}</option>
@@ -316,7 +324,7 @@ function abandonSub(){
 		            #{else}
 		                <input name="college" id="college" value="${college}"/>
 		            #{/else}
-		            <span class="tooltip-icon" title="#{fieldHelp COLLEGE /}"><i class="icon-info-sign"></i></span>
+		            <span class="tooltip-icon" title="#{fieldHelp COLLEGE /}"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
                 #{/else}
             </div>
         </div>
@@ -335,7 +343,7 @@ function abandonSub(){
                     <option #{if degree == degreeObject.getName()}selected="true"#{/if} value="${degreeObject.getName()}">${degreeObject.getName()}</option>
                     #{/list}
 				</select>
-				<span class="tooltip-icon" title="#{fieldHelp DEGREE /}"><i class="icon-info-sign"></i></span>
+				<span class="tooltip-icon" title="#{fieldHelp DEGREE /}"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
 				#{/else}
 			</div>
 		</div>
@@ -359,7 +367,7 @@ function abandonSub(){
 					#{else}
 					   <input name="major" id="major" value="${major}"/>
 					#{/else}
-					<span class="tooltip-icon" title="#{fieldHelp MAJOR /}"><i class="icon-info-sign"></i></span>
+					<span class="tooltip-icon" title="#{fieldHelp MAJOR /}"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
 				#{/else}
 			</div>
 		</div>
@@ -379,7 +387,7 @@ function abandonSub(){
                 #{/if} 
                 #{else}
 				<input type="text" class="span3" id="permPhone" name="permPhone" value="${permPhone}" placeholder="(###) ###-####">
-				<span class="tooltip-icon" title="#{fieldHelp PERMANENT_PHONE_NUMBER /}"><i class="icon-info-sign"></i></span>
+				<span class="tooltip-icon" title="#{fieldHelp PERMANENT_PHONE_NUMBER /}"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
 				#{/else}
 			</div>
 		</div>
@@ -393,7 +401,7 @@ function abandonSub(){
                 #{/if} 
                 #{else}
 				<textarea class="span4 address" id="permAddress" name="permAddress">${permAddress}</textarea>
-				<span class="tooltip-icon" title="#{fieldHelp PERMANENT_POSTAL_ADDRESS /}"><i class="icon-info-sign"></i></span>
+				<span class="tooltip-icon" title="#{fieldHelp PERMANENT_POSTAL_ADDRESS /}"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
 				#{/else}
 			</div>
 		</div>
@@ -407,7 +415,7 @@ function abandonSub(){
                 #{/if} 
                 #{else}
 				<input type="text" class="span3" id="permEmail" name="permEmail" value="${permEmail}">
-				<span class="tooltip-icon" title="#{fieldHelp PERMANENT_EMAIL_ADDRESS /}"><i class="icon-info-sign"></i></span>
+				<span class="tooltip-icon" title="#{fieldHelp PERMANENT_EMAIL_ADDRESS /}"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
 				#{/else}
 			</div>
 		</div>
@@ -421,7 +429,7 @@ function abandonSub(){
                 #{/if} 
                 #{else}
 				<input type="text" class="span3" id="currentPhone" name="currentPhone" value="${currentPhone}" placeholder="(###) ###-####">
-				<span class="tooltip-icon" title="#{fieldHelp CURRENT_PHONE_NUMBER /}"><i class="icon-info-sign"></i></span>
+				<span class="tooltip-icon" title="#{fieldHelp CURRENT_PHONE_NUMBER /}"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
 				#{/else}
 			</div>
 		</div>
@@ -435,22 +443,21 @@ function abandonSub(){
                 #{/if} 
                 #{else}
 				<textarea class="span4 address" id="currentAddress" name="currentAddress">${currentAddress}</textarea>
-				<span class="tooltip-icon" title="#{fieldHelp CURRENT_POSTAL_ADDRESS /}"><i class="icon-info-sign"></i></span>
+				<span class="tooltip-icon" title="#{fieldHelp CURRENT_POSTAL_ADDRESS /}"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
 				#{/else}
 			</div>
 		</div>
 		#{/ifEnabled}
 	</fieldset>
 	#{/ifEnabled}
-	<div class="form-actions">
+	<div class="form-actions pull-right">
 		<input type="submit" class="btn btn-primary" name="submit_next" value="Save and Continue" />
 		<input type="submit" class="btn" name="submit_cancel" value="Cancel" />
 	</div>
 </form>            
 </div>
-	<div id="stickyNotes" class="span3">
+	<div id="stickyNotes" class="span4">
 	    #{list items:stickies, as:'sticky'}
-	       <div class="sticky-top"></div>
            <div class="sticky-bottom">#{verbatim}${sticky}#{/verbatim}</div>
 	    #{/list}
 	</div>

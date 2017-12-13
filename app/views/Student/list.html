@@ -73,19 +73,17 @@ function startNewSub() {
 	<li class="active">Submissions</li>
 </ul>
 <div class="row pageHead">
-    <h3 class="span11">Submission Status</h3>
+    <h1>Submission Status</h1>
 </div>
-<br />
 
-
-<p class="row">
+<p>
 #{if ! subStatus.getSubmissionsOpen()}
     <p class="alert alert-error">The system is currently closed for new submissions; please contact your thesis office for more information.</p>
 	</p>
 #{/if}
 
 
-<p class="row">
+<p>
 #{verbatim}${ instructions }#{/verbatim}
 </p>
 
@@ -99,7 +97,7 @@ function startNewSub() {
             <th>Title</th>
 			<th>Manuscript</th>
 			<th>Date Submitted</th>
-			<th>&nbsp;</th>
+			<th><span class="sr-only">Submission Options</span></th>
 		</tr>
 	</thead>
 		<tbody>

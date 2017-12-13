@@ -11,14 +11,12 @@ user may customize it's options.
        <em class="icon-plus"></em> ${field.getName()} <span class="required-field">*</span>
     </a>
     <form class="form-horizontal" style="display: none;">
-       <fieldset>
-           <div class="control-group warning">
-               <label class="control-label"><strong>Usage:</strong></label>
-               <div class="controls">
-                   <p class="help-block span4">${field.getNote()}</p>
-               </div>
-           </div>
-       </fieldset>
+       <div class="alert alert-info">
+        <div class="alert-content">
+           <strong>Usage:</strong>
+           <p class="help-block">${field.getNote()}</p>
+         </div>
+       </div>
        
        <div class="control-group">
            <label class="control-label" for="${field.ENABLED}"><strong>Enabled</strong>:</label>
@@ -33,19 +31,19 @@ user may customize it's options.
        <div class="control-group">
            <label class="control-label" for="${field.LABEL}"><strong>Display Label</strong>:</label>
            <div class="controls">
-               <input name="${field.LABEL}" id="${field.LABEL}" class="span4" type="text" value="${settingRepo.getConfigValue(field.LABEL)}" placeholder="${org.tdl.vireo.model.Configuration.DEFAULTS.get(field.LABEL)}">
+               <input name="${field.LABEL}" id="${field.LABEL}" type="text" value="${settingRepo.getConfigValue(field.LABEL)}" placeholder="${org.tdl.vireo.model.Configuration.DEFAULTS.get(field.LABEL)}">
            </div>
        </div>
        <div class="control-group">
            <label class="control-label" for="${field.HELP}"><strong>Help Text</strong>:</label>
            <div class="controls">
-               <textarea name="${field.HELP}" id="${field.HELP}" class="span4" placeholder="${org.tdl.vireo.model.Configuration.DEFAULTS.get(field.HELP)}">${settingRepo.getConfigValue(field.HELP)}</textarea>
+               <textarea name="${field.HELP}" id="${field.HELP}" placeholder="${org.tdl.vireo.model.Configuration.DEFAULTS.get(field.HELP)}">${settingRepo.getConfigValue(field.HELP)}</textarea>
            </div>
        </div>
        <div class="control-group">
            <label class="control-label"></label>
            <div class="controls close-form">
-               <p class="span4"><a class="toggle-field" href="javascript:void(0);">close</a></p>
+               <a class="toggle-field btn" href="javascript:void(0);">close</a>
            </div>
        </div>
     </form>

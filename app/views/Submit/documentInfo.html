@@ -118,29 +118,31 @@ jQuery(document).ready(function(){
 </script>
 #{/set}
 
-<br />
 <div class="row pageHead">
-	<h3 class="span11">Senior Thesis Information</h3>
+	<h1>Senior Thesis Information</h1>
 </div>
-<br />
-<div id="stickyNotes" class="span3">
+<div id="stickyNotes" class="span4">
      #{list items:stickies, as:'sticky'}
-       <div class="sticky-top"></div>
          <div class="sticky-bottom">#{verbatim}${sticky}#{/verbatim}</div>
     #{/list}
 </div>
 <div class="row">
-<div class="span7">
-<h4>Instructions:</h4>
-    <p> #{verbatim}${instructions}#{/verbatim}</p><br/>
+<div class="span8">
+<h2>Instructions:</h2>
+    <p> #{verbatim}${instructions}#{/verbatim}</p>
 #{ifErrors}
-<ul class="red">
-    #{errors}
-    <li>${error}</li> 
-    #{/errors}
-</ul>
+<div class="alert alert-error">
+	<div class="alert-content">
+		<h2>Error:</h2>
+		<ul>
+		    #{errors}
+		    <li>${error}</li> 
+		    #{/errors}
+		</ul>
+	</div>
+</div>
 #{/ifErrors}
-<br/>
+
 	<form action="@{submit.DocumentInfo.documentInfo(sub.getId())}" method="post" class="form-inline">
 	<input type="hidden" name="step" value="documentInfo"/>
 
@@ -151,8 +153,8 @@ jQuery(document).ready(function(){
 		<div class="control-group #{errorClass 'title' /} #{fieldClass DOCUMENT_TITLE /}">
 			<label class="control-label" for="title"><span class="required-star">*</span> #{fieldLabel DOCUMENT_TITLE /}:</label>
 			<div class="controls">
-				<input type="text" class="span4" id="title" name="title" value="${title}">
-				<span class="tooltip-icon" title="#{fieldHelp DOCUMENT_TITLE /}"><i class="icon-info-sign"></i></span>
+				<input type="text" class="span5" id="title" name="title" value="${title}" required>
+				<span class="tooltip-icon" title="#{fieldHelp DOCUMENT_TITLE /}"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
 			</div>
 		</div>
 		#{/ifEnabled}
@@ -174,7 +176,7 @@ jQuery(document).ready(function(){
 				    <option #{if null != degreeYear && String.valueOf(year).equals(degreeYear)}selected="true"#{/if} value="${year}">${year}</option>
 				    #{/list}
 				</select>
-				<span class="tooltip-icon" title="#{fieldHelp GRADUATION_DATE /}"><i class="icon-info-sign"></i></span>
+				<span class="tooltip-icon" title="#{fieldHelp GRADUATION_DATE /}"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
 			</div>
 		</div>
 		#{/ifEnabled}
@@ -183,7 +185,7 @@ jQuery(document).ready(function(){
 			<label class="control-label" for="defenseDate"><span class="required-star">*</span> #{fieldLabel DEFENSE_DATE /}:</label>
 			<div class="controls row">
 				<input type="text" name="defenseDate" id="defenseDate" class="span4 datepicker" value="${defenseDate?.format('MM/dd/yyyy')}" placeholder="MM/DD/YYYY" />
-				<span class="tooltip-icon" title="#{fieldHelp DEFENSE_DATE /}"><i class="icon-info-sign"></i></span>
+				<span class="tooltip-icon" title="#{fieldHelp DEFENSE_DATE /}"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
 			</div>			
 		</div>
 		#{/ifEnabled}
@@ -191,8 +193,8 @@ jQuery(document).ready(function(){
 		<div class="control-group #{errorClass 'abstractText'/} #{fieldClass DOCUMENT_ABSTRACT /}">
 			<label class="control-label" for="abstractText"><span class="required-star">*</span> #{fieldLabel DOCUMENT_ABSTRACT /}:</label>
 			<div class="controls">
-				<textarea class="span4" id="abstractText" name="abstractText">${abstractText}</textarea>
-				<span class="tooltip-icon" title="#{fieldHelp DOCUMENT_ABSTRACT /}"><i class="icon-info-sign"></i></span>
+				<textarea class="span5" id="abstractText" name="abstractText">${abstractText}</textarea>
+				<span class="tooltip-icon" title="#{fieldHelp DOCUMENT_ABSTRACT /}"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
 			</div>
 		</div>
 		#{/ifEnabled}
@@ -200,13 +202,13 @@ jQuery(document).ready(function(){
             <div class="control-group #{errorClass 'docType'/} #{fieldClass DOCUMENT_TYPE /}">
                 <label class="control-label" for="docType"><span class="required-star">*</span> #{fieldLabel DOCUMENT_TYPE /}:</label>
                 <div class="controls">
-                    <select class="span4" id="docType" name="docType">
+                    <select class="span5" id="docType" name="docType" required>
                         <option #{if null == docType || docType.equals("")}selected="true"#{/if} value="">...choose</option>
 						#{list docTypes, as: 'type'}
                             <option #{if null != type && docType.equals(type)}selected="true"#{/if} value="${type}">${type}</option>
 						#{/list}
                     </select>
-                    <span class="tooltip-icon" title="#{fieldHelp DOCUMENT_TYPE /}"><i class="icon-info-sign"></i></span>
+                    <span class="tooltip-icon" title="#{fieldHelp DOCUMENT_TYPE /}"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
                 </div>
             </div>
 		#{/ifEnabled}
@@ -214,8 +216,8 @@ jQuery(document).ready(function(){
 		<div class="control-group #{errorClass 'keywords'/} #{fieldClass DOCUMENT_KEYWORDS /}">
 			<label class="control-label" for="keywords"><span class="required-star">*</span> #{fieldLabel DOCUMENT_KEYWORDS /}:</label>
 			<div class="controls">
-				<textarea class="span4" id="keywords" name="keywords" placeholder="Keyword one;  Keyword two">${keywords}</textarea>
-				<span class="tooltip-icon" title="#{fieldHelp DOCUMENT_KEYWORDS /}"><i class="icon-info-sign"></i></span>
+				<textarea class="span5" id="keywords" name="keywords" placeholder="Keyword one;  Keyword two">${keywords}</textarea>
+				<span class="tooltip-icon" title="#{fieldHelp DOCUMENT_KEYWORDS /}"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
 			</div>
 		</div>
 		#{/ifEnabled}
@@ -232,7 +234,7 @@ jQuery(document).ready(function(){
                     <option #{if subjectPrimary == subject.getDescription()}selected="true"#{/if} value="${subject.getDescription()}">${subject.getDescription()}</option>
                     #{/list}
                 </select>
-                <span class="tooltip-icon" title="#{fieldHelp DOCUMENT_SUBJECTS /}"><i class="icon-info-sign"></i></span>
+                <span class="tooltip-icon" title="#{fieldHelp DOCUMENT_SUBJECTS /}"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
                 
 	            
 				<label for="subject-secondary" class="help-block additional">Additional Subject:</label>
@@ -263,13 +265,13 @@ jQuery(document).ready(function(){
 	            		<p>${docLanguages.get(0).getLocale().getDisplayName()}</p>
 	            	#{/if}
 	            	#{else}
-		            	<select class="span4" id="docLanguage" name="docLanguage">
+		            	<select class="span5" id="docLanguage" name="docLanguage" required>
 			                <option #{if null == docLanguage || docLanguage.equals("")}selected="true"#{/if} value="">...choose</option>
 			                #{list docLanguages, as: 'language'}
 			                    <option #{if null != language && docLanguage.equals(language.getName())}selected="true"#{/if} value="${language.getName()}">${language.getLocale().getDisplayName()}</option>
 			                #{/list}
 		            	</select>
-				<span class="tooltip-icon" title="#{fieldHelp DOCUMENT_LANGUAGE /}"><i class="icon-info-sign"></i></span>
+				<span class="tooltip-icon" title="#{fieldHelp DOCUMENT_LANGUAGE /}"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
 		            #{/else}
 	            #{/ifRequired}
 	            #{else}
@@ -279,7 +281,7 @@ jQuery(document).ready(function(){
 	                    <option #{if null != language && docLanguage.equals(language.getName())}selected="true"#{/if} value="${language.getName()}">${language.getLocale().getDisplayName()}</option>
 	                #{/list}
 	            </select>
-	            <span class="tooltip-icon" title="#{fieldHelp DOCUMENT_LANGUAGE /}"><i class="icon-info-sign"></i></span>
+	            <span class="tooltip-icon" title="#{fieldHelp DOCUMENT_LANGUAGE /}"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
 	            #{/else}	            
 			</div>
 		</div>
@@ -292,7 +294,7 @@ jQuery(document).ready(function(){
                 <div class="controls">
 					#{ifRequired PROGRAM}
 						#{if settingRepo.findAllPrograms().size() > 0 }
-                            <select class="span4" name="program" id="program">
+                            <select class="span5" name="program" id="program">
                                 <option #{if program == null} selected="true"#{/if} value="">...choose</option>
 								#{list items:settingRepo.findAllPrograms(), as:'programObject'}
                                     <option #{if program == programObject.getName()}selected="true"#{/if} value="${programObject.getName()}">${programObject.getName()}</option>
@@ -302,7 +304,7 @@ jQuery(document).ready(function(){
 					#{/ifRequired}
 					#{else}
 						#{if settingRepo.findAllPrograms().size() > 0 }
-                            <select class="span4" name="program" id="program">
+                            <select class="span5" name="program" id="program">
                                 <option #{if program == null}selected="true"#{/if} value="">...choose</option>
 								#{list items:settingRepo.findAllPrograms(), as:'programObject'}
                                     <option #{if program == programObject.getName()}selected="true"#{/if} value="${programObject.getName()}">${programObject.getName()}</option>
@@ -310,7 +312,7 @@ jQuery(document).ready(function(){
                             </select>
 						#{/if}
 					#{/else}
-                    <span class="tooltip-icon" title="#{fieldHelp PROGRAM /}"><i class="icon-info-sign"></i></span>
+                    <span class="tooltip-icon" title="#{fieldHelp PROGRAM /}"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
                 </div>
             </div>
 		#{/ifEnabled}
@@ -320,7 +322,7 @@ jQuery(document).ready(function(){
 
 	#{ifEnabled COMMITTEE}
 	<fieldset class="form-inline">
-		<legend>#{fieldLabel COMMITTEE /}</legend>
+		<legend><span class="required-star">*</span> #{fieldLabel COMMITTEE /}</legend>
 		<p>#{fieldHelp COMMITTEE /}</p>
         <div id="committee-members">
 
@@ -340,14 +342,14 @@ jQuery(document).ready(function(){
             }%
             <table role="presentation" class="committee-member #{ifError "committee"}error#{/ifError}">
                     <tr>
-                        <td><label for="committeeFirstName${i}" class="span2">First Name</label></td>
+                        <td><label for="committeeFirstName${i}" class="span3">First Name</label></td>
                         <td><label for="committeeMiddleName${i}" class="span1">MI</label></td>
-                        <td><label for="committeeLastName${i}" class="span2">Last Name</label></td>
+                        <td><label for="committeeLastName${i}" class="span3">Last Name</label></td>
                     </tr>
                     <tr> 
-                        <td><input type="text" class="input-medium" id="committeeFirstName${i}" name="committeeFirstName${i}" value="${firstName}"></td>
+                        <td><input type="text" class="input-medium span3" id="committeeFirstName${i}" name="committeeFirstName${i}" value="${firstName}"></td>
                         <td><input type="text" class="span1" id="committeeMiddleName${i}" name="committeeMiddleName${i}" value="${middleName}"></td>
-                        <td><input type="text" class="input-medium" id="committeeLastName${i}" name="committeeLastName${i}" value="${lastName}"></td>
+                        <td><input type="text" class="input-medium span3" id="committeeLastName${i}" name="committeeLastName${i}" value="${lastName}"></td>
                     </tr>
                     #{if false && availableRoles.size() > 0}
                     <tr class="committee-role-row">
@@ -372,9 +374,9 @@ jQuery(document).ready(function(){
 
             #{/list} 
         </div>
-                
-		<div class="row center">
-                    <input type="submit" class="btn" id="submit_add" name="submit_add" value="Add Additional Advisers" />
+
+		<div class="btn-add">
+            <input type="submit" class="btn" id="submit_add" name="submit_add" value="Add Additional Advisers" />
 		</div>		
 	</fieldset>
 	#{/ifEnabled}
@@ -386,7 +388,7 @@ jQuery(document).ready(function(){
 			<label class="control-label" for="chairEmail"><span class="required-star">*</span> #{fieldLabel COMMITTEE_CONTACT_EMAIL /}:</label>
 			<div class="controls">
 				<input type="text" class="span4" id="chairEmail" name="chairEmail" value="${chairEmail}">
-				<span class="tooltip-icon" title="#{fieldHelp COMMITTEE_CONTACT_EMAIL /}"><i class="icon-info-sign"></i></span>
+				<span class="tooltip-icon" title="#{fieldHelp COMMITTEE_CONTACT_EMAIL /}"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
 			</div>
 		</div>
 	</fieldset>
@@ -463,7 +465,7 @@ jQuery(document).ready(function(){
 					#{if activeEmbargosMap.get(EMBARGO_TYPE).toString() != 'DEFAULT'} embargo-type-additional #{/if} 
 					#{ifRequired EMBARGO_TYPE}#{if activeEmbargosMap.get(EMBARGO_TYPE) != org.tdl.vireo.model.EmbargoGuarantor.DEFAULT}embargoReq#{/if}#{/ifRequired}">
 					
-					<h4 class="#{errorClass embargoErrorClass /}">#{ifRequired EMBARGO_TYPE}* #{/ifRequired}#{fieldLabel EMBARGO_TYPE /}</h4>
+					<h2 class="#{errorClass embargoErrorClass /}">#{ifRequired EMBARGO_TYPE}* #{/ifRequired}#{fieldLabel EMBARGO_TYPE /}</h2>
 					<p>#{fieldHelp EMBARGO_TYPE /}</p>
 					#{list embargoTypes, as: 'et'}
 		                #{if et.getGuarantor().toString() == activeEmbargosMap.get(EMBARGO_TYPE).toString()}
@@ -491,8 +493,8 @@ jQuery(document).ready(function(){
 	<!--The feature to hide additional embargos by default has been removed-->
 	<!--<a href="#" id="additional-embargos-btn">Additional Embargos</a>-->
 	
-	<div class="span10 center">
-		<input type="submit" name="submit_next" value="Save and Continue >>" class="btn btn-primary">
+	<div class="form-actions pull-right">
+		<input type="submit" name="submit_next" value="Save and Continue" class="btn btn-primary">
 	</div>
 	</form>
 </div>
