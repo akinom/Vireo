@@ -698,38 +698,69 @@ button.ui-multiselect.ui-widget.ui-state-default.ui-corner-all {
     background-color: #FFF;
 }
 
-.alert .fa {
-	font-size: 4em;
-	float: left;
-	margin-right: 15px;
-	vertical-align: middle;
-}
-
-.alert .fa.fa-small {
-	font-size: 1.5em;
-}
-
-.fa-small + .alert-content > p {
-	margin-top: 0;
-}
-
 .alert-content {
 	display: inline-block;
 	vertical-align: middle;
+	padding-left: 10px;
 
-	h4 {
-		margin-top: 3px;
+	h2 {
+		margin: 0 0 16px;
+		font-size: 16px;
+		line-height: 1;
+		color: @grayDarker;
 	}
 
 	p {
-		margin-bottom: 0;
-		margin-top: 8px;
+		margin: 0;
+		color: @grayDarker;
 	}
 
 	ul {
 		margin-left: 15px;
-		margin-top: 10px;
+		margin-top: 16px;
 	}
+}
+
+.alert {
+	border-bottom-right-radius: 2px;
+	border-top-right-radius: 2px;
+	border-left: 4px solid;
+	margin: 0 8px 1.2rem;
+	padding: 1em;
+	position: relative;
+}
+
+.alert::before {
+	border-radius: 100%;
+	font-size: 16px;
+	font-weight: 700;
+	font-family: Helvetica, Arial, sans-seif;
+	left: -17px;
+	line-height: 23px;
+	padding: 5px;
+	position: absolute;
+	width: 20px;
+	height: 20px;
+	text-align: center;
+	top: 10px
+}
+
+.alert-warning::before {
+	background: @orange;
+	color: @white;
+	content: "!";
+}
+
+.alert-error::before {
+	background: @red;
+	color: @white;
+	content: "X";
+}
+
+.alert-info::before {
+	background: @blueDark;
+	color: @white;
+	content: "i";
 }
 
 .form-horizontal input + .password.help-block {

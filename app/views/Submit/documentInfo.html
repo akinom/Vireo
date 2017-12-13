@@ -133,7 +133,6 @@ jQuery(document).ready(function(){
     <p> #{verbatim}${instructions}#{/verbatim}</p>
 #{ifErrors}
 <div class="alert alert-error">
-	<i class="fa fa-exclamation-circle" aria-hidden="true"></i>
 	<div class="alert-content">
 		<h2>Error:</h2>
 		<ul>
@@ -324,7 +323,7 @@ jQuery(document).ready(function(){
 
 	#{ifEnabled COMMITTEE}
 	<fieldset class="form-inline">
-		<legend><span class="required-star">*</span>#{fieldLabel COMMITTEE /}</legend>
+		<legend><span class="required-star">*</span> #{fieldLabel COMMITTEE /}</legend>
 		<p>#{fieldHelp COMMITTEE /}</p>
         <div id="committee-members">
 
