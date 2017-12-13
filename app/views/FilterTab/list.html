@@ -28,21 +28,27 @@
 	<div class="inner">
 	    #{if flash.get("error") != null}
 	    <div class="alert alert-error">
-		    <button class="close" data-dismiss="alert" type="button">×</button>
-		    <p><strong>Oops, an error occurred: </strong> ${flash.get("error")}</p>
-		    <p>Your filter and/or columns may have been reset.</p>
+	    	<div class="alert-conent">
+			    <p><strong>Oops, an error occurred: </strong></p> 
+			    <p>${flash.get("error")}</p>
+			    <p>Your filter and/or columns may have been reset.</p>
+		    </div>
 	    </div>
 	    #{/if}
 	    #{if flash.get("noSubmission") != null}
 	    <div class="alert alert-error">
-	    	<button class="close" data-dismiss="alert" type="button">×</button>
-		    <p><strong>Oops, an error occurred: </strong> ${flash.get("noSubmission")}</p>
+	    	<div class="alert-content">
+			    <p><strong>Oops, an error occurred: </strong> </p>
+			    <p>${flash.get("noSubmission")}</p>
+			</div>
 		</div>
 	    #{/if}
 	
-		<h1>List Submissions</h1>
+		<div class="heading">
+			<h1>List Submissions</h1>
 		
-	   <a href="#customize-search-modal" data-toggle="modal">Customize view</a>
+	   		<a href="#customize-search-modal" data-toggle="modal" class="btn btn-mini customize-view">Customize view</a>
+	   	</div>
         #{include 'FilterTab/results.include' /}
 	</div>
 </div>

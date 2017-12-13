@@ -109,17 +109,17 @@ list pages.</p>
 		<div id="submissionStep1" class="accordion-body collapse ${ "submissionStep1".equals(flash.get("open")) ? "in" : "" }">
 			<div class="accordion-inner">
 			
-			    <div class="fields span7">
+			    <div class="fields span9">
 				    <h3>Fields <span class="heading-note">(<a href="javascript: void(0);" class="toggle-all-fields">expand all</a>)</span></h3>
 				    <p><a class="confirm" data-confirm="<em class='icon-refresh'></em> (Are you sure?)" href="@{settings.SubmissionSettingsTab.resetSettings('personal-info-fields')}"><em class="icon-refresh"></em> Reset fields</a></p>			    
-				    <ul>
+				    <ul class="fields-list">
 					    #{list items:PERSONAL_INFO_FIELDS, as:'field'}
 					         #{include 'SettingTabs/submissionField.include'/}
 					    #{/list}
 				    </ul>
 			    </div>
 			    
-			    <div class="sticky span4">
+			    <div class="sticky span3">
 			        <h3>Sticky Notes</h3>
 			        
 			        <p><a class="confirm" data-confirm="<em class='icon-refresh'></em> (Are you sure?)" href="@{settings.SubmissionSettingsTab.resetSettings('personal-info-stickies')}"><em class="icon-refresh"></em> Reset sticky notes</a></p>
@@ -150,11 +150,11 @@ list pages.</p>
         <div id="submissionStep2" class="accordion-body collapse ${ "submissionStep2".equals(flash.get("open")) ? "in" : "" }">
             <div class="accordion-inner">
                 
-                <div class="fields span7">
+                <div class="fields span9">
 	                <h3>Fields <span class="heading-note">(<a href="javascript: void(0);" class="toggle-all-fields">expand all</a>)</span></h3>
 	                <p><a class="confirm" data-confirm="<em class='icon-refresh'></em> (Are you sure?)" href="@{settings.SubmissionSettingsTab.resetSettings('license-agreement-fields')}"><em class="icon-refresh"></em> Reset fields</a></p>
 	                
-	                <ul>
+	                <ul class="fields-list">
 		                #{list items:LICENSE_AGREEMENT_FIELDS, as:'field'}
 		                     #{include 'SettingTabs/submissionField.include'/}
 		                #{/list}
@@ -173,11 +173,11 @@ list pages.</p>
         <div id="submissionStep3" class="accordion-body collapse ${ "submissionStep3".equals(flash.get("open")) ? "in" : "" }">
             <div class="accordion-inner">
                 
-                <div class="fields span7">
+                <div class="fields span9">
 	                <h3>Fields <span class="heading-note">(<a href="javascript: void(0);" class="toggle-all-fields">expand all</a>)</span></h3>
 	                <p><a class="confirm" data-confirm="<em class='icon-refresh'></em> (Are you sure?)" href="@{settings.SubmissionSettingsTab.resetSettings('document-info-fields')}"><em class="icon-refresh"></em> Reset fields</a></p>
 	                
-	                <ul>
+	                <ul class="fields-list">
 		                #{list items:DOCUMENT_INFO_FIELDS, as:'field'}
 		                     #{include 'SettingTabs/submissionField.include'/}
 		                #{/list}
@@ -185,7 +185,7 @@ list pages.</p>
 	            </div>
                 
 
-                <div class="sticky span4">
+                <div class="sticky span3">
                     <h3>Sticky Notes</h3>
                     
                     <p><a class="confirm" data-confirm="<em class='icon-refresh'></em> (Are you sure?)" href="@{settings.SubmissionSettingsTab.resetSettings('document-info-stickies')}"><em class="icon-refresh"></em> Reset sticky notes</a></p>
@@ -216,19 +216,19 @@ list pages.</p>
         <div id="submissionStep4" class="accordion-body collapse ${ "submissionStep4".equals(flash.get("open")) ? "in" : "" }">
             <div class="accordion-inner">
                 
-                <div class="fields span7">
+                <div class="fields span9">
 	                <h3>Fields <span class="heading-note">(<a href="javascript: void(0);" class="toggle-all-fields">expand all</a>)</span></h3>
 	                
 	                <p><a class="confirm" data-confirm="<em class='icon-refresh'></em> (Are you sure?)" href="@{settings.SubmissionSettingsTab.resetSettings('upload-files-fields')}"><em class="icon-refresh"></em> Reset fields</a></p>
 	                
-	                <ul>
+	                <ul class="fields-list">
 		                #{list items:UPLOAD_FILES_FIELDS, as:'field'}
 		                     #{include 'SettingTabs/submissionField.include'/}
 		                #{/list}
 	                </ul>
                 </div>
                 
-                <div class="sticky span4">
+                <div class="sticky span3">
                     <h3>Sticky Notes</h3>
                     
                     <p><a class="confirm" data-confirm="<em class='icon-refresh'></em> (Are you sure?)" href="@{settings.SubmissionSettingsTab.resetSettings('upload-files-stickies')}"><em class="icon-refresh"></em> Reset sticky notes</a></p>

@@ -59,7 +59,8 @@ FONTS COLORS ETC
 }
 
 h1{
-	margin-bottom:15px;
+	margin:0 0 0.5em;
+	padding: 0 0 10px 0;
 	border-bottom:solid 1px @grayLighter;
 }
 
@@ -71,16 +72,16 @@ h1{
 TABLES & FORMS
 *****************/
 
-th {
-    background: url(../images/nav-bg.gif) repeat-x left bottom transparent;
-}
+// th {
+//     background: url(../images/nav-bg.gif) repeat-x left bottom transparent;
+// }
 
-th.selected {
-    background: url(../images/nav-bg-selected.png) repeat-x left bottom #E8EEEA;
-}
+// th.selected {
+//     background: url(../images/nav-bg-selected.png) repeat-x left bottom #E8EEEA;
+// }
 
 td.comments{
-	background:url("../images/nav-bg.gif") repeat-x left top #E0E0E0;
+	// background:url("../images/nav-bg.gif") repeat-x left top #E0E0E0;
 	height:31px;
 	padding:0 15px;
 	line-height:28px;
@@ -97,33 +98,38 @@ td button, td button.btn, td button.btn-small{
 // 	text-decoration:none;
 // }
 
-legend.default{
-	border:none;
-	margin:0;
-	padding:0;
-	width:auto;
-	font-size:1.2em;
-	font-weight:bold;
-	color:@grayLight;
-}
+// legend.default{
+// 	border:none;
+// 	margin:0;
+// 	padding:0;
+// 	width:auto;
+// 	font-size:1.2em;
+// 	font-weight:bold;
+// 	color:@grayLight;
+// }
 
-fieldset.default{
-	border:solid 1px @grayLight;
-	padding:10px;
-	margin:20px 0 20px 20px;
-}
+// fieldset.default{
+// 	border:solid 1px @grayLight;
+// 	padding:10px;
+// 	margin:20px 0 20px 20px;
+// }
 
-@inputWidth: 170px;
-.settings div{
+@inputWidth: 23%;
+.settings label{
 	float:left;
 	width:@inputWidth;
 	font-size:.9em;
 	padding:0 7px;
 	margin:5px 0;
+	cursor: pointer;
 }
 
 .settings .half{
 	width:@inputWidth/2;
+}
+
+th a {
+	border: 0;
 }
 
 th.orderby.ascending a {
@@ -358,10 +364,20 @@ LAYOUT
 	border-bottom: 0;
 }
 
+#right-column .nav-tabs {
+	font-size: 13px;
+	border-bottom: 1px solid #ddd;
+}
+
+#right-column h2 {
+	clear: both;
+}
+
 .emailHeaders,
 .submissionAvailability{
 	width:600px;
 	margin:20px 0;
+	clear: both;
 }
 
 .emailHeaders li,
@@ -516,7 +532,7 @@ SIDE BOXES
 
 .box-body a {
 	border: 0;
-	padding: 5px 15px;
+	padding: 0 15px;
 }
 
 .box-body li {
@@ -547,6 +563,16 @@ SIDE BOXES
 // 	background:url("../images/box_bottom.png") no-repeat;
 // 	height:13px;
 // }
+
+.heading {
+	position: relative;
+}
+
+.customize-view {
+	position: absolute;
+	top: 10px;
+	right: 0;
+}
 
 .box-head .expand {
 	float: right;
@@ -1006,20 +1032,22 @@ input.monospace {
 .submission-settings ul {
     list-style-type: none;
 }
+.submission-settings li a {
+	border: 0;
+}
+.submission-settings .alert {
+	margin-top: 1em;
+}
 .submission-settings p.help-block {
-    margin: 0;
-    padding-top: 5px;
+    color: @grayDarker;
 }
 .submission-settings .heading-note {
     font-size: 13px;
     line-height: 18px;
     color: #70706F;
 }
-.submission-settings .close-form p {
-    text-align: right;
-}
-.submission-settings .close-form p a {
-    padding-right: 20px;
+.submission-settings .close-form a {
+	border: 1px solid @grayLighter;
 }
 .submission-settings .control-label {
     width: 110px;
@@ -1030,6 +1058,17 @@ input.monospace {
 .submission-settings .fields {
     margin-left: 0px;
 }
+.submission-settings .fields-list li {
+	margin: 1em 8px;
+	border: 1px solid @grayLighter;
+	padding: 8px;
+}
+.sumission-settings .fields-list form {
+	margin-bottom: 0;
+}
+.submission-settings .fields-list .control-group:last-child {
+	margin-bottom: 0;
+}
 .submission-settings .disabled-field,
 .submission-settings .required-field {
     display: none;
@@ -1037,19 +1076,23 @@ input.monospace {
 .submission-settings .required .required-field {
     display: inline;
 }
-.submission-settings .disabled {
+.submission-settings .disabled a {
     text-decoration: line-through;
+    color: @grayLighter;
 }
 .submission-settings .sticky ul {
     margin: 0;
+}
+.submission-settings .sticky li {
+	background: @stickyNoteColor;
 }
 .submission-settings .sticky-bottom {
     position: relative;
 }
 .submission-settings .remove-sticky-note {
     position: absolute;
-    right: 3px;
-    top: -15px;
+    right: -17px;
+	top: -5px;
 }
 .submission-settings .remove-sticky-note:hover .icon-remove-sign {
     opacity: .75;
@@ -1082,4 +1125,10 @@ input.monospace {
 *******************/
 .datepicker {
 	margin-left:38px;
+}
+
+
+.pagination ul > li > a, 
+.pagination ul > li > span {
+	padding: 10px;
 }
