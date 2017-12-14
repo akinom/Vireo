@@ -148,7 +148,6 @@ public class VireoEmailImpl implements VireoEmail {
 
 	@Override
 	public void addBcc(String email) {
-		System.out.println("BCC " + email);
 		addBcc(email, null);
 	}
 
