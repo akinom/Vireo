@@ -35,38 +35,40 @@
         #{get 'moreScripts' /}
     </head>
     <body>
-    	<div class="navbar navbar-static-top">
-    		<div class="navbar-inner">
-    			<div id="header" class="container ${currentUser ? currentUser.getRole() : "ANONYMOUS"}">	    
-					<a id="left-logo" class="brand" href="@{Application.index}">
-						#{if new java.io.File(controllers.settings.ThemeSettingsTab.LEFT_LOGO_PATH).exists()}<img alt="Home" src="@{Application.index()}theme/left-logo" />#{/if}
-						#{else}<img alt="Home" src="@{Application.index()}public/images/vireo-logo-sm.png" />#{/else}
-						<span class="sr-only">Princeton University Library</span>
-					</a>
+        <div id="wrap">
+        	<div class="navbar navbar-static-top">
+        		<div class="navbar-inner">
+        			<div id="header" class="container ${currentUser ? currentUser.getRole() : "ANONYMOUS"}">	    
+    					<a id="left-logo" class="brand" href="@{Application.index}">
+    						#{if new java.io.File(controllers.settings.ThemeSettingsTab.LEFT_LOGO_PATH).exists()}<img alt="Home" src="@{Application.index()}theme/left-logo" />#{/if}
+    						#{else}<img alt="Home" src="@{Application.index()}public/images/vireo-logo-sm.png" />#{/else}
+    						<span class="sr-only">Princeton University Library</span>
+    					</a>
 
-					<div id="right-logo">
-						Thesis Central Senior Thesis Submission System
-					</div>
+    					<div id="right-logo">
+    						Thesis Central Senior Thesis Submission System
+    					</div>
 
-		    		<div id="personal-bar" class="pull-right">
-						#{if currentUser != null }
-							<a href="@{Authentication.profile()}">${currentUser.getDisplayName()}</a> |
-							#{if securityContext.isReviewer()}
-							<a href="@{FilterTab.list()}">Admin</a> |
-							#{/if}
-							<a href="@{Student.submissionList}">Submission History</a> |
-							<a href="@{Authentication.logout()}">Logout</a>
-						#{/if}
-						#{else}
-						   <a href="@{Authentication.loginList()}">Login</a>
-						#{/else}
-					</div>
-		    	</div>
-    		</div>
-    	</div>
-    	
-    	<div id="body" class="container">
-       		#{doLayout /}
+    		    		<div id="personal-bar" class="pull-right">
+    						#{if currentUser != null }
+    							<a href="@{Authentication.profile()}">${currentUser.getDisplayName()}</a> |
+    							#{if securityContext.isReviewer()}
+    							<a href="@{FilterTab.list()}">Admin</a> |
+    							#{/if}
+    							<a href="@{Student.submissionList}">Submission History</a> |
+    							<a href="@{Authentication.logout()}">Logout</a>
+    						#{/if}
+    						#{else}
+    						   <a href="@{Authentication.loginList()}">Login</a>
+    						#{/else}
+    					</div>
+    		    	</div>
+        		</div>
+        	</div>
+        	
+        	<div id="body" class="container">
+           		#{doLayout /}
+            </div>
         </div>
 	    <div id="footer" class="container">
                 <p class="pull-left">Vireo ${ play.Play.configuration.get("vireo.version") } &copy; ${ java.util.Calendar.getInstance().get(java.util.Calendar.YEAR) } <a href="http://www.tdl.org/">Texas Digital Library</a>. All Rights Reserved.</p>
