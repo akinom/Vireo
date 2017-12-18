@@ -62,6 +62,39 @@ chkconfig
 # ---------------------
 cp  vireo-v0.conf  /etc/httpd/conf.d/vireo.conf 
 chkconfig --add httpd
+chkconfig httpd on
+chkconfig 
+
+# ---------------------
+# conf http with SSL
+# ---------------------
+# SSL see http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/SSL-on-an-instance.html#ssl_enable
+# also http://httpd.apache.org/docs/2.2/mod/directives.html
+yum update -y
+yum install -y mod_ssl
+sudo service httpd restart
+#create key 
+cd /tmp/
+openssl genrsa -out custom.key 4096
+chown root.root custom.key
+chmod 600 custom.key 
+ls -la custom.key 
+# create CRA 
+sudo openssl req -new -key custom.key -out csr.pem
+# send certificate to signing authority 
+
+# test certificate 
+openssl x509 -in certificate.crt -text
+
+# create dummy cert  and copy to private 
+cd /etc/pki/tls/certs
+./make-dummy-cert  dummy.crt
+cd .. 
+cp certs/dummy.crt private/custom.crt
+# make sure certificate file is rw for root only 
+
+vi /etc/httpd/conf.d/ssl.conf
+SSLCertificateKeyFile /etc/pki/tls/private/custom.key
 #test in browser  http://server-name/ 
 
 # --------------------
