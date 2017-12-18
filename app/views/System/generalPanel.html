@@ -145,12 +145,12 @@ jQuery(document).ready(function() {
 	</div>
 
 	<div class="span6">
-        <h3> Populate / Clear Student Data  </h3>
+        <h3> Populate / Delete Student Data  </h3>
         <form class="form-inline" method="POST" action="@{System.loadStudentsCreateSubmissions()}">
-            <input type="submit" class="btn-info"  value="Load Student Accounts and Create Submissions"/>
+            <input type="submit" class="btn-info"  value="Load Student Data; (Re)Create Accounts and Submissions"/>
         </form>
         <form class="form-inline" method="POST" action="@{System.clearStudentsAndSubmission()}">
-            <input type="submit" class="btn-info"  value="Delete Student Accounts and their Submissions"/>
+            <input type="submit" class="btn-info"  value="Delete All Student Accounts and their Submissions"/>
         </form>
 	</div>
 </div>
