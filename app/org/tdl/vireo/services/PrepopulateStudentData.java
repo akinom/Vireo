@@ -9,6 +9,7 @@ import play.modules.spring.Spring;
 
 import java.io.*;
 import java.util.Hashtable;
+import java.util.List;
 
 /**
  * Created by monikam on 10/17/17.
@@ -269,7 +270,16 @@ public class PrepopulateStudentData {
                 dept = record[DEPARTMENT];
             }
 
-            Person p = personRepo.createPerson(record[NETID], email, record[FIRST_NAME], record[LAST_NAME], RoleType.STUDENT);
+            Person p;
+            p = personRepo.findPersonByNetId(record[NETID]);
+            if (null == p) {
+                p = personRepo.createPerson(record[NETID], email, record[FIRST_NAME], record[LAST_NAME], RoleType.STUDENT);
+            } else {
+                p.setEmail(email);
+                p.setFirstName(record[FIRST_NAME]);
+                p.setLastName(record[LAST_NAME]);
+                p.setRole(RoleType.STUDENT);
+            }
             p.setMiddleName(record[MIDDLE_NAME]);
             p.setCurrentDepartment(dept);
             p.setInstitutionalIdentifier(record[UID]);
@@ -279,7 +289,13 @@ public class PrepopulateStudentData {
                 settingsRepo.createDepartment(dept).save();
             }
 
-            Submission s = submissionRepo.createSubmission(p);
+            List<Submission> slist = submissionRepo.findSubmission(p);
+            Submission s;
+            if (slist.isEmpty()) {
+                s = submissionRepo.createSubmission(p);
+            } else {
+                s = slist.get(0);
+            }
             // personal Info step
             s.setStudentFirstName(p.getFirstName());
             s.setStudentLastName(p.getLastName());
