@@ -1,5 +1,5 @@
 #{extends 'Submit/submitStep.html' /}
-#{set title:'Vireo Thesis and Dissertation Submital System - Submission - Document Information' /}
+#{set title:'Thesis Central - Submission - Document Information' /}
 #{set 'moreStyles'}
 <link href="@{'/public/stylesheets/jquery-ui.css'}" rel="stylesheet" type="text/css">
 <link href="@{'/public/stylesheets/multiselect.css'}" rel="stylesheet" type="text/css">
@@ -121,7 +121,7 @@ jQuery(document).ready(function(){
 <div class="row pageHead">
 	<h1>Senior Thesis Information</h1>
 </div>
-<div id="stickyNotes" class="span4">
+<div id="stickyNotes" class="span4 stickies__student">
      #{list items:stickies, as:'sticky'}
          <div class="sticky-bottom">#{verbatim}${sticky}#{/verbatim}</div>
     #{/list}

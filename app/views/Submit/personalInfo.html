@@ -1,5 +1,5 @@
 #{extends 'Submit/submitStep.html' /}
-#{set title:'Vireo Thesis and Dissertation Submital System - Submission - Verify Your Information' /}
+#{set title:'Thesis Central - Submission - Verify Your Information' /}
 #{set 'moreScripts'}
 <style type="text/css">
 	option.major-used {
@@ -456,7 +456,7 @@ function abandonSub(){
 	</div>
 </form>            
 </div>
-	<div id="stickyNotes" class="span4">
+	<div id="stickyNotes" class="span4 stickies__student">
 	    #{list items:stickies, as:'sticky'}
            <div class="sticky-bottom">#{verbatim}${sticky}#{/verbatim}</div>
 	    #{/list}

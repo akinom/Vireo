@@ -17,13 +17,14 @@
     </head>
     <body>
     	<div id="mainContainer" class="container-fluid">
-	    	<div id="header">	    		
-	    		<span id="logo">&nbsp;</span>			  	
-	    	</div>
-	    	<div id="body">
-	       		#{doLayout /}
-	        </div>
-	        <div class="clear"></div>
+            <div id="wrap">
+    	    	<div id="header">	    		
+    	    		<span id="logo">&nbsp;</span>			  	
+    	    	</div>
+    	    	<div id="body">
+    	       		#{doLayout /}
+    	        </div>
+            </div>
 	        <div id="footer" class="row">
 	            <p class="pull-left">Vireo ${ play.Play.configuration.get("vireo.version") } </p>
 	        </div>

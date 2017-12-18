@@ -247,16 +247,39 @@ STICKY NOTES
     // width:201px;
     // height:27px;
 }
-.sticky-bottom{
+.stickies__student .sticky-bottom{
     // background:url("../images/sticky_bot.jpg") no-repeat scroll left bottom @stickyNoteColor;   
     display:block;
-    margin: 2em 1em;
-    // padding:0 20px 30px;
-    // margin:0 0 40px 0;
-    // width:161px;
-    // font-size:0.9em;
+    margin: 16px;
+    padding: 16px;
+    background: @warningBackground;
+    border: 1px solid @grayLighter;
+    font-size: 12px;
 }
 
 .well {
     border-radius: 0;
+}
+
+#wrap {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    /* Negative indent footer by it's height */
+    margin: 0 auto -60px;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+#footer {
+    height: 60px;
+    clear: both;
+}
+
+#footer p{
+    font-size:0.8em;
+    padding: 1em 0;
 }
