@@ -22,12 +22,11 @@
 						#{if new java.io.File(controllers.settings.ThemeSettingsTab.LEFT_LOGO_PATH).exists()}<img alt="Home" src="@{Application.index()}theme/left-logo" />#{/if}
 						#{else}<img alt="Home" src="@{Application.index()}public/images/vireo-logo-sm.png" />#{/else}
 						<span class="sr-only">Princeton University Library</span>
+						<div id="right-logo">
+							Thesis Central Senior Thesis Submission System
+						</div>
 					</a>
 
-					<div id="right-logo">
-						Thesis Central Senior Thesis Submission System
-					</div>
-		    		
 		    		<div id="personal-bar" class="pull-right">
 						#{if currentUser != null }
 							<a href="@{Authentication.profile()}"><b>${currentUser.getDisplayName()}</b></a> |
