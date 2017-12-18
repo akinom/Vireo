@@ -1,6 +1,7 @@
 package org.tdl.vireo.model;
 
 import java.util.List;
+import javax.mail.internet.InternetAddress;
 
 /**
  * The person object is used for both students, reviewers, and administrators
@@ -203,7 +204,7 @@ public interface Person extends AbstractModel {
 	public void setCurrentPostalAddress(String postalAddress);
 
 	/**
-	 * 
+	 *
 	 * @return The current email address. If no specific email address is
 	 *         specified here, then the user's primary email address (aka
 	 *         getEmail()) will be returned.
@@ -211,7 +212,12 @@ public interface Person extends AbstractModel {
 	public String getCurrentEmailAddress();
 
 	/**
-	 * 
+	 * @return A new InternetAddress based on person name and email
+	 */
+	public InternetAddress getInternetAddress();
+
+	/**
+	 *
 	 * @param email
 	 *            The new current email address.
 	 */

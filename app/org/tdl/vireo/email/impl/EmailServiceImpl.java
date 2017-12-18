@@ -144,7 +144,7 @@ public class EmailServiceImpl implements EmailService {
 				// Subject and Message
 				email.setSubject(this.email.getSubject());
 				email.setMsg(this.email.getMessage());
-
+// TODO INDICATE PLAIN TEXT
 
 				// Send the email
 				email = Mail.buildMessage(email);

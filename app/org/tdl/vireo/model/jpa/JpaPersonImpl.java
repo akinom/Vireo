@@ -14,6 +14,9 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import javax.mail.internet.InternetAddress;
+
+import org.tdl.vireo.email.VireoEmail;
 import org.tdl.vireo.model.NameFormat;
 import org.tdl.vireo.model.Person;
 import org.tdl.vireo.model.Preference;
@@ -360,6 +363,26 @@ public class JpaPersonImpl extends JpaAbstractModel<JpaPersonImpl> implements Pe
 			return getEmail();
 		else 
 			return currentEmailAddress;
+	}
+
+
+	/**
+	 * recasts encoding errors as runtime exceptions while still allowing
+	 * AddressExceptions to be passed through.
+	 *
+	 * @return A new InternetAddress based on person name and email
+	 */
+	@Override
+	public InternetAddress getInternetAddress() {
+			try {
+				InternetAddress address = new InternetAddress(getCurrentEmailAddress());
+				String name = getFormattedName(NameFormat.FIRST_LAST);
+				if (name != null && name.trim().length() > 0)
+					address.setPersonal(name);
+				return address;
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
 	}
 
 	@Override

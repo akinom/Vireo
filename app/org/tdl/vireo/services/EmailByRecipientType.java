@@ -30,7 +30,7 @@ public class EmailByRecipientType {
 		switch (recipientType) {
 		case Student:
 			if(submission.getSubmitter().getCurrentEmailAddress() != null && submission.getSubmitter().getCurrentEmailAddress().length() > 0) {
-				recipients.add(submission.getSubmitter().getCurrentEmailAddress());
+				recipients.add(submission.getSubmitter().getInternetAddress().toString());
 			}
 			break;
 		case Advisor:
