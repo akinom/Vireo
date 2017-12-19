@@ -58,36 +58,28 @@ managing and modifying filters.
             #{list items:activeFilter.getStates(), as:'value'}
             %{ org.tdl.vireo.state.State state = stateManager.getState(value) }%
             #{if !state.isActive() && !state.isArchived() }
-            <li><a class="removable" href="@{FilterTab.ModifyFilters(nav)}?action=remove&type=state&value=${value.urlEncode()}">${state.getDisplayName()}</a><li>
+            <li><a class="removable" href="@{FilterTab.ModifyFilters(nav)}?action=remove&type=state&value=${value.urlEncode()}">${state.getDisplayName()}</a></li>
             #{/if}
             #{/list}
 
             <!-- List Active states -->
             #{if showActive }
-            <li>+ Active
-            <ul class="unstyled">
             #{list items:activeFilter.getStates(), as:'value'}
             %{ org.tdl.vireo.state.State state = stateManager.getState(value) }%
             #{if state.isActive() }
             <li><a class="removable" href="@{FilterTab.ModifyFilters(nav)}?action=remove&type=state&value=${value.urlEncode()}">${state.getDisplayName()}</a></li>
             #{/if}
             #{/list}
-            </ul>
-            </li>
             #{/if}
             
             <!-- List Archived states -->
             #{if showArchived}
-            <li>+ Archived
-            <ul class="unstyled">
             #{list items:activeFilter.getStates(), as:'value'}
             %{ org.tdl.vireo.state.State state = stateManager.getState(value) }%
             #{if state.isArchived() }
             <li><a class="removable" href="@{FilterTab.ModifyFilters(nav)}?action=remove&type=state&value=${value.urlEncode()}">${state.getDisplayName()}</a></li>
             #{/if}
             #{/list}
-            </ul>
-            </li>
             #{/if}
         </ul>
         #{/if}
