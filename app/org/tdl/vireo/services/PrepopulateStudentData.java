@@ -276,6 +276,7 @@ public class PrepopulateStudentData {
                 p = personRepo.createPerson(record[NETID], email, record[FIRST_NAME], record[LAST_NAME], RoleType.STUDENT);
             } else {
                 p.setEmail(email);
+                p.setCurrentEmailAddress(null);
                 p.setFirstName(record[FIRST_NAME]);
                 p.setLastName(record[LAST_NAME]);
                 p.setRole(RoleType.STUDENT);
