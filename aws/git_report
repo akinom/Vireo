@@ -1,8 +1,9 @@
-#!/bin/tcsh -f
+#!/bin/bash 
+cd "$(dirname "$0")"
 git diff --stat --no-color 
 
 echo ""
 echo "--------------------------"
 echo ""
 
-git log --abbrev-commit '--pretty=%h %cn %s' --graph --author Mevenkamp --no-color 
+git log --abbrev-commit '--pretty=%h %cn %s' --graph --author Mevenkamp --no-color
