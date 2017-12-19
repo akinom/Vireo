@@ -643,7 +643,7 @@ if (org.tdl.vireo.model.RoleType.getPersonRole(currentUser) == org.tdl.vireo.mod
 			<div id="docTypeOptions" style="display:none;">
 			    <select class="field">
 				#{list items:settingRepo.findAllDocumentTypes(), as:'docType'}
-					<option value="${docType.getName()}">${docType.getName()} - ${docType.getLevel()}</option>
+					<option value="${docType.getName()}">${docType.getName()}</option>
 				#{/list}
 				</select>
 			</div>
