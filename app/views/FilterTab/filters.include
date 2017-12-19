@@ -257,9 +257,9 @@ different blocks this gets around this problem because each is independent.
         <div class="sub-heading">MANAGE FILTERS</div>
         <ul class="unstyled">
             <li><a href="@{FilterTab.ModifyFilters(nav)}?action=clear" class="confirm">Clear current filter</a></li>
-            <li><a href="#filter-save-modal" data-toggle="modal">Save current filter</a></li>
-            <li><a href="#filter-manage-modal" data-toggle="modal">Remove existing filters</a></li>
-            <li><a href="#filter-customize-modal" data-toggle="modal">Customize filters</a></li>
+            <li class="noreviewer"><a href="#filter-save-modal" data-toggle="modal">Save current filter</a></li>
+            <li class="noreviewer"><a href="#filter-manage-modal" data-toggle="modal">Remove existing filters</a></li>
+            <li class="noreviewer"><a href="#filter-customize-modal" data-toggle="modal">Customize filters</a></li>
         </ul>
     </div>
     #{if subRepo.findSearchFiltersByCreatorOrPublic(securityContext.getPerson()).size() > 0 }
