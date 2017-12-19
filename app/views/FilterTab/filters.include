@@ -53,41 +53,33 @@ managing and modifying filters.
                 }
             }
             }%              
-            
+
             <!-- List all non-active non-archive states -->
             #{list items:activeFilter.getStates(), as:'value'}
             %{ org.tdl.vireo.state.State state = stateManager.getState(value) }%
             #{if !state.isActive() && !state.isArchived() }
-            <li><a class="removable" href="@{FilterTab.ModifyFilters(nav)}?action=remove&type=state&value=${value.urlEncode()}">${state.getDisplayName()}</a><li>
+            <li><a class="removable" href="@{FilterTab.ModifyFilters(nav)}?action=remove&type=state&value=${value.urlEncode()}">${state.getDisplayName()}</a></li>
             #{/if}
             #{/list}
-            
+
             <!-- List Active states -->
             #{if showActive }
-            <li>+ Active
-            <ul class="unstyled">
             #{list items:activeFilter.getStates(), as:'value'}
             %{ org.tdl.vireo.state.State state = stateManager.getState(value) }%
             #{if state.isActive() }
             <li><a class="removable" href="@{FilterTab.ModifyFilters(nav)}?action=remove&type=state&value=${value.urlEncode()}">${state.getDisplayName()}</a></li>
             #{/if}
             #{/list}
-            </ul>
-            </li>
             #{/if}
             
             <!-- List Archived states -->
             #{if showArchived}
-            <li>+ Archived
-            <ul class="unstyled">
             #{list items:activeFilter.getStates(), as:'value'}
             %{ org.tdl.vireo.state.State state = stateManager.getState(value) }%
             #{if state.isArchived() }
             <li><a class="removable" href="@{FilterTab.ModifyFilters(nav)}?action=remove&type=state&value=${value.urlEncode()}">${state.getDisplayName()}</a></li>
             #{/if}
             #{/list}
-            </ul>
-            </li>
             #{/if}
         </ul>
         #{/if}
@@ -257,35 +249,29 @@ different blocks this gets around this problem because each is independent.
         <div class="sub-heading">MANAGE FILTERS</div>
         <ul class="unstyled">
             <li><a href="@{FilterTab.ModifyFilters(nav)}?action=clear" class="confirm">Clear current filter</a></li>
-            <li><a href="#filter-save-modal" data-toggle="modal">Save current filter</a></li>
-            <li><a href="#filter-manage-modal" data-toggle="modal">Remove existing filters</a></li>
-            <li><a href="#filter-customize-modal" data-toggle="modal">Customize filters</a></li>
+            <li class="noreviewer"><a href="#filter-save-modal" data-toggle="modal">Save current filter</a></li>
+            <li class="noreviewer"><a href="#filter-manage-modal" data-toggle="modal">Remove existing filters</a></li>
+            <li class="noreviewer"><a href="#filter-customize-modal" data-toggle="modal">Customize filters</a></li>
         </ul>
     </div>
     #{if subRepo.findSearchFiltersByCreatorOrPublic(securityContext.getPerson()).size() > 0 }
     <div class="box-body" id="saved-filters-left-column">
-        <div class="sub-heading">SAVED FILTERS</div>
+        <div class="sub-heading">AVAILABLE FILTERS</div>
         <ul class="unstyled">
-        	<span class="sub-heading">Without Columns</span>
-        	%{boolean foundWithout=false;}%
+        	%{boolean foundFilter=false;}%
             #{list items:subRepo.findSearchFiltersByCreatorOrPublic(securityContext.getPerson()), as:'filter'}
 				#{if !filter.hasColumns()}
-					%{foundWithout=true;}%
+					%{foundFilter=true;}%
 					<li><a href="@{FilterTab.ModifyFilters(nav)}?action=load&filter=${filter.getId()}">${filter.getName()}</a></li>
 				#{/if}
             #{/list}
-            #{if !foundWithout}
-            		<li><a href="javascript:void(0)">None...</a></li>
-            #{/if}
-            <span class="sub-heading">With Columns</span>
-            %{boolean foundWith=false;}%
             #{list items:subRepo.findSearchFiltersByCreatorOrPublic(securityContext.getPerson()), as:'filter'}
 				#{if filter.hasColumns()}
-					%{foundWith=true;}%
+					%{foundFilter=true;}%
 					<li><a href="@{FilterTab.ModifyFilters(nav)}?action=load&filter=${filter.getId()}">${filter.getName()}</a></li>
 				#{/if}
             #{/list}
-            #{if !foundWith}
+            #{if !foundFilter}
             		<li><a href="javascript:void(0)">None...</a></li>
             #{/if}
         </ul>
@@ -354,28 +340,20 @@ different blocks this gets around this problem because each is independent.
             
             <!-- List Active states -->
             #{if expandActive != null}
-            <li>#{if !expandActive}<span class="sub-heading more">+ Active...</span>#{/if}<span #{if !expandActive}class="sub-heading hidden"#{/if}>+ Active</span>
-            <ul class="unstyled#{if !expandActive} hidden#{/if}">
             #{list items:stateManager.getAllStates(), as:'state'}
             #{if state.isActive() && !activeFilter.getStates().contains(state.getBeanName())}
             <li><a href="@{FilterTab.ModifyFilters(nav)}?action=add&type=state&value=${state.getBeanName().urlEncode()}">${state.getDisplayName()}</a></li>
             #{/if}
             #{/list}
-            </ul>
-            </li>
             #{/if}
             
             <!-- List Archived states -->
             #{if expandArchived != null}
-           <li>#{if !expandArchived}<span class="sub-heading more">+ Archived...</span>#{/if}<span #{if !expandArchived}class="sub-heading hidden"#{/if}>+ Archived</span>
-            <ul class="unstyled#{if !expandArchived} hidden#{/if}">
             #{list items:stateManager.getAllStates(), as:'state'}
             #{if state.isArchived() && !activeFilter.getStates().contains(state.getBeanName())}
             <li><a href="@{FilterTab.ModifyFilters(nav)}?action=add&type=state&value=${state.getBeanName().urlEncode()}">${state.getDisplayName()}</a></li>
             #{/if}
             #{/list}
-            </ul>
-            </li>
             #{/if}
         </ul>
         #{/if}

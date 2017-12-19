@@ -35,7 +35,7 @@
 		<p>
 		<a href="#submission-status-modal" data-toggle="modal"><button class="btn btn-info">${submission.getState().getDisplayName()}</button></a>
 		</p>
-		<ul class="unstyled">
+		<ul class="unstyled noreviewer">
 			<li>Assigned To:</li>
 			<li><i class="icon-pencil"></i><b><a href="#assignee-modal" data-toggle="modal">
 			#{if submission.getAssignee()}
@@ -60,7 +60,7 @@
 			#{/else}
 			</li>
 		</ul>
-		<ul class="unstyled ${hideFromReviewers}">
+		<ul class="unstyled noreviewer">
 			<li>UMI Release:</li>
 			<li><b>#{if submission.getUMIRelease() != null}
 				${submission.getUMIRelease() ? "yes" : "no"}
@@ -69,7 +69,7 @@
 			#{/else}
 			</b></li>
 		</ul>
-		<ul class="unstyled ${hideFromReviewers}">
+		<ul class="unstyled noreviewer">
 			<li>Embargo Options</li>
 			#{if submission.getEmbargoTypes() != null && submission.getEmbargoTypes().size() > 0}
 				#{list items:submission.getEmbargoTypes(), as:'embargo'}
@@ -89,7 +89,7 @@
 	</div>		
 </div>
 
-<div class="side-box">
+<div class="side-box noreviewer">
 	<div class="box-head expanded">
 		<div class="expand">[-]</div>
 		<div class="main-heading">Custom Actions</div>
