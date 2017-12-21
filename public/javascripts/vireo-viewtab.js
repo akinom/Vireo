@@ -396,9 +396,9 @@ function editCommitteeMemberHandler(){
 			markup += '<tr><td><b>Last Name</b></td><td><b>First Name</b></td><td><b>Middle Name</b></td><td></td></tr>'
 			markup += '<tr>'
 			markup += '<td><input id="memberId" class="hidden" type="hidden" value="'+memberId+'" />';
-			markup += '<input id="cmLastName" class="span2" type="text" value="'+lastName+'" /></td>';
-			markup += '<td><input id="cmFirstName" class="span2" type="text" value="'+firstName+'" /></td>';
-			markup += '<td><input id="cmMiddleName" class="span2" type="text" value="'+middleName+'" /></td>';
+			markup += '<input id="cmLastName" class="input-small" type="text" value="'+lastName+'" /></td>';
+			markup += '<td><input id="cmFirstName" class="input-small" type="text" value="'+firstName+'" /></td>';
+			markup += '<td><input id="cmMiddleName" class="input-small" type="text" value="'+middleName+'" /></td>';
 			
 			if (availableRoles.length == 1 && ( currentRoles.length == 0 || currentRoles[0] == availableRoles[0] )) {
 				// Only one role, so just show a checkbox
@@ -472,9 +472,9 @@ function addCommitteeMemberHandler(){
 			var markup = '<li class="add"><div class="editing"><table>';
 			markup += '<tr><td><b>Last Name</b></td><td><b>First Name</b></td><td><b>Middle Name</b></td><td></td></tr>'
 			markup += '<tr>'
-			markup += '<td><input id="cmLastName" class="span2" type="text" /></td>';
-			markup += '<td><input id="cmFirstName" class="span2" type="text" /></td>';
-			markup += '<td><input id="cmMiddleName" class="span2" type="text" /></td>';
+			markup += '<td><input id="cmLastName" class="input-small" type="text" /></td>';
+			markup += '<td><input id="cmFirstName" class="input-small" type="text" /></td>';
+			markup += '<td><input id="cmMiddleName" class="input-small" type="text" /></td>';
 			if (availableRoles.length == 1 ) {
 				// Only one role, so just show a checkbox
 				markup += '</tr>';
@@ -565,9 +565,9 @@ function commitNewCommitteeMemberHandler(subId, jsonURL) {
 				var markup = '<div class="editing"><table>';
 				markup += '<tr><td><b>Last Name</b></td><td><b>First Name</b></td><td><b>Middle Name</b></td><td></td></tr>'
 					markup += '<tr>'
-						markup += '<td><input id="cmLastName" class="span2" type="text" value="'+data.lastName+'" /></td>';
-				markup += '<td><input id="cmFirstName" class="span2" type="text" value="'+data.firstName+'" /></td>';
-				markup += '<td><input id="cmMiddleName" class="span2" type="text" value="'+data.middleName+'" /></td>';
+						markup += '<td><input id="cmLastName" class="input-small" type="text" value="'+data.lastName+'" /></td>';
+				markup += '<td><input id="cmFirstName" class="input-small" type="text" value="'+data.firstName+'" /></td>';
+				markup += '<td><input id="cmMiddleName" class="input-small" type="text" value="'+data.middleName+'" /></td>';
 				
 				var availableRoles = jQuery.parseJSON(jQuery("#committeeMembers").attr("data-roles"));
 				if (availableRoles.length == 1 && ( data.roles.length == 0 || data.roles[0] == availableRoles[0] )) {
