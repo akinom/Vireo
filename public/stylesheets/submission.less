@@ -326,6 +326,18 @@ legend + .control-group {
 	margin-top: 0;
 }
 
+input[disabled],
+select[disabled],
+textarea[disabled] {
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+}
+
+.control-group.error > span {
+	color: @red;
+}
+
 input[type=file] {
 	background-color: #ffffff;
 	border: 1px solid #cccccc;

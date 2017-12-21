@@ -202,7 +202,7 @@ function abandonSub(){
             <label class="control-label" for="firstName"><span class="required-star">*</span> #{fieldLabel STUDENT_FIRST_NAME /}:</label>
             <div class="controls">
                 #{if disabledFields.contains("firstName")}
-                <p>${firstName}</p>
+                <input type="text" name="firstName" id="firstName" value="${firstName}" required aria-required="true" disabled>
                 #{/if} 
                 #{else}
                 <input type="text" name="firstName" id="firstName" value="${firstName}" required aria-required="true">
@@ -215,7 +215,7 @@ function abandonSub(){
             <label class="control-label" for="middleName"><span class="required-star">*</span> #{fieldLabel STUDENT_MIDDLE_NAME /}:</label>
             <div class="controls">
                 #{if disabledFields.contains("middleName")}
-                <p>${middleName}</p>
+                <input type="text" class="span1" id="middleName" name="middleName" value="${middleName}" aria-required=“false” disabled>
                 #{/if} 
                 #{else}
                 <input type="text" class="span1" id="middleName" name="middleName" value="${middleName}" aria-required=“false”>
@@ -228,7 +228,7 @@ function abandonSub(){
             <label class="control-label" for="lastName"><span class="required-star">*</span> #{fieldLabel STUDENT_LAST_NAME /}:</label>
             <div class="controls">
                 #{if disabledFields.contains("lastName")}
-                <p>${lastName}</p>
+                <input type="text" name="lastName" id="lastName" value="${lastName}" required aria-required=“true” disabled>
                 #{/if} 
                 #{else}
                 <input type="text" name="lastName" id="lastName" value="${lastName}" required aria-required=“true”>
@@ -240,7 +240,7 @@ function abandonSub(){
         <div class="control-group #{errorClass 'email' /} #{fieldClass STUDENT_EMAIL /}">
             <label class="control-label" for="email"><span class="required-star">*</span> #{fieldLabel STUDENT_EMAIL /}:</label>
             <div class="controls">
-                <p>${submitter.getEmail()}</p>
+                <input type="text" name="email" id="email" value="${submitter.getEmail()}" required aria-required="true" disabled>
             </div>
         </div>
         #{/ifEnabled}
@@ -462,11 +462,9 @@ function abandonSub(){
 		</ul>
 		<table id="checkMajor-submission-table" class="table table-striped table-bordered table-condensed">
 			<caption>
-				<h5>
-					<div id="checkMajor-wrap" class="alert alert-danger">
-						<p>If you have a document which Needs Corrections, return to Submission History  and click Edit next to your submission.</p>
-					</div>
-				</h5>
+				<div id="checkMajor-wrap" class="alert alert-danger">
+					<p>If you have a document which Needs Corrections, return to Submission History  and click Edit next to your submission.</p>
+				</div>
 			</caption>
 			<thead>
 			</thead>
@@ -475,7 +473,7 @@ function abandonSub(){
 		</table>
 	</div>
 	<div class="modal-footer">
-		<a id="checkMajor-cancel" href="javascript:void(0);" class="btn" data-dismiss="modal" aria-role="button"><span>Cancel<br/>(Select a Different Degree/Major)</span></a>
-		<a id="checkMajor-abandon" href="@{Student.submissionDelete(subId)}" class="btn btn-primary" aria-role="button"><span>I need to edit my submission<br/>(Go back to Submission History)</span></a>
+		<a id="checkMajor-cancel" href="javascript:void(0);" class="btn" data-dismiss="modal" role="button"><span>Cancel<br/>(Select a Different Degree/Major)</span></a>
+		<a id="checkMajor-abandon" href="@{Student.submissionDelete(subId)}" class="btn btn-primary" role="button"><span>I need to edit my submission<br/>(Go back to Submission History)</span></a>
 	</div>
 </div>

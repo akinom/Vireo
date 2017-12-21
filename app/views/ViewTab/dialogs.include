@@ -10,7 +10,7 @@
             <div style="padding-bottom:15px;">
             <h3>Current Transitions</h3>
             #{list items:transitions, as:'state'}
-            	<a id="${state.getBeanName()}" aria-role="button" class="btn special-value
+            	<a id="${state.getBeanName()}" role="button" class="btn special-value
             	#{if state.isDepositable()}
             		 btn-success 
             		 #{if depositLocations.size() > 1}
@@ -50,15 +50,15 @@
             
             <div style="padding-top:15px;">
            		#{if submission.getState().isDeletable()}
-           			<a id="deleteState" aria-role="button" class="btn btn-danger special-value deleteState">Delete this Submission</a>
+           			<a id="deleteState" role="button" class="btn btn-danger special-value deleteState">Delete this Submission</a>
            		#{/if}#{else}
-           			<a id="cancelState" aria-role="button" class="btn btn-important special-value">Cancel this Submission</a>
+           			<a id="cancelState" role="button" class="btn btn-important special-value">Cancel this Submission</a>
             	#{/else}
             </div>
             </form>
         </div>
         <div class="modal-footer">
-            <a href="#" class="btn" aria-role="button" data-dismiss="modal">Close</a>            
+            <a href="#" class="btn" role="button" data-dismiss="modal">Close</a>            
         </div>
     
 </div>
@@ -73,7 +73,7 @@
         <div class="modal-body">
            <form id="assignee-form" action="@{ViewTab.changeAssignedTo(submission.getId())}" method="POST" class="form-horizontal"> 
            <div style="padding-bottom:15px;">
-           	<a id="${currentUser.getId()}" aria-role="button" class="btn special-value">Assign to me</a>
+           	<a id="${currentUser.getId()}" role="button" class="btn special-value">Assign to me</a>
            </div>           
             
             <select name="assignee">
@@ -84,13 +84,13 @@
            <input type="hidden" name="special_value" value="" />
            <input type="submit" class="btn btn-primary" name="submit_save" value="Save"/>
             <div style="padding-top:15px;">
-           <a id="unassign" aria-role="button" class="btn special-value">Unassign</a>
+           <a id="unassign" role="button" class="btn special-value">Unassign</a>
            </div>
            </form>
            
         </div>
         <div class="modal-footer">
-            <a href="#" class="btn" data-dismiss="modal" aria-role="button">Close</a>
+            <a href="#" class="btn" data-dismiss="modal" role="button">Close</a>
             
         </div>
     
@@ -109,7 +109,7 @@
     </div>
     
     <div class="modal-footer">
-        <a href="#" class="btn" data-dismiss="modal" aria-role="button">Close</a>
+        <a href="#" class="btn" data-dismiss="modal" role="button">Close</a>
         <input type="submit" class="btn btn-primary" name="submit_save" value="Save"/>
     </div>
     </form>
@@ -244,7 +244,7 @@
 	</div>
 	
 	<div class="modal-footer">
-			<a href="#" class="btn" data-dismiss="modal" aria-role="button">Close</a>
+			<a href="#" class="btn" data-dismiss="modal" role="button">Close</a>
 			<input type="submit" class="btn btn-primary" name="addActionLogComment" value="Save"/> 
 		</form>                 
 	</div>
@@ -384,7 +384,7 @@
 	</div>
 	
 	<div class="modal-footer">
-			<a href="#" class="btn" data-dismiss="modal" aria-role="button">Close</a>
+			<a href="#" class="btn" data-dismiss="modal" role="button">Close</a>
 			<input type="submit" class="btn btn-primary" name="addFile" value="Submit"/> 
 		</form>                 
 	</div>
@@ -430,7 +430,7 @@
 	
 	<div class="modal-footer">
 			<button type="submit" class="btn btn-danger confirm" name="deleteFile" style="float:left">Delete</button>			
-			<a href="#" class="btn" data-dismiss="modal" aria-role="button">Close</a>
+			<a href="#" class="btn" data-dismiss="modal" role="button">Close</a>
 			#{if !attachment.getType().toString().equals("PRIMARY")}
 			<input type="submit" class="btn btn-primary" name="editFile" value="Submit"/>
 			#{/if}

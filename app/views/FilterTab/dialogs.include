@@ -197,7 +197,7 @@ jQuery(document).ready(function() {
             </fieldset>
         </div>
         <div class="modal-footer">
-            <a href="#" class="btn" data-dismiss="modal" aria-role="button">Close</a>
+            <a href="#" class="btn" data-dismiss="modal" role="button">Close</a>
             <input type="submit" class="btn btn-primary" name="submit_save" value="Save Filter"/>
         </div>
     </form>
@@ -252,7 +252,7 @@ jQuery(document).ready(function() {
             </table>
         </div>
         <div class="modal-footer">
-            <a href="#" class="btn" data-dismiss="modal" aria-role="button">Close</a>
+            <a href="#" class="btn" data-dismiss="modal" role="button">Close</a>
             <input type="submit" class="btn btn-primary" name="submit_remove" value="Remove Filters"/>
         </div>
     </form>
@@ -290,7 +290,7 @@ jQuery(document).ready(function() {
             </div>
         </div>
         <div class="modal-footer">
-            <a href="#" class="btn" data-dismiss="modal" aria-role="button">Close</a>
+            <a href="#" class="btn" data-dismiss="modal" role="button">Close</a>
             <input type="submit" class="btn btn-primary" name="submit_save" value="Save"/>
         </div>
     </form>
@@ -349,7 +349,7 @@ jQuery(document).ready(function() {
             
         </div>
         <div class="modal-footer">
-            <a href="#" class="btn" data-dismiss="modal" aria-role="button">Close</a>
+            <a href="#" class="btn" data-dismiss="modal" role="button">Close</a>
             <input type="submit" class="btn btn-primary" name="submit_save" value="Save"/>
             <input type="submit" class="btn btn-primary" name="default_columns" value="Default Columns"/>
         </div>
@@ -403,7 +403,7 @@ jQuery(document).ready(function() {
             </fieldset>
         </div>
         <div class="modal-footer">
-            <a href="#" class="btn" data-dismiss="modal" aria-role="button">Close</a>
+            <a href="#" class="btn" data-dismiss="modal" role="button">Close</a>
             <button type="submit" class="btn btn-primary batchConfirm" name="submit_save">Transition</button>
         </div>
     </form>
@@ -437,7 +437,7 @@ jQuery(document).ready(function() {
             </fieldset>
         </div>
         <div class="modal-footer">
-            <a href="#" class="btn" data-dismiss="modal" aria-role="button">Close</a>
+            <a href="#" class="btn" data-dismiss="modal" role="button">Close</a>
             <button type="submit" class="btn btn-primary batchConfirm" name="submit_save">Assign</button>
         </div>
     </form>
@@ -566,7 +566,7 @@ jQuery(document).ready(function() {
 	</div>
 	
 	<div class="modal-footer">
-			<a href="#" class="btn" data-dismiss="modal" aria-role="button">Close</a>
+			<a href="#" class="btn" data-dismiss="modal" role="button">Close</a>
 			<button type="submit" class="btn btn-primary batchConfirm" name="submit_save">Submit</button>
 		</form>                 
 	</div>
@@ -600,7 +600,7 @@ jQuery(document).ready(function() {
             </fieldset>
         </div>
         <div class="modal-footer">
-            <a href="#" class="btn" data-dismiss="modal" aria-role="button">Close</a>
+            <a href="#" class="btn" data-dismiss="modal" role="button">Close</a>
             <input type="submit" class="btn btn-primary" id="submit_download_export" name="submit_save" value="Download Export"/>
         </div>
     </form>

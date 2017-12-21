@@ -114,13 +114,13 @@ function startNewSub() {
 				<td>
 					#{if !subStatus.getSubmissionsOpen() && sub.getState().isInProgress() }
 				    *{ submissions closed before the user was able to finish their submission. }*
-				    <a id="submission-delete" class="btn btn-primary" href="@{Student.submissionDelete(sub.getId())}" aria-role="button">Delete</a>
+				    <a id="submission-delete" class="btn btn-primary" href="@{Student.submissionDelete(sub.getId())}" role="button">Delete</a>
 				#{/if}
 				#{elseif sub.getState().isInProgress() }
-				    <a id="submission-continue" class="btn btn-primary" href="@{submit.PersonalInfo.personalInfo(sub.getId())}" aria-role="button">Continue Submission</a>
+				    <a class="btn btn-primary submission-continue" href="@{submit.PersonalInfo.personalInfo(sub.getId())}" role="button">Continue Submission</a>
                 #{/elseif}
                 #{else}
-				     <a class="btn btn-primary" href="@{Student.submissionView(sub.getId())}" aria-role="button">
+				     <a class="btn btn-primary" href="@{Student.submissionView(sub.getId())}" role="button">
 				     	${ sub.getState().isEditableByStudent() ? "Edit" : "View" }
 				     </a>				 
 				#{/else}
@@ -133,7 +133,7 @@ function startNewSub() {
             </td>
             <td>
             #{if subStatus.getAllowMultiple() || !subStatus.getHasSubmissions()}
-                    <a href="javascript:void(0)" onclick="checkBeforeNewSub()" class="btn btn-primary" aria-role="button">Make Additional Submission</a>
+                    <a href="javascript:void(0)" onclick="checkBeforeNewSub()" class="btn btn-primary" role="button">Make Additional Submission</a>
             #{/if}
             #{else}
             <p class="alert alert-error">You've already submitted an ETD or have one in progress!</p>
@@ -161,8 +161,8 @@ function startNewSub() {
 	</div>
 	<h3>Do you want to start a new submission ?</h3>
 	<div class="modal-footer">
-		<button id="checkBeforeNewSub-cancel" class="btn" data-dismiss="modal" aria-role="button">No</button>
-		<button id="checkBeforeNewSub-start" onclick="startNewSub()" class="btn btn-primary" aria-role="button">Yes</button>
+		<button id="checkBeforeNewSub-cancel" class="btn" data-dismiss="modal" role="button">No</button>
+		<button id="checkBeforeNewSub-start" onclick="startNewSub()" class="btn btn-primary" role="button">Yes</button>
 	</div>
 </div>
 

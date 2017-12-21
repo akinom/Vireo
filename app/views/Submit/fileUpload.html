@@ -48,7 +48,7 @@
 
                 #{if primaryAttachment == null}
                     <div class="controls">
-                        <input type="file" id="primaryFile" class="input-file" name="primaryDocument">
+                        <input type="file" id="primaryFile" class="input-file" name="primaryDocument" required aria-required="true" title="Your primary file">
                         <input type="submit" value="Upload" class="uploadBtn btn" name="uploadPrimary">
                         
                     </div>
@@ -72,6 +72,7 @@
 			<legend>Upload Additional Files</legend>
 			<div class="control-group #{errorClass 'additionalDocument' /} #{fieldClass SUPPLEMENTAL_ATTACHMENT /} #{fieldClass SOURCE_ATTACHMENT /} #{fieldClass ADMINISTRATIVE_ATTACHMENT /}">
 					<div class="controls hidden">
+                        <label for="documentType">Document Type:</label>
 						<select id="documentType" class="input-select" name="attachmentType" style="margin-bottom:7px;">
                     	<option value="SUPPLEMENTAL">#{fieldLabel SUPPLEMENTAL_ATTACHMENT /}</option>
                         </select>

@@ -41,9 +41,8 @@ user may customize it's options.
            </div>
        </div>
        <div class="control-group">
-           <label class="control-label"></label>
            <div class="controls close-form">
-               <a class="toggle-field btn" aria-role="button" href="javascript:void(0);">close</a>
+               <a class="toggle-field btn" role="button" href="javascript:void(0);">close</a>
            </div>
        </div>
     </form>

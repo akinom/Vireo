@@ -14,7 +14,7 @@
 #{list items:visibleMethods, as:'method'}
 <div class="row">
 	<span class="span3 center">
-	   <a href="@@{Authentication.loginMethod(method.getBeanName())}" class="btn" aria-role="button">${method.getDisplayName()}</a>
+	   <a href="@@{Authentication.loginMethod(method.getBeanName())}" class="btn" role="button">${method.getDisplayName()}</a>
 	</span>
 	<span class="span7">
 	   <p>#{verbatim}${method.getDisplayDescription()}#{/verbatim}</p>
