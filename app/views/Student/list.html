@@ -147,9 +147,7 @@ function startNewSub() {
 <div class="modal fade" id="checkBeforeNewSub-modal">
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal">X</button>
-		<h4>
-			<p class="center red">You currently have a submission in progress!</p>
-		</h4>
+		<h2 class="center red">You currently have a submission in progress!</h2>
 	</div>
 	<div class="modal-body">
 		<ul id="checkBeforeNewSub-errors" class="red">
@@ -163,8 +161,8 @@ function startNewSub() {
 	</div>
 	<h3>Do you want to start a new submission ?</h3>
 	<div class="modal-footer">
-		<a id="checkBeforeNewSub-cancel" href="javascript:void(0);" class="btn" data-dismiss="modal" aria-role="button">No</a>
-		<a id="checkBeforeNewSub-start" href="javascript:void(0);" onclick="startNewSub()" class="btn btn-primary" aria-role="button">Yes</a>
+		<button id="checkBeforeNewSub-cancel" class="btn" data-dismiss="modal" aria-role="button">No</button>
+		<button id="checkBeforeNewSub-start" onclick="startNewSub()" class="btn btn-primary" aria-role="button">Yes</button>
 	</div>
 </div>
 
