@@ -198,7 +198,6 @@ function abandonSub(){
                 #{/if} 
                 #{else}
                 <input type="text" name="firstName" id="firstName" value="${firstName}" required>
-                <span class="tooltip-icon" title="#{fieldHelp STUDENT_FIRST_NAME /}"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
                 #{/else}
             </div>
         </div>
@@ -212,7 +211,6 @@ function abandonSub(){
                 #{/if} 
                 #{else}
                 <input type="text" class="span1" id="middleName" name="middleName" value="${middleName}">
-                <span class="tooltip-icon" title="#{fieldHelp STUDENT_MIDDLE_NAME /}"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
                 #{/else}
             </div>
         </div>
@@ -226,7 +224,6 @@ function abandonSub(){
                 #{/if} 
                 #{else}
                 <input type="text" name="lastName" id="lastName" value="${lastName}" required>
-                <span class="tooltip-icon" title="#{fieldHelp STUDENT_LAST_NAME /}"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
                 #{/else}
             </div>
         </div>
@@ -262,7 +259,6 @@ function abandonSub(){
                 #{/if} 
                 #{else}
                                <input type="text" class="span3" id="birthYear" name="birthYear" value="${birthYear}">
-                <span class="tooltip-icon" title="#{fieldHelp STUDENT_BIRTH_YEAR /}"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
                 #{/else}
             </div>
         </div>
@@ -286,7 +282,6 @@ function abandonSub(){
 						#{else}
                             <input name="department" id="department" value="${department}" required/>
 						#{/else}
-                        <span class="tooltip-icon" title="#{fieldHelp DEPARTMENT /}"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
 					#{/else}
                 </div>
             </div>
@@ -324,7 +319,6 @@ function abandonSub(){
 		            #{else}
 		                <input name="college" id="college" value="${college}"/>
 		            #{/else}
-		            <span class="tooltip-icon" title="#{fieldHelp COLLEGE /}"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
                 #{/else}
             </div>
         </div>
@@ -343,7 +337,6 @@ function abandonSub(){
                     <option #{if degree == degreeObject.getName()}selected="true"#{/if} value="${degreeObject.getName()}">${degreeObject.getName()}</option>
                     #{/list}
 				</select>
-				<span class="tooltip-icon" title="#{fieldHelp DEGREE /}"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
 				#{/else}
 			</div>
 		</div>
@@ -367,7 +360,6 @@ function abandonSub(){
 					#{else}
 					   <input name="major" id="major" value="${major}"/>
 					#{/else}
-					<span class="tooltip-icon" title="#{fieldHelp MAJOR /}"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
 				#{/else}
 			</div>
 		</div>
@@ -387,7 +379,6 @@ function abandonSub(){
                 #{/if} 
                 #{else}
 				<input type="text" class="span3" id="permPhone" name="permPhone" value="${permPhone}" placeholder="(###) ###-####">
-				<span class="tooltip-icon" title="#{fieldHelp PERMANENT_PHONE_NUMBER /}"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
 				#{/else}
 			</div>
 		</div>
@@ -401,7 +392,6 @@ function abandonSub(){
                 #{/if} 
                 #{else}
 				<textarea class="span4 address" id="permAddress" name="permAddress">${permAddress}</textarea>
-				<span class="tooltip-icon" title="#{fieldHelp PERMANENT_POSTAL_ADDRESS /}"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
 				#{/else}
 			</div>
 		</div>
@@ -415,7 +405,6 @@ function abandonSub(){
                 #{/if} 
                 #{else}
 				<input type="text" class="span3" id="permEmail" name="permEmail" value="${permEmail}">
-				<span class="tooltip-icon" title="#{fieldHelp PERMANENT_EMAIL_ADDRESS /}"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
 				#{/else}
 			</div>
 		</div>
@@ -429,7 +418,6 @@ function abandonSub(){
                 #{/if} 
                 #{else}
 				<input type="text" class="span3" id="currentPhone" name="currentPhone" value="${currentPhone}" placeholder="(###) ###-####">
-				<span class="tooltip-icon" title="#{fieldHelp CURRENT_PHONE_NUMBER /}"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
 				#{/else}
 			</div>
 		</div>
@@ -443,7 +431,6 @@ function abandonSub(){
                 #{/if} 
                 #{else}
 				<textarea class="span4 address" id="currentAddress" name="currentAddress">${currentAddress}</textarea>
-				<span class="tooltip-icon" title="#{fieldHelp CURRENT_POSTAL_ADDRESS /}"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
 				#{/else}
 			</div>
 		</div>
