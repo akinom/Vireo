@@ -14,8 +14,17 @@
 <div class="span8">
        <h2>Instructions:</h2>
     <p> #{verbatim}${instructions}#{/verbatim}</p>
+
+    <div class="alert alert-info">
+        <span aria-hidden="true"></span>
+        <div class="alert-content" role="alert">
+            <p>Fields marked with an asterisk (*) are required.</p>
+        </div>
+    </div>
+    
     #{ifErrors}
     <div class="alert alert-error">
+        <span aria-hidden="true"></span>
         <div class="alert-content" role="alert">
             <h2>Error:</h2>
             <ul>

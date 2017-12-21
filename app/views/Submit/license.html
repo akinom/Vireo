@@ -18,6 +18,7 @@
 
 		#{ifErrors}
 		<div class="alert alert-error">
+			<span aria-hidden="true"></span>
 			<div class="alert-content">
 				<h2>Error:</h2>
 				<ul>
@@ -47,7 +48,7 @@
 		
 		<div class="row center">
 			<label id="palabel" class="checkbox #{if errors.forKey('proquestAgreement')}red#{/if}">
-				<input id="proquestAgreement" type="checkbox" required name="proquestAgreement" ${ proquestAgreement != null ? "checked='true'" : "" }/> #{fieldHelp UMI_RELEASE /}
+				<input id="proquestAgreement" type="checkbox" required aria-required="true" name="proquestAgreement" ${ proquestAgreement != null ? "checked='true'" : "" }/> #{fieldHelp UMI_RELEASE /}
 			</label>
 		</div>	
 	    #{/ifEnabled}

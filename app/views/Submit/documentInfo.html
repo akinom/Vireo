@@ -130,8 +130,16 @@ jQuery(document).ready(function(){
 <div class="span8">
 <h2>Instructions:</h2>
     <p> #{verbatim}${instructions}#{/verbatim}</p>
+
+    <div class="alert alert-info">
+		<span aria-hidden="true"></span>
+		<div class="alert-content" role="alert">
+			<p>Fields marked with an asterisk (*) are required.</p>
+		</div>
+	</div>
 #{ifErrors}
 <div class="alert alert-error">
+	<span aria-hidden="true"></span>
 	<div class="alert-content" role="alert">
 		<h2>Error:</h2>
 		<ul>
@@ -153,7 +161,7 @@ jQuery(document).ready(function(){
 		<div class="control-group #{errorClass 'title' /} #{fieldClass DOCUMENT_TITLE /}">
 			<label class="control-label" for="title"><span class="required-star">*</span> #{fieldLabel DOCUMENT_TITLE /}:</label>
 			<div class="controls">
-				<input type="text" class="span5" id="title" name="title" value="${title}" required>
+				<input type="text" class="span5" id="title" name="title" value="${title}" required aria-required="true">
 			</div>
 		</div>
 		#{/ifEnabled}
@@ -198,7 +206,7 @@ jQuery(document).ready(function(){
             <div class="control-group #{errorClass 'docType'/} #{fieldClass DOCUMENT_TYPE /}">
                 <label class="control-label" for="docType"><span class="required-star">*</span> #{fieldLabel DOCUMENT_TYPE /}:</label>
                 <div class="controls">
-                    <select class="span5" id="docType" name="docType" required>
+                    <select class="span5" id="docType" name="docType" required  aria-required="true">
                         <option #{if null == docType || docType.equals("")}selected="true"#{/if} value="">...choose</option>
 						#{list docTypes, as: 'type'}
                             <option #{if null != type && docType.equals(type)}selected="true"#{/if} value="${type}">${type}</option>
@@ -258,7 +266,7 @@ jQuery(document).ready(function(){
 	            		<p>${docLanguages.get(0).getLocale().getDisplayName()}</p>
 	            	#{/if}
 	            	#{else}
-		            	<select class="span5" id="docLanguage" name="docLanguage" required>
+		            	<select class="span5" id="docLanguage" name="docLanguage" required aria-required="true">
 			                <option #{if null == docLanguage || docLanguage.equals("")}selected="true"#{/if} value="">...choose</option>
 			                #{list docLanguages, as: 'language'}
 			                    <option #{if null != language && docLanguage.equals(language.getName())}selected="true"#{/if} value="${language.getName()}">${language.getLocale().getDisplayName()}</option>
@@ -332,14 +340,14 @@ jQuery(document).ready(function(){
             }%
             <table role="presentation" class="committee-member #{ifError "committee"}error#{/ifError}">
                     <tr>
-                        <td><label for="committeeFirstName${i}" class="span3">First Name</label></td>
+                        <td><label for="committeeFirstName${i}" class="span3"><span class="required-star">*</span> First Name</label></td>
                         <td><label for="committeeMiddleName${i}" class="span1">MI</label></td>
-                        <td><label for="committeeLastName${i}" class="span3">Last Name</label></td>
+                        <td><label for="committeeLastName${i}" class="span3"><span class="required-star">*</span> Last Name</label></td>
                     </tr>
                     <tr> 
-                        <td><input type="text" class="input-medium span3" id="committeeFirstName${i}" name="committeeFirstName${i}" value="${firstName}"></td>
+                        <td><input type="text" class="input-medium span3" id="committeeFirstName${i}" name="committeeFirstName${i}" value="${firstName}" required aria-required="true"></td>
                         <td><input type="text" class="span1" id="committeeMiddleName${i}" name="committeeMiddleName${i}" value="${middleName}"></td>
-                        <td><input type="text" class="input-medium span3" id="committeeLastName${i}" name="committeeLastName${i}" value="${lastName}"></td>
+                        <td><input type="text" class="input-medium span3" id="committeeLastName${i}" name="committeeLastName${i}" value="${lastName}" required aria-required="true"></td>
                     </tr>
                     #{if false && availableRoles.size() > 0}
                     <tr class="committee-role-row">

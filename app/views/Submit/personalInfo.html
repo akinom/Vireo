@@ -172,13 +172,14 @@ function abandonSub(){
 		<div class="alert alert-info">
 			<span aria-hidden="true"></span>
 			<div class="alert-content" role="alert">
-				<p>Required fields are indicated with an asterisk.</p>
+				<p>Fields marked with an asterisk (*) are required.</p>
 			</div>
 		</div>
 		
 
 		#{ifErrors}
 		<div class="alert alert-error">
+			<span aria-hidden="true"></span>
 			<div class="alert-content" role="alert">
 				<h2>Error:</h2>
 				<ul>
@@ -204,7 +205,7 @@ function abandonSub(){
                 <p>${firstName}</p>
                 #{/if} 
                 #{else}
-                <input type="text" name="firstName" id="firstName" value="${firstName}" required>
+                <input type="text" name="firstName" id="firstName" value="${firstName}" required aria-required="true">
                 #{/else}
             </div>
         </div>
@@ -217,7 +218,7 @@ function abandonSub(){
                 <p>${middleName}</p>
                 #{/if} 
                 #{else}
-                <input type="text" class="span1" id="middleName" name="middleName" value="${middleName}">
+                <input type="text" class="span1" id="middleName" name="middleName" value="${middleName}" aria-required=“false”>
                 #{/else}
             </div>
         </div>
@@ -230,7 +231,7 @@ function abandonSub(){
                 <p>${lastName}</p>
                 #{/if} 
                 #{else}
-                <input type="text" name="lastName" id="lastName" value="${lastName}" required>
+                <input type="text" name="lastName" id="lastName" value="${lastName}" required aria-required=“true”>
                 #{/else}
             </div>
         </div>
@@ -251,7 +252,7 @@ function abandonSub(){
                 <p>${orcid}</p>
                 #{/if} 
                 #{else}
-                <input type="text" class="span3" name="orcid" id="orcid" value="${orcid}">
+                <input type="text" class="span3" name="orcid" id="orcid" value="${orcid}" aria-required=“false”>
                 <p><small>#{fieldHelp STUDENT_ORCID /}</small></p>
                 #{/else}
             </div>
@@ -265,7 +266,7 @@ function abandonSub(){
                 <p>${birthYear}</p>
                 #{/if} 
                 #{else}
-                               <input type="text" class="span3" id="birthYear" name="birthYear" value="${birthYear}">
+                    <input type="text" class="span3" id="birthYear" name="birthYear" value="${birthYear}" aria-required=“false”>
                 #{/else}
             </div>
         </div>
@@ -287,7 +288,7 @@ function abandonSub(){
                             </select>
 						#{/if}
 						#{else}
-                            <input name="department" id="department" value="${department}" required/>
+                            <input name="department" id="department" value="${department}" required aria-required=“required”/>
 						#{/else}
 					#{/else}
                 </div>
@@ -324,7 +325,7 @@ function abandonSub(){
 		                </select>
 		            #{/if}
 		            #{else}
-		                <input name="college" id="college" value="${college}"/>
+		                <input name="college" id="college" value="${college}" aria-required=“false”/>
 		            #{/else}
                 #{/else}
             </div>
@@ -365,7 +366,7 @@ function abandonSub(){
 						</select>
 					#{/if}
 					#{else}
-					   <input name="major" id="major" value="${major}"/>
+					   <input name="major" id="major" value="${major}" aria-required=“false”/>
 					#{/else}
 				#{/else}
 			</div>
@@ -385,7 +386,7 @@ function abandonSub(){
                 <p>${permPhone}</p>
                 #{/if} 
                 #{else}
-				<input type="text" class="span3" id="permPhone" name="permPhone" value="${permPhone}" placeholder="(###) ###-####">
+				<input type="text" class="span3" id="permPhone" name="permPhone" value="${permPhone}" placeholder="(###) ###-####" aria-required=“false”>
 				#{/else}
 			</div>
 		</div>
@@ -411,7 +412,7 @@ function abandonSub(){
                 <p>${permEmail}</p>
                 #{/if} 
                 #{else}
-				<input type="text" class="span3" id="permEmail" name="permEmail" value="${permEmail}">
+				<input type="text" class="span3" id="permEmail" name="permEmail" value="${permEmail}" aria-required=“false”>
 				#{/else}
 			</div>
 		</div>
@@ -424,7 +425,7 @@ function abandonSub(){
                 <p>${currentPhone}</p>
                 #{/if} 
                 #{else}
-				<input type="text" class="span3" id="currentPhone" name="currentPhone" value="${currentPhone}" placeholder="(###) ###-####">
+				<input type="text" class="span3" id="currentPhone" name="currentPhone" value="${currentPhone}" placeholder="(###) ###-####" aria-required=“false”>
 				#{/else}
 			</div>
 		</div>
