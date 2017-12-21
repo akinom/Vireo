@@ -116,10 +116,10 @@
         </fieldset>
     </div>
     <div class="modal-footer">
-        <a href="#" class="btn" data-dismiss="modal">Close</a>
+        <a href="#" class="btn" data-dismiss="modal" aria-role="button">Close</a>
         #{if depositLocationId != null }
-        <a href="#" id="depositLocation-delete" class="btn">Delete</a>
+        <a href="#" id="depositLocation-delete" class="btn" aria-role="button">Delete</a>
         #{/if}
-        <a href="#" id="depositLocation-save" class="btn">Save</a>
+        <a href="#" id="depositLocation-save" class="btn" aria-role="button">Save</a>
     </div>
 </form>
