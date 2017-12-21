@@ -160,28 +160,35 @@ function abandonSub(){
 	<h1>Verify Your Information</h1>
 </div>
 <div class="row">
+	<div id="stickyNotes" class="span4 stickies__student">
+	    #{list items:stickies, as:'sticky'}
+           <div class="sticky-bottom">#{verbatim}${sticky}#{/verbatim}</div>
+	    #{/list}
+	</div>
 	<div class="span8">
 		<h2>Instructions:</h2>
 		<p>#{verbatim}${instructions}#{/verbatim}</p>
+
 		<div class="alert alert-info">
-			<div class="alert-content">
+			<span aria-hidden="true"></span>
+			<div class="alert-content" role="alert">
 				<p>Required fields are indicated with an asterisk.</p>
 			</div>
 		</div>
 		
 
-#{ifErrors}
-<div class="alert alert-error">
-	<div class="alert-content">
-		<h2>Error:</h2>
-		<ul>
-		    #{errors}
-		    <li>${error}</li> 
-		    #{/errors}
-		</ul>
-	</div>
-</div>
-#{/ifErrors}
+		#{ifErrors}
+		<div class="alert alert-error">
+			<div class="alert-content" role="alert">
+				<h2>Error:</h2>
+				<ul>
+				    #{errors}
+				    <li>${error}</li> 
+				    #{/errors}
+				</ul>
+			</div>
+		</div>
+		#{/ifErrors}
 
   <form action="@{submit.PersonalInfo.personalInfo(subId)}" method="post" class="form-horizontal">
     <input type="hidden" name="step" value="personalInfo"/>
@@ -443,11 +450,6 @@ function abandonSub(){
 	</div>
 </form>            
 </div>
-	<div id="stickyNotes" class="span4 stickies__student">
-	    #{list items:stickies, as:'sticky'}
-           <div class="sticky-bottom">#{verbatim}${sticky}#{/verbatim}</div>
-	    #{/list}
-	</div>
 </div>
 <div class="modal fade" id="checkMajor-modal">
 	<div class="modal-header">
