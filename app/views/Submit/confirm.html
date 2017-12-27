@@ -13,6 +13,7 @@
 
 #{ifErrors}
 <div class="alert alert-error">
+	<span aria-hidden="true"></span>
 	<div class="alert-content">
 		<h2>Error:</h2>
 		<ul>
@@ -45,7 +46,7 @@
 	
 		#{ifEnabled PRIMARY_ATTACHMENT }
 		<div class="control-group #{errorClass 'primaryDocument' /} ">
-			<label class="control-label">#{fieldLabel PRIMARY_ATTACHMENT /}:</label>
+			<span class="control-label">#{fieldLabel PRIMARY_ATTACHMENT /}:</span>
 			<div class="controls">
 			    #{if primaryDocument != null}
 				    <p>
@@ -62,7 +63,7 @@
 		#{ifEnabled [SUPPLEMENTAL_ATTACHMENT,SOURCE_ATTACHMENT,ADMINISTRATIVE_ATTACHMENT]}
 	    #{if additionalDocuments.size() > 0}
 	    <div class="control-group #{errorClass 'additonalDocument' /} ">
-	        <label class="control-label">Additional Documents:</label>
+	        <span class="control-label">Additional Documents:</span>
 	        <div class="controls">
 	            #{list items:additionalDocuments, as:'attachment'}
 	            <p>
@@ -75,7 +76,7 @@
 	    #{/if}
 	    #{/ifEnabled}
 		<div class="control-group">
-			<label class="control-label"></label>
+			
 			<div class="controls edit">
 				<p><a href="@{submit.FileUpload.fileUpload(subId)}">[edit your uploaded files]</a></p>
 			</div>
@@ -87,6 +88,7 @@
 	<legend>Final Submission</legend>
 
 	<div class="alert alert-warning final-submission-warning">
+		<span aria-hidden="true"></span>
 		<div class="alert-content">
 			<h2>Warning:</h2>
 			<p>After pressing "Confirm and Submit" you cannot make any more changes to this submission.</p>

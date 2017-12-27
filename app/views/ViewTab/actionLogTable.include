@@ -15,7 +15,7 @@
 			#{/if}
 		</td>
 		<td class="comments tr" colspan="2">
-			<a href="#add-comment-modal" data-toggle="modal" class="btn btn-mini">
+			<a href="#add-comment-modal" data-toggle="modal" class="btn btn-mini" role="button">
 				Add Comment
 			</a>
 		</td>

@@ -241,10 +241,10 @@ function commitChangesHandler(eventTarget, jsonURL, committeeURL, subId){
 					markup += '<span class="lastName">'+data.lastName+'</span><span class="seperator">,&nbsp;</span>';
 					markup += '<span class="firstName">'+data.firstName+'&nbsp;</span>';
 					markup += '<span class="middleName">'+data.middleName+'&nbsp;</span>';	
-					jQuery.each(data.roles,function(index,value) {
-						markup += ' <span class="role label label-info">'+value+'</span> '
+					// jQuery.each(data.roles,function(index,value) {
+					// 	markup += ' <span class="role label label-info">'+value+'</span> '
 					
-					});
+					// });
 					markup += '</div>';
 					
 					jQuery("li."+data.id).html(markup);
@@ -253,10 +253,10 @@ function commitChangesHandler(eventTarget, jsonURL, committeeURL, subId){
 					markup += '<span class="lastName">'+data.lastName+'</span><span class="seperator">,&nbsp;</span>';
 					markup += '<span class="firstName">'+data.firstName+'&nbsp;</span>';
 					markup += '<span class="middleName">'+data.middleName+'&nbsp;</span>';						
-					jQuery.each(data.roles,function(index,value) {
-						markup += ' <span class="role label label-info">'+value+'</span> '
+					// jQuery.each(data.roles,function(index,value) {
+					// 	markup += ' <span class="role label label-info">'+value+'</span> '
 					
-					});
+					// });
 					markup += '<span><a href="#" class="tooltip-icon" rel="tooltip" title="'+data.message+'"><span class="badge badge-important"><i class="icon-warning-sign icon-white"></i></span></a></span>';
 					markup += '</div>';
 					
@@ -385,58 +385,58 @@ function editCommitteeMemberHandler(){
 			var lastName = jQuery.trim(escapeQuotes(jQuery(this).find(".lastName").text()));
 			var middleName = jQuery.trim(escapeQuotes(jQuery(this).find(".middleName").text()));
 			var currentRoles = new Array();
-			jQuery(this).find(".role").each(function () {
-				currentRoles.push(jQuery.trim(escapeQuotes(jQuery(this).text())));
-			});
+			// jQuery(this).find(".role").each(function () {
+			// 	currentRoles.push(jQuery.trim(escapeQuotes(jQuery(this).text())));
+			// });
 			
 			// get available roles
-			var availableRoles = jQuery.parseJSON(jQuery("#committeeMembers").attr("data-roles"));
+			// var availableRoles = jQuery.parseJSON(jQuery("#committeeMembers").attr("data-roles"));
 
 			var markup = '<div class="editing"><table>';
 			markup += '<tr><td><b>Last Name</b></td><td><b>First Name</b></td><td><b>Middle Name</b></td><td></td></tr>'
 			markup += '<tr>'
 			markup += '<td><input id="memberId" class="hidden" type="hidden" value="'+memberId+'" />';
-			markup += '<input id="cmLastName" class="span2" type="text" value="'+lastName+'" /></td>';
-			markup += '<td><input id="cmFirstName" class="span2" type="text" value="'+firstName+'" /></td>';
-			markup += '<td><input id="cmMiddleName" class="span2" type="text" value="'+middleName+'" /></td>';
+			markup += '<input id="cmLastName" class="input-small" type="text" value="'+lastName+'" /></td>';
+			markup += '<td><input id="cmFirstName" class="input-small" type="text" value="'+firstName+'" /></td>';
+			markup += '<td><input id="cmMiddleName" class="input-small" type="text" value="'+middleName+'" /></td>';
 			
-			if (availableRoles.length == 1 && ( currentRoles.length == 0 || currentRoles[0] == availableRoles[0] )) {
-				// Only one role, so just show a checkbox
+			// if (availableRoles.length == 1 && ( currentRoles.length == 0 || currentRoles[0] == availableRoles[0] )) {
+			// 	// Only one role, so just show a checkbox
 				
-				var checked = "";
-				if (currentRoles[0] == availableRoles[0]) 
-					checked = 'checked="checked"'
+			// 	var checked = "";
+			// 	if (currentRoles[0] == availableRoles[0]) 
+			// 		checked = 'checked="checked"'
 				
-				markup += '</tr>';
-				markup += '<tr><td style="text-align:right;"><b>Role:</b> </td>';
-				markup += '<td colspan="2"> ';
-				markup += '<input class="single-role" id="cmRoles" type="checkbox" value="'+availableRoles[0]+'" '+checked+'> '+availableRoles[0];
-				markup += '</td>';
-				markup += '</tr>';
+			// 	markup += '</tr>';
+			// 	markup += '<tr><td style="text-align:right;"><b>Role:</b> </td>';
+			// 	markup += '<td colspan="2"> ';
+			// 	markup += '<input class="single-role" id="cmRoles" type="checkbox" value="'+availableRoles[0]+'" '+checked+'> '+availableRoles[0];
+			// 	markup += '</td>';
+			// 	markup += '</tr>';
 				
-			} else {
-				// Otherwise show a full drop down list
-				markup += '</tr>';
-				markup += '<tr><td style="text-align:right;"><b>Roles:</b></td>';
-				markup += '<td colspan="2"><select id="cmRoles" multiple="multiple">';	
+			// } else {
+			// 	// Otherwise show a full drop down list
+			// 	markup += '</tr>';
+			// 	markup += '<tr><td style="text-align:right;"><b>Roles:</b></td>';
+			// 	markup += '<td colspan="2"><select id="cmRoles" multiple="multiple">';	
 				
-				// List all of the normal roles
-				jQuery.each(availableRoles, function(index, value) {
-					var selected = '';				
-					if (currentRoles.indexOf(value) > -1)
-						var selected = 'selected="selected"';
+			// 	// List all of the normal roles
+			// 	jQuery.each(availableRoles, function(index, value) {
+			// 		var selected = '';				
+			// 		if (currentRoles.indexOf(value) > -1)
+			// 			var selected = 'selected="selected"';
 					
-					markup += '<option value="'+decodeURIComponent(value)+'" '+selected+'>'+decodeURIComponent(value)+'</option>'
-				});
-				// If a current role is not in the list of available roles, add it to the end of the list.
-				jQuery.each(currentRoles, function(index, value) {
-					if (availableRoles.indexOf(value) == -1)
-						markup += '<option value="'+decodeURIComponent(value)+'" selected="selected">'+decodeURIComponent(value)+'</option>'
-				});
+			// 		markup += '<option value="'+decodeURIComponent(value)+'" '+selected+'>'+decodeURIComponent(value)+'</option>'
+			// 	});
+			// 	// If a current role is not in the list of available roles, add it to the end of the list.
+			// 	jQuery.each(currentRoles, function(index, value) {
+			// 		if (availableRoles.indexOf(value) == -1)
+			// 			markup += '<option value="'+decodeURIComponent(value)+'" selected="selected">'+decodeURIComponent(value)+'</option>'
+			// 	});
 	
-				markup += '</select></td>';
-				markup += '</tr>';
-			}
+			// 	markup += '</select></td>';
+			// 	markup += '</tr>';
+			// }
 			
 			markup += '</table><div style="padding:5px;"><a class="btn btn-danger btn-mini remove-committee-member" style="margin-right:10px;">delete</a>&nbsp;<i class="icon-remove" title="cancel"></i>&nbsp;<i class="icon-ok" title="commit"></i></div></div>';
 
@@ -467,36 +467,36 @@ function addCommitteeMemberHandler(){
 			jQuery("#backup").remove();
 
 			// get available roles
-			var availableRoles = jQuery.parseJSON(jQuery("#committeeMembers").attr("data-roles"));
+			// var availableRoles = jQuery.parseJSON(jQuery("#committeeMembers").attr("data-roles"));
 			
 			var markup = '<li class="add"><div class="editing"><table>';
 			markup += '<tr><td><b>Last Name</b></td><td><b>First Name</b></td><td><b>Middle Name</b></td><td></td></tr>'
 			markup += '<tr>'
-			markup += '<td><input id="cmLastName" class="span2" type="text" /></td>';
-			markup += '<td><input id="cmFirstName" class="span2" type="text" /></td>';
-			markup += '<td><input id="cmMiddleName" class="span2" type="text" /></td>';
-			if (availableRoles.length == 1 ) {
+			markup += '<td><input id="cmLastName" class="input-small" type="text" /></td>';
+			markup += '<td><input id="cmFirstName" class="input-small" type="text" /></td>';
+			markup += '<td><input id="cmMiddleName" class="input-small" type="text" /></td>';
+			// if (availableRoles.length == 1 ) {
 				// Only one role, so just show a checkbox
-				markup += '</tr>';
-				markup += '<tr><td style="text-align:right;"><b>Role:</b> </td>';
-				markup += '<td colspan="2"> ';
-				markup += '<input class="single-role" id="cmRoles" type="checkbox" value="'+decodeURIComponent(availableRoles[0])+'"> '+decodeURIComponent(availableRoles[0]);
-				markup += '</td>';
-				markup += '</tr>';
+				// markup += '</tr>';
+				// markup += '<tr><td style="text-align:right;"><b>Role:</b> </td>';
+				// markup += '<td colspan="2"> ';
+				// markup += '<input class="single-role" id="cmRoles" type="checkbox" value="'+decodeURIComponent(availableRoles[0])+'"> '+decodeURIComponent(availableRoles[0]);
+				// markup += '</td>';
+				// markup += '</tr>';
 				
-			} else {
+			// } else {
 				// Otherwise show a full drop down list
-				markup += '</tr>';
-				markup += '<tr><td style="text-align:right;"><b>Roles:</b></td>';
-				markup += '<td colspan="2"><select id="cmRoles" multiple="multiple">';	
+				// markup += '</tr>';
+				// markup += '<tr><td style="text-align:right;"><b>Roles:</b></td>';
+				// markup += '<td colspan="2"><select id="cmRoles" multiple="multiple">';	
 				
 				// List all of the normal roles
-				jQuery.each(availableRoles, function(index, value) {
-					markup += '<option value="'+decodeURIComponent(value)+'">'+decodeURIComponent(value)+'</option>'
-				});
-				markup += '</select></td>';
-				markup += '</tr>';
-			}
+				// jQuery.each(availableRoles, function(index, value) {
+					// markup += '<option value="'+decodeURIComponent(value)+'">'+decodeURIComponent(value)+'</option>'
+				// });
+				// markup += '</select></td>';
+				// markup += '</tr>';
+			// }
 			markup += '</table><i class="icon-remove" title="cancel"></i>&nbsp<i class="icon-ok" title="commit"></i></div></li>';
 
 			jQuery(markup).insertBefore('#add_new_member');
@@ -565,43 +565,43 @@ function commitNewCommitteeMemberHandler(subId, jsonURL) {
 				var markup = '<div class="editing"><table>';
 				markup += '<tr><td><b>Last Name</b></td><td><b>First Name</b></td><td><b>Middle Name</b></td><td></td></tr>'
 					markup += '<tr>'
-						markup += '<td><input id="cmLastName" class="span2" type="text" value="'+data.lastName+'" /></td>';
-				markup += '<td><input id="cmFirstName" class="span2" type="text" value="'+data.firstName+'" /></td>';
-				markup += '<td><input id="cmMiddleName" class="span2" type="text" value="'+data.middleName+'" /></td>';
+						markup += '<td><input id="cmLastName" class="input-small" type="text" value="'+data.lastName+'" /></td>';
+				markup += '<td><input id="cmFirstName" class="input-small" type="text" value="'+data.firstName+'" /></td>';
+				markup += '<td><input id="cmMiddleName" class="input-small" type="text" value="'+data.middleName+'" /></td>';
 				
-				var availableRoles = jQuery.parseJSON(jQuery("#committeeMembers").attr("data-roles"));
-				if (availableRoles.length == 1 && ( data.roles.length == 0 || data.roles[0] == availableRoles[0] )) {
-					// Only one role, so just show a checkbox
+				// var availableRoles = jQuery.parseJSON(jQuery("#committeeMembers").attr("data-roles"));
+				// if (availableRoles.length == 1 && ( data.roles.length == 0 || data.roles[0] == availableRoles[0] )) {
+				// 	// Only one role, so just show a checkbox
 					
-					var checked = "";
-					if (data.roles[0] == availableRoles[0]) 
-						checked = 'checked="checked"'
+				// 	var checked = "";
+				// 	if (data.roles[0] == availableRoles[0]) 
+				// 		checked = 'checked="checked"'
 					
-					markup += '</tr>';
-					markup += '<tr><td style="text-align:right;"><b>Role:</b> </td>';
-					markup += '<td colspan="2"> ';
-					markup += '<input class="single-role" id="cmRoles" type="checkbox" value="'+availableRoles[0]+'" '+checked+'> '+availableRoles[0];
-					markup += '</td>';
-					markup += '</tr>';
+				// 	markup += '</tr>';
+				// 	markup += '<tr><td style="text-align:right;"><b>Role:</b> </td>';
+				// 	markup += '<td colspan="2"> ';
+				// 	markup += '<input class="single-role" id="cmRoles" type="checkbox" value="'+availableRoles[0]+'" '+checked+'> '+availableRoles[0];
+				// 	markup += '</td>';
+				// 	markup += '</tr>';
 					
-				} else {
-					// Otherwise show a full drop down list
-					markup += '</tr>';
-					markup += '<tr><td style="text-align:right;"><b>Roles:</b></td>';
-					markup += '<td colspan="2"><select id="cmRoles" multiple="multiple">';	
+				// } else {
+				// 	// Otherwise show a full drop down list
+				// 	markup += '</tr>';
+				// 	markup += '<tr><td style="text-align:right;"><b>Roles:</b></td>';
+				// 	markup += '<td colspan="2"><select id="cmRoles" multiple="multiple">';	
 					
-					// List all of the normal roles
-					jQuery.each(availableRoles, function(index, value) {
-						var selected = '';				
-						if (data.roles.indexOf(value) > -1)
-							var selected = 'selected="selected"';
+				// 	// List all of the normal roles
+				// 	jQuery.each(availableRoles, function(index, value) {
+				// 		var selected = '';				
+				// 		if (data.roles.indexOf(value) > -1)
+				// 			var selected = 'selected="selected"';
 						
-						markup += '<option value="'+value+'" '+selected+'>'+value+'</option>'
-					});
+				// 		markup += '<option value="'+value+'" '+selected+'>'+value+'</option>'
+				// 	});
 		
-					markup += '</select></td>';
-					markup += '</tr>';
-				}
+				// 	markup += '</select></td>';
+				// 	markup += '</tr>';
+				// }
 				markup += '</table><i class="icon-remove"></i>&nbsp<i class="icon-ok"></i>';					
 				markup += '<span><a href="#" class="tooltip-icon" rel="tooltip" title="'+data.message+'"><span class="badge badge-important"><i class="icon-warning-sign icon-white"></i></span></a></span>';
 				markup += '</div>';

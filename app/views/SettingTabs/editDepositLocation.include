@@ -78,7 +78,7 @@
                 </div>
             </div>
             <div class="control-group">
-                <label class="control-label"></label>
+                
                 <div class="controls">
                     <button id="depositLocation-test" class="btn #{if "depositLocation-test".equals(action)}${ errors.size() == 0 ? "btn-success" : "btn-warning" }#{/if}" >Test connection & find available collections</button>
                 </div>
@@ -116,10 +116,10 @@
         </fieldset>
     </div>
     <div class="modal-footer">
-        <a href="#" class="btn" data-dismiss="modal">Close</a>
+        <a href="#" class="btn" data-dismiss="modal" role="button">Close</a>
         #{if depositLocationId != null }
-        <a href="#" id="depositLocation-delete" class="btn">Delete</a>
+        <a href="#" id="depositLocation-delete" class="btn" role="button">Delete</a>
         #{/if}
-        <a href="#" id="depositLocation-save" class="btn">Save</a>
+        <a href="#" id="depositLocation-save" class="btn" role="button">Save</a>
     </div>
 </form>

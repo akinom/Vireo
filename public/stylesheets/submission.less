@@ -43,6 +43,11 @@ a {
     }
 }
 
+.fa.fa-external-link {
+	margin: 0 3px;
+	font-size: 12px;
+}
+
 .navbar .brand {
 	padding: 0;
 }
@@ -319,6 +324,18 @@ legend {
 
 legend + .control-group {
 	margin-top: 0;
+}
+
+input[disabled],
+select[disabled],
+textarea[disabled] {
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+}
+
+.control-group.error > span {
+	color: @red;
 }
 
 input[type=file] {
@@ -735,7 +752,7 @@ button.ui-multiselect.ui-widget.ui-state-default.ui-corner-all {
 	position: relative;
 }
 
-.alert::before {
+.alert span::before {
 	border-radius: 100%;
 	font-size: 16px;
 	font-weight: 700;
@@ -750,19 +767,19 @@ button.ui-multiselect.ui-widget.ui-state-default.ui-corner-all {
 	top: 10px
 }
 
-.alert-warning::before {
+.alert-warning span::before {
 	background: @orange;
 	color: @white;
 	content: "!";
 }
 
-.alert-error::before {
+.alert-error span::before {
 	background: @red;
 	color: @white;
 	content: "X";
 }
 
-.alert-info::before {
+.alert-info span::before {
 	background: @blueDark;
 	color: @white;
 	content: "i";

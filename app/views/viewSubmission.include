@@ -21,7 +21,7 @@ Plus all the FieldConfig objects
 <legend>${sub.getCollege()}</legend>
 #{if showEditLinks}
 <div class="control-group">
-    <label class="control-label"></label>
+    
     <div class="controls edit">
         <p><a href="@{submit.PersonalInfo.personalInfo(subId)}">[edit thesis type]</a></p>
     </div>
@@ -35,7 +35,7 @@ Plus all the FieldConfig objects
 <legend>Student Information</legend>
 #{ifEnabled [STUDENT_FIRST_NAME,STUDENT_MIDDLE_NAME]}
 <div class="control-group #{errorClass 'firstName' /} #{errorClass 'lastName' /} #{errorClass 'middleName' /} #{errorClass 'birthYear' /} ">
-    <label class="control-label ">Name:</label>
+    <span class="control-label ">Name:</span>
     <div class="controls">
         <p>${sub?.getStudentFormattedName(org.tdl.vireo.model.NameFormat.LAST_FIRST_MIDDLE_BIRTH)}</p>
     </div>
@@ -51,7 +51,7 @@ Plus all the FieldConfig objects
 #{/ifEnabled}
 #{ifEnabled STUDENT_EMAIL}
 <div class="control-group #{errorClass 'email' /} ">
-    <label class="control-label">#{fieldLabel STUDENT_EMAIL /}:</label>
+    <span class="control-label">#{fieldLabel STUDENT_EMAIL /}:</span>
     <div class="controls">
         <p><a href="mailto:${submitter?.getEmail()}">${submitter?.getEmail()}</a></p>
     </div>
@@ -99,7 +99,7 @@ Plus all the FieldConfig objects
 #{/ifEnabled}
 #{ifEnabled DEPARTMENT }
 <div class="control-group #{errorClass 'department' /} ">
-    <label class="control-label">#{fieldLabel DEPARTMENT /}:</label>
+    <span class="control-label">#{fieldLabel DEPARTMENT /}:</span>
     <div class="controls">
         <p>${ sub.getDepartment() }</p>
     </div>
@@ -107,7 +107,7 @@ Plus all the FieldConfig objects
 #{/ifEnabled}
 #{if showEditLinks}
 <div class="control-group">
-    <label class="control-label"></label>
+    
     <div class="controls edit">
         <p><a href="@{submit.PersonalInfo.personalInfo(subId)}">[edit your personal information]</a></p>
     </div>
@@ -153,7 +153,7 @@ Plus all the FieldConfig objects
 #{/ifEnabled}
 #{if showEditLinks}
 <div class="control-group">
-    <label class="control-label"></label>
+    
     <div class="controls edit">
         <p><a href="@{submit.PersonalInfo.personalInfo(subId)}">[edit your academic affiliation]</a></p>
     </div>
@@ -167,7 +167,7 @@ Plus all the FieldConfig objects
 
 #{ifEnabled DOCUMENT_TITLE}
 <div class="control-group #{errorClass 'title' /} ">
-    <label class="control-label">#{fieldLabel DOCUMENT_TITLE /}:</label>
+    <span class="control-label">#{fieldLabel DOCUMENT_TITLE /}:</span>
     <div class="controls">
         <p>${sub.getDocumentTitle()}</p>
     </div>
@@ -175,7 +175,7 @@ Plus all the FieldConfig objects
 #{/ifEnabled}
 #{ifEnabled PROGRAM }
 <div class="control-group #{errorClass 'program' /} ">
-	<label class="control-label">#{fieldLabel PROGRAM /}:</label>
+	<span class="control-label">#{fieldLabel PROGRAM /}:</span>
 	<div class="controls">
 		<p>${ sub.getProgram() }</p>
 	</div>
@@ -208,7 +208,7 @@ Plus all the FieldConfig objects
 #{/ifEnabled}
 #{ifEnabled DOCUMENT_TYPE}
 <div class="control-group #{errorClass 'docType' /} ">
-    <label class="control-label">#{fieldLabel DOCUMENT_TYPE /}:</label>
+    <span class="control-label">#{fieldLabel DOCUMENT_TYPE /}:</span>
     <div class="controls">
         <p>${sub.getDocumentType()}</p>
     </div>
@@ -216,7 +216,7 @@ Plus all the FieldConfig objects
 #{/ifEnabled}
 #{ifEnabled DOCUMENT_ABSTRACT}
 <div class="control-group #{errorClass 'keywords' /} ">
-    <label class="control-label">#{fieldLabel DOCUMENT_ABSTRACT /}:</label>
+    <span class="control-label">#{fieldLabel DOCUMENT_ABSTRACT /}:</span>
     <div class="controls">
         <p>${ sub.getDocumentAbstract()?.nl2br() }</p>
     </div>
@@ -243,7 +243,7 @@ Plus all the FieldConfig objects
 
 #{ifEnabled DOCUMENT_LANGUAGE}
 <div class="control-group #{errorClass 'language' /} ">
-	<label class="control-label">#{fieldLabel DOCUMENT_LANGUAGE /}:</label>
+	<span class="control-label">#{fieldLabel DOCUMENT_LANGUAGE /}:</span>
 	<div class="controls">
 		<p>#{if sub.getDocumentLanguageLocale() != null}${sub.getDocumentLanguageLocale().getDisplayName()}#{/if}</p>
 	</div>
@@ -338,7 +338,7 @@ Plus all the FieldConfig objects
 
 #{if showEditLinks }
 <div class="control-group">
-    <label class="control-label"></label>
+    
     <div class="controls edit">
         <p><a href="@{submit.DocumentInfo.documentInfo(subId)}">[edit your document information]</a></p>
     </div>

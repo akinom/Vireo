@@ -4,13 +4,28 @@
 <div class="row pageHead">
 	<h1>Upload Your Files</h1>
 </div>
+
 <div class="row">
+    <div id="stickyNotes" class="span4 stickies__student">
+        #{list items:stickies, as:'sticky'}
+           <div class="sticky-bottom">#{verbatim}${sticky}#{/verbatim}</div>
+        #{/list}
+    </div>
 <div class="span8">
        <h2>Instructions:</h2>
     <p> #{verbatim}${instructions}#{/verbatim}</p>
+
+    <div class="alert alert-info">
+        <span aria-hidden="true"></span>
+        <div class="alert-content" role="alert">
+            <p>Fields marked with an asterisk (*) are required.</p>
+        </div>
+    </div>
+    
     #{ifErrors}
     <div class="alert alert-error">
-        <div class="alert-content">
+        <span aria-hidden="true"></span>
+        <div class="alert-content" role="alert">
             <h2>Error:</h2>
             <ul>
                 #{errors}
@@ -33,7 +48,7 @@
 
                 #{if primaryAttachment == null}
                     <div class="controls">
-                        <input type="file" id="primaryFile" class="input-file" name="primaryDocument">
+                        <input type="file" id="primaryFile" class="input-file" name="primaryDocument" required aria-required="true" title="Your primary file">
                         <input type="submit" value="Upload" class="uploadBtn btn" name="uploadPrimary">
                         
                     </div>
@@ -57,6 +72,7 @@
 			<legend>Upload Additional Files</legend>
 			<div class="control-group #{errorClass 'additionalDocument' /} #{fieldClass SUPPLEMENTAL_ATTACHMENT /} #{fieldClass SOURCE_ATTACHMENT /} #{fieldClass ADMINISTRATIVE_ATTACHMENT /}">
 					<div class="controls hidden">
+                        <label for="documentType">Document Type:</label>
 						<select id="documentType" class="input-select" name="attachmentType" style="margin-bottom:7px;">
                     	<option value="SUPPLEMENTAL">#{fieldLabel SUPPLEMENTAL_ATTACHMENT /}</option>
                         </select>
@@ -97,10 +113,5 @@
 		</div>
 		
 	</form>
-</div>
-<div id="stickyNotes" class="span4 stickies__student">
-    #{list items:stickies, as:'sticky'}
-       <div class="sticky-bottom">#{verbatim}${sticky}#{/verbatim}</div>
-    #{/list}
 </div>
 </div>

@@ -109,7 +109,7 @@ jQuery(document).ready(function(){
 	/*
 	 * Remove a committee member
 	 */
-	 jQuery(".remove-committee-member").live("click", function(){FFirst
+	 jQuery(".remove-committee-member").live("click", function(){
 		 if (jQuery(this).text().indexOf("Are you sure?") >= 0) {
 			 removeCommitteeMemberHandler(removeCommitteeMemberJSONURL, jQuery(this));			 
 		 } else {
@@ -431,7 +431,7 @@ if (org.tdl.vireo.model.RoleType.getPersonRole(currentUser) == org.tdl.vireo.mod
 					</ul>
 				</div>
 
-                <div id="committeeMembers" class="edit-box pull-left" data-roles='[#{list items:roles, as:'role'}"${role}"${ role_isLast ? "" : ","}#{/list}]'>
+                <div id="committeeMembers" class="edit-box pull-left">
                     <ul class="unstyled">
                         <li><b>Advisers:</b>
                             <ul class="unstyled" style="padding:10px 0 0 30px;">
@@ -444,15 +444,12 @@ if (org.tdl.vireo.model.RoleType.getPersonRole(currentUser) == org.tdl.vireo.mod
                                             <span class="lastName">${value.getLastName()}</span><span class="seperator">,</span>
                                             <span class="firstName">${value.getFirstName()}</span>
                                             <span class="middleName">${value.getMiddleName()}</span>
-											#{list items:value.getRoles(), as:'role'}
-                                                <span class="role label label-info">${role}</span>
-											#{/list}
                                         </div>
                                     </li>
 
 								#{/list}
 							#{/if}
-                                <li id="add_new_member"><button class="btn">Add Adviser</button></li>
+                                <li id="add_new_member"><button class="btn btn__new-member">Add Adviser</button></li>
                             </ul></li>
                     </ul>
                 </div>
@@ -832,7 +829,7 @@ if (org.tdl.vireo.model.RoleType.getPersonRole(currentUser) == org.tdl.vireo.mod
 				#{/list}				
 				<tr>
 					<td colspan="5" class="comments tr">
-					<a href="#add-file-modal" data-toggle="modal" class="btn btn-mini">
+					<a href="#add-file-modal" data-toggle="modal" class="btn btn-mini" role="button">
 						Add File
 					</a>
 					</td>
