@@ -76,7 +76,7 @@ mkdir bin
 # --------------------
 # ask Chris Krantz to make sure service account that connectes to smtp.princeton.edu 
 # is enabled for the smtp service 
-# see  https://www.easy-smtp.com/smtp-sendmail
+# see  https://www.easy-smtp.com/smtp-sendmail, http://www.sendmail.org/~ca/email/auth.html
 
 yum install telnet 
 yum install  sendmail-cf 
@@ -99,19 +99,21 @@ cp sendmail.authinfo /etc/mail/authinfo
 # add lines from sendmail.mc.lines   to /etc/mail/sendmail.mc 
 # add before MAIL(smtp)dnl  directive 
 
-cd /etc/mail 
+cd /etc/mail
 chmod 600 /etc/mail/authinfo
 makemap hash /etc/mail/authinfo < /etc/mail/authinfo
 newaliases
 make -C /etc/mail
+m4 sendmail.mc > sendmail.cf
 /etc/init.d/sendmail restart
+cat testmail | sendmail -Am -v -t
+
 # test 
 sendmail -Am -v -t
-To: monikam@princeton.edu
-From: noreply@princeton.edu
+To: MCM <monikam@princeton.edu>
+From: NOREPLY <noreply@princeton.edu>
 Subject: An Easy SMTP test
-testing testing 
-.
+testing testing
 
 # commit changes if success 
 
