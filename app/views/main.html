@@ -50,7 +50,7 @@
 
     		    		<div id="personal-bar" class="pull-right">
     						#{if currentUser != null }
-    							<a href="@{Authentication.profile()}">${currentUser.getDisplayName()}</a> |
+    							${currentUser.getDisplayName()} |
     							#{if securityContext.isReviewer()}
     							<a href="@{FilterTab.list()}">Admin</a> |
     							#{/if}
