@@ -124,7 +124,7 @@ public class FilterTab extends AbstractVireoController {
 			orderby = SearchOrder.find(Integer.valueOf(orderByCookie.value));
 		} catch(RuntimeException re) { /* ignore */	}
 		if (orderby == null)
-			orderby = SearchOrder.ID;
+			orderby = SearchOrder.STUDENT_NAME;
 		
 		SearchDirection direction = null;
 		try {
