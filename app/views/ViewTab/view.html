@@ -824,7 +824,9 @@ if (org.tdl.vireo.model.RoleType.getPersonRole(currentUser) == org.tdl.vireo.mod
 						<td><a href="@{ViewTab.viewFile(submission.getId(), attachment.getId(), attachment.getName())}" target="_blank">${attachment.getName()}</a> (${attachment.getDisplaySize()})</td>
 						<td>${attachment.getType()}</td>
 						<td>${attachment.getDate()?.format("MM/dd/yyyy hh:mm:ss")}</td>
-						<td><a href="#edit-file${attachment.getId()}-modal" data-toggle="modal">edit</a></td>
+						<td ${attachment.getType() == org.tdl.vireo.model.AttachmentType.LICENSE ? "class='noreviewer'" : ""}>
+							<a href="#edit-file${attachment.getId()}-modal" data-toggle="modal">edit</a>
+						</td>
 					</tr>
 				#{/list}				
 				<tr>
