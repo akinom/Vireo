@@ -26,7 +26,7 @@
 	
 	<bean id="InProgress" class="org.tdl.vireo.state.impl.StateImpl"
 		scope="singleton">
-		<property name="displayName" value="In Progress" />
+		<property name="displayName" value="Not Submitted" />
 		<property name="inProgress" value="true" />
 		<property name="transitions">
 			<util:list list-class="java.util.ArrayList" value-type="org.tdl.vireo.state.State">
