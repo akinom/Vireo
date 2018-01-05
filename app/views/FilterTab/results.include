@@ -62,7 +62,8 @@ in results.
            } else {
            		out.print("<tr>");
            }
-           
+
+           dateFormat = 'MM/dd/YY-HH:MM'
            for(org.tdl.vireo.search.SearchOrder column : columns) {
            
            	 out.print("<td>");
@@ -180,27 +181,27 @@ in results.
                      break;
                  case DEFENSE_DATE:
                  	if (sub.getDefenseDate() != null)
-                 		out.print(sub.getDefenseDate().format('MM/dd/yyyy'));
+                 		out.print(sub.getDefenseDate().format(dateFormat));
                  	break;
                  case SUBMISSION_DATE:
                      if (sub.getSubmissionDate() != null)
-                        out.print(sub.getSubmissionDate().format('MM/dd/yyyy'));
+                        out.print(sub.getSubmissionDate().format(dateFormat));
                      break;
                  case LICENSE_AGREEMENT_DATE:
                      if (sub.getLicenseAgreementDate() != null)
-                        out.print(sub.getLicenseAgreementDate().format('MM/dd/yyyy'));
+                        out.print(sub.getLicenseAgreementDate().format(dateFormat));
                      break;
                  case APPROVAL_DATE:
                      if (sub.getApprovalDate() != null)
-                        out.print(sub.getApprovalDate().format('MM/dd/yyyy'));
+                        out.print(sub.getApprovalDate().format(dateFormat));
                      break;                      
                  case COMMITTEE_APPROVAL_DATE:
                      if (sub.getCommitteeApprovalDate() != null)
-                        out.print(sub.getCommitteeApprovalDate().format('MM/dd/yyyy'));
+                        out.print(sub.getCommitteeApprovalDate().format(dateFormat));
                      break;                          
                  case COMMITTEE_EMBARGO_APPROVAL_DATE:
                      if (sub.getCommitteeEmbargoApprovalDate() != null)
-                        out.print(sub.getCommitteeEmbargoApprovalDate().format('MM/dd/yyyy'));
+                        out.print(sub.getCommitteeEmbargoApprovalDate().format(dateFormat));
                      break;                          
                  case COMMITTEE_MEMBERS:
                      for (org.tdl.vireo.model.CommitteeMember member : sub.getCommitteeMembers()) {
