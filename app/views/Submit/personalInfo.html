@@ -228,10 +228,10 @@ function abandonSub(){
             <label class="control-label" for="lastName"><span class="required-star">*</span> #{fieldLabel STUDENT_LAST_NAME /}:</label>
             <div class="controls">
                 #{if disabledFields.contains("lastName")}
-                <input type="text" name="lastName" id="lastName" value="${lastName}" required aria-required=“true” disabled>
+                <input type="text" name="lastName" id="lastName" value="${lastName}" required aria-required="true" disabled>
                 #{/if} 
                 #{else}
-                <input type="text" name="lastName" id="lastName" value="${lastName}" required aria-required=“true”>
+                <input type="text" name="lastName" id="lastName" value="${lastName}" required aria-required="true">
                 #{/else}
             </div>
         </div>
