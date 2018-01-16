@@ -107,7 +107,7 @@ function startNewSub() {
                 <td>${sub.getDocumentTitle() == null ? "n/a" : sub.getDocumentTitle() }</td>
 				<td>${sub.getPrimaryDocument() == null ? "n/a" : sub.getPrimaryDocument().getName()}
 				#{if sub.getPrimaryDocument() != null}
-				    <a href="@{Student.viewAttachment(sub.getId(),sub.getPrimaryDocument().getId(),sub.getPrimaryDocument().getName())}">[view]</a>
+				    <a href="@{Student.viewAttachment(sub.getId(),sub.getPrimaryDocument().getId(),sub.getPrimaryDocument().getName())}" target="_blank">[view]</a>
 				#{/if}
 				</td>
 				<td>${sub.getSubmissionDate() == null ? "n/a" : sub.getSubmissionDate().format('dd MMMM yyyy')}</td>
@@ -121,7 +121,7 @@ function startNewSub() {
                 #{/elseif}
                 #{else}
 				     <a class="btn btn-primary" href="@{Student.submissionView(sub.getId())}" role="button">
-				     	${ sub.getState().isEditableByStudent() ? "Edit" : "View" }
+				     	${ sub.getState().isEditableByStudent() ? "Resume" : "View" } Submission
 				     </a>				 
 				#{/else}
 				</td>

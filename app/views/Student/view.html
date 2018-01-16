@@ -323,7 +323,7 @@ jQuery(document).ready(function() {
 			        #{/if}
 			        #{else}
 		                <p>
-		                    <a href="@{Student.viewAttachment(subId,primaryDocument.getId(),primaryDocument.getName())}">${primaryDocument.getName()}</a>
+		                    <a href="@{Student.viewAttachment(subId,primaryDocument.getId(),primaryDocument.getName())}" target="_blank">${primaryDocument.getName()}</a>
 		                    (${primaryDocument.getDisplaySize()})
 		                    <input type="submit" value="Replace Manuscript" class="uploadBtn btn" id="replacePrimary" name="replacePrimary">
 		                </p>
