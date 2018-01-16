@@ -229,7 +229,7 @@ jQuery(document).ready(function() {
 	<li class="active">View</li>
 </ul>
 <div class="row pageHead">
-	<h3 class="span11">View Submission</h3>
+	<h1 class="span11">View Submission</h1>
 </div>
 <br/>
 #{ifErrors}
@@ -246,7 +246,7 @@ jQuery(document).ready(function() {
 		#{if sub.getState().isEditableByStudent() }
 			<div id="correctionsWrap" class="alert alert-error">
 				<a href="#toggleDetails" class="doToggle">[-]</a>
-				<p><h4>Current Submission State: </h4><strong>${sub.getState().getDisplayName()}!</strong></p>
+				<p><h2>Current Submission State: </h2><strong>${sub.getState().getDisplayName()}!</strong></p>
 				<div id="stateDetails">
 					<p>The application requires you to make corrections. Please make the indicated corrections and upload the
 					 new manuscript. After clicking the "Corrections Completed" button you will no
@@ -268,7 +268,7 @@ jQuery(document).ready(function() {
 		#{if visibleActions.size() > 0}
 				<div id="customActionsWrap" class="alert alert-info">
 					<a href="#toggleDetails" class="doToggle">[-]</a>
-					<p><strong><h4>Requirements Checklist:</h4></strong></p>
+					<p><strong><h2>Requirements Checklist:</h2></strong></p>
 					<div id="customActionsDetails">
 						%{
 							String sActions = "";
