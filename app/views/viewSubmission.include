@@ -17,18 +17,24 @@ Plus all the FieldConfig objects
 }*
 
 #{ifEnabled COLLEGE}
-<fieldset class="thesis-type">
-<legend>${sub.getCollege()}</legend>
-#{if showEditLinks}
-<div class="control-group">
-    
+<fieldset>
+<legend>Thesis Type</legend>
+
+    <div class="control-group #{errorClass 'college' /} ">
+        <span class="control-label ">Type:</span>
+        <div class="controls">
+            <p>${sub.getCollege()}</p>
+        </div>
+    </div>
+
+    #{if showEditLinks}
     <div class="controls edit">
         <p><a href="@{submit.PersonalInfo.personalInfo(subId)}">[edit thesis type]</a></p>
     </div>
-</div>
-#{/if}
-#{/ifEnabled}
+    #{/if}
+
 </fieldset>
+#{/ifEnabled}
 
 #{ifEnabled [STUDENT_FIRST_NAME,STUDENT_MIDDLE_NAME,STUDENT_EMAIL,STUDENT_ORCID,STUDENT_BIRTH_YEAR,DEPARTMENT]}
 <fieldset>
