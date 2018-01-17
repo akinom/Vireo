@@ -292,7 +292,7 @@ https://thesis-central-qa.aws.princeton.edu/Shibboleth.sso/Metadata
 # check that 
 # file refers to thesis-central DNS name  in EntityDescriptor and RequestInitiator 
 # edit all mentions of ec2 DNS  with thesis-central DNS 
-#
+# xmllint file to make sure its valid xml 
 mkdir /var/www/html/shibboleth
 cp edited_file /var/www/html/shibboleth/metadata
 # test 
