@@ -12,6 +12,11 @@ yum install ant
 
 # copy dot files from this directory 
 
+# -------------------
+# enable ssl for apache
+# -------------------
+see README.ssl 
+
 # --------------------
 # change hostname
 # --------------------
@@ -269,18 +274,30 @@ overall configuration is loadable, check console for non-fatal problems
 netstat -nlp | fgrep shi
 unix  2      [ ACC ]     STREAM     LISTENING     17099  3696/shibd          /var/run/shibboleth/shibd.sock
 
-#install mod_shib.so to apache  and enable shibboleth 
-cp /etc/shibboleth/apache22.config /etc/httpd/conf.d/shib.conf
-cd /etc/httpd/modules
+#install mod_shib.so to apache 
 rpm -qa rpm -qa shi\*
 rpm -ql  shibboleth-2.6.1-3.1.amzn1.x86_64
 cp /usr/lib64/shibboleth/mod_shib_22.so  /usr/lib64/httpd/modules
 /sbin/service httpd restart 
+
+
+# install httpd/conf.d files from this directory to /etc/httpd/conf.d
+# adjust server DNS 
+/sbin/service httpd restart 
 # look for shib_mod
 apachectl -t -D DUMP_MODULES
-
 #get Metadata File 
-https://iamprox300l.princeton.edu/Shibboleth.sso/Metadata
+https://thesis-central-qa.aws.princeton.edu/Shibboleth.sso/Metadata
+
+# check that 
+# file refers to thesis-central DNS name  in EntityDescriptor and RequestInitiator 
+# edit all mentions of ec2 DNS  with thesis-central DNS 
+#
+mkdir /var/www/html/shibboleth
+cp edited_file /var/www/html/shibboleth/metadata
+# test 
+wget -O -   thesis-central-qa.aws.princeton.edu/shibboleth/metadata 
+# work with Mark G  to setup with princeton shibboleth infrastructure 
 
 
 
