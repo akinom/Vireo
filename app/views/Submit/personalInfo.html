@@ -452,6 +452,7 @@ function abandonSub(){
 </form>            
 </div>
 </div>
+#{ifEnabled [MAJOR] }
 <div class="modal fade" id="checkMajor-modal">
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal">X</button>
@@ -477,3 +478,4 @@ function abandonSub(){
 		<a id="checkMajor-abandon" href="@{Student.submissionDelete(subId)}" class="btn btn-primary"><span>I need to edit my submission<br/>(Go back to Submission Overview)</span></a>
 	</div>
 </div>
+#{/ifEnabled}
