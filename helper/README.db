@@ -1,0 +1,27 @@
+---------------------
+DUMP and RESTORE
+---------------------
+# dump with DROP object ifexists 
+set db=NAME
+pg_dump -c --if-exists -d $db -h $VIREO_RDS -U tcdemo -W  > $db.sql 
+
+psql -h $VIREO_RDS -U tcdemo -d $db -W < $db.sql
+
+
+-----------------------
+CREATE DATABASE
+-----------------------
+
+psql -d $db -h $VIREO_RDS -U tcdemo -W  << %%
+DROP SCHEMA public CASCADE;
+CREATE SCHEMA public;
+GRANT ALL ON SCHEMA public TO tcdemo;
+GRANT ALL ON SCHEMA public TO  awsvireo;
+%%
+
+
+-----------------------
+CREATE DATABASE
+-----------------------
+DROP SCHEMA public CASCADE;
+then recreate 

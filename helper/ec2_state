@@ -1,0 +1,6 @@
+#!/bin/tcsh 
+set echo 
+cp ~/.aws/credentials.dev  ~/.aws/credentials
+setenv PYTHON_PATH . 
+python ~/projects/aws/aws-infrastructure/ec2/state_manager.py -t Purpose -V 'Test-A' $1
+python ~/projects/aws/aws-infrastructure/ec2/state_manager.py -t Purpose -V 'Test-B' $1

@@ -1,0 +1,16 @@
+# RDS db server 
+setenv PYTHONPATH . 
+setenv VIREO_RDS vireo-inst-demo-restore.cz1isg5fg4pr.us-east-1.rds.amazonaws.com
+
+setenv VIREO2_EC2 ec2-34-235-93-123.compute-1.amazonaws.com
+alias awsvireoB  caffeinate ssh -i /Users/monikam/.ssh/aws-dev-monikam.pem ec2-user@$VIREO2_EC2 
+
+setenv VIREO_EC2  ec2-54-156-29-105.compute-1.amazonaws.com
+alias awsvireoA  caffeinate ssh -i /Users/monikam/.ssh/aws-dev-monikam.pem ec2-user@$VIREO_EC2 
+
+
+#printenv | fgrep VIREO 
+
+
+
+

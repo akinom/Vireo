@@ -23,7 +23,7 @@ data
 
 # ignore monikas dev setup files
 sql/
-helper/
+nogit/
 play
 
 *.pyc 
