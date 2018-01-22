@@ -76,7 +76,7 @@
 		<property name="displayName" value="Cancelled" />
 		<property name="archived" value="true" />
 		<property name="editableByReviewer" value="true" />
-		<property name="deletable" value="true" />
+		<property name="deletable" value="false" />
 	</bean>
 
 </beans>
