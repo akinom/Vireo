@@ -118,8 +118,8 @@ managing and modifying filters.
         #{/if}
         
          #{if facet == FACET_PROGRAM && activeFilter.getPrograms().size() > 0 }
-        <div class="sub-heading">&{nav.toUpperCase()+'_FACET_'+facet.name()}</div>
-        <ul class="unstyled editable">
+        <div class="sub-heading noreviewer">&{nav.toUpperCase()+'_FACET_'+facet.name()}</div>
+        <ul class="unstyled editable noreviewer">
             #{list items:activeFilter.getPrograms(), as:'value'}
             <li><a class="removable" href="@{FilterTab.ModifyFilters(nav)}?action=remove&type=program&value=${value.urlEncode()}">${value}</a></li>
             #{/list}
@@ -136,8 +136,8 @@ managing and modifying filters.
         #{/if}
 
         #{if facet == FACET_MAJOR && activeFilter.getMajors().size() > 0 }
-        <div class="sub-heading">&{nav.toUpperCase()+'_FACET_'+facet.name()}</div>
-        <ul class="unstyled editable">
+        <div class="sub-heading noreviewer">&{nav.toUpperCase()+'_FACET_'+facet.name()}</div>
+        <ul class="unstyled editable noreviewer">
             #{list items:activeFilter.getMajors(), as:'value'}
             <li><a class="removable" href="@{FilterTab.ModifyFilters(nav)}?action=remove&type=major&value=${value.urlEncode()}">${value}</a></li>
             #{/list}
@@ -145,8 +145,8 @@ managing and modifying filters.
         #{/if}
         
          #{if facet == FACET_EMBARGO && activeFilter.getEmbargoTypes().size() > 0 }
-        <div class="sub-heading">&{nav.toUpperCase()+'_FACET_'+facet.name()}</div>
-        <ul class="unstyled editable">
+        <div class="sub-heading noreviewer">&{nav.toUpperCase()+'_FACET_'+facet.name()}</div>
+        <ul class="unstyled editable noreviewer">
             #{list items:activeFilter.getEmbargoTypes(), as:'embargo'}
             <li><a class="removable" href="@{FilterTab.ModifyFilters(nav)}?action=remove&type=embargo&value=${embargo.getId()}">${embargo.getName()}#{if !embargo.getGuarantor().equals(org.tdl.vireo.model.EmbargoGuarantor.DEFAULT)} (${embargo.getGuarantor()})#{/if}#{if !embargo.isSystemRequired()} <em class="icon-user"></em>#{/if}#{else} <em class="icon-globe"></em>#{/else}</a></li>
             #{/list}
@@ -154,8 +154,8 @@ managing and modifying filters.
         #{/if}
 
         #{if facet == FACET_DEGREE && activeFilter.getDegrees().size() > 0 }
-        <div class="sub-heading">&{nav.toUpperCase()+'_FACET_'+facet.name()}</div>
-        <ul class="unstyled editable">
+        <div class="sub-heading noreviewer">&{nav.toUpperCase()+'_FACET_'+facet.name()}</div>
+        <ul class="unstyled editable noreviewer">
             #{list items:activeFilter.getDegrees(), as:'value'}
             <li><a class="removable" href="@{FilterTab.ModifyFilters(nav)}?action=remove&type=degree&value=${value.urlEncode()}">${value}</a></li>
             #{/list}
@@ -172,16 +172,16 @@ managing and modifying filters.
         #{/if}
         
         #{if facet == FACET_UMI_RELEASE && activeFilter.getUMIRelease() != null }
-        <div class="sub-heading">&{nav.toUpperCase()+'_FACET_'+facet.name()}</div>
-        <ul class="unstyled editable">
+        <div class="sub-heading noreviewer">&{nav.toUpperCase()+'_FACET_'+facet.name()}</div>
+        <ul class="unstyled editable noreviewer">
             <li><a class="removable" href="@{FilterTab.ModifyFilters(nav)}?action=remove&type=umi&value=${activeFilter.getUMIRelease()}">${activeFilter.getUMIRelease() ? "Yes" : "No"}</a></li>
         </ul>
         #{/if}
         
         #{if (facet == FACET_DATE_CHOOSE || facet == FACET_DATE_RANGE ) && !dateRangeDisplayed && ( activeFilter.getDateRangeStart() != null || activeFilter.getDateRangeEnd() != null ) }
         %{ dateRangeDisplayed = true; }%
-        <div class="sub-heading">&{nav.toUpperCase()+'_FACET_DATE'}</div>
-        <ul class="unstyled editable">
+        <div class="sub-heading noreviewer">&{nav.toUpperCase()+'_FACET_DATE'}</div>
+        <ul class="unstyled editable noreviewer">
             #{if activeFilter.getDateRangeStart() != null}
             <li><strong>After: </strong><a class="removable" href="@{FilterTab.ModifyFilters(nav)}?action=remove&type=rangeStart">${activeFilter.getDateRangeStart().format('MM/dd/yyyy')}</a>
             #{/if}
@@ -192,8 +192,8 @@ managing and modifying filters.
         #{/if}
         
         #{if facet == FACET_CUSTOM_ACTIONS && activeFilter.getCustomActions().size() > 0 }
-        <div class="sub-heading">&{nav.toUpperCase()+'_FACET_'+facet.name()}</div>
-        <ul class="unstyled editable">
+        <div class="sub-heading noreviewer">&{nav.toUpperCase()+'_FACET_'+facet.name()}</div>
+        <ul class="unstyled editable noreviewer">
             #{list items:activeFilter.getCustomActions(), as:'action'}
             <li><a class="removable" href="@{FilterTab.ModifyFilters(nav)}?action=remove&type=customAction&value=${action.getId()}">${action.getLabel()}</a></li>
             #{/list}
@@ -240,7 +240,7 @@ different blocks this gets around this problem because each is independent.
 }*
 #{get 'now-filtering-by-box'/}
 
-<div class="side-box">
+<div class="side-box noreviewer">
     <div class="box-head expanded">
         <div class="expand">[-]</div>
         <div class="main-heading">Filter Options:</div>
@@ -358,8 +358,8 @@ different blocks this gets around this problem because each is independent.
         </ul>
         #{/if}
         #{if facet == FACET_ASSIGNEE }
-        <div class="sub-heading">&{nav.toUpperCase()+'_FACET_'+facet.name()}</div>
-        <ul class="unstyled">
+        <div class="sub-heading noreviewer">&{nav.toUpperCase()+'_FACET_'+facet.name()}</div>
+        <ul class="unstyled noreviewer">
             #{if !activeFilter.getAssignees().contains(null) }
             <li><a href="@{FilterTab.ModifyFilters(nav)}?action=add&type=assignee&value=null">Unassigned</a>
             #{/if}
@@ -374,9 +374,9 @@ different blocks this gets around this problem because each is independent.
             #{/list}
         </ul>
         #{/if}
-        #{if false && facet == FACET_GRADUATION_SEMESTER }
-        <div class="sub-heading">&{nav.toUpperCase()+'_FACET_'+facet.name()}</div>
-        <ul class="unstyled">
+        #{if facet == FACET_GRADUATION_SEMESTER }
+        <div class="sub-heading noreviewer">&{nav.toUpperCase()+'_FACET_'+facet.name()}</div>
+        <ul class="unstyled noreviewer">
             %{ shown = 0 }%
             #{list items:subRepo.findAllGraduationSemesters(), as:'semester'}
             #{if !activeFilter.getGraduationSemesters().contains(semester) }{% shown++ %}
@@ -406,8 +406,8 @@ different blocks this gets around this problem because each is independent.
         </ul>
         #{/if}
         #{if facet == FACET_PROGRAM }
-        <div class="sub-heading">&{nav.toUpperCase()+'_FACET_'+facet.name()}</div>
-        <ul class="unstyled">
+        <div class="sub-heading noreviewer">&{nav.toUpperCase()+'_FACET_'+facet.name()}</div>
+        <ul class="unstyled noreviewer">
             %{ shown = 0 }%
             #{if shown == 0}
             #{list items:subRepo.findAllPrograms(), as:'program'}

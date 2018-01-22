@@ -1207,13 +1207,12 @@ public class FilterTab extends AbstractVireoController {
 		if (type == ACTION_LOG) {
 			facets.add(SearchFacet.TEXT);
 			facets.add(SearchFacet.STATE);
-			facets.add(SearchFacet.ASSIGNEE);
-			facets.add(SearchFacet.DATE_RANGE);			
+			facets.add(SearchFacet.DOCUMENT_TYPE);
 		} else {
 			facets.add(SearchFacet.TEXT);
 			facets.add(SearchFacet.STATE);
-			facets.add(SearchFacet.ASSIGNEE);
-			facets.add(SearchFacet.GRADUATION_SEMESTER);
+			facets.add(SearchFacet.DOCUMENT_TYPE);
+			facets.add(SearchFacet.DATE_RANGE);
 		}
 		
 		return facets;
