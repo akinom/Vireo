@@ -50,11 +50,12 @@
     <property name="primaryIdentifier" value="${auth.shib.primaryIdentifier}" />
     <property name="attributeMap">
       <util:map>
-        <!-- Required -->
-        <entry key="uid" value="${auth.shib.attribute.netid}" />
-        <entry key="Email" value="${auth.shib.attribute.email}" />
-        <entry key="givenName" value="${auth.shib.attribute.firstName}" />
+         <!-- Required -->
+        <entry key="netId" value="${auth.shib.attribute.netid}" />
+        <entry key="email" value="${auth.shib.attribute.email}" />
+        <entry key="firstName" value="${auth.shib.attribute.firstName}" />
         <entry key="lastName" value="${auth.shib.attribute.lastName}" />
+
 
         <!-- Optional -->
         <entry key="institutionalIdentifier" value="${auth.shib.attribute.institutionalIdentifier}" />
