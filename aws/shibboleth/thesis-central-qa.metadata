@@ -1,8 +1,4 @@
-<!--
-This is example metadata only. Do *NOT* supply it as is without review,
-and do *NOT* provide it in real time to your partners.
- -->
-<md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" ID="_d3dfb5d6c3ecbfa9971fcc449a77e9773d2e6ffd" entityID="https://ec2-34-235-93-123.compute-1.amazonaws.com/shibboleth">
+<md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" ID="_1d21a47b32f9fbd2ab1bf670a34b78837706336e" entityID="https://thesis-central-qa.aws.princeton.edu/shibboleth">
 
   <md:Extensions xmlns:alg="urn:oasis:names:tc:SAML:metadata:algsupport">
     <alg:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha512"/>
@@ -25,13 +21,14 @@ and do *NOT* provide it in real time to your partners.
 
   <md:SPSSODescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol urn:oasis:names:tc:SAML:1.1:protocol urn:oasis:names:tc:SAML:1.0:protocol">
     <md:Extensions>
-      <init:RequestInitiator xmlns:init="urn:oasis:names:tc:SAML:profiles:SSO:request-init" Binding="urn:oasis:names:tc:SAML:profiles:SSO:request-init" Location="http://thesis-central-qa.aws.princeton.edu/Shibboleth.sso/Login"/>
+      <init:RequestInitiator xmlns:init="urn:oasis:names:tc:SAML:profiles:SSO:request-init" Binding="urn:oasis:names:tc:SAML:profiles:SSO:request-init" Location="https://thesis-central-qa.aws.princeton.edu/Shibboleth.sso/Login"/>
+      <idpdisc:DiscoveryResponse xmlns:idpdisc="urn:oasis:names:tc:SAML:profiles:SSO:idp-discovery-protocol" Binding="urn:oasis:names:tc:SAML:profiles:SSO:idp-discovery-protocol" Location="https://thesis-central-qa.aws.princeton.edu/Shibboleth.sso/Login" index="1"/>
     </md:Extensions>
     <md:KeyDescriptor>
       <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
-        <ds:KeyName>ec2-34-235-93-123.compute-1.amazonaws.com</ds:KeyName>
+        <ds:KeyName>thesis-central-qa.aws.princeton.edu</ds:KeyName>
         <ds:X509Data>
-          <ds:X509SubjectName>CN=ec2-34-235-93-123.compute-1.amazonaws.com</ds:X509SubjectName>
+          <ds:X509SubjectName>CN=thesis-central-qa.aws.princeton.edu</ds:X509SubjectName>
           <ds:X509Certificate>MIIEQjCCAqqgAwIBAgIJAJcXnAxpb0D6MA0GCSqGSIb3DQEBCwUAMDQxMjAwBgNV
 BAMTKWVjMi0zNC0yMzUtOTMtMTIzLmNvbXB1dGUtMS5hbWF6b25hd3MuY29tMB4X
 DTE3MTIxMjIwNDYyMloXDTI3MTIxMDIwNDYyMlowNDEyMDAGA1UEAxMpZWMyLTM0
@@ -68,21 +65,16 @@ RNIzmiOVjDCla6OW74eblEx1ll0Obxf8nNT7wE0oivUX+KfdIYU=
       <md:EncryptionMethod Algorithm="http://www.w3.org/2009/xmlenc11#rsa-oaep"/>
       <md:EncryptionMethod Algorithm="http://www.w3.org/2001/04/xmlenc#rsa-oaep-mgf1p"/>
     </md:KeyDescriptor>
-    <md:ArtifactResolutionService Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP" Location="http://thesis-central-qa.aws.princeton.edu/Shibboleth.sso/Artifact/SOAP" index="1"/>
-    <md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP" Location="http://thesis-central-qa.aws.princeton.edu/Shibboleth.sso/SLO/SOAP"/>
-    <md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="http://thesis-central-qa.aws.princeton.edu/Shibboleth.sso/SLO/Redirect"/>
-    <md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="http://thesis-central-qa.aws.princeton.edu/Shibboleth.sso/SLO/POST"/>
-    <md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact" Location="http://thesis-central-qa.aws.princeton.edu/Shibboleth.sso/SLO/Artifact"/>
-    <md:ManageNameIDService Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP" Location="http://thesis-central-qa.aws.princeton.edu/Shibboleth.sso/NIM/SOAP"/>
-    <md:ManageNameIDService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="http://thesis-central-qa.aws.princeton.edu/Shibboleth.sso/NIM/Redirect"/>
-    <md:ManageNameIDService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="http://thesis-central-qa.aws.princeton.edu/Shibboleth.sso/NIM/POST"/>
-    <md:ManageNameIDService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact" Location="http://thesis-central-qa.aws.princeton.edu/Shibboleth.sso/NIM/Artifact"/>
-    <md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="http://thesis-central-qa.aws.princeton.edu/Shibboleth.sso/SAML2/POST" index="1"/>
-    <md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST-SimpleSign" Location="http://thesis-central-qa.aws.princeton.edu/Shibboleth.sso/SAML2/POST-SimpleSign" index="2"/>
-    <md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact" Location="http://thesis-central-qa.aws.princeton.edu/Shibboleth.sso/SAML2/Artifact" index="3"/>
-    <md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:PAOS" Location="http://thesis-central-qa.aws.princeton.edu/Shibboleth.sso/SAML2/ECP" index="4"/>
-    <md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:1.0:profiles:browser-post" Location="http://thesis-central-qa.aws.princeton.edu/Shibboleth.sso/SAML/POST" index="5"/>
-    <md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:1.0:profiles:artifact-01" Location="http://thesis-central-qa.aws.princeton.edu/Shibboleth.sso/SAML/Artifact" index="6"/>
+    <md:ArtifactResolutionService Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP" Location="https://thesis-central-qa.aws.princeton.edu/Shibboleth.sso/Artifact/SOAP" index="1"/>
+    <md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP" Location="https://thesis-central-qa.aws.princeton.edu/Shibboleth.sso/SLO/SOAP"/>
+    <md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="https://thesis-central-qa.aws.princeton.edu/Shibboleth.sso/SLO/Redirect"/>
+    <md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://thesis-central-qa.aws.princeton.edu/Shibboleth.sso/SLO/POST"/>
+    <md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact" Location="https://thesis-central-qa.aws.princeton.edu/Shibboleth.sso/SLO/Artifact"/>
+    <md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://thesis-central-qa.aws.princeton.edu/Shibboleth.sso/SAML2/POST" index="1"/>
+    <md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST-SimpleSign" Location="https://thesis-central-qa.aws.princeton.edu/Shibboleth.sso/SAML2/POST-SimpleSign" index="2"/>
+    <md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact" Location="https://thesis-central-qa.aws.princeton.edu/Shibboleth.sso/SAML2/Artifact" index="3"/>
+    <md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:PAOS" Location="https://thesis-central-qa.aws.princeton.edu/Shibboleth.sso/SAML2/ECP" index="4"/>
+    <md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:1.0:profiles:browser-post" Location="https://thesis-central-qa.aws.princeton.edu/Shibboleth.sso/SAML/POST" index="5"/>
+    <md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:1.0:profiles:artifact-01" Location="https://thesis-central-qa.aws.princeton.edu/Shibboleth.sso/SAML/Artifact" index="6"/>
   </md:SPSSODescriptor>
-
 </md:EntityDescriptor>
