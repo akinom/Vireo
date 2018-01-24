@@ -252,12 +252,10 @@ chkconfig --add shibd
 
 #cp shibboleth2.xml /etc/shibboleth
 add definitions to /etc/shibboleth/attribute-map.xml
-+    <Attribute name="urn:mace:dir:attribute-def:uid" id="uid" />
-+    <Attribute name="urn:mace:dir:attribute-def:sn" id="sn"/>
-+    <Attribute name="urn:mace:dir:attribute-def:givenName" id="givenName"/>
-+    <Attribute name="urn:oid:0.9.2342.19200300.100.1.1" id="uid" aliases="PS_SSO_UID" />
-+    <Attribute name="urn:oid:2.5.4.4" id="sn"/>
-+    <Attribute name="urn:oid:2.5.4.42" id="givenName"/>
+    <Attribute name="Email" id="shib_mail" />
+    <Attribute name="urn:oid:0.9.2342.19200300.100.1.1" id="shib_netid"  />
+    <Attribute name="urn:oid:2.5.4.42" id="shib_givenname"/>
+    <Attribute name="LastName" id="shib_sn"/>
 
 #test config  - as root 
 export LD_LIBRARY_PATH=/opt/shibboleth/lib64

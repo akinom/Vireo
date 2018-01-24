@@ -148,29 +148,8 @@
     <Attribute name="urn:mace:dir:attribute-def:physicalDeliveryOfficeName" id="physicalDeliveryOfficeName"/>
     -->
 
-<!-- 
-    <Attribute name="urn:mace:dir:attribute-def:uid" id="netid" />
-
-    <Attribute name="urn:mace:dir:attribute-def:sn" id="sn"/>
-    <Attribute name="urn:mace:dir:attribute-def:givenName" id="givenName"/>
-    <Attribute name="urn:oid:2.5.4.4" id="sn"/>
-    <Attribute name="urn:oid:2.5.4.42" id="givenName"/>
-    -->
-<!-- 
-    <Attribute name="Email" id="email"/>
-    <Attribute name="urn:oid:0.9.2342.19200300.100.1.1" id="netid"  />
-    <Attribute name="urn:oid:2.5.4.42" id="firstName"/>
-    <Attribute name="LastName" id="lastName"/>
-    -->
-
-<!-- 
-    <Attribute name="Email" id="mail" />
-    <Attribute name="urn:oid:0.9.2342.19200300.100.1.1" id="netid"  />
-    <Attribute name="LastName" id="sn"/>
--->
-
-    <Attribute name="Email" id="mail" />
-    <Attribute name="urn:oid:0.9.2342.19200300.100.1.1" id="netId"  />
-    <Attribute name="urn:oid:2.5.4.42" id="givenname"/>
-    <Attribute name="LastName" id="sn"/>
+    <Attribute name="Email" id="shib_mail" />
+    <Attribute name="urn:oid:0.9.2342.19200300.100.1.1" id="shib_netid"  />
+    <Attribute name="urn:oid:2.5.4.42" id="shib_givenname"/>
+    <Attribute name="LastName" id="shib_sn"/>
 </Attributes>
