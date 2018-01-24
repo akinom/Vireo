@@ -250,12 +250,40 @@ rpmbuild –-without builtinapache --rebuild -D ‘shib_options –with-apxs24=/
 # add to start up sequence 
 chkconfig --add shibd 
 
-#cp shibboleth2.xml /etc/shibboleth
-add definitions to /etc/shibboleth/attribute-map.xml
+
+# adjust shboolth configs 
+cd /etc/shibboleth 
+
+# get metadata for ipdqa  fir ipp
+wget -O idp-metadata.xml  https://idpqa.princeton.edu/idp/shibboleth 
+
+# edit shibboleth2.xml 
+# change sp.example.org/idp.example.org   and force ssl 
+# add MetadataProvider
+23c23
+<     <ApplicationDefaults entityID="https://sp.example.org/shibboleth"
+---
+>     <ApplicationDefaults entityID="https://thesis-central-qa.aws.princeton.edu/shibboleth"
+36c36
+<                   checkAddress="false" handlerSSL="false" cookieProps="http">
+---
+>                   checkAddress="false" handlerSSL="true" cookieProps="https">
+44,45c44
+<             <SSO entityID="https://idp.example.org/idp/shibboleth"
+<                  discoveryProtocol="SAMLDS" discoveryURL="https://ds.example.org/DS/WAYF">
+---
+>             <SSO entityID="https://idpqa.princeton.edu/idp/shibboleth" >
+85a85,86
+>         <MetadataProvider type="XML" file="idp-metadata.xml" />
+
+
+# add sttribute mapping to attribute-map.xml  
     <Attribute name="Email" id="shib_mail" />
     <Attribute name="urn:oid:0.9.2342.19200300.100.1.1" id="shib_netid"  />
     <Attribute name="urn:oid:2.5.4.42" id="shib_givenname"/>
     <Attribute name="LastName" id="shib_sn"/>
+
+
 
 #test config  - as root 
 export LD_LIBRARY_PATH=/opt/shibboleth/lib64
@@ -284,6 +312,10 @@ cp /usr/lib64/shibboleth/mod_shib_22.so  /usr/lib64/httpd/modules
 /sbin/service httpd restart 
 # look for shib_mod
 apachectl -t -D DUMP_MODULES
+
+#test whether idp is found 
+https://thesis-central-qa.aws.princeton.edu/Shibboleth.sso/DiscoFeed
+
 #get Metadata File 
 https://thesis-central-qa.aws.princeton.edu/Shibboleth.sso/Metadata
 
@@ -291,12 +323,10 @@ https://thesis-central-qa.aws.princeton.edu/Shibboleth.sso/Metadata
 # file refers to thesis-central DNS name  in EntityDescriptor and RequestInitiator 
 # edit all mentions of ec2 DNS  with thesis-central DNS 
 # xmllint file to make sure its valid xml 
-mkdir /var/www/html/shibboleth
-cp edited_file /var/www/html/shibboleth/metadata
+cp edited_file /var/www/html/shibboleth
 # test 
-wget -O -   thesis-central-qa.aws.princeton.edu/shibboleth/metadata 
+wget -O -   thesis-central-qa.aws.princeton.edu/shibboleth
 # work with Mark G  to setup with princeton shibboleth infrastructure 
-
 
 
 # RPM 
