@@ -45,7 +45,7 @@
 						<ul class="nav nav-tabs">
 							<li #{if nav=="list"}class="active"#{/if}><a id="tab-list" href="@{FilterTab.list}">List</a></li>
 							<li #{if nav=="view"}class="active"#{/if}><a id="tab-view" href="#{if submission != null}@{ViewTab.view(submission.getId())}#{/if}#{elseif subId != null}@{ViewTab.view(subId)}#{/elseif}#{else}@{ViewTab.view}#{/else}">View</a></li>
-							<li #{if nav=="log"}class="active"#{/if}><a id="tab-log" href="#{if submission != null}@{FilterTab.log(submission.getId())}#{/if}#{elseif subId != null}@{FilterTab.log(subId)}#{/elseif}#{else}@{FilterTab.log}#{/else}">Log</a></li>
+							<li #{if nav=="log"}class="active"#{/if}><a id="tab-log" class="noreviewer" href="#{if submission != null}@{FilterTab.log(submission.getId())}#{/if}#{elseif subId != null}@{FilterTab.log(subId)}#{/elseif}#{else}@{FilterTab.log}#{/else}">Log</a></li>
 							<li #{if nav=="settings"}class="active"#{/if}><a id="tab-settings" class="noreviewer" href="@{SettingsTab.settingsRedirect}">Settings</a></li>
 						</ul>					
 					</div>
