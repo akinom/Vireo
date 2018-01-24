@@ -153,6 +153,10 @@
     <property name="settingsRepository" ref="SettingsRepository" />
   </bean>
 
+  <bean id="ManageReviewerAccounts" class="org.tdl.vireo.services.ManageReviewerAccounts" scope="singleton">
+    <property name="settingsRepository" ref="SettingsRepository" />
+  </bean>
+
 
   <!-- Search -->
   <bean id="Indexer" class="org.tdl.vireo.search.impl.LuceneIndexerImpl" scope="singleton">
