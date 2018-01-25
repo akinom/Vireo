@@ -1,4 +1,5 @@
-#check whether ssl is enabled 
+
+#check whether ssl is enabled
 httpd -M 
 ls /etc/httpd/modules/*ssl 
 
@@ -6,28 +7,35 @@ ls /etc/httpd/modules/*ssl
 telnet updatespace.princeton.edu  443
 
 # httpd version 
-httpd -v 
+httpd -v
 
-# on server 
-mkdir /etc/httpd/certs 
-cd !$ 
+# on server
+mkdir /etc/httpd/certs
+cp THIS-FILE /etc/httpd/certs/README.ssl
+
+cd /etc/httpd/certs
+# generate private key
 openssl genrsa -out custom.key  2048
+
+# single domain name 
 openssl req -new -sha256 -key custom.key  -out custom.csr 
+
+# multiple domain name
+# edit openssl.cnf file and enter alternate names
+openssl req -config openssl.cnf -new -sha256 -key custom.key -out custom.csr
+
+# check certificate 
+openssl req -text -noout -in custom.csr
+
 # request signature at SN@P   (search for SSL certificate)  
 # when confirmed use emailed lnks to download certificate and intermediate certificate 
-setenv DNS thesis-central-qa.aws.princetpn.edu
-mkdir /etc/httpd/certs/$DNS 
-cd /etc/httpd/certs/$DNS
-# safe file here 
-# the adjust /etc/httpd/conf/httpd.conf 
-+SSLCertificateFile /etc/httpd/certs/thesis-central-qa.aws.princeton.edu/certificate-signed.crt
-+SSLCertificateKeyFile /etc/httpd/certs/thesis-central-qa.aws.princeton.edu/custom.key
-+SSLCertificateChainFile /etc/httpd/certs/thesis-central-qa.aws.princeton.edu/custom-intermediate.crts
 
-# copy httpd/init.conf to /etc/httpd/conf.d 
-# adjust server name 
+mkdir /etc/httpd/certs
+cd /etc/httpd/certs
+# safe in files at#
+wget -O custom.crt EMAILED_LINK
+wget -O custom-intermediate.crts EMAILED_LINK
 
-# test 
-/sbin/service httpd  restart 
-# test in browser 
+# adjust  /etc/httpd/conf.d/ssl.conf  | thesisce-central.conf
+git status /etc/httpd/conf.d
 
