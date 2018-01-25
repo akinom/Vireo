@@ -1,9 +1,12 @@
 
 #check whether ssl is enabled
-httpd -M 
+/usr/sbin/apachectl -t -D DUMP_MODULE
 ls /etc/httpd/modules/*ssl 
 
-# check port open 
+# install if necessary 
+yum install mod_ssl openssl
+
+# start daemon and check port open 
 telnet updatespace.princeton.edu  443
 
 # httpd version 

@@ -24,3 +24,4 @@ subjectAltName = @alt_names
 [alt_names]
 DNS.1 = thesis-central.aws.princeton.edu
 DNS.2 = thesis-central.princeton.edu
+DNS.3 = thesis-central-qa.aws.princeton.edu
