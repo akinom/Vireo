@@ -1,9 +1,6 @@
 package org.tdl.vireo.export.impl;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -24,6 +21,7 @@ import org.tdl.vireo.model.Submission;
 import org.tdl.vireo.model.SubmissionRepository;
 import org.tdl.vireo.services.StringVariableReplacement;
 
+import play.Logger;
 import play.Play;
 import play.exceptions.TemplateNotFoundException;
 import play.templates.Template;
@@ -181,11 +179,15 @@ public class FilePackagerImpl extends AbstractPackagerImpl {
 					} else {
 						exportFile = new File(fileName);
 					}
-													
-					FileUtils.copyFile(
-							attachment.getFile(),
-							exportFile
-							);
+
+					try {
+						FileUtils.copyFile(
+								attachment.getFile(),
+								exportFile
+						);
+					} catch (IOException ex ) {
+						Logger.error("Submission " + submission.getId() + ":" + ex.toString());
+					}
 					ZipEntry ze = new ZipEntry(fileName);
 					zos.putNextEntry(ze);
 					FileInputStream in = new FileInputStream(exportFile);
@@ -251,13 +253,18 @@ public class FilePackagerImpl extends AbstractPackagerImpl {
 						dirName = StringVariableReplacement.applyParameterSubstitution(dirName, parameters);
 						pkgPath = pkgPath + File.separator + dirName;
 					}
-						
-					File exportFile = new File(pkgPath, fileName);
-						
-					FileUtils.copyFile(
-						attachment.getFile(),
-						exportFile
+
+					try {
+						File exportFile = new File(pkgPath, fileName);
+
+						FileUtils.copyFile(
+								attachment.getFile(),
+								exportFile
 						);
+					} catch (IOException ex ) {
+						Logger.error("Submission " + submission.getId() + ":" + ex.toString());
+					}
+
 				}//End for loop
 				
 			}
