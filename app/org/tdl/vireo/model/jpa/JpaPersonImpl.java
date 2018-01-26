@@ -149,7 +149,14 @@ public class JpaPersonImpl extends JpaAbstractModel<JpaPersonImpl> implements Pe
 		this.preferences = new ArrayList<Preference>();
 		this.role = role;
 	}
-	
+
+	@Override
+	public String toString() {
+		String id = "";
+		if (null != netid) id = netid; else id = email;
+		return "Person(" +  id + ")";
+	}
+
 	@Override
 	public JpaPersonImpl save() {
 		
