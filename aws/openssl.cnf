@@ -9,9 +9,12 @@ stateOrProvinceName = State or Province Name (full name)
 stateOrProvinceName_default = New Jersey
 localityName = Locality Name (eg, city)
 localityName_default = Princeton
+organizationName = Organization Nam 
+organizationName_default = Princeton University 
 organizationalUnitName	= Organizational Unit Name (eg, section)
 organizationalUnitName_default	= OIT
-commonName = Princeton University
+commonName = Common Name
+commonName_default = thesis-central.princeton.edu
 commonName_max	= 64
 
 [ v3_req ]
@@ -23,5 +26,4 @@ subjectAltName = @alt_names
 
 [alt_names]
 DNS.1 = thesis-central.aws.princeton.edu
-DNS.2 = thesis-central.princeton.edu
-DNS.3 = thesis-central-qa.aws.princeton.edu
+DNS.2 = thesis-central-qa.aws.princeton.edu
