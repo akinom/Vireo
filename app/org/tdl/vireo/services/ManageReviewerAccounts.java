@@ -39,6 +39,7 @@ public class ManageReviewerAccounts {
         for (Integer i : email_hsh.keySet()) {
             String mail = email_hsh.get(i);
             String netid = mail.split("@")[0];
+            Logger.info("PERSON " + mail + " [" + netid + "]");
             Person p = personRepo.findPersonByNetId(netid);
             if (p == null) {
                 Logger.info(" Create Person " + netid);
@@ -53,7 +54,8 @@ public class ManageReviewerAccounts {
 
     private void revoke_reviewer_roles() {
         for (Person stp : personRepo.findPersonsByRole(RoleType.REVIEWER)) {
-            stp.setRole(RoleType.MANAGER);
+            if (RoleType.REVIEWER == stp.getRole())
+                stp.setRole(RoleType.NONE);
         }
     }
 

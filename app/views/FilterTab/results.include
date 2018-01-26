@@ -88,7 +88,7 @@ in results.
                      break;
                 case STUDENT_EMAIL:
                      if (sub.getSubmitter() != null && sub.getSubmitter().getEmail() != null) {
-                        out.print(sub.getSubmitter().getEmail());
+                        out.print(sub.getSubmitter().getEmail().substring(0,20));
                      }
                      break;
                  case STUDENT_NAME:
