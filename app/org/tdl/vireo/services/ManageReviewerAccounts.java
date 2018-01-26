@@ -39,24 +39,39 @@ public class ManageReviewerAccounts {
         for (Integer i : email_hsh.keySet()) {
             String mail = email_hsh.get(i);
             String netid = mail.split("@")[0];
-            Logger.info("PERSON " + mail + " [" + netid + "]");
             Person p = personRepo.findPersonByNetId(netid);
-            if (p == null) {
-                Logger.info(" Create Person " + netid);
-                //  must give first or last name
-                p = personRepo.createPerson(netid, mail, null, mail, RoleType.REVIEWER);
-            } else {
-                Logger.info(" Exists Person " + netid);
-                p.setRole(RoleType.REVIEWER);
+            try {
+                if (p == null) {
+                    //  must give first or last name
+                    p = personRepo.createPerson(netid, mail, null, mail, RoleType.REVIEWER);
+                    p.save();
+                    Logger.debug(" makeReviewers: created " + p);
+                } else {
+                    Logger.debug(" Exists Person " + p);
+                    if (p.getRole().ordinal() < RoleType.REVIEWER.ordinal()) {
+                        Logger.debug(" Make Reviewer " + p + " " + p.getRole());
+                        p.setRole(RoleType.REVIEWER);
+                        p.save();
+                        Logger.debug(" makeReviewers: setRole " + p);
+                    }
+                }
+            } catch (Exception ex) {
+                Logger.error(p.toString() + ": " + ex);
             }
         }
     }
 
-    private void revoke_reviewer_roles() {
+    private int revoke_reviewer_roles() {
+        int nrevoked = 0;
         for (Person stp : personRepo.findPersonsByRole(RoleType.REVIEWER)) {
-            if (RoleType.REVIEWER == stp.getRole())
+            if (RoleType.REVIEWER == stp.getRole()) {
+                Logger.debug("PERSON  [" + stp.getNetId() + "] REVIEWER -> NONE");
                 stp.setRole(RoleType.NONE);
+                stp.save();
+                nrevoked ++;
+            }
         }
+        return nrevoked;
     }
 
 
