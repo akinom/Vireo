@@ -143,16 +143,6 @@ jQuery(document).ready(function() {
 		
 		</form>
 	</div>
-
-	<div class="span6">
-        <h3> Populate / Delete Student Data  </h3>
-        <form class="form-inline" method="POST" action="@{System.loadStudentsCreateSubmissions()}">
-            <input type="submit" class="btn-info"  value="Load Student Data; (Re)Create Accounts and Submissions"/>
-        </form>
-        <form class="form-inline" method="POST" action="@{System.clearStudentsAndSubmission()}">
-            <input type="submit" class="btn-info"  value="Delete All Student Accounts and their Submissions"/>
-        </form>
-	</div>
 </div>
 
 <div class="row-fluid">
@@ -182,7 +172,24 @@ jQuery(document).ready(function() {
 		</p>
 		#{/if}
 	</div>
-	
+
+    <div class="span6">
+        <h3> (Re)Adjust REVIEWER Roles  </h3>
+        <form class="form-inline" method="POST" action="@{System.readjustReviewers()}">
+            <input type="submit" class="btn-info"  value="Reset Reviewers based on emails registered with Departments/Programs"/>
+        </form>
+		<div> Number of Reviewers:   ${nreviewers} </div>
+    </div>
+
+    <div class="span6">
+        <h3> Populate / Delete Student Data  </h3>
+        <form class="form-inline" method="POST" action="@{System.loadStudentsCreateSubmissions()}">
+            <input type="submit" class="btn-info"  value="Load Student Data; (Re)Create Accounts and Submissions"/>
+        </form>
+        <form class="form-inline" method="POST" action="@{System.clearStudentsAndSubmission()}">
+            <input type="submit" class="btn-info"  value="Delete All Student Accounts and their Submissions"/>
+        </form>
+    </div>
 
 	<div class="span6">
 		<h3>Index Information</h3>

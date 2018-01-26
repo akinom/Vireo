@@ -15,6 +15,7 @@ import org.tdl.vireo.job.JobStatus;
 import org.tdl.vireo.model.*;
 import org.tdl.vireo.search.Indexer;
 
+import org.tdl.vireo.services.ManageReviewerAccounts;
 import org.tdl.vireo.services.PrepopulateStudentData;
 import play.Logger;
 import play.Play;
@@ -61,7 +62,7 @@ public class System extends AbstractVireoController {
 	@Security(RoleType.ADMINISTRATOR)
 	public static void generalPanel() {
 
-		Runtime runtime = Runtime.getRuntime();	
+		Runtime runtime = Runtime.getRuntime();
 
 		
 		// Java Information
@@ -125,6 +126,8 @@ public class System extends AbstractVireoController {
 			indexJob += String.format(" ( %.3f%% complete )",complete);
 		}
 
+		// inefficient - but there is not count operation in the personRepo
+		int nreviewers = personRepo.findPersonsByRole(RoleType.REVIEWER).size();
 
 		renderTemplate("System/generalPanel.html",
 				// Java Info
@@ -143,7 +146,10 @@ public class System extends AbstractVireoController {
 				vireoVersion, personTotal, submissionTotal, actionLogTotal,
 				
 				// Index Information
-				indexImpl, indexJob
+				indexImpl, indexJob,
+
+				// Accounts Info,
+				nreviewers
 				
 				);
 	}
@@ -241,24 +247,9 @@ public class System extends AbstractVireoController {
 		generalPanel();
 	}
 
-	/**
-	 * Clear Submissions
-	 */
-	@Security(RoleType.ADMINISTRATOR)
-	public static void clearSubmissions() {
-		generalPanel();
-	}
 
 	/**
-	 * load Submissions from file
-	 */
-	@Security(RoleType.ADMINISTRATOR)
-	public static void loadSubmissions() {
-		generalPanel();
-	}
-
-	/**
-	 * Clear Students
+	 * Clear Students ANd Their Submissions
 	 */
 	@Security(RoleType.ADMINISTRATOR)
 	public static void clearStudentsAndSubmission() {
@@ -272,7 +263,7 @@ public class System extends AbstractVireoController {
 	}
 
 	/**
-	 * Load Students
+	 * Load Students and create Submissions
 	 */
 	@Security(RoleType.ADMINISTRATOR)
 	public static void loadStudentsCreateSubmissions() {
@@ -281,6 +272,20 @@ public class System extends AbstractVireoController {
 			dataLoader.loadStudentsCreateSubmissions();
 		} catch (RuntimeException re) {
 			Logger.error(re, "Unable to initialize student data");
+		}
+		generalPanel();
+	}
+
+	/**
+	 * Assign REVIEWER rols to those accounts who's emails are listed with Departments/Programs
+	 */
+	@Security(RoleType.ADMINISTRATOR)
+	public static void readjustReviewers() {
+		try {
+			ManageReviewerAccounts manager = Spring.getBeanOfType(ManageReviewerAccounts.class);
+			manager.updateAccounts();
+		} catch (RuntimeException e) {
+			Logger.error(e, "Error while assigning REVIEWER roles");
 		}
 		generalPanel();
 	}
