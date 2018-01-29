@@ -255,7 +255,7 @@ chkconfig --add shibd
 cd /etc/shibboleth 
 
 # get metadata for ipdqa  fir ipp
-wget -O idp-metadata.xml  https://idpqa.princeton.edu/idp/shibboleth 
+wget -O idp-metadata.xml  https://idp.princeton.edu/idp/shibboleth 
 
 # edit shibboleth2.xml 
 # change sp.example.org/idp.example.org   and force ssl 
