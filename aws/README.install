@@ -1,338 +1,69 @@
-# -------------------------------------------------
-# Install on Linux 
-# -------------------------------------------------
+# ---------------
+# packages  
+# ---------------
+ant -- to install play1 
 
-yum install tcsh 
+# ---------------
+# file change at 
+# ---------------
+/etc/httpd/conf.d
+/etc/httpd/conf
+/etc/httpd/certs 
 
-yum install httpd 
-yum install git 
+/etc/shibboleth 
+# get idp-matadata.xml 
+wget -O  /etc/shibboleth/idp-metadata.xml   https://idp.princeton.edu/idp/shibboleth
 
-yum install jdk java-1.7.0-openjdk-devel 
-yum install ant
+/var/www/html/shibboleth 
 
-# copy dot files from this directory 
+#########
+### as thesiscentralsu 
+#########
+setup thesiscentralsu account 
 
-# -------------------
-# enable ssl for apache
-# -------------------
-see README.ssl 
-
-# --------------------
-# change hostname
-# --------------------
-# http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/set-hostname.html
-# edit /etc/sysconfig/network   and adjust HOSTNAME value 
-# reboot
-
-# --------------------
-# get play framework 
-# --------------------
-cd ~ec2-user
+# ---------------
+# install play1 framework
+# ---------------
+cd ~
 git clone https://github.com/playframework/play1.git
 # installation instrauctions at https://www.playframework.com/documentation/1.1.1/install
+cd play1 
 git checkout tags/1.3.0
 git checkout -b tags/1.3.0
 # this brings out a version from Jan 13 2016
-cd play1/framework
-ant 
+cd framework
+ant
 
-# test 
-cd ~ec2-user
-play1/play 
 
-# ------------------
-# get vireo code 
-# ------------------
-ssh-keygen
-# add key to github 
+#########
+### as thesiscentralsu 
+#########
+ssh-keygen 
+configure key with bitbucket repo 
 
-git clone git@github.com:akinom/Vireo.git
+# ---------------
+# get vireo code
+# ---------------
+cd ~
+mkdir Vireo
 cd Vireo 
-# checkout relevant branch 
-git checkout ec2
-# edit conf/aplication.conf - enter database settings 
-# do not checkin 
-
-# --------------------
-# add vireo to startup sequence 
-# --------------------
-# http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/user-data.html
-# copy aws/vireo-init.sh to /etc/init.d/vireo    
-# when starting up scripts will pull new code from current branch 
-chkconfig --add  vireo
-chkconfig
-
-# ---------------------
-# put behing http
-# ---------------------
-cp  vireo-v0.conf  /etc/httpd/conf.d/vireo.conf 
-chkconfig --add httpd
-chkconfig httpd on
-chkconfig 
-
-# ---------------------
-# conf http with SSL
-# ---------------------
-# SSL see http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/SSL-on-an-instance.html#ssl_enable
-# also http://httpd.apache.org/docs/2.2/mod/directives.html
-yum update -y
-yum install -y mod_ssl
-sudo service httpd restart
-#create key 
-cd /tmp/
-openssl genrsa -out custom.key 4096
-chown root.root custom.key
-chmod 600 custom.key 
-ls -la custom.key 
-# create CRA 
-sudo openssl req -new -key custom.key -out csr.pem
-# send certificate to signing authority 
-
-# test certificate 
-openssl x509 -in certificate.crt -text
-
-# create dummy cert  and copy to private 
-cd /etc/pki/tls/certs
-./make-dummy-cert  dummy.crt
-cd .. 
-cp certs/dummy.crt private/custom.crt
-# make sure certificate file is rw for root only 
-
-vi /etc/httpd/conf.d/ssl.conf
-SSLCertificateKeyFile /etc/pki/tls/private/custom.key
-#test in browser  http://server-name/ 
-
-# --------------------
-# setup ec2-user with tcsh 
-# --------------------
-mkdir bin 
-(cd bin; ln -s ~/Vireo/aws/gitinfo .) 
-(cd ~; ln -s ~/Vireo/aws/.cshrc ~/Vireo/aws/.gitconfig .) 
--
-
-
-# something waccky with   'play deps' 
-# not compiling java classes in modiles subdirs  on EC@ instance 
-# so copying from Monika's MAC 
-
-
-# --------------------
-# setup email 
-# --------------------
-# ask Chris Krantz to make sure service account that connectes to smtp.princeton.edu 
-# is enabled for the smtp service 
-# see  https://www.easy-smtp.com/smtp-sendmail, http://www.sendmail.org/~ca/email/auth.html
-
-yum install telnet 
-yum install  sendmail-cf 
-
-# test 
-telnet localhost 25
-# should return something like 
-# 220 YourServer.Princeton.EDU ESMTP Sendmail 8.14.4/8.12.9; Tue, 24 Oct 2017 15:10:55 -0400
-
-# configure retry interval in /etc/sysconfig/sendmail 
-QUEUE=2m
- 
-cd /etc/mail
 git init . 
-git add `find . -name f`
-git commit 'original files' 
-
-# back to this directory -  
-cp sendmail.authinfo /etc/mail/authinfo 
-# add lines from sendmail.mc.lines   to /etc/mail/sendmail.mc 
-# add before MAIL(smtp)dnl  directive 
-
-cd /etc/mail
-edit  /etc/sysconfig/sendmail
-decrease QUEUE value  eg 2m for every 2 minutes 
-chmod 600 /etc/mail/authinfo
-makemap hash /etc/mail/authinfo < /etc/mail/authinfo
-newaliases
-make -C /etc/mail
-m4 sendmail.mc > sendmail.cf
-/etc/init.d/sendmail restart
-cat testmail | sendmail -Am -v -t
-
-# test 
-sendmail -Am -v -t
-To: MCM <monikam@princeton.edu>
-From: NOREPLY <noreply@princeton.edu>
-Subject: An Easy SMTP test
-testing testing
-
-# commit changes if success 
-
+git remote add origin git@bitbucket.org:princeton/thesiscentral-vireo.git
+git fetch 
+git checkout master 
 
 # ---------------
-# SHIBBOLETH 
+# link Viireo to play1 framework
 # ---------------
-I found info on installing Shibboleth on Amazon at http://idmintegration.com/blog/shibboleth-sp-install-amazon-ami-linux/
+cd ~/Vireo 
+ln -s ~/play1 play
 
-t points to http://download.opensuse.org/repositories/security://shibboleth/RHEL_6/src/
-list el6  rpms - the latest is http://download.opensuse.org/repositories/security://shibboleth/RHEL_6/src/shibboleth-2.6.1-3.1.el6.src.rpm.mirrorlist
-
-on my EC2 instance uname tells me 
-Linux ec2-34-235-93-123.compute-1.amazonaws.com 4.9.43-17.38.amzn1.x86_64 #1 SMP Thu Aug 17 00:20:39 UTC 2017 x86_64 x86_64 x86_64 GNU/Linux
-
-On the AMAZON console my instale says, based on AMI: 
-amzn-ami-hvm-2017.03.1.20170812-x86_64-gp2 (ami-4fffc834)
-Description Amazon Linux AMI 2017.03.1.20170812 x86_64 HVM GP2
-Platform Amazon Linux
-
-# -------------------
-# CREATE SWAP
-# -------------------
-# was need to run rpmbuild commands
-/bin/dd if=/dev/zero of=/var/swap.1 bs=1M count=250
-/sbin/mkswap /var/swap.1
-chmod 600 /var/swap.1
-/sbin/swapon /var/swap.1
-free
-
-# --------------------
-# Shibboleth
-# --------------------
-Following slightly modified instructions from
-I found info on installing Shibboleth on Amazon at http://idmintegration.com/blog/shibboleth-sp-install-amazon-ami-linux/
-http:s//s3.amazonaws.com/awsiammedia/public/docs/OpenLDAPandShibboleth/SingleSign-On_IntegratingAWSOpenLDAPandShibboleth.pdf
-
-yum install automake boost-devel chrpath doxygen gcc-c++ groff httpd-devel libidn-devel openldap-devel openssl-devel redhat-rpm-config stunnel unixODBC-devel
-yum install rpmdevtools rpm-build
-wget http://download.opensuse.org/repositories/security://shibboleth/RHEL_6/src/log4shib-1.0.9-3.1.el6.src.rpm
-rpmbuild --rebuild log4shib-1.0.9-3.1.el6.src.rpm
-rpm -ivh /usr/src/rpm/RPMS/x86_64/liblog4shib1-1.0.9-3.1.amzn1.x86_64.rpm
-rpm -ivh /usr/src/rpm/RPMS/x86_64/log4shib-debuginfo-1.0.9-3.1.amzn1.x86_64.rpm
-rpm -ivh /usr/src/rpm/RPMS/x86_64/liblog4shib-devel-1.0.9-3.1.amzn1.x86_64.rpm
-
-
-wget http://download.opensuse.org/repositories/security://shibboleth/RHEL_6/src/xerces-c-3.1.4-1.1.el6.src.rpm
-rpmbuild --rebuild  xerces*rpm
-rpm -ivh /usr/src/rpm/RPMS/x86_64/libxerces-c-3_1-3.1.4-1.1.amzn1.x86_64.rpm
-rpm -ivh /usr/src/rpm/RPMS/x86_64/libxerces-c-devel-3.1.4-1.1.amzn1.x86_64.rpm
-rpm -ivh /usr/src/rpm/RPMS/x86_64/xerces-c-bin-3.1.4-1.1.amzn1.x86_64.rpm
-rpm -ivh /usr/src/rpm/RPMS/x86_64/xerces-c-debuginfo-3.1.4-1.1.amzn1.x86_64.rpm
-
-
-wget http://download.opensuse.org/repositories/security://shibboleth/RHEL_6/src/xml-security-c-1.7.3-3.2.el6.src.rpm
-rpmbuild --rebuild  xml-security*rpm
-rpm -ivh /usr/src/rpm/RPMS/x86_64/libxml-security-c*
-# installs 2 pacakges
-
-wget http://download.opensuse.org/repositories/security://shibboleth/RHEL_6/src/curl-openssl-7.57.0-1.1.el6.src.rpm
-rpmbuild --rebuild curl-openssl-7*
-rpm -ivh /usr/src/rpm/RPMS/x86_64/*curl*
-# installs 4 pacakges
-
-wget http://download.opensuse.org/repositories/security://shibboleth/RHEL_6/src/xmltooling-1.6.2-3.1.el6.src.rpm
-#see https://wiki.umbc.edu/display/MW/Shibboleth+SP+RPM+Build+for+Amazon+AWS
-rpmbuild --rebuild -D 'xmltooling_options --with-curl=/opt/shibboleth' xmltooling-1.6.2-3.1.el6.src.rpm
-rpm -ivh /usr/src/rpm/RPMS/x86_64/*xmltooling*
-# installs 4 packages
-
-wget http://download.opensuse.org/repositories/security://shibboleth/RHEL_6/src/opensaml-2.6.1-3.1.el6.src.rpm
-rpmbuild --rebuild opensaml-2.6.1-3.1.el6.src.rpm
-rpm -ivh /usr/src/rpm/RPMS/x86_64/libsaml*
-# install 2 pacakges
-rpm -ivh /usr/src/rpm/RPMS/x86_64/opensaml-*
-# install 3 pacakges
-
-# INSTALL From SOURCE
-# COMPILE SHIBBOLTH and get apache module
-# parameter order is important
-wget http://download.opensuse.org/repositories/security://shibboleth/RHEL_6/src/shibboleth-2.5.3-1.1.el6.src.rpm
-rpmbuild –-without builtinapache --rebuild -D ‘shib_options –with-apxs24=/usr/sbin/apxs –with-apr1=/usr/bin/apr-1-config –enable-apache24’ shibboleth-2.5.5-3.1.el6.src.rpm
-
-???warning: line 14: prereq is deprecated: PreReq:         xmltooling-schemas(x86-64) >= 1.6.0, opensaml-schemas(x86-64) >= 2.6.0
-
-
-# add to start up sequence 
-chkconfig --add shibd 
-
-
-# adjust shboolth configs 
-cd /etc/shibboleth 
-
-# get metadata for ipdqa  fir ipp
-wget -O idp-metadata.xml  https://idp.princeton.edu/idp/shibboleth 
-
-# edit shibboleth2.xml 
-# change sp.example.org/idp.example.org   and force ssl 
-# add MetadataProvider
-23c23
-<     <ApplicationDefaults entityID="https://sp.example.org/shibboleth"
----
->     <ApplicationDefaults entityID="https://thesis-central-qa.aws.princeton.edu/shibboleth"
-36c36
-<                   checkAddress="false" handlerSSL="false" cookieProps="http">
----
->                   checkAddress="false" handlerSSL="true" cookieProps="https">
-44,45c44
-<             <SSO entityID="https://idp.example.org/idp/shibboleth"
-<                  discoveryProtocol="SAMLDS" discoveryURL="https://ds.example.org/DS/WAYF">
----
->             <SSO entityID="https://idpqa.princeton.edu/idp/shibboleth" >
-85a85,86
->         <MetadataProvider type="XML" file="idp-metadata.xml" />
-
-
-# add sttribute mapping to attribute-map.xml  
-    <Attribute name="Email" id="shib_mail" />
-    <Attribute name="urn:oid:0.9.2342.19200300.100.1.1" id="shib_netid"  />
-    <Attribute name="urn:oid:2.5.4.42" id="shib_givenname"/>
-    <Attribute name="LastName" id="shib_sn"/>
-
-
-
-#test config  - as root 
-export LD_LIBRARY_PATH=/opt/shibboleth/lib64
-setenv  LD_LIBRARY_PATH /opt/shibboleth/lib64
-shibd -t 
-#these warning are OK - says simon 
-2017-12-13 21:14:15 WARN Shibboleth.Application : insecure cookieProps setting, set to "https" for SSL/TLS-only usage
-2017-12-13 21:14:15 WARN Shibboleth.Application : handlerSSL should be enabled for SSL/TLS-enabled web sites
-2017-12-13 21:14:17 WARN Shibboleth.AttributeExtractor.XML : attribute mapping rule (uid) uses deprecated aliases feature, consider revising
-overall configuration is loadable, check console for non-fatal problems
-
-
-# shibd is listening to a socket
-netstat -nlp | fgrep shi
-unix  2      [ ACC ]     STREAM     LISTENING     17099  3696/shibd          /var/run/shibboleth/shibd.sock
-
-#install mod_shib.so to apache 
-rpm -qa rpm -qa shi\*
-rpm -ql  shibboleth-2.6.1-3.1.amzn1.x86_64
-cp /usr/lib64/shibboleth/mod_shib_22.so  /usr/lib64/httpd/modules
-/sbin/service httpd restart 
-
-
-# install httpd/conf.d files from this directory to /etc/httpd/conf.d
-# adjust server DNS 
-/sbin/service httpd restart 
-# look for shib_mod
-apachectl -t -D DUMP_MODULES
-
-#test whether idp is found 
-https://thesis-central-qa.aws.princeton.edu/Shibboleth.sso/DiscoFeed
-
-#get Metadata File 
-https://thesis-central-qa.aws.princeton.edu/Shibboleth.sso/Metadata
-
-# check that 
-# file refers to thesis-central DNS name  in EntityDescriptor and RequestInitiator 
-# edit all mentions of ec2 DNS  with thesis-central DNS 
-# xmllint file to make sure its valid xml 
-cp edited_file /var/www/html/shibboleth
+# ---------------
+# configure with right database 
+# ---------------
+cd ~/Vireo 
+edit db connector in conf/application.conf
+./play/sh srtart 
 # test 
-wget -O -   thesis-central-qa.aws.princeton.edu/shibboleth
-# work with Mark G  to setup with princeton shibboleth infrastructure 
-
-
-# RPM 
-#extract files from rpm 
-cd /tmp 
-mkdir RPM 
-cd RPM
-rpm2cpio /usr/src/rpm/RPMS/x86_64/shibboleth-2.6.1-3.1.amzn1.x86_64.rpm | cpio -ivdm
+wget -O - http://localhost:9000 
 
