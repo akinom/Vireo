@@ -1,0 +1,44 @@
+
+#check whether ssl is enabled
+/usr/sbin/apachectl -t -D DUMP_MODULE
+ls /etc/httpd/modules/*ssl 
+
+# install if necessary 
+yum install mod_ssl openssl
+
+# start daemon and check port open 
+telnet updatespace.princeton.edu  443
+
+# httpd version 
+httpd -v
+
+# on server
+mkdir /etc/httpd/certs
+cp THIS-FILE /etc/httpd/certs/README.ssl
+
+cd /etc/httpd/certs
+# generate private key
+openssl genrsa -out custom.key  2048
+
+# single domain name 
+openssl req -new -sha256 -key custom.key  -out custom.csr 
+
+# multiple domain name
+# edit openssl.cnf file and enter alternate names
+openssl req -config openssl.cnf -new -sha256 -key custom.key -out custom.csr
+
+# check certificate 
+openssl req -text -noout -in custom.csr
+
+# request signature at SN@P   (search for SSL certificate)  
+# when confirmed use emailed lnks to download certificate and intermediate certificate 
+
+mkdir /etc/httpd/certs
+cd /etc/httpd/certs
+# safe in files at#
+wget -O custom.crt EMAILED_LINK
+wget -O custom-intermediate.crts EMAILED_LINK
+
+# adjust  /etc/httpd/conf.d/ssl.conf  | thesisce-central.conf
+git status /etc/httpd/conf.d
+
