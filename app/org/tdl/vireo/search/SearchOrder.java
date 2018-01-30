@@ -74,6 +74,7 @@ public enum SearchOrder {
 			ASSIGNEE,
 
 			DOCUMENT_TITLE,
+			DOCUMENT_TYPE,
 			DOCUMENT_LANGUAGE,
 
 			PRIMARY_DOCUMENT,
