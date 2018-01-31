@@ -1130,9 +1130,10 @@ public class FilterTab extends AbstractVireoController {
 				Logger.warn(re,"Unable to decode search filter: "+cookie.value);
 			}
 		}
+		// apply to reviewers that are NOT administrators
 		if (context.isReviewer() && !context.isAdministrator()) {
 			String userEmail = context.getPerson().getEmail();
-			// restrict department reviwers to their departments
+			// restrict department reviewers to their departments
 			for (Department stp : settingRepo.findAllDepartments()) {
 				activeFilter.removeDepartment(stp.getName());
 				if (stp.getEmails().containsValue(userEmail)) {
@@ -1140,9 +1141,10 @@ public class FilterTab extends AbstractVireoController {
 				}
 			}
 
-			// restrict program reviewers college with names that do not contain Department
+			// restrict program reviewers to colleges with names that do not contain Department
 			// and to their programs
 			Boolean restricted = false;
+			// check whether this is a program reveiwer and add program to active filter
 			for (Program stp : settingRepo.findAllPrograms()) {
 				activeFilter.removeProgram(stp.getName());
 				if (stp.getEmails().containsValue(userEmail)) {
@@ -1151,6 +1153,7 @@ public class FilterTab extends AbstractVireoController {
 				}
 			}
 			if (restricted) {
+				// restrict to colleges that do not contain the word 'Deaprtment'
 				for (College stp : settingRepo.findAllColleges()) {
 					activeFilter.removeCollege(stp.getName());
 					if (!stp.getName().contains("Department")) {
