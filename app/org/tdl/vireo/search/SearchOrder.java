@@ -71,8 +71,6 @@ public enum SearchOrder {
 
 			STATE,
 
-			ASSIGNEE,
-
 			DOCUMENT_TITLE,
 			DOCUMENT_TYPE,
 			DOCUMENT_LANGUAGE,
@@ -83,7 +81,6 @@ public enum SearchOrder {
 			APPROVAL_DATE,
 
 			COMMITTEE_MEMBERS,
-			COMMITTEE_CONTACT_EMAIL,
 
 			PROGRAM,
 			COLLEGE,
