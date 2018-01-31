@@ -3,7 +3,10 @@ package org.tdl.vireo.services;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.mail.internet.AddressException;
@@ -347,4 +350,11 @@ public class Utilities {
 		    }
 		    return builder.toString();
 		}
+
+	private static DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+	public static String formatDate(Date date)  {
+		if (null == date)
+			return "";
+		return formatter.format(date);
+	}
 }

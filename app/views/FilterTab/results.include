@@ -184,17 +184,15 @@ in results.
                  		out.print(sub.getDefenseDate().format(dateFormat));
                  	break;
                  case SUBMISSION_DATE:
-                     if (sub.getSubmissionDate() != null)
-                        out.print(sub.getSubmissionDate().format(dateFormat));
-                     break;
+                    out.print(org.tdl.vireo.services.Utilities.formatDate(sub.getSubmissionDate()));
+                    break;
                  case LICENSE_AGREEMENT_DATE:
                      if (sub.getLicenseAgreementDate() != null)
                         out.print(sub.getLicenseAgreementDate().format(dateFormat));
                      break;
                  case APPROVAL_DATE:
-                     if (sub.getApprovalDate() != null)
-                        out.print(sub.getApprovalDate().format(dateFormat));
-                     break;                      
+                    out.print(org.tdl.vireo.services.Utilities.formatDate(sub.getApprovalDate()));
+                     break;
                  case COMMITTEE_APPROVAL_DATE:
                      if (sub.getCommitteeApprovalDate() != null)
                         out.print(sub.getCommitteeApprovalDate().format(dateFormat));
@@ -299,8 +297,7 @@ in results.
                      if ("log".equals(nav)) {
                         out.print(log.getActionDate().format("MM/dd/yyyy hh:mm:ss a"));
                      } else {
-                         if (sub.getLastLogDate() != null)
-                             out.print(sub.getLastLogDate().format("MM/dd/yyyy hh:mm:ss a"));
+                        out.print(org.tdl.vireo.services.Utilities.formatDate(sub.getLastLogDate()));
                      }
                      break;
                  case ORCID:
