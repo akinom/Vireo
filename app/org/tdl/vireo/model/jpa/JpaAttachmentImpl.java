@@ -405,29 +405,19 @@ public class JpaAttachmentImpl extends JpaAbstractModel<JpaAttachmentImpl> imple
 			throw new IllegalStateException("Unable to rename the primary document on an attachment which is not of type = PRIMARY.");
 		
 		// Step 1) Figure out what the primary document should be named.
-		String namePart = null;
+		String namePart = "";
 		if (submission.getStudentLastName() != null && submission.getStudentLastName().trim().length() > 0)
 			// If available use the last name.
 			namePart = submission.getStudentLastName();
-		if (namePart == null && submission.getStudentLastName() != null && submission.getStudentLastName().trim().length() > 0)
+		if (submission.getStudentFirstName() != null && submission.getStudentFirstName().trim().length() > 0)
 			// If the last name is unavailable, use the first name.
-			namePart = submission.getStudentFirstName();
-		if (namePart == null)
+			namePart = namePart + "-" + submission.getStudentFirstName();
+		if (namePart.equals(""))
 			// Lastly fall back to the word primary if we don't have a student name;
 			namePart = "primary";
 
-		String docPart = "thesis";
+		String filename = namePart + "-thesis";
 
-		String yearPart = null;
-		if (submission.getGraduationYear() != null)
-			// Add the year if helpfull
-			yearPart = String.valueOf(submission.getGraduationYear());
-		
-		// Put it all together
-		String filename = namePart + "-" + docPart;
-		if (yearPart != null)
-			filename += "-" + yearPart;
-		
 		// Sanitize the filename for any random characters
 		filename = Normalizer.normalize(filename, Normalizer.Form.NFD);
 		filename = filename.replaceAll("[^a-zA-Z0-9\\-_]", "");

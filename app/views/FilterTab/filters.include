@@ -13,6 +13,36 @@ managing and modifying filters.
         <div class="main-heading">Now filtering By:</div>
     </div>
     <div class="box-body">
+
+        #{if activeFilter.getColleges().size() > 0 }
+            <div class="sub-heading noreviewer">&{'LIST_FACET_COLLEGE'}</div>
+            <ul class="unstyled editable noreviewer">
+                #{list items:activeFilter.getColleges(), as:'value'}
+                    <li><a class="removable" href="@{FilterTab.ModifyFilters(nav)}?action=remove&type=college&value=${value.urlEncode()}">${value}</a></li>
+                #{/list}
+            </ul>
+        #{/if}
+
+        #{if (activeFilter.getDepartments().size() > 0) }
+            <div class="sub-heading">&{'LIST_FACET_DEPARTMENT'}</div>
+            <ul class="unstyled editable">
+                #{list items:activeFilter.getDepartments(), as:'value'}
+                    <li><a class="removable"
+                           href="@{FilterTab.ModifyFilters(nav)}?action=remove&type=department&value=${value.urlEncode()}">${value}</a>
+                    </li>
+                #{/list}
+            </ul>
+        #{/if}
+
+        #{if activeFilter.getPrograms().size() > 0 }
+            <div class="sub-heading">&{'LIST_FACET_PROGRAM'}</div>
+            <ul class="unstyled editable">
+                #{list items:activeFilter.getPrograms(), as:'value'}
+                    <li><a class="removable" href="@{FilterTab.ModifyFilters(nav)}?action=remove&type=program&value=${value.urlEncode()}">${value}</a></li>
+                #{/list}
+            </ul>
+        #{/if}
+
         %{ 
             def dateRangeDisplayed = false; 
             
@@ -107,33 +137,6 @@ managing and modifying filters.
             #{/list}
         </ul>
         #{/if}
-        
-        #{if facet == FACET_DEPARTMENT && activeFilter.getDepartments().size() > 0 }
-        <div class="sub-heading">&{nav.toUpperCase()+'_FACET_'+facet.name()}</div>
-        <ul class="unstyled editable">
-            #{list items:activeFilter.getDepartments(), as:'value'}
-            <li><a class="removable" href="@{FilterTab.ModifyFilters(nav)}?action=remove&type=department&value=${value.urlEncode()}">${value}</a></li>
-            #{/list}
-        </ul>
-        #{/if}
-        
-         #{if facet == FACET_PROGRAM && activeFilter.getPrograms().size() > 0 }
-        <div class="sub-heading noreviewer">&{nav.toUpperCase()+'_FACET_'+facet.name()}</div>
-        <ul class="unstyled editable noreviewer">
-            #{list items:activeFilter.getPrograms(), as:'value'}
-            <li><a class="removable" href="@{FilterTab.ModifyFilters(nav)}?action=remove&type=program&value=${value.urlEncode()}">${value}</a></li>
-            #{/list}
-        </ul>
-        #{/if}
-        
-        #{if facet == FACET_COLLEGE && activeFilter.getColleges().size() > 0 }
-        <div class="sub-heading">&{nav.toUpperCase()+'_FACET_'+facet.name()}</div>
-        <ul class="unstyled editable">
-            #{list items:activeFilter.getColleges(), as:'value'}
-            <li><a class="removable" href="@{FilterTab.ModifyFilters(nav)}?action=remove&type=college&value=${value.urlEncode()}">${value}</a></li>
-            #{/list}
-        </ul>
-        #{/if}
 
         #{if facet == FACET_MAJOR && activeFilter.getMajors().size() > 0 }
         <div class="sub-heading noreviewer">&{nav.toUpperCase()+'_FACET_'+facet.name()}</div>
@@ -161,7 +164,7 @@ managing and modifying filters.
             #{/list}
         </ul>
         #{/if}
-        
+
         #{if facet == FACET_DOCUMENT_TYPE && activeFilter.getDocumentTypes().size() > 0 }
         <div class="sub-heading">&{nav.toUpperCase()+'_FACET_'+facet.name()}</div>
         <ul class="unstyled editable">
@@ -170,7 +173,7 @@ managing and modifying filters.
             #{/list}
         </ul>
         #{/if}
-        
+
         #{if facet == FACET_UMI_RELEASE && activeFilter.getUMIRelease() != null }
         <div class="sub-heading noreviewer">&{nav.toUpperCase()+'_FACET_'+facet.name()}</div>
         <ul class="unstyled editable noreviewer">

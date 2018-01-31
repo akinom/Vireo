@@ -890,13 +890,11 @@ public class JpaSubmissionImpl extends JpaAbstractModel<JpaSubmissionImpl> imple
 		
 		if (!equals(this.submissionDate,date)) {
 			this.submissionDate = date;
-			
 			if (date == null) {
 				generateLog("Submission date cleared",true);
 			} else {
-				DateFormat format = new SimpleDateFormat("MM/dd/yyyy");
-				String formattedDate = format.format(date);
-				generateLog("Submission date set to "+formattedDate,true);
+				DateFormat format = new SimpleDateFormat("MM/dd/YY-HH:mm");
+				generateLog("Submission date set to "+  Utilities.formatDate(date),true);
 			}
 		}
 	}

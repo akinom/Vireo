@@ -81,7 +81,8 @@
 		</ul>
 		<ul class="unstyled">
 			<li>Submission Date</li>
-			<li><i class="icon-pencil"></i><b><a href="#submission-date-modal" data-toggle="modal">${ submission.getSubmissionDate() != null ? submission.getSubmissionDate()?.format("MM/dd/yyyy") : "none"  }</a></b></li>
+			<li><i class="icon-pencil"></i><b><a href="#submission-date-modal" data-toggle="modal">
+			${ org.tdl.vireo.services.Utilities.formatDate(submission.getSubmissionDate()) }
 		</ul>
 	</div>
 	<div class="box-footer">
