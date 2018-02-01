@@ -21,7 +21,7 @@
 		        <li>There are errors on the "Verify Your Information" step. <a href="@{submit.PersonalInfo.personalInfo(subId)}">[visit step]</a></li>
 		    #{/if}
 		    #{if errors.forKey('license')}
-		        <li>There are errors on the "License Agreement" step. <a href="@{submit.License.license(subId)}">[visit step]</a></li>
+		        <li>There are errors on the "Honor Code" step. <a href="@{submit.License.license(subId)}">[visit step]</a></li>
 		    #{/if}
 		    #{if errors.forKey('documentInfo')}
 		        <li>There are errors on the "Document Information" step. <a href="@{submit.DocumentInfo.documentInfo(subId)}">[visit step]</a></li>
@@ -78,7 +78,7 @@
 		<div class="control-group">
 			
 			<div class="controls edit">
-				<p><a href="@{submit.FileUpload.fileUpload(subId)}">[edit your uploaded files]</a></p>
+				<p><a href="@{submit.FileUpload.fileUpload(subId)}">[edit Uploaded Files]</a></p>
 			</div>
 		</div>
 		#{/ifEnabled}

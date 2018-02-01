@@ -115,7 +115,7 @@ Plus all the FieldConfig objects
 <div class="control-group">
     
     <div class="controls edit">
-        <p><a href="@{submit.PersonalInfo.personalInfo(subId)}">[edit your Student Information]</a></p>
+        <p><a href="@{submit.PersonalInfo.personalInfo(subId)}">[edit Student Information]</a></p>
     </div>
 </div>
 #{/if}
@@ -161,7 +161,7 @@ Plus all the FieldConfig objects
 <div class="control-group">
     
     <div class="controls edit">
-        <p><a href="@{submit.PersonalInfo.personalInfo(subId)}">[edit your academic affiliation]</a></p>
+        <p><a href="@{submit.PersonalInfo.personalInfo(subId)}">[edit academic affiliation]</a></p>
     </div>
 </div>
 #{/if}
@@ -346,7 +346,7 @@ Plus all the FieldConfig objects
 <div class="control-group">
     
     <div class="controls edit">
-        <p><a href="@{submit.DocumentInfo.documentInfo(subId)}">[edit your Senior Thesis Information]</a></p>
+        <p><a href="@{submit.DocumentInfo.documentInfo(subId)}">[edit Senior Thesis Information]</a></p>
     </div>
 </div>
 #{/if}
