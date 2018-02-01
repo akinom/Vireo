@@ -2,21 +2,48 @@
 
 #{set 'moreScripts'}
 <script type="text/javascript">
-jQuery(document).ready(function() { 
-	
+jQuery(document).ready(function() {
+
 	jQuery("#delete-and-rebuild-index").click(function() {
 		
 		var response =
 			window.confirm("Are you sure? Users will not be able to search while the index is being rebuilt.");
 		return response;
-	}); 
-	
-	jQuery("#generation-warning a").click(function() {
-		
-		var response =
-			window.confirm("Are you sure? This will generate "+jQuery(this).text()+" number of submissions which may take quite some time.");
+	});
+
+    jQuery("#generation-warning a").click(function() {
+
+        var response =
+                window.confirm("Are you sure? This will generate "+jQuery(this).text()+" number of submissions which may take quite some time.");
+        return response;
+    });
+
+    jQuery("#recreate-students").click(function() {
+
+        var response =
+                window.confirm("Are you sure? " +
+						"This will populate the current years student submissions " +
+						"from spreadsheet file at conf/prepopulate/Student-Data.tsv");
+        return response;
+    });
+
+    jQuery("#delete-students").click(function() {
+
+        var response =
+                window.confirm("Are you sure? " +
+						"This will delete student accounts and their submissions " +
+						"- run at end of submission period after all data was exported  ");
 		return response;
-	}); 
+    });
+
+    jQuery("#delete-submissions").click(function() {
+
+        var response =
+                window.confirm("Are you sure? " +
+						"This will delete ALL submissions " +
+						"- run when cleaning up after exporting data");
+        return response;
+    });
     
 });
 </script>
@@ -174,40 +201,48 @@ jQuery(document).ready(function() {
 	</div>
 
     <div class="span6">
-        <h3> (Re)Adjust REVIEWER Roles  </h3>
-        <form class="form-inline" method="POST" action="@{System.readjustReviewers()}">
-            <input type="submit" class="btn-info"  value="Reset Reviewers based on emails registered with Departments/Programs"/>
+        <h3>Index Information</h3>
+        <dl class="dl-horizontal">
+            <dt>Indexer</dt>
+            <dd>${indexImpl}</dd>
+
+            <dt>Running Job</dt>
+            <dd>${indexJob}</dd>
+        </dl>
+
+        <form class="form-inline" method="POST" action="@{System.rebuildIndex()}">
+            <input class="btn-info" type="submit" name="submit_rebuild" value="Rebuild Index">
+            <input class="btn-danger" type="submit" name="submit_deleteAndRebuild" value="Delete Index and Rebuild" id="delete-and-rebuild-index">
         </form>
-		<div> Number of Reviewers:   ${nreviewers} </div>
+    </div>
+
+</div>
+
+<div class="row-fluid">
+	<div class="span6">
+        <h3> Reviewers  </h3>
+        <div> Number of Reviewers:   ${nreviewers} </div>
+        <form class="form-inline" method="POST" action="@{System.readjustReviewers()}">
+            <input type="submit" class="btn-info"  value="Reset based on Department/Program Settings"/>
+        </form>
+        <form class="form-inline" method="POST" action="@{System.removeUnusedAccounts()}">
+            <input type="submit" class="btn-info"  value="Delete Accounts without Role"/>
+        </form>
     </div>
 
     <div class="span6">
-        <h3> Populate / Delete Student Data  </h3>
+        <h3> Students and Submissions   </h3>
         <form class="form-inline" method="POST" action="@{System.loadStudentsCreateSubmissions()}">
-            <input type="submit" class="btn-info"  value="Load Student Data; (Re)Create Accounts and Submissions"/>
+            <input type="submit" class="btn-danger"  value="(Re)Create Student Accounts and Submissions" id='recreate-students'/>
         </form>
-        <form class="form-inline" method="POST" action="@{System.clearStudentsAndSubmission()}">
-            <input type="submit" class="btn-info"  value="Delete All Student Accounts and their Submissions"/>
+        <form class="form-inline" method="POST" action="@{System.deleteStudentsAndTheirSubmissions()}">
+            <input type="submit" class="btn-danger"  value="Delete Students and Their Submissions"  id='delete-students'/>
         </form>
-    </div>
-
-	<div class="span6">
-		<h3>Index Information</h3>
-		<dl class="dl-horizontal">
-			<dt>Indexer</dt>
-			<dd>${indexImpl}</dd>
-
-			<dt>Running Job</dt>
-			<dd>${indexJob}</dd>
-		</dl>
-		
-		<form class="form-inline" method="POST" action="@{System.rebuildIndex()}">
-			<input class="btn-info" type="submit" name="submit_rebuild" value="Rebuild Index">
-			<input class="btn-danger" type="submit" name="submit_deleteAndRebuild" value="Delete Index and Rebuild" id="delete-and-rebuild-index">
-		</form>
+	    <form class="form-inline" method="POST" action="@{System.deleteAllSubmissions()}">
+            <input type="submit" class="btn-danger" value="Delete All Submissions" id='delete-submissions'/>
+        </form>
 	</div>
-	
 </div>
-<br/>
+    <br/>
 <br/>
 

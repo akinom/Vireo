@@ -129,7 +129,7 @@
     <property name="securityContext" ref="SecurityContext" />
   </bean>
 
-  <bean id="PrepopulateStudentData" class="org.tdl.vireo.services.PrepopulateStudentData" scope="singleton">
+  <bean id="PrepopulateStudentData" class="edu.princeton.vireo.services.PrepopulateStudentData" scope="singleton">
     <property name = "firstName" value = "Student First"/>
     <property name = "lastName" value = "Student Last"/>
     <property name = "middleName" value = "Student Middle Initial"/>
@@ -152,12 +152,16 @@
 
     <property name="securityContext" ref="SecurityContext" />
     <property name="settingsRepository" ref="SettingsRepository" />
+    <property name="submissionRepository" ref="SubmissionRepository" />
+    <property name="personRepository" ref="PersonRepository" />
   </bean>
 
-  <bean id="ManageReviewerAccounts" class="org.tdl.vireo.services.ManageReviewerAccounts" scope="singleton">
+  <bean id="ManageData" class="edu.princeton.vireo.services.ManageData" scope="singleton">
+    <property name="securityContext" ref="SecurityContext" />
     <property name="settingsRepository" ref="SettingsRepository" />
+    <property name="submissionRepository" ref="SubmissionRepository" />
+    <property name="personRepository" ref="PersonRepository" />
   </bean>
-
 
   <!-- Search -->
   <bean id="Indexer" class="org.tdl.vireo.search.impl.LuceneIndexerImpl" scope="singleton">
