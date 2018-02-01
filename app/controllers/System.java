@@ -15,8 +15,8 @@ import org.tdl.vireo.job.JobStatus;
 import org.tdl.vireo.model.*;
 import org.tdl.vireo.search.Indexer;
 
-import org.tdl.vireo.services.ManageReviewerAccounts;
-import org.tdl.vireo.services.PrepopulateStudentData;
+import edu.princeton.vireo.services.PrepopulateStudentData;
+import edu.princeton.vireo.services.ManageData;
 import play.Logger;
 import play.Play;
 import play.jobs.Job;
@@ -249,13 +249,13 @@ public class System extends AbstractVireoController {
 
 
 	/**
-	 * Clear Students ANd Their Submissions
+	 * Delete All Students ANd Their Submissions
 	 */
 	@Security(RoleType.ADMINISTRATOR)
-	public static void clearStudentsAndSubmission() {
+	public static void deleteStudentsAndTheirSubmissions() {
 		try {
-			PrepopulateStudentData dataLoader = Spring.getBeanOfType(PrepopulateStudentData.class);
-			dataLoader.deleteAllStudentsAndSubmissions();
+			ManageData manager = Spring.getBeanOfType(ManageData.class);
+			manager.deleteAllStudentsAndSubmissions();
 		} catch (RuntimeException e) {
 			Logger.error(e, "Unable to deleteAllStudentsAndSubmissions");
 		}
@@ -263,7 +263,21 @@ public class System extends AbstractVireoController {
 	}
 
 	/**
-	 * Load Students and create Submissions
+	 * Delete All Submissions
+	 */
+	@Security(RoleType.ADMINISTRATOR)
+	public static void deleteAllSubmissions() {
+		try {
+			ManageData manager = Spring.getBeanOfType(ManageData.class);
+			manager.deleteAllSubmissions();
+		} catch (RuntimeException e) {
+			Logger.error(e, "Unable to deleteAllStudentsAndSubmissions");
+		}
+		generalPanel();
+	}
+
+	/**
+	 * Load Students and create Submissions by reading data from file configured in bean definition
 	 */
 	@Security(RoleType.ADMINISTRATOR)
 	public static void loadStudentsCreateSubmissions() {
@@ -277,15 +291,29 @@ public class System extends AbstractVireoController {
 	}
 
 	/**
-	 * Assign REVIEWER rols to those accounts who's emails are listed with Departments/Programs
+	 * Assign REVIEWER roles to those accounts who's emails are listed with Departments/Programs
 	 */
 	@Security(RoleType.ADMINISTRATOR)
 	public static void readjustReviewers() {
 		try {
-			ManageReviewerAccounts manager = Spring.getBeanOfType(ManageReviewerAccounts.class);
-			manager.updateAccounts();
+			ManageData manager = Spring.getBeanOfType(ManageData.class);
+			manager.updateReviewerAccounts();
 		} catch (RuntimeException e) {
 			Logger.error(e, "Error while assigning REVIEWER roles");
+		}
+		generalPanel();
+	}
+
+	/**
+	 * remove Person/Accounts that are not used - aka that have role NONE
+	 */
+	@Security(RoleType.ADMINISTRATOR)
+	public static void removeUnusedAccounts() {
+		try {
+			ManageData manager = Spring.getBeanOfType(ManageData.class);
+			manager.deleteAllUserWithRoleNONE();
+		} catch (RuntimeException e) {
+			Logger.error(e, "Error while removing users with NONE role");
 		}
 		generalPanel();
 	}

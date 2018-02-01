@@ -1,4 +1,4 @@
-package org.tdl.vireo.services;
+package edu.princeton.vireo.services;
 
 import au.com.bytecode.opencsv.CSVReader;
 
@@ -30,7 +30,7 @@ public class PrepopulateStudentData {
 
     String[] colHeaderName = new String[NCOLUMNS];
 
-    Hashtable<String, Integer> headerIndex;
+    Hashtable<String, Integer> headerIndex = new Hashtable<String, Integer>(NCOLUMNS);
 
     String defaultCollege;  // abused as thesis type - eg home department versus certificate thesis
     String defaultTitle = null;
@@ -45,19 +45,20 @@ public class PrepopulateStudentData {
     SubmissionRepository submissionRepo;
     SettingsRepository settingsRepo;
 
-    public PrepopulateStudentData() {
-        personRepo = Spring.getBeanOfType(PersonRepository.class);
-        submissionRepo = Spring.getBeanOfType(SubmissionRepository.class);
-        settingsRepo = Spring.getBeanOfType(SettingsRepository.class);
-        headerIndex = new Hashtable<String, Integer>(NCOLUMNS);
-    }
-
     public void setSecurityContext(SecurityContext context) {
         this.context = context;
     }
 
     public void setSettingsRepository(SettingsRepository settingsRepo) {
         this.settingsRepo = settingsRepo;
+    }
+
+    public void setPersonRepository(PersonRepository repo) {
+        this.personRepo = repo;
+    }
+
+    public void setSubmissionRepository(SubmissionRepository repo) {
+        this.submissionRepo = repo;
     }
 
     public void setFirstName(String colheader) {
@@ -201,26 +202,6 @@ public class PrepopulateStudentData {
         }
 
         Logger.info(String.format("file %s: %d lines - skipped %d", fileName, lineno, skipped));
-    }
-
-    public void deleteAllStudentsAndSubmissions() {
-        Logger.info("Start Deleting all students and their submissions");
-        int n = 0;
-        for (Person p : personRepo.findPersonsByRole(RoleType.STUDENT)) {
-            if (p.getRole() == RoleType.STUDENT) {
-                for (Submission s : submissionRepo.findSubmission(p)) {
-                    s.delete();
-                }
-                if (Logger.isDebugEnabled())
-                    Logger.debug("Delete Student " +  n + " "  + p.getNetId());
-                p.delete();
-                n++;
-                if (0 == n % 50 ) {
-                    Logger.info("Delete " + n + " Students ...");
-                }
-            }
-        }
-        Logger.info("Finished Deleting all students and their submissions: Deleted total of " + n + " Students ");
     }
 
     class Record {
