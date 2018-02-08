@@ -29,8 +29,8 @@
 
 		    		<div id="personal-bar" class="pull-right">
 						#{if currentUser != null }
-							<a href="@{Authentication.profile()}"><b>${currentUser.getDisplayName()}</b></a> |
-							<a href="@{Application.index()}">Home</a> | 
+							${currentUser.getDisplayName()}
+							<a href="@{Application.index()}">Home</a> |
 							#{if currentUser.getRole().ordinal() >= org.tdl.vireo.model.RoleType.MANAGER.ordinal()}
 								<a href="@{System.generalPanel()}">System</a> | 
 							#{/if}
