@@ -79,9 +79,12 @@ public class AppConfig {
 	
 	/** Custom CSS */
 	public final static String CUSTOM_CSS = "custom_css";
-	
+
 	/** Instructions to show on the front page of Vireo. */
 	public final static String FRONT_PAGE_INSTRUCTIONS = "front_page_instructions";
+
+	/** Instructions to show on the front page of Vireo when system is closed to submissions  */
+	public final static String CLOSED_FRONT_PAGE_INSTRUCTIONS = "closed_front_page_instructions";
 	
 	/** Instructions to show after completing a submission */
 	public final static String SUBMIT_INSTRUCTIONS = "submit_instructions";

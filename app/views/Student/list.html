@@ -78,7 +78,7 @@ function startNewSub() {
 
 <p>
 #{if ! subStatus.getSubmissionsOpen()}
-    <p class="alert alert-error">The system is currently closed for new submissions; please contact your thesis office for more information.</p>
+    <p class="alert alert-error">The system is currently closed for new submissions.</p>
 	</p>
 #{/if}
 
@@ -102,6 +102,7 @@ function startNewSub() {
 	</thead>
 		<tbody>
         #{list items:submissions, as:"sub"}
+			#{if  !sub.getState().isInProgress() || subStatus.getSubmissionsOpen()}
 	        <tr${ (sub.getState().isInProgress() || sub.getState().isEditableByStudent()) ? " class='sub-inprogress'" : ""}>
                 <td>${sub.getStudentLastName()}, ${sub.getStudentFirstName()}</td>
                 <td>${sub.getDocumentTitle() == null ? "n/a" : sub.getDocumentTitle() }</td>
@@ -112,21 +113,22 @@ function startNewSub() {
 				</td>
 				<td>${sub.getSubmissionDate() == null ? "n/a" : sub.getSubmissionDate().format('dd MMMM yyyy')}</td>
 				<td>
-					#{if !subStatus.getSubmissionsOpen() && sub.getState().isInProgress() }
-				    *{ submissions closed before the user was able to finish their submission. }*
-				    <a id="submission-delete" class="btn btn-primary" href="@{Student.submissionDelete(sub.getId())}" role="button">Delete</a>
-				#{/if}
-				#{elseif sub.getState().isInProgress() }
-				    <a class="btn btn-primary submission-continue" href="@{submit.PersonalInfo.personalInfo(sub.getId())}" role="button">Begin/Resume Submission</a>
-                #{/elseif}
-                #{else}
-				     <a class="btn btn-primary" href="@{Student.submissionView(sub.getId())}" role="button">
-				     	${ sub.getState().isEditableByStudent() ? "Resume" : "View" } Submission
-				     </a>				 
-				#{/else}
+					#{if ! sub.getState().isInProgress() && ! sub.getState().isEditableByStudent()}
+						<a class="btn btn-primary" href="@{Student.submissionView(sub.getId())}" role="button">View Submission </a>
+					#{/if}
+					#{elseif subStatus.getSubmissionsOpen()}
+						#{if  sub.getState().isInProgress() }
+				   		 	<a class="btn btn-primary submission-continue" href="@{submit.PersonalInfo.personalInfo(sub.getId())}" role="button">Begin/Resume Submission</a>
+                		#{/if}
+	                    #{elseif} sub.getState().isEditableByStudent()}
+						<a class="btn btn-primary" href="@{Student.submissionView(sub.getId())}" role="button"> Resume </a>
+						#{/elseif}
+					#{/elseif}
 				</td>
 	        </tr>
+			#{/if}
         #{/list}
+		#{if subStatus.getSubmissionsOpen()}
         <tr>
             <td colspan="4">
 			#{verbatim}${ instructions_start_new }#{/verbatim}
@@ -140,7 +142,8 @@ function startNewSub() {
             #{/else}
             </td>
         </tr>
-        </tbody>
+		#{/if}
+		</tbody>
 	</table>
 </div>
 

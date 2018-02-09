@@ -28,27 +28,30 @@ public class Application extends AbstractVireoController {
 	public static void index() {
 
 		// Get the text for the front page.
-		String instructions = settingRepo.getConfigValue(AppConfig.FRONT_PAGE_INSTRUCTIONS);
-		instructions = text2html(instructions);
+
+		SubmissionStatus subStatus = new SubmissionStatus();
 
 		// Split the text into two blocks, one block before the
 		// "start submission" button, and the other after.
 		String instructionsBefore = "";
 		String instructionsAfter = "";
+		Boolean showSubmissionButton;
 
-		int idx = instructions.indexOf(START_SUBMISSION);
-		if (idx > -1) {
-
-			instructionsBefore = instructions.substring(0, idx);
-			instructionsAfter = instructions.substring(idx + START_SUBMISSION.length(), instructions.length());
-		} else {
-			instructionsBefore = instructions;
-		}
-
-		SubmissionStatus subStatus = new SubmissionStatus();
+			String instructions = subStatus.getSubmissionsOpen()
+					? settingRepo.getConfigValue(AppConfig.FRONT_PAGE_INSTRUCTIONS)
+					: settingRepo.getConfigValue(AppConfig.CLOSED_FRONT_PAGE_INSTRUCTIONS);
+			instructions = text2html(instructions);
+			int idx = instructions.indexOf(START_SUBMISSION);
+			showSubmissionButton = idx > -1;
+			if (idx > -1) {
+				instructionsBefore = instructions.substring(0, idx);
+				instructionsAfter = instructions.substring(idx + START_SUBMISSION.length(), instructions.length());
+			} else {
+				instructionsBefore = instructions;
+			}
 
 		// Render the Application/index.html template
-		render(instructionsBefore, instructionsAfter, subStatus);
+		render(instructionsBefore, instructionsAfter, subStatus, showSubmissionButton);
 	}
 
 	/**

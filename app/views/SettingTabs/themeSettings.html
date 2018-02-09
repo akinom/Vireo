@@ -148,11 +148,23 @@ jQuery(document).ready(function(){
 
 <h2>FRONT PAGE INSTRUCTIONS</h2>
 
+<h3>While Open For Submissions</h3>
+
 <div class="wrap theme-protected">
     <p class="lock-control"><a href="#${org.tdl.vireo.constant.AppConfig.FRONT_PAGE_INSTRUCTIONS}"><em class="icon-lock"></em> This field is locked to prevent accidental editing, click to unlock.</a></p>
     <textarea class="input-xxlarge theme-textarea" id="${org.tdl.vireo.constant.AppConfig.FRONT_PAGE_INSTRUCTIONS}" name="${org.tdl.vireo.constant.AppConfig.FRONT_PAGE_INSTRUCTIONS}" readonly="true">#{verbatim}${FRONT_PAGE_INSTRUCTIONS}#{/verbatim}</textarea>
 
-    <p class="info">These instructions are show on the front page of Vireo to all users. The following HTML tags are allowed: h1 - h5, p, a, b, i, u, ol, li, img. New lines are converted to paragraphs automatically.</p>
+    <p class="info">These instructions are show on the front page of Vireo to all users <em>while the system is open to submissions </em>. The following HTML tags are allowed: h1 - h5, p, a, b, i, u, ol, li, img. New lines are converted to paragraphs automatically.</p>
+</div>
+
+<h3>While Closed </h3>
+
+<div class="wrap theme-protected">
+    <p class="lock-control"><a href="#${org.tdl.vireo.constant.AppConfig.CLOSED_FRONT_PAGE_INSTRUCTIONS}"><em class="icon-lock"></em> This field is locked to prevent accidental editing, click to unlock.</a></p>
+    <textarea class="input-xxlarge theme-textarea" id="${org.tdl.vireo.constant.AppConfig.CLOSED_FRONT_PAGE_INSTRUCTIONS}" name="${org.tdl.vireo.constant.AppConfig.CLOSED_FRONT_PAGE_INSTRUCTIONS}" readonly="true">#{verbatim}${CLOSED_FRONT_PAGE_INSTRUCTIONS}#{/verbatim}</textarea>
+
+    <p class="info">These instructions are show on the front page of Vireo to all users <em>while the system is closed </em>.
+		The following HTML tags are allowed: h1 - h5, p, a, b, i, u, ol, li, img. New lines are converted to paragraphs automatically.</p>
 </div>
 
 <h2>POST SUBMISSION INSTRUCTIONS</h2>

@@ -34,8 +34,9 @@ public class ThemeSettingsTab extends SettingsTab {
 			
 	@Security(RoleType.MANAGER)
 	public static void themeSettings() {
-		
+
 		renderArgs.put("FRONT_PAGE_INSTRUCTIONS", settingRepo.getConfigValue(FRONT_PAGE_INSTRUCTIONS));
+		renderArgs.put("CLOSED_FRONT_PAGE_INSTRUCTIONS", settingRepo.getConfigValue(CLOSED_FRONT_PAGE_INSTRUCTIONS));
 		renderArgs.put("SUBMIT_INSTRUCTIONS", settingRepo.getConfigValue(SUBMIT_INSTRUCTIONS));
 		renderArgs.put("STUDENT_SUBMISSION_LIST_INSTRUCTIONS", settingRepo.getConfigValue(STUDENT_SUBMISSION_LIST_INSTRUCTIONS));
 		renderArgs.put("STUDENT_SUBMISSION_START_NEW_INSTRUCTIONS", settingRepo.getConfigValue(STUDENT_SUBMISSION_START_NEW_INSTRUCTIONS));
@@ -74,6 +75,7 @@ public class ThemeSettingsTab extends SettingsTab {
 			
 			List<String> textFields = new ArrayList<String>();
 			textFields.add(FRONT_PAGE_INSTRUCTIONS);
+			textFields.add(CLOSED_FRONT_PAGE_INSTRUCTIONS);
 			textFields.add(SUBMIT_INSTRUCTIONS);
 			textFields.add(STUDENT_SUBMISSION_LIST_INSTRUCTIONS);
 			textFields.add(STUDENT_SUBMISSION_START_NEW_INSTRUCTIONS);
