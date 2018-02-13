@@ -1,25 +1,56 @@
-# ---------------
-# packages  
-# ---------------
-ant -- to install play1 
+# -----
+# sys setup   with puppet 
+# -----
+accounts 
+   thesiscentralsu/monikasu/ratliffsu 
+   with home directories
+   shell for thesiscentralsu is csh
 
-# ---------------
-# file change at 
-# ---------------
-/etc/httpd/conf.d
-/etc/httpd/conf
-/etc/httpd/certs 
+packages:
+    git
+    csh
+    httpd  with ssl
+    shibboleth
+    mail configured with smtp.princeton.edu
 
-/etc/shibboleth 
-# get idp-matadata.xml 
-wget -O  /etc/shibboleth/idp-metadata.xml   https://idp.princeton.edu/idp/shibboleth
+/etc/httpd
+	certs subdirectory 
+	conf.d   		
+		no ssl.conf
+		no shib.conf
+		init.conf thesis-central.conf 
+	modules	
+		mod_shib*.so    
 
-/var/www/html/shibboleth 
+/etc/shibboleth/
+	shibboleth2.xml 
+	attribute-map.xml
+    # get idp-matadata.xml
+    wget -O  /etc/shibboleth/idp-metadata.xml   https://idp.princeton.edu/idp/shibboleth
 
-#########
-### as thesiscentralsu 
-#########
-setup thesiscentralsu account 
+# httpd and shibd should be in startup sequence 
+/sbin/chkconfig --list httpd 
+/sbin/chkconfig --list shibd  
+/sbin/chkconfig --list thesiscentral
+
+
+# -----
+# sys setup manual tweaks  
+# -----
+cd /var/www/html/shibboleth 
+wget -O shib https://thesis-central.aws.princeton.edu/Shibboleth.sso/Metadata
+substitute to match server name   eg: 
+ <ds:KeyName>thesis-central.aws.princeton.edu</ds:KeyName>
+ <ds:X509SubjectName>CN=thesis-central.aws.princeton.edu</ds:X509SubjectName>
+
+
+# -----
+# thesiscentralsu  account 
+# -----
+setup the same pub/private keys  on QA and PROD server
+ssh-keygen 
+configure thesis-central bitbucket to accept key 
+add  to ~/.ssh/authorized_keys   so monikasu can login
 
 # ---------------
 # install play1 framework
@@ -34,15 +65,8 @@ git checkout -b tags/1.3.0
 cd framework
 ant
 
-
-#########
-### as thesiscentralsu 
-#########
-ssh-keygen 
-configure key with bitbucket repo 
-
 # ---------------
-# get vireo code
+# get thesis-central code
 # ---------------
 cd ~
 mkdir Vireo
@@ -50,20 +74,80 @@ cd Vireo
 git init . 
 git remote add origin git@bitbucket.org:princeton/thesiscentral-vireo.git
 git fetch 
-git checkout master 
+git checkout master
+# set up account with .cshrc and .gitconfig settings
+cp -r aws/thesiscentralsu/bin aws/thesiscentralsu/.[a-z]* ~
+#log out and back in - should see adjusted prompt
+# create data directories  and link to them from ~Vireo/data
+mkdir /data/thesiscentralsu/attachments
+mkdir /data/thesiscentralsu/indexes
+mkdir /data/thesiscentralsu/deposits
+(cd data;  ln -s /data/thesiscentralsu/* .)
 
 # ---------------
-# link Viireo to play1 framework
+# link Vireo to play1 framework
 # ---------------
 cd ~/Vireo 
 ln -s ~/play1 play
+
 
 # ---------------
 # configure with right database 
 # ---------------
 cd ~/Vireo 
 edit db connector in conf/application.conf
-./play/sh srtart 
-# test 
-wget -O - http://localhost:9000 
+# seed data base with princeton base theme settings ....
+psql -h db-host-name -U db-user -d db-name -W <  aws/thesis-central-seed.sql
+# if tunneling you need to use the -p option
+psql -p tunnel-port -h localhost  -U db-user -d db-name -W  <  aws/thesis-central-seed.sql
+
+
+# ---------------
+# start and configure first account
+# ----------------
+./play/sh  start
+# test
+wget -O - http://localhost:9000
+# by paasing shibboleth
+# access with browser http://thesis-central...
+
+
+
+
+
+
+# -------------
+# after data was exported and imported into DataSpace
+# prepare for following year
+# --------------
+
+#--- create sql dump that will be used to seed the database in the coming year
+# in thesis central UI - delete all submissions, all students, all accounts without role
+# close the system for submissions
+# then export database:
+pg_dump ---data-only  --column-inserts -d db-name -h db-host-name -U db-user -W > aws/thesis-central-seed.sql
+# delete all insertions into the person table
+# delete all statements that set sequence values  SELECT pg_catalog.setval(..);
+
+# then check that there are only insertions in the following tables
+fgrep INSERT aws/thesis-central-seed.sql | awk '{print $3}' | sort -u
+college
+configuration
+department
+document_type
+email_template
+email_workflow_rule_conditions
+email_workflow_rules
+embargo_type
+language
+program
+
+# make sure there are no REVOKE/GRANT statements
+fgrep REWOKE aws/thesis-central-seed.sql
+fgrep GRANT aws/thesis-central-seed.sql
+
+# remove all SELECT pg_catalog.setval( .. statements
+fgrep pg_catalog.setval aws/thesis-central-seed.sql
+
+
 
