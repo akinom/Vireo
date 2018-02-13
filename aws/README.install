@@ -108,8 +108,10 @@ psql -p tunnel-port -h localhost  -U db-user -d db-name -W  <  aws/thesis-centra
 ./play/sh  start
 # test
 wget -O - http://localhost:9000
-# by paasing shibboleth
-# access with browser http://thesis-central...
+# this creates the tables in the database if they do not exist yet
+
+# by passing shibboleth
+# access with browser http://thesis-central.../login/PasswordAuthentication
 
 
 
