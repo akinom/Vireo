@@ -7,57 +7,11 @@
 
 
 --
--- Data for Name: person; Type: TABLE DATA; Schema: public; Owner: thesis-dev
---
-
---
--- Data for Name: submission; Type: TABLE DATA; Schema: public; Owner: thesis-dev
---
-
-
-
---
--- Data for Name: attachment; Type: TABLE DATA; Schema: public; Owner: thesis-dev
---
-
-
-
---
--- Data for Name: actionlog; Type: TABLE DATA; Schema: public; Owner: thesis-dev
---
-
-
-
---
--- Data for Name: administrative_groups; Type: TABLE DATA; Schema: public; Owner: thesis-dev
---
-
-
-
---
 -- Data for Name: college; Type: TABLE DATA; Schema: public; Owner: thesis-dev
 --
 
 INSERT INTO college (id, displayorder, emails, name) VALUES (1, 0, '\xaced0005737200116a6176612e7574696c2e486173684d61700507dac1c31660d103000246000a6c6f6164466163746f724900097468726573686f6c6478703f400000000000007708000000010000000078', 'Home Department Thesis');
 INSERT INTO college (id, displayorder, emails, name) VALUES (2, 10, '\xaced0005737200116a6176612e7574696c2e486173684d61700507dac1c31660d103000246000a6c6f6164466163746f724900097468726573686f6c6478703f400000000000107708000000100000000078', 'Certificate Program Thesis');
-
-
---
--- Data for Name: committee_member; Type: TABLE DATA; Schema: public; Owner: thesis-dev
---
-
-
-
---
--- Data for Name: committee_member_role_type; Type: TABLE DATA; Schema: public; Owner: thesis-dev
---
-
-
-
---
--- Data for Name: committee_member_roles; Type: TABLE DATA; Schema: public; Owner: thesis-dev
---
-
 
 
 --
@@ -188,24 +142,6 @@ Starting March 19th, 2018 Students may start submitting their Senior Theses.');
 
 
 --
--- Data for Name: custom_action_definition; Type: TABLE DATA; Schema: public; Owner: thesis-dev
---
-
-
-
---
--- Data for Name: custom_action_value; Type: TABLE DATA; Schema: public; Owner: thesis-dev
---
-
-
-
---
--- Data for Name: degree; Type: TABLE DATA; Schema: public; Owner: thesis-dev
---
-
-
-
---
 -- Data for Name: department; Type: TABLE DATA; Schema: public; Owner: thesis-dev
 --
 
@@ -253,12 +189,6 @@ INSERT INTO department (id, displayorder, emails, name) VALUES (96, 400, '\xaced
 INSERT INTO department (id, displayorder, emails, name) VALUES (84, 410, '\xaced0005737200116a6176612e7574696c2e486173684d61700507dac1c31660d103000246000a6c6f6164466163746f724900097468726573686f6c6478703f400000000000007708000000010000000078', 'Sociology');
 INSERT INTO department (id, displayorder, emails, name) VALUES (77, 420, '\xaced0005737200116a6176612e7574696c2e486173684d61700507dac1c31660d103000246000a6c6f6164466163746f724900097468726573686f6c6478703f400000000000007708000000010000000078', 'Spanish and Portuguese');
 INSERT INTO department (id, displayorder, emails, name) VALUES (111, 100, '\xaced0005737200116a6176612e7574696c2e486173684d61700507dac1c31660d103000246000a6c6f6164466163746f724900097468726573686f6c6478703f400000000000007708000000010000000078', 'Computer Science');
-
-
---
--- Data for Name: deposit_location; Type: TABLE DATA; Schema: public; Owner: thesis-dev
---
-
 
 
 --
@@ -476,12 +406,6 @@ INSERT INTO embargo_type (id, active, description, displayorder, duration, guara
 
 
 --
--- Data for Name: graduation_month; Type: TABLE DATA; Schema: public; Owner: thesis-dev
---
-
-
-
---
 -- Data for Name: language; Type: TABLE DATA; Schema: public; Owner: thesis-dev
 --
 
@@ -515,24 +439,6 @@ INSERT INTO language (id, displayorder, name) VALUES (29, 260, 'es');
 INSERT INTO language (id, displayorder, name) VALUES (30, 270, 'sv');
 INSERT INTO language (id, displayorder, name) VALUES (31, 280, 'tr');
 INSERT INTO language (id, displayorder, name) VALUES (32, 290, 'uk');
-
-
---
--- Data for Name: major; Type: TABLE DATA; Schema: public; Owner: thesis-dev
---
-
-
-
---
--- Data for Name: person_affiliations; Type: TABLE DATA; Schema: public; Owner: thesis-dev
---
-
-
-
---
--- Data for Name: preference; Type: TABLE DATA; Schema: public; Owner: thesis-dev
---
-
 
 
 --
@@ -586,126 +492,6 @@ INSERT INTO program (id, displayorder, emails, name) VALUES (196, 50, '\xaced000
 INSERT INTO program (id, displayorder, emails, name) VALUES (197, 60, '\xaced0005737200116a6176612e7574696c2e486173684d61700507dac1c31660d103000246000a6c6f6164466163746f724900097468726573686f6c6478703f4000000000000077080000000100000001737200116a6176612e6c616e672e496e746567657212e2a0a4f781873802000149000576616c7565787200106a6176612e6c616e672e4e756d62657286ac951d0b94e08b0200007870000000007400156c64757267696e407072696e6365746f6e2e65647578', 'Center for Statistics and Machine Learning');
 INSERT INTO program (id, displayorder, emails, name) VALUES (198, 70, '\xaced0005737200116a6176612e7574696c2e486173684d61700507dac1c31660d103000246000a6c6f6164466163746f724900097468726573686f6c6478703f4000000000000077080000000100000001737200116a6176612e6c616e672e496e746567657212e2a0a4f781873802000149000576616c7565787200106a6176612e6c616e672e4e756d62657286ac951d0b94e08b0200007870000000007400156c64757267696e407072696e6365746f6e2e65647578', 'Contemporary European Politics and Society Program');
 INSERT INTO program (id, displayorder, emails, name) VALUES (199, 80, '\xaced0005737200116a6176612e7574696c2e486173684d61700507dac1c31660d103000246000a6c6f6164466163746f724900097468726573686f6c6478703f4000000000000c77080000001000000002737200116a6176612e6c616e672e496e746567657212e2a0a4f781873802000149000576616c7565787200106a6176612e6c616e672e4e756d62657286ac951d0b94e08b0200007870000000007400187570612d746865736973407072696e6365746f6e2e6564757371007e0002000000017400156c64757267696e407072696e6365746f6e2e65647578', 'Creative Writing Program');
-
-
---
--- Data for Name: search_filter; Type: TABLE DATA; Schema: public; Owner: thesis-dev
---
-
-
-
---
--- Data for Name: search_filter_assignees; Type: TABLE DATA; Schema: public; Owner: thesis-dev
---
-
-
-
---
--- Data for Name: search_filter_colleges; Type: TABLE DATA; Schema: public; Owner: thesis-dev
---
-
-
-
---
--- Data for Name: search_filter_columns; Type: TABLE DATA; Schema: public; Owner: thesis-dev
---
-
-
-
---
--- Data for Name: search_filter_customactions; Type: TABLE DATA; Schema: public; Owner: thesis-dev
---
-
-
-
---
--- Data for Name: search_filter_degrees; Type: TABLE DATA; Schema: public; Owner: thesis-dev
---
-
-
-
---
--- Data for Name: search_filter_departments; Type: TABLE DATA; Schema: public; Owner: thesis-dev
---
-
-
-
---
--- Data for Name: search_filter_documenttypes; Type: TABLE DATA; Schema: public; Owner: thesis-dev
---
-
-
-
---
--- Data for Name: search_filter_embargos; Type: TABLE DATA; Schema: public; Owner: thesis-dev
---
-
-
-
---
--- Data for Name: search_filter_excluded_actionlogs; Type: TABLE DATA; Schema: public; Owner: thesis-dev
---
-
-
-
---
--- Data for Name: search_filter_excluded_submissions; Type: TABLE DATA; Schema: public; Owner: thesis-dev
---
-
-
-
---
--- Data for Name: search_filter_included_actionlogs; Type: TABLE DATA; Schema: public; Owner: thesis-dev
---
-
-
-
---
--- Data for Name: search_filter_included_submissions; Type: TABLE DATA; Schema: public; Owner: thesis-dev
---
-
-
-
---
--- Data for Name: search_filter_majors; Type: TABLE DATA; Schema: public; Owner: thesis-dev
---
-
-
-
---
--- Data for Name: search_filter_programs; Type: TABLE DATA; Schema: public; Owner: thesis-dev
---
-
-
-
---
--- Data for Name: search_filter_semesters; Type: TABLE DATA; Schema: public; Owner: thesis-dev
---
-
-
-
---
--- Data for Name: search_filter_states; Type: TABLE DATA; Schema: public; Owner: thesis-dev
---
-
-
-
---
--- Data for Name: search_filter_text; Type: TABLE DATA; Schema: public; Owner: thesis-dev
---
-
-
-
---
--- Data for Name: submission_embargotypes; Type: TABLE DATA; Schema: public; Owner: thesis-dev
---
-
-
-
---
--- Data for Name: submission_subjects; Type: TABLE DATA; Schema: public; Owner: thesis-dev
---
-
 
 
 --
