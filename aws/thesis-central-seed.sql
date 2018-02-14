@@ -5,25 +5,10 @@
 -- Dumped from database version 9.6.5
 -- Dumped by pg_dump version 10.0
 
-SET statement_timeout = 0;
-SET lock_timeout = 0;
-SET idle_in_transaction_session_timeout = 0;
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SET check_function_bodies = false;
-SET client_min_messages = warning;
-SET row_security = off;
-
-SET search_path = public, pg_catalog;
 
 --
 -- Data for Name: person; Type: TABLE DATA; Schema: public; Owner: thesis-dev
 --
-
-INSERT INTO person (id, birthyear, currentcollege, currentdegree, currentdepartment, currentemailaddress, currentgraduationmonth, currentgraduationyear, currentmajor, currentphonenumber, currentpostaladdress, currentprogram, displayname, email, firstname, institutionalidentifier, lastname, middlename, netid, orcid, passwordhash, permanentemailaddress, permanentphonenumber, permanentpostaladdress, role) VALUES (1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'thesiscentralsu@princeton.edu', 'Thesis', NULL, 'Central SU', NULL, NULL, NULL, 'd667b048e0873092ab2fe086cec347711fb1d8ce4c918e34fb6965a00565a066', NULL, NULL, NULL, 4);
-INSERT INTO person (id, birthyear, currentcollege, currentdegree, currentdepartment, currentemailaddress, currentgraduationmonth, currentgraduationyear, currentmajor, currentphonenumber, currentpostaladdress, currentprogram, displayname, email, firstname, institutionalidentifier, lastname, middlename, netid, orcid, passwordhash, permanentemailaddress, permanentphonenumber, permanentpostaladdress, role) VALUES (2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'thesiscentral@princeton.edu', 'Thesis', NULL, 'Central', NULL, NULL, NULL, 'ca2d5163cf2f02a35cbb8889c47b35b89fa72e45f42562ceac7c805223bab4c7', NULL, NULL, NULL, 4);
-INSERT INTO person (id, birthyear, currentcollege, currentdegree, currentdepartment, currentemailaddress, currentgraduationmonth, currentgraduationyear, currentmajor, currentphonenumber, currentpostaladdress, currentprogram, displayname, email, firstname, institutionalidentifier, lastname, middlename, netid, orcid, passwordhash, permanentemailaddress, permanentphonenumber, permanentpostaladdress, role) VALUES (3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'monikam@princeton.edu', 'Monika', NULL, 'Mevenkamp', NULL, 'monikam', NULL, NULL, NULL, NULL, NULL, 4);
-
 
 --
 -- Data for Name: submission; Type: TABLE DATA; Schema: public; Owner: thesis-dev
