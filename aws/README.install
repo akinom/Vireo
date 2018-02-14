@@ -92,7 +92,10 @@ define thesis-central-rds.aws.princeton.edu  domain name
 
 cd ~/Vireo 
 edit db connector in conf/application.conf
-# seed data base with princeton base theme settings ....
+# start application which creates tables
+# then import princeton specific data
+
+# seed data base with princeton base theme settings BEFORE starting the application for the first time
 psql -h db-host-name -U db-user -d db-name -W <  aws/thesis-central-seed.sql
 # if tunneling you need to use the -p option
 psql -p tunnel-port -h localhost  -U db-user -d db-name -W  <  aws/thesis-central-seed.sql
@@ -124,7 +127,8 @@ wget -O - http://localhost:9000
 # in thesis central UI - delete all submissions, all students, all accounts without role
 # close the system for submissions
 # then export database:
-pg_dump  --column-inserts -d db-name -h db-host-name -U db-user -W > aws/thesis-central-seed.sql
+pg_dump  --data-only --column-inserts -d db-name -h db-host-name -U db-user -W > aws/thesis-central-seed.sql
+pg_dump  --data-only --column-inserts  -h localhost -p 11527 -d thesis-dev-db -U thesis-dev  -W > aws/thesis-central-seed.sql
 
 # remove all insertions to person table
 
@@ -141,7 +145,7 @@ embargo_type
 language
 program
 
-# make sure there are no REVOKE/GRANT statements
+# make sure there are no REVOKE/GRANT/OWNER statements
 fgrep REWOKE aws/thesis-central-seed.sql
 fgrep GRANT aws/thesis-central-seed.sql
 fgrep OWNER aws/thesis-central-seed.sql
