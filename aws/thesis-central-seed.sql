@@ -383,26 +383,10 @@ INSERT INTO email_workflow_rule_conditions (id, conditionid, conditiontype, disp
 -- Data for Name: email_workflow_rules; Type: TABLE DATA; Schema: public; Owner: thesis-dev
 --
 
-INSERT INTO email_workflow_rules (id, associatedstate, displayorder, isdisabled, issystem, recipienttype, admingrouprecipientid, conditionid, emailtemplateid) VALUES (1, 'Submitted', 1, false, true, 1, NULL, 1, 5);
-INSERT INTO email_workflow_rules (id, associatedstate, displayorder, isdisabled, issystem, recipienttype, admingrouprecipientid, conditionid, emailtemplateid) VALUES (2, 'Submitted', 2, false, true, 0, NULL, 2, 6);
+UPDATE email_workflow_rules SET isdisabled = True WHERE  issystem = True;
 INSERT INTO email_workflow_rules (id, associatedstate, displayorder, isdisabled, issystem, recipienttype, admingrouprecipientid, conditionid, emailtemplateid) VALUES (7, 'Submitted', 7, false, false, 3, NULL, 7, 9);
 INSERT INTO email_workflow_rules (id, associatedstate, displayorder, isdisabled, issystem, recipienttype, admingrouprecipientid, conditionid, emailtemplateid) VALUES (3, 'Submitted', 3, false, false, 0, NULL, 3, 8);
 INSERT INTO email_workflow_rules (id, associatedstate, displayorder, isdisabled, issystem, recipienttype, admingrouprecipientid, conditionid, emailtemplateid) VALUES (5, 'Submitted', 5, false, false, 4, NULL, 5, 9);
-
-
---
--- Data for Name: embargo_type; Type: TABLE DATA; Schema: public; Owner: thesis-dev
---
-
-INSERT INTO embargo_type (id, active, description, displayorder, duration, guarantor, name, systemrequired) VALUES (1, true, 'The work will be published after approval.', 0, 0, 0, 'None', true);
-INSERT INTO embargo_type (id, active, description, displayorder, duration, guarantor, name, systemrequired) VALUES (2, true, 'The work will be delayed for publication by one year because of a restriction from publication in an academic journal.', 0, 12, 0, 'Journal Hold', true);
-INSERT INTO embargo_type (id, active, description, displayorder, duration, guarantor, name, systemrequired) VALUES (3, true, 'The work will be delayed for publication by two years because of patent related activities.', 0, 24, 0, 'Patent Hold', true);
-INSERT INTO embargo_type (id, active, description, displayorder, duration, guarantor, name, systemrequired) VALUES (4, false, 'The work will be delayed for publication by an indefinite amount of time.', 0, NULL, 0, 'Other Embargo Period', true);
-INSERT INTO embargo_type (id, active, description, displayorder, duration, guarantor, name, systemrequired) VALUES (5, true, 'The work will be published after approval.', 0, 0, 1, 'None', true);
-INSERT INTO embargo_type (id, active, description, displayorder, duration, guarantor, name, systemrequired) VALUES (6, true, 'The full text of this work will be held/restricted from worldwide access on the internet for six months from the semester/year of graduation to meet academic publisher restrictions or to allow time for publication.', 0, 6, 1, '6-month Journal Hold', true);
-INSERT INTO embargo_type (id, active, description, displayorder, duration, guarantor, name, systemrequired) VALUES (7, true, 'The full text of this work will be held/restricted from worldwide access on the internet for one year from the semester/year of graduation to meet academic publisher restrictions or to allow time for publication.', 0, 12, 1, '1-year Journal Hold', true);
-INSERT INTO embargo_type (id, active, description, displayorder, duration, guarantor, name, systemrequired) VALUES (8, true, 'The full text of this work will be held/restricted from worldwide access on the internet for two years from the semester/year of graduation to meet academic publisher restrictions or to allow time for publication.', 0, 24, 1, '2-year Journal Hold', true);
-INSERT INTO embargo_type (id, active, description, displayorder, duration, guarantor, name, systemrequired) VALUES (9, false, 'The work will be delayed for publication by an indefinite amount of time.', 0, NULL, 1, 'Flexible/Delayed Release Embargo Period', true);
 
 
 --
