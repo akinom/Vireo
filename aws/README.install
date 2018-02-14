@@ -110,8 +110,10 @@ psql -p tunnel-port -h localhost  -U db-user -d db-name -W  <  aws/thesis-centra
 # configure first account thesiscentral@princeton.edu
 # configure second thesiscentralsu@princeton.edu at http://XXX.princeton.edu/login/PasswordAuthentication
 # make second account admin
-# set  email-bcc  at Admin | Settings | Email Settings
-
+# check  email-bcc  at Admin | Settings | Email Settings
+# create accounts for reviewers: Admin | System | Reset based o Department/Program Settings
+# in QA import stsudent accounts - the file conf/prepopulate/Student-Data.tsv   is setup foe thesis.central.pu+NETID emails @gmail.com
+# in PROD - place current years  file on PROD server - then import
 
 
 
