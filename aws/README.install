@@ -86,31 +86,33 @@ cd ~/Vireo
 ln -s ~/play1 play
 
 # ---------------
-# configure with right database 
+# start and populate database
 # ---------------
-define thesis-central-rds.aws.princeton.edu  domain name
+# define thesis-central-rds.aws.princeton.edu  domain name  for database server
+# edit db connector in conf/application.conf
+cd ~/Vireo
+# start application which creates tables and seeds with vireo defaults
+./play.sh start
+# look at logs/application.log
 
-cd ~/Vireo 
-edit db connector in conf/application.conf
-# start application which creates tables
-# then import princeton specific data
+# import princeton specific data  use sql from aws/thesis-central-seed-qa/prod.sql
+psql -h db-host-name -U db-user -d db-name -W <  aws/thesis-central-seed-XX.sql
 
-# seed data base with princeton base theme settings BEFORE starting the application for the first time
-psql -h db-host-name -U db-user -d db-name -W <  aws/thesis-central-seed.sql
 # if tunneling you need to use the -p option
 psql -p tunnel-port -h localhost  -U db-user -d db-name -W  <  aws/thesis-central-seed.sql
 
 
 # ---------------
-# start and configure first account
+# configure Vireo admin accounts
 # ----------------
-./play/sh  start
-# test
-wget -O - http://localhost:9000
-# this creates the tables in the database if they do not exist yet
+# visit http://thsis-central-qa.aws.princeton.edu
+# visit http://thsis-central.princeton.edu
+# configure first account thesiscentral@princeton.edu
+# configure second thesiscentralsu@princeton.edu at http://XXX.princeton.edu/login/PasswordAuthentication
+# make second account admin
+# set  email-bcc  at Admin | Settings | Email Settings
 
-# by passing shibboleth
-# access with browser http://thesis-central.../login/PasswordAuthentication
+
 
 
 
