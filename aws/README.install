@@ -114,6 +114,7 @@ wget -O - http://localhost:9000
 
 
 
+
 # -------------
 # after data was exported and imported into DataSpace
 # prepare for following year
@@ -124,6 +125,8 @@ wget -O - http://localhost:9000
 # close the system for submissions
 # then export database:
 pg_dump  --column-inserts -d db-name -h db-host-name -U db-user -W > aws/thesis-central-seed.sql
+
+# remove all insertions to person table
 
 # then check that there are only insertions in the following tables
 fgrep INSERT aws/thesis-central-seed.sql | awk '{print $3}' | sort -u
@@ -136,12 +139,12 @@ email_workflow_rule_conditions
 email_workflow_rules
 embargo_type
 language
-person
 program
 
 # make sure there are no REVOKE/GRANT statements
 fgrep REWOKE aws/thesis-central-seed.sql
 fgrep GRANT aws/thesis-central-seed.sql
+fgrep OWNER aws/thesis-central-seed.sql
 
 # remove all SELECT pg_catalog.setval( .. statements
 fgrep pg_catalog.setval aws/thesis-central-seed.sql
