@@ -7,10 +7,12 @@ accounts
    shell for thesiscentralsu is csh
 
 packages:
+    ant
     git
     csh
     httpd  with ssl
     shibboleth
+    postgresql
     mail configured with smtp.princeton.edu
 
 /etc/httpd
@@ -28,29 +30,23 @@ packages:
     # get idp-matadata.xml
     wget -O  /etc/shibboleth/idp-metadata.xml   https://idp.princeton.edu/idp/shibboleth
 
-# httpd and shibd should be in startup sequence 
-/sbin/chkconfig --list httpd 
-/sbin/chkconfig --list shibd  
-/sbin/chkconfig --list thesiscentral
+# ---------------
+# file change at 
+# ---------------
+/etc/httpd/conf.d
+/etc/httpd/conf
+/etc/httpd/certs 
 
+/etc/shibboleth 
+# get idp-matadata.xml 
+wget -O  /etc/shibboleth/idp-metadata.xml   https://idp.princeton.edu/idp/shibboleth
 
-# -----
-# sys setup manual tweaks  
-# -----
-cd /var/www/html/shibboleth 
-wget -O shib https://thesis-central.aws.princeton.edu/Shibboleth.sso/Metadata
-substitute to match server name   eg: 
- <ds:KeyName>thesis-central.aws.princeton.edu</ds:KeyName>
- <ds:X509SubjectName>CN=thesis-central.aws.princeton.edu</ds:X509SubjectName>
+/var/www/html/shibboleth 
 
-
-# -----
-# thesiscentralsu  account 
-# -----
-setup the same pub/private keys  on QA and PROD server
-ssh-keygen 
-configure thesis-central bitbucket to accept key 
-add  to ~/.ssh/authorized_keys   so monikasu can login
+#########
+### as thesiscentralsu 
+#########
+setup thesiscentralsu account 
 
 # ---------------
 # install play1 framework
@@ -65,8 +61,15 @@ git checkout -b tags/1.3.0
 cd framework
 ant
 
+
+#########
+### as thesiscentralsu 
+#########
+ssh-keygen 
+configure key with bitbucket repo 
+
 # ---------------
-# get thesis-central code
+# get vireo code
 # ---------------
 cd ~
 mkdir Vireo
@@ -74,44 +77,43 @@ cd Vireo
 git init . 
 git remote add origin git@bitbucket.org:princeton/thesiscentral-vireo.git
 git fetch 
-git checkout master
-# set up account with .cshrc and .gitconfig settings
-cp -r aws/thesiscentralsu/bin aws/thesiscentralsu/.[a-z]* ~
-#log out and back in - should see adjusted prompt
-# create data directories  and link to them from ~Vireo/data
-mkdir /data/thesiscentralsu/attachments
-mkdir /data/thesiscentralsu/indexes
-mkdir /data/thesiscentralsu/deposits
-(cd data;  ln -s /data/thesiscentralsu/* .)
+git checkout master 
 
 # ---------------
-# link Vireo to play1 framework
+# link Viireo to play1 framework
 # ---------------
 cd ~/Vireo 
 ln -s ~/play1 play
 
+# ---------------
+# start and populate database
+# ---------------
+# define thesis-central-rds.aws.princeton.edu  domain name  for database server
+# edit db connector in conf/application.conf
+cd ~/Vireo
+# start application which creates tables and seeds with vireo defaults
+./play.sh start
+# look at logs/application.log
 
-# ---------------
-# configure with right database 
-# ---------------
-cd ~/Vireo 
-edit db connector in conf/application.conf
-# seed data base with princeton base theme settings ....
-psql -h db-host-name -U db-user -d db-name -W <  aws/thesis-central-seed.sql
+# import princeton specific data  use sql from aws/thesis-central-seed-qa/prod.sql
+psql -h db-host-name -U db-user -d db-name -W <  aws/thesis-central-seed-XX.sql
+
 # if tunneling you need to use the -p option
 psql -p tunnel-port -h localhost  -U db-user -d db-name -W  <  aws/thesis-central-seed.sql
 
 
 # ---------------
-# start and configure first account
+# configure Vireo admin accounts
 # ----------------
-./play/sh  start
-# test
-wget -O - http://localhost:9000
-# this creates the tables in the database if they do not exist yet
+# visit http://thsis-central-qa.aws.princeton.edu
+# visit http://thsis-central.princeton.edu
+# configure first account thesiscentral@princeton.edu
+# configure second thesiscentralsu@princeton.edu at http://XXX.princeton.edu/login/PasswordAuthentication
+# make second account admin
+# set  email-bcc  at Admin | Settings | Email Settings
 
-# by passing shibboleth
-# access with browser http://thesis-central.../login/PasswordAuthentication
+
+
 
 
 
@@ -127,9 +129,10 @@ wget -O - http://localhost:9000
 # in thesis central UI - delete all submissions, all students, all accounts without role
 # close the system for submissions
 # then export database:
-pg_dump ---data-only  --column-inserts -d db-name -h db-host-name -U db-user -W > aws/thesis-central-seed.sql
-# delete all insertions into the person table
-# delete all statements that set sequence values  SELECT pg_catalog.setval(..);
+pg_dump  --data-only --column-inserts -d db-name -h db-host-name -U db-user -W > aws/thesis-central-seed.sql
+pg_dump  --data-only --column-inserts  -h localhost -p 11527 -d thesis-dev-db -U thesis-dev  -W > aws/thesis-central-seed.sql
+
+# remove all insertions to person table
 
 # then check that there are only insertions in the following tables
 fgrep INSERT aws/thesis-central-seed.sql | awk '{print $3}' | sort -u
@@ -144,12 +147,12 @@ embargo_type
 language
 program
 
-# make sure there are no REVOKE/GRANT statements
+# make sure there are no REVOKE/GRANT/OWNER statements
 fgrep REWOKE aws/thesis-central-seed.sql
 fgrep GRANT aws/thesis-central-seed.sql
+fgrep OWNER aws/thesis-central-seed.sql
 
 # remove all SELECT pg_catalog.setval( .. statements
 fgrep pg_catalog.setval aws/thesis-central-seed.sql
-
 
 
