@@ -20,7 +20,7 @@
     -->
 
     <!-- The ApplicationDefaults element is where most of Shibboleth's SAML bits are defined. -->
-    <ApplicationDefaults entityID="https://thesis-central.princeton.edu/shibboleth"
+    <ApplicationDefaults entityID="https://thesis-central-qa.aws.princeton.edu/shibboleth"
                          REMOTE_USER="eppn persistent-id targeted-id">
 
         <!--
