@@ -1,5 +1,7 @@
 package org.tdl.vireo.model;
 
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -274,6 +276,15 @@ public class MockPerson extends AbstractMock implements Person {
 	@Override
 	public String getCurrentEmailAddress() {
 		return this.currentEmailAddress;
+	}
+
+	@Override
+	public InternetAddress getInternetAddress() {
+		try {
+			return new InternetAddress(getCurrentEmailAddress());
+		} catch (AddressException e ) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	@Override
