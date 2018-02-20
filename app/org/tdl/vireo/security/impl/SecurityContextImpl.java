@@ -95,8 +95,7 @@ public class SecurityContextImpl implements SecurityContext {
 
 	@Override
 	public void turnOffAuthorization() {
-		
-		if (authorizationStateHistory.get() == null) 
+		if (authorizationStateHistory.get() == null)
 			resetAuthorizationStack();
 		authorizationStateHistory.get().push(false);
 	}
@@ -113,7 +112,7 @@ public class SecurityContextImpl implements SecurityContext {
 	@Override
 	public boolean isAuthorizationActive() {
 		try {
-			return authorizationStateHistory.get().peek();
+			return (null != authorizationStateHistory.get()) && authorizationStateHistory.get().peek();
 		} catch (EmptyStackException ese) {
 			return true;
 		}
