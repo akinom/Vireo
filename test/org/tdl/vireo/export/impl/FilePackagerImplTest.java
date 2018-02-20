@@ -116,7 +116,7 @@ public class FilePackagerImplTest extends UnitTest {
 			Map<String, File> fileMap = getFileMap(exportFile);
 			
 			// There should be three files
-			assertTrue(fileMap.containsKey("PRIMARY-DOCUMENT.pdf"));
+			assertTrue(fileMap.containsKey("PRIMARY-THESIS.pdf"));
 			assertTrue(fileMap.containsKey("fluff.jpg"));			
 			
 			// Cleanup
