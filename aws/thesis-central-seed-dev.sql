@@ -385,6 +385,6 @@ INSERT INTO program (id, displayorder, emails, name) VALUES (199, 80, '\xaced000
 -- update email from/reply to/bcc
 --
 
-UPDATE configuration SET value = '"QA Thesis Central" <noreply@princeton.edu>' WHERE NAME = 'email_from';
-UPDATE configuration SET value = '"QA Thesis Central" <thesis.central.pu+REPLYTO@gmail.com>' WHERE name = 'email_reply_to';
-UPDATE configuration SET value = '"QA Thesis Central" <thesis.central.pu+BCC@gmail.com>' WHERE name = 'email_bcc';
+UPDATE configuration SET value = '"DEV Thesis Central" <noreply@princeton.edu>' WHERE NAME = 'email_from';
+UPDATE configuration SET value = '"DEV Thesis Central" <thesis.central.pu+REPLYTO@gmail.com>' WHERE name = 'email_reply_to';
+UPDATE configuration SET value = '"DEV Thesis Central" <thesis.central.pu+BCC@gmail.com>' WHERE name = 'email_bcc';
