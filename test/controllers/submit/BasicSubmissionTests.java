@@ -120,7 +120,7 @@ public class BasicSubmissionTests extends AbstractSubmissionTests {
 		// View the homepage
 		Response response = GET(INDEX_URL);
 		assertIsOk(response);
-		assertContentMatch("Start your submission",response); // the start button is there.
+		assertContentMatch("Manage/View your submission",response); // the start button is there.
 		assertContentMatch(LIST_URL,response); // and it's url.
 
 		// PersonalInfo step
@@ -213,7 +213,7 @@ public class BasicSubmissionTests extends AbstractSubmissionTests {
 		// View the homepage
 		Response response = GET(INDEX_URL);
 		assertIsOk(response);
-		assertContentMatch("Start your submission",response); // the start button is there.
+		assertContentMatch("Manage/View your submission",response); // the start button is there.
 		assertContentMatch(LIST_URL,response); // and it's url.
 
 		// PersonalInfo step
@@ -336,7 +336,7 @@ public class BasicSubmissionTests extends AbstractSubmissionTests {
 		// View the homepage
 		Response response = GET(INDEX_URL);
 		assertIsOk(response);
-		assertContentMatch("Start your submission",response); // the start button is there.
+		assertContentMatch("Manage/View your submission",response); // the start button is there.
 		assertContentMatch(LIST_URL,response); // and it's url.
 		
 		// PersonalInfo step
@@ -557,7 +557,7 @@ public class BasicSubmissionTests extends AbstractSubmissionTests {
 		// View the homepage
 		Response response = GET(INDEX_URL);
 		assertIsOk(response);
-		assertContentMatch("Start your submission",response); // the start button is there.
+		assertContentMatch("Manage/View your submission",response); // the start button is there.
 		assertContentMatch(LIST_URL,response); // and it's url.
 
 		// PersonalInfo step
@@ -686,7 +686,7 @@ public class BasicSubmissionTests extends AbstractSubmissionTests {
 		// View the homepage
 		Response response = GET(INDEX_URL);
 		assertIsOk(response);
-		assertContentMatch("Start your submission",response); // the start button is there.
+		assertContentMatch("Manage/View your submission",response); // the start button is there.
 		assertContentMatch(LIST_URL,response); // and it's url.
 
 		// PersonalInfo step
@@ -767,7 +767,7 @@ public class BasicSubmissionTests extends AbstractSubmissionTests {
 		// View the homepage
 		Response response = GET(INDEX_URL);
 		assertIsOk(response);
-		assertContentMatch("Start your submission",response); // the start button is there.
+		assertContentMatch("Manage/View your submission",response); // the start button is there.
 		assertContentMatch(LIST_URL,response); // and it's url.
 
 		// PersonalInfo step
