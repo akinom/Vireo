@@ -63,8 +63,8 @@ public class FilterTabTest extends AbstractVireoFunctionalTest {
 		
 		// Login as an administrator
 		LOGIN();
-		
-		
+
+
 		Person reviewer = personRepo.findPersonsByRole(RoleType.REVIEWER).get(0);
 		EmbargoType embargo1 = settingRepo.findAllEmbargoTypes().get(0);
 		EmbargoType embargo2 = settingRepo.findAllEmbargoTypes().get(1);
@@ -570,7 +570,6 @@ public class FilterTabTest extends AbstractVireoFunctionalTest {
 			assertContentMatch("<li id=\"column_"+SearchOrder.DOCUMENT_TITLE.getId()+"\" class=\"originally-shown\"", response);
 			assertContentMatch("<li id=\"column_"+SearchOrder.STATE.getId()+"\" class=\"originally-shown\"", response);
 			
-			assertContentMatch("<li id=\"column_"+SearchOrder.ASSIGNEE.getId()+"\" class=\"originally-hidden\"", response);
 			assertContentMatch("<li id=\"column_"+SearchOrder.LAST_EVENT_TIME.getId()+"\" class=\"originally-hidden\"", response);
 	
 			assertContentMatch("<option selected=\"true\" value=\"20\">20</option>",response);
@@ -600,8 +599,6 @@ public class FilterTabTest extends AbstractVireoFunctionalTest {
 			// The default facets shared between list and log tabs.
 			assertContentMatch("<li id=\"facet_"+SearchFacet.TEXT.getId()+"\" class=\"originally-shown\"", response);
 			assertContentMatch("<li id=\"facet_"+SearchFacet.STATE.getId()+"\" class=\"originally-shown\"", response);
-			assertContentMatch("<li id=\"facet_"+SearchFacet.ASSIGNEE.getId()+"\" class=\"originally-shown\"", response);
-			
 			
 			// Change the facets
 			String facetsString = "facet_"+SearchFacet.TEXT.getId()+",facet_"+SearchFacet.DEGREE.getId()+",facet_"+SearchFacet.DATE_RANGE.getId();
@@ -618,8 +615,6 @@ public class FilterTabTest extends AbstractVireoFunctionalTest {
 			assertContentMatch("<li id=\"facet_"+SearchFacet.DATE_RANGE.getId()+"\" class=\"originally-shown\"", response);
 			
 			assertContentMatch("<li id=\"facet_"+SearchFacet.STATE.getId()+"\" class=\"originally-hidden\"", response);
-			assertContentMatch("<li id=\"facet_"+SearchFacet.ASSIGNEE.getId()+"\" class=\"originally-hidden\"", response);
-			assertContentMatch("<li id=\"facet_"+SearchFacet.UMI_RELEASE.getId()+"\" class=\"originally-hidden\"", response);
 		}
 	}
 	
