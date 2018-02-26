@@ -755,8 +755,8 @@ public class ViewTabTest extends AbstractVireoFunctionalTest {
 		file.delete();
 		// Verify the files were uploaded and archived
 		submission = subRepo.findSubmission(id);
-		assertEquals("PRIMARY-DOCUMENT.pdf",submission.getPrimaryDocument().getName());
-		assertEquals("PRIMARY-DOCUMENT-archived-on-"+JpaAttachmentImpl.dateFormat.format(new Date())+".pdf",submission.getAttachmentsByType(AttachmentType.ARCHIVED).get(0).getName());
+		assertEquals("PRIMARY-THESIS.pdf",submission.getPrimaryDocument().getName());
+		assertEquals("PRIMARY-THESIS-archived-on-"+JpaAttachmentImpl.dateFormat.format(new Date())+".pdf",submission.getAttachmentsByType(AttachmentType.ARCHIVED).get(0).getName());
 		assertEquals(submission.getState(),stateManager.getState("NeedsCorrection"));
 		
 		submission.delete();
