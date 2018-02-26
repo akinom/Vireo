@@ -5,6 +5,7 @@ package org.tdl.vireo.services;
 
 import java.util.List;
 
+import net.sf.oval.constraint.AssertTrue;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -90,14 +91,14 @@ public class SystemDataLoaderTest extends AbstractVireoFunctionalTest {
 		assertEquals("Vireo Account Registration", template.getSubject());
 		assertTrue(template.getMessage().contains("To complete registration of your Vireo account, please click the link"));
 		assertTrue(template.getMessage().contains("{REGISTRATION_URL}"));
-		assertTrue(template.getMessage().contains("The Vireo Team"));
+		assertTrue(template.getMessage().contains("The Thesis Central Team"));
 
 		template = mockSettingsRepository.findEmailTemplateByName("SYSTEM Verify Email Address");
 		assertEquals("SYSTEM Verify Email Address", template.getName());
 		assertEquals("Verify Email Address", template.getSubject());
 		assertTrue(template.getMessage().contains("Please click on the link below to verify your email address with"));
 		assertTrue(template.getMessage().contains("{REGISTRATION_URL}"));
-		assertTrue(template.getMessage().contains("The Vireo Team"));
+		assertTrue(template.getMessage().contains("The Thesis Central Team"));
 	}
 
 	/**
@@ -118,11 +119,9 @@ public class SystemDataLoaderTest extends AbstractVireoFunctionalTest {
 		template.save();
 
 		assertEquals("SYSTEM Email Test", template.getName());
-		assertEquals("Vireo Email Test", template.getSubject());
+		assertTrue(template.getSubject().contains("Email Test"));
 		assertTrue(template.isSystemRequired());
-		assertTrue(template.getMessage().contains("A Vireo system administrator has sent this email address a test email. You may"));
-		assertTrue(template.getMessage().contains("If you need assistance with your account, please email"));
-		assertTrue(template.getMessage().contains("The Vireo Team"));
+		assertTrue(template.getMessage().contains("system administrator has sent this email address a test email"));
 	}
 
 	/**
@@ -156,11 +155,9 @@ public class SystemDataLoaderTest extends AbstractVireoFunctionalTest {
 		// should give us our system one (after data upgrade)
 		EmailTemplate newSystemTemplate = mockSettingsRepository.findSystemEmailTemplateByName("SYSTEM Email Test");
 		assertEquals("SYSTEM Email Test", newSystemTemplate.getName());
-		assertEquals("Vireo Email Test", newSystemTemplate.getSubject());
+		assertTrue(newSystemTemplate.getSubject().contains("Email Test"));
 		assertTrue(newSystemTemplate.isSystemRequired());
-		assertTrue(newSystemTemplate.getMessage().contains("A Vireo system administrator has sent this email address a test email. You may"));
-		assertTrue(newSystemTemplate.getMessage().contains("If you need assistance with your account, please email"));
-		assertTrue(newSystemTemplate.getMessage().contains("The Vireo Team"));
+		assertTrue(newSystemTemplate.getMessage().contains("system administrator has sent this email address a test email"));
 
 		// Create the embargo.
 		EmbargoType oldEmbargo = mockSettingsRepository.createEmbargoType("None", "Nonya", 60, false, EmbargoGuarantor.DEFAULT).save();
