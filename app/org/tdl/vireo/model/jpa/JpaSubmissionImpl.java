@@ -66,7 +66,6 @@ import play.vfs.VirtualFile;
 @Entity
 @Table(name = "submission")
 public class JpaSubmissionImpl extends JpaAbstractModel<JpaSubmissionImpl> implements Submission {
-
 	@ManyToOne(optional = false, targetEntity = JpaPersonImpl.class)
 	public Person submitter;
 
@@ -893,7 +892,6 @@ public class JpaSubmissionImpl extends JpaAbstractModel<JpaSubmissionImpl> imple
 			if (date == null) {
 				generateLog("Submission date cleared",true);
 			} else {
-				DateFormat format = new SimpleDateFormat("MM/dd/YY-HH:mm");
 				generateLog("Submission date set to "+  Utilities.formatDate(date),true);
 			}
 		}

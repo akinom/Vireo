@@ -31,6 +31,7 @@ import org.tdl.vireo.search.SearchFilter;
 import org.tdl.vireo.search.SearchOrder;
 import org.tdl.vireo.search.Searcher;
 import org.tdl.vireo.security.SecurityContext;
+import org.tdl.vireo.services.Utilities;
 import org.tdl.vireo.state.StateManager;
 
 import play.Logger;
@@ -759,8 +760,7 @@ public class LuceneSearcherImplTest extends UnitTest{
 			
 			logs = searcher.actionLogSearch(filter, SearchOrder.ID, SearchDirection.DESCENDING, 0, 20).getResults();
 			
-			DateFormat format = new SimpleDateFormat("MM/dd/yyyy");
-			String formattedDate = format.format(sub2.getSubmissionDate());
+			String formattedDate = Utilities.formatDate(sub2.getSubmissionDate());
 			
 			assertEquals(sub2,logs.get(0).getSubmission());
 			assertEquals("Submission date set to "+formattedDate, logs.get(0).getEntry());

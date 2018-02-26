@@ -351,10 +351,10 @@ public class Utilities {
 		    return builder.toString();
 		}
 
-	private static DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+	public static final DateFormat dateFormatter = new SimpleDateFormat("MM/dd/YY HH:mm");
 	public static String formatDate(Date date)  {
 		if (null == date)
 			return "";
-		return formatter.format(date);
+		return dateFormatter.format(date);
 	}
 }

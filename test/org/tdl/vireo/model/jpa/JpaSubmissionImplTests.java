@@ -24,6 +24,7 @@ import org.tdl.vireo.model.RoleType;
 import org.tdl.vireo.model.Submission;
 import org.tdl.vireo.search.Semester;
 import org.tdl.vireo.security.SecurityContext;
+import org.tdl.vireo.services.Utilities;
 import org.tdl.vireo.state.State;
 import org.tdl.vireo.state.StateManager;
 import org.tdl.vireo.state.impl.StateManagerImpl;
@@ -696,8 +697,7 @@ public class JpaSubmissionImplTests extends UnitTest {
 		
 		sub.delete();
 		
-		DateFormat format = new SimpleDateFormat("MM/dd/yyyy");
-		String formattedDate = format.format(now);
+		String formattedDate = Utilities.formatDate(now);
 
 		assertEquals("Document subjects cleared", logItr.next().getEntry());
 		assertEquals("Reviewer notes cleared", logItr.next().getEntry());
