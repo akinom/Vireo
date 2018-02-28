@@ -106,7 +106,7 @@ public class SystemTest extends AbstractVireoFunctionalTest {
 				break;
 		}
 		assertNotNull(recieved);
-		assertTrue(recieved.contains("Subject: Vireo Email Test"));
+		assertTrue(recieved.contains("Subject: Email Test"));
 	}
 	
 	/** 
