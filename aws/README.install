@@ -52,8 +52,15 @@ setup thesiscentralsu account
 # install play1 framework
 # ---------------
 cd ~
-wget https://downloads.typesafe.com/play/1.3.4/play-1.3.4.zip
-unzip play-1.3.4.zip
+git clone https://github.com/playframework/play1.git
+# installation instrauctions at https://www.playframework.com/documentation/1.1.1/install
+cd play1
+git checkout tags/1.3.0
+git checkout -b tags/1.3.0
+# this brings out a version from Jan 13 2016
+cd framework
+ant
+
 
 
 #########
