@@ -150,7 +150,7 @@ public class StudentTest extends AbstractVireoFunctionalTest {
 
 		
 		Response response = GET(LIST_URL);
-		assertContentMatch(">Start a new submission</a>",response);
+		assertContentMatch(">Make Additional Submission</a>",response);
 		response = GET(PERSONAL_INFO_URL);
 		assertNotNull(response.getHeader("Location"));
 		int lastSlash = response.getHeader("Location").indexOf('/', 8);
@@ -159,7 +159,7 @@ public class StudentTest extends AbstractVireoFunctionalTest {
 		assertEquals("/submit/", part1);
 		assertEquals("/personalInfo", part2);
 		response = GET(response.getHeader("Location"));
-		assertContentMatch("<title>Vireo Thesis and Dissertation Submital System - Submission - Verify Your Information</title>",response);
+		assertContentMatch("<title>Thesis Central - Submission - Verify Your Information</title>",response);
 	}
 
 	/**
@@ -176,7 +176,7 @@ public class StudentTest extends AbstractVireoFunctionalTest {
 
 		Response response = GET(LIST_URL);
 		assertIsOk(response);
-		assertContentMatch("<title>Submission Status</title>",response);
+		assertContentMatch("<title>Submission Overview</title>",response);
 
 	}
 
@@ -202,7 +202,7 @@ public class StudentTest extends AbstractVireoFunctionalTest {
 		Response response = GET(LIST_URL);
 				
 		assertIsOk(response);
-		assertContentMatch("<title>Submission Status</title>",response);
+		assertContentMatch("<title>Submission Overview</title>",response);
 		
 	}
 
@@ -272,7 +272,7 @@ public class StudentTest extends AbstractVireoFunctionalTest {
 		
 		Response response = GET(LIST_URL);
 		assertIsOk(response);
-		assertContentMatch("<title>Submission Status</title>",response);	
+		assertContentMatch("<title>Submission Overview</title>",response);
 		assertContentMatch(VIEW_URL,response);
 		assertContentMatch(NEW_URL,response);
 
@@ -320,8 +320,8 @@ public class StudentTest extends AbstractVireoFunctionalTest {
 		
 		Response response = GET(LIST_URL);
 		assertIsOk(response);
-		assertContentMatch("<title>Submission Status</title>",response);
-		assertContentMatch(">Start a new submission</a>",response);
+		assertContentMatch("<title>Submission Overview</title>",response);
+		assertContentMatch(">Make Additional Submission</a>",response);
 	}
 
 	/**
@@ -349,7 +349,7 @@ public class StudentTest extends AbstractVireoFunctionalTest {
 		
 		Response response = GET(LIST_URL);
 		assertIsOk(response);
-		assertContentMatch("<title>Submission Status</title>",response);
+		assertContentMatch("<title>Submission Overview</title>",response);
 	}
 
 	/**
@@ -379,7 +379,7 @@ public class StudentTest extends AbstractVireoFunctionalTest {
 
 		
 		Response response = GET(LIST_URL);
-		assertContentMatch("The system is currently closed for new submissions; please contact your thesis office for more information.", response);
+		assertContentMatch("is currently closed", response);
 		response = GET(VIEW_URL);
 		assertContentMatch("<title>View Application</title>",response);
 	}
@@ -388,7 +388,7 @@ public class StudentTest extends AbstractVireoFunctionalTest {
 	 * Test deleting submission with other submissions in list.
 	 */
 	@Test
-	public void testDeletingSubmissionWithOtherSubmissions() {
+	public void testNoDeletingSubmissionWithOtherSubmissions() {
 		
 		configure(true,true);
 		
@@ -409,19 +409,8 @@ public class StudentTest extends AbstractVireoFunctionalTest {
 
 		Response response = GET(LIST_URL);
 		assertIsOk(response);
-		assertContentMatch("<title>Submission Status</title>",response);
-		assertContentMatch(DELETE_URL,response);
-		
-		response = GET(DELETE_URL);
-		assertEquals(LIST_URL,response.getHeader("Location"));
-		
-		// confirm the submission was deleted
-		JPA.em().getTransaction().commit();
-		JPA.em().clear();
-		JPA.em().getTransaction().begin();
-		
-		assertNull(subRepo.findSubmission(sub1.getId()));
-		
+		assertContentMatch("<title>Submission Overview</title>",response);
+		assertEquals(-1, getContent(response).indexOf(DELETE_URL));
 	}
 
 	/**
@@ -448,12 +437,11 @@ public class StudentTest extends AbstractVireoFunctionalTest {
 
 		Response response = GET(LIST_URL);
 		assertIsOk(response);
-		assertContentMatch("<title>Submission Status</title>",response);
-		assertContentMatch(DELETE_URL,response);
-		
+		assertContentMatch("<title>Submission Overview</title>",response);
+
 		response = GET(DELETE_URL);
 		assertEquals(INDEX_URL,response.getHeader("Location"));
-		
+
 		// confirm the submission was deleted
 		JPA.em().getTransaction().commit();
 		JPA.em().clear();
