@@ -15,6 +15,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.tdl.vireo.model.ActionLog;
+import org.tdl.vireo.model.Attachment;
 import org.tdl.vireo.model.AttachmentType;
 import org.tdl.vireo.model.Configuration;
 import org.tdl.vireo.model.Person;
@@ -570,19 +571,29 @@ public class StudentTest extends AbstractVireoFunctionalTest {
 		
 		assertIsOk(response);
 		assertContentMatch("<title>View Application</title>",response);
-		assertContentMatch("PRIMARY-DOCUMENT.pdf",response);
-		
+		sub = subRepo.findSubmission(sub.getId()); // reload
+		String primaryDocName = sub.getPrimaryDocument().getName();
+		assertContentMatch(primaryDocName,response);
+
 		// Delete a manuscript
 		params.clear();
 		params.put("replacePrimary","Replace Manuscript");
 		response = POST(VIEW_URL,params);
-		
+
 		assertIsOk(response);
 		assertContentMatch("<title>View Application</title>",response);
-		assertFalse(getContent(response).contains("PRIMARY-DOCUMENT.pdf</a>"));
-		
+		assertFalse(getContent(response).contains(primaryDocName + "</a>"));
+
+		// Reload and Verify the submission
+		JPA.em().getTransaction().commit();
+		JPA.em().clear();
+		JPA.em().getTransaction().begin();
 		sub = subRepo.findSubmission(sub.getId());
-		assertEquals("PRIMARY-DOCUMENT-archived-on-"+JpaAttachmentImpl.dateFormat.format(new Date())+".pdf",sub.getAttachmentsByType(AttachmentType.ARCHIVED).get(0).getName());
+
+		assertTrue(sub.getPrimaryDocument() == null);
+		Attachment archived = sub.getAttachmentsByType(AttachmentType.ARCHIVED).get(0);
+		assertEquals("PRIMARY-THESIS" + "-archived-on-"+JpaAttachmentImpl.dateFormat.format(new Date())+".pdf",
+				archived.getName());
 	}
 
 	/**
