@@ -5,14 +5,10 @@ package org.tdl.vireo.services;
 
 import java.util.List;
 
-import net.sf.oval.constraint.AssertTrue;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.tdl.vireo.model.EmailTemplate;
-import org.tdl.vireo.model.EmbargoGuarantor;
-import org.tdl.vireo.model.EmbargoType;
-import org.tdl.vireo.model.SettingsRepository;
+import org.tdl.vireo.model.*;
 import org.tdl.vireo.model.jpa.MockSettingsRepository;
 import org.tdl.vireo.security.SecurityContext;
 
@@ -91,14 +87,12 @@ public class SystemDataLoaderTest extends AbstractVireoFunctionalTest {
 		assertEquals("Vireo Account Registration", template.getSubject());
 		assertTrue(template.getMessage().contains("To complete registration of your Vireo account, please click the link"));
 		assertTrue(template.getMessage().contains("{REGISTRATION_URL}"));
-		assertTrue(template.getMessage().contains("The Thesis Central Team"));
 
 		template = mockSettingsRepository.findEmailTemplateByName("SYSTEM Verify Email Address");
 		assertEquals("SYSTEM Verify Email Address", template.getName());
 		assertEquals("Verify Email Address", template.getSubject());
 		assertTrue(template.getMessage().contains("Please click on the link below to verify your email address with"));
 		assertTrue(template.getMessage().contains("{REGISTRATION_URL}"));
-		assertTrue(template.getMessage().contains("The Thesis Central Team"));
 	}
 
 	/**
@@ -108,7 +102,7 @@ public class SystemDataLoaderTest extends AbstractVireoFunctionalTest {
 	public void testOverwritingSystemEmailTemplate() {
 		// Create the template.
 
-		EmailTemplate template = settingRepo.createEmailTemplate("SYSTEM Email Test", "subject", "message").save();
+		EmailTemplate template = mockSettingsRepository.createEmailTemplate("SYSTEM Email Test", "subject", "message").save();
 		assertEquals("SYSTEM Email Test", template.getName());
 		assertEquals("subject", template.getSubject());
 		assertEquals("message", template.getMessage());
@@ -121,7 +115,7 @@ public class SystemDataLoaderTest extends AbstractVireoFunctionalTest {
 		assertEquals("SYSTEM Email Test", template.getName());
 		assertTrue(template.getSubject().contains("Email Test"));
 		assertTrue(template.isSystemRequired());
-		assertTrue(template.getMessage().contains("system administrator has sent this email address a test email"));
+		assertTrue(template.getMessage().contains("administrator has sent this email address a test email"));
 	}
 
 	/**
