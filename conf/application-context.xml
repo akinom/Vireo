@@ -148,7 +148,7 @@
     <!-- TODO - remove password setting in production
     <property name = "password" value="test" />
     -->
-    <property name = "fileName" value = "conf/prepopulate/Student-Data.tsv"/>
+    <property name = "fileName" value = "conf/prepopulate/Student-Prod-Data.tsv"/>
 
     <property name="securityContext" ref="SecurityContext" />
     <property name="settingsRepository" ref="SettingsRepository" />
