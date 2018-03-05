@@ -145,10 +145,9 @@
     <property name = "college" value = "Home Department Thesis"/>
     <property name = "defaultDocType" value = "no"/>
     <property name = "defaultLanguage" value = "en"/>
-    <!-- TODO - remove password setting in production
     <property name = "password" value="test" />
-    -->
-    <property name = "fileName" value = "conf/prepopulate/Student-Prod-Data.tsv"/>
+    <property name = "password" value="test" />
+    <property name = "fileName" value = "conf/prepopulate/Student-QA-Data.tsv"/>
 
     <property name="securityContext" ref="SecurityContext" />
     <property name="settingsRepository" ref="SettingsRepository" />
