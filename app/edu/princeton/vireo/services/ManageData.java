@@ -3,6 +3,7 @@ package edu.princeton.vireo.services;
 import org.tdl.vireo.model.*;
 import org.tdl.vireo.security.SecurityContext;
 import play.Logger;
+import play.db.jpa.JPA;
 import play.modules.spring.Spring;
 
 import java.util.HashMap;
@@ -38,18 +39,21 @@ public class ManageData {
     }
 
     public void deleteAllSubmissions() {
-        Logger.info("Start Deleting All Submissions");
         int n = 0;
         // since we are deleting inside the iterator which goes through batches of submissions
         // by querying with offset values it skips submissions
+        Logger.info("Start Deleting All Submissions");
         while (submissionRepo.findSubmissionsTotal() > 0) {
+            Logger.info("Start Deleting " + submissionRepo.findSubmissionsTotal() + " Submissions");
             Iterator<Submission> submissionsItr = submissionRepo.findAllSubmissions();
             while (submissionsItr.hasNext()) {
                 Submission sub = submissionsItr.next();
                 sub.delete();
                 n++;
                 if (0 == n % 50) {
-                    Logger.info("Delete " + n + " Submission ...");
+                    Logger.info("Deleted " + n + " Submission ...");
+                } else if (Logger.isDebugEnabled()) {
+                    Logger.debug("Deleted " + n + " Submission ...");
                 }
             }
         }
