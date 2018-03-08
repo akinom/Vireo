@@ -86,7 +86,12 @@ git checkout master
 # link Viireo to play1 framework
 # ---------------
 cd ~/Vireo 
-ln -s ../play-1.3.4 play
+ln -s ../play1 play
+# generate new secret key 
+./play.sh secret 
+# see whether new key is in conf/application.conf 
+git diff 
+
 
 # ---------------
 # start and populate database
