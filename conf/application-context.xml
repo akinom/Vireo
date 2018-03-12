@@ -141,11 +141,13 @@
     <property name = "advisorFirstName" value="Adviser 1 First Name" />
     <property name = "advisorNetid" value="Thesis Adviser 1 NETID" />
 
-    <property name = "emailAddOn" value = "@princeton.edu"/>
+    <property name = "emailAddOn" value = "@gmail.com"/>
     <property name = "college" value = "Home Department Thesis"/>
     <property name = "defaultDocType" value = "no"/>
     <property name = "defaultLanguage" value = "en"/>
-    <property name = "fileName" value = "conf/prepopulate/Student-Prod-Data.tsv"/>
+    <!-- TODO - remove password setting in production -->
+    <property name = "password" value="test" />
+    <property name = "fileName" value = "conf/prepopulate/Student-QA-Data.tsv"/>
 
     <property name="securityContext" ref="SecurityContext" />
     <property name="settingsRepository" ref="SettingsRepository" />
