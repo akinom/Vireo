@@ -71,7 +71,7 @@ auth.forceSSL = false
 
 # Password Authentication Module
 auth.pass.enabled = true
-auth.pass.visible = false
+auth.pass.visible = true
 auth.pass.name = Vireo Account
 auth.pass.description = Users who are not able to use other options should select this option to login with Vireo account.
 
