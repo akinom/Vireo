@@ -56,6 +56,7 @@ import org.tdl.vireo.state.StateManager;
 
 import play.Logger;
 import play.modules.spring.Spring;
+import play.mvc.Util;
 import play.vfs.VirtualFile;
 
 /**
@@ -454,8 +455,11 @@ public class JpaSubmissionImpl extends JpaAbstractModel<JpaSubmissionImpl> imple
 		
 		assertReviewerOrOwner(submitter);
 		if (!equals(this.documentTitle,title)) {
-			this.documentTitle = title;
-			generateChangeLog("Document title", title, false);
+			title = Utilities.sanitizeString((title));
+			if (!equals(this.documentTitle, title)) {
+				this.documentTitle = title;
+				generateChangeLog("Document title", title, false);
+			}
 		}
 	}
 
@@ -466,12 +470,14 @@ public class JpaSubmissionImpl extends JpaAbstractModel<JpaSubmissionImpl> imple
 
 	@Override
 	public void setDocumentAbstract(String docAbstract) {
-		
+
 		assertReviewerOrOwner(submitter);
-		
-		if (!equals(this.documentAbstract,docAbstract)) {
-			this.documentAbstract = docAbstract;
-			generateChangeLog("Document abstract", docAbstract, false);
+		if (!equals(this.documentAbstract, docAbstract)) {
+			docAbstract = Utilities.sanitizeString(docAbstract);
+			if (!equals(this.documentAbstract, docAbstract)) {
+				this.documentAbstract = docAbstract;
+				generateChangeLog("Document abstract", docAbstract, false);
+			}
 		}
 	}
 
@@ -1323,20 +1329,23 @@ public class JpaSubmissionImpl extends JpaAbstractModel<JpaSubmissionImpl> imple
 		assertReviewer();
 		
 		if (!equals(this.reviewerNotes,notes)) {
-			
-			this.reviewerNotes = notes;
-			
-			// Generate a private note
-			String entry;
-			if (notes == null)
-				entry = "Reviewer notes cleared";
-			else
-				entry = String.format(
-					"Reviewer notes changed to '%s'",
-					notes);
-			
-			ActionLog log = logAction(entry);
-			log.setPrivate(true);
+			notes = Utilities.sanitizeString(notes);
+			if (!equals(this.reviewerNotes, notes)) {
+
+				this.reviewerNotes = notes;
+
+				// Generate a private note
+				String entry;
+				if (notes == null)
+					entry = "Reviewer notes cleared";
+				else
+					entry = String.format(
+							"Reviewer notes changed to '%s'",
+							notes);
+
+				ActionLog log = logAction(entry);
+				log.setPrivate(true);
+			}
 		}
 		
 	}

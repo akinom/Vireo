@@ -584,23 +584,37 @@ public class JpaSubmissionImplTests extends UnitTest {
 		
 		assertEquals(null,sub.getDocumentLanguage());
 	}
-	
+
 	/**
 	 * Test reviewer notes action log are marked as private.
 	 */
 	@Test
 	public void testReviewerNotesLogsArePrivate() {
-		
+
 		Submission sub = subRepo.createSubmission(person);
 		sub.setReviewerNotes("notes");
 		sub.save();
-		
+
 		List<ActionLog> logs = subRepo.findActionLog(sub);
 
 		assertEquals(2,logs.size());
 		assertEquals("Reviewer notes changed to 'notes'",logs.get(0).getEntry());
 		assertTrue(logs.get(0).isPrivate());
-		
+
+		sub.delete();
+	}
+
+	/**
+	 * Test reviewer notes action log are marked as private.
+	 */
+	@Test
+	public void testReviewerNotesLogsAreSanitized() {
+
+		Submission sub = subRepo.createSubmission(person);
+		sub.setReviewerNotes("notes with <html>");
+		sub.save();
+		assertEquals(sub.getReviewerNotes(), "notes with < html>");
+
 		sub.delete();
 	}
 	

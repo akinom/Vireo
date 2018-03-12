@@ -49,4 +49,20 @@ public class UtilitiesTest extends UnitTest {
 		assertEquals("1234-5678-1234-567X", Utilities.formatOrcidAsDashedId(condensedOrcid));
 		assertEquals("I/ am not www an orcid.", Utilities.formatOrcidAsDashedId(badOrcid));
 	}
+
+	@Test
+	public void TestSanitizeString() {
+		String str, sanitized;
+		assertEquals(null, Utilities.sanitizeString(null));
+
+		str = "nothing to change";
+		assertEquals(str, Utilities.sanitizeString(str));
+
+		str = "nothing to change < even though there is a < AND a <1 and a <( ";
+		assertEquals(str, Utilities.sanitizeString(str));
+
+		str = "<HTML> subsitute html - especially <script href=...> ";
+		sanitized = "< HTML> subsitute html - especially < script href=...> ";
+		assertEquals(sanitized, Utilities.sanitizeString(str));
+	}
 }

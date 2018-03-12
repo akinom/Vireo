@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
@@ -357,4 +358,22 @@ public class Utilities {
 			return "";
 		return dateFormatter.format(date);
 	}
+
+	/**
+	 * helper method that reformats strings to avoid that any potentially inclosed html is interpretede
+	 *
+	 * adds a blank after each '<'  that is followed by a a-zA-Z
+	 *
+	 * @param s
+	 * @return  sanitizes string
+	 */
+	private static Pattern matcher = Pattern.compile("<([a-zA-Z])");
+
+
+	public static String sanitizeString(String s) {
+		if (null == s)
+			return null;
+		return matcher.matcher(s).replaceAll("< $1");
+	}
+
 }

@@ -16,9 +16,11 @@ import org.tdl.vireo.model.CommitteeMemberRoleType;
 import org.tdl.vireo.model.NameFormat;
 import org.tdl.vireo.model.SettingsRepository;
 import org.tdl.vireo.model.Submission;
+import org.tdl.vireo.services.Utilities;
 import org.tdl.vireo.state.StateManager;
 
 import play.modules.spring.Spring;
+import play.mvc.Util;
 
 /**
  * Jpa specific implementation of Vireo's CommitteeMember interface
@@ -82,9 +84,9 @@ public class JpaCommitteeMemberImpl extends
 
 		this.submission = submission;
 		this.displayOrder = 0;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.middleName = middleName;
+		this.firstName = Utilities.sanitizeString(firstName);
+		this.lastName = Utilities.sanitizeString(lastName);
+		this.middleName = Utilities.sanitizeString(middleName);
 		this.roles = new ArrayList<String>();
 	}
 
@@ -173,7 +175,7 @@ public class JpaCommitteeMemberImpl extends
 	public void setFirstName(String firstName) {
 
 		assertReviewerOrOwner(submission.getSubmitter());
-		this.firstName = firstName;
+		this.firstName = Utilities.sanitizeString(firstName);
 	}
 
 	@Override
@@ -185,7 +187,7 @@ public class JpaCommitteeMemberImpl extends
 	public void setLastName(String lastName) {
 
 		assertReviewerOrOwner(submission.getSubmitter());
-		this.lastName = lastName;
+		this.lastName = Utilities.sanitizeString(lastName);
 	}
 
 	@Override
@@ -197,7 +199,7 @@ public class JpaCommitteeMemberImpl extends
 	public void setMiddleName(String middleName) {
 
 		assertReviewerOrOwner(submission.getSubmitter());
-		this.middleName = middleName;
+		this.middleName = Utilities.sanitizeString(middleName);
 	}
 
 	@Override

@@ -91,6 +91,12 @@ public class JpaCommitteeMemberImplTests extends UnitTest {
 		assertEquals("last",member.getLastName());
 		assertNull(member.getMiddleName());
 		assertEquals(0,member.getRoles().size());
+
+		member = sub.addCommitteeMember("f<i>rst", "last<last> last", "m<m> middle");
+		assertEquals("f< i>rst",member.getFirstName());
+		assertEquals("last< last> last",member.getLastName());
+		assertEquals("m< m> middle",member.getMiddleName());
+		assertEquals(0,member.getRoles().size());
 	}
 	
 	/**
