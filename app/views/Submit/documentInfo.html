@@ -330,24 +330,28 @@ jQuery(document).ready(function(){
                 def middleName = "";
                 def lastName = "";
                 def currentRoles = new java.util.ArrayList<String>();
-                
+                def required_star = "";
+                def required = "";
+
                 if (committee.size() >= i) {
                     firstName = committee.get(i-1).firstName;
                     middleName = committee.get(i-1).middleName;
                     lastName = committee.get(i-1).lastName;
                     currentRoles = committee.get(i-1).roles;
-                }
+	                required_star = (i == 1) ? "<span class=\"required-star\">*</span> " : "";
+    	            required  = (i == 1) ? "required aria-required=\"true\"" : "";
+		        }
             }%
             <table role="presentation" class="committee-member #{ifError "committee"}error#{/ifError}">
                     <tr>
-                        <td><label for="committeeFirstName${i}" class="span3"><span class="required-star">*</span> First Name</label></td>
+                        <td><label for="committeeFirstName${i}" class="span3">${required_star.raw()} First Name</label></td>
                         <td><label for="committeeMiddleName${i}" class="span1">MI</label></td>
-                        <td><label for="committeeLastName${i}" class="span3"><span class="required-star">*</span> Last Name</label></td>
+                        <td><label for="committeeLastName${i}" class="span3">${required_star.raw()} Last Name</label></td>
                     </tr>
-                    <tr> 
-                        <td><input type="text" class="input-medium span3" id="committeeFirstName${i}" name="committeeFirstName${i}" value="${firstName}" required aria-required="true"></td>
+                    <tr>
+                        <td><input type="text" class="input-medium span3" id="committeeFirstName${i}" name="committeeFirstName${i}" value="${firstName}" ${required}></td>
                         <td><input type="text" class="span1" id="committeeMiddleName${i}" name="committeeMiddleName${i}" value="${middleName}"></td>
-                        <td><input type="text" class="input-medium span3" id="committeeLastName${i}" name="committeeLastName${i}" value="${lastName}" required aria-required="true"></td>
+                        <td><input type="text" class="input-medium span3" id="committeeLastName${i}" name="committeeLastName${i}" value="${lastName}" ${required}></td>
                     </tr>
                     #{if false && availableRoles.size() > 0}
                     <tr class="committee-role-row">
