@@ -98,9 +98,13 @@ git diff
 # ---------------
 # define thesis-central-rds.aws.princeton.edu  domain name  for database server
 #
-# edit db connector in conf/application.conf
-# start application which creates tables and seeds with vireo defaults
 cd ~/Vireo
+
+# prepare conf/application.conf  (not under version control)
+cp conf/application-conf  conf/application.conf
+# enter database credentials in conf/application.conf
+
+# start application which creates tables and seeds with vireo defaults
 ./play.sh start
 # look at logs/application.log
 
