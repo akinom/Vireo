@@ -19,7 +19,7 @@ http.path=/
 
 # Reverse routing URLs for background tasks. If you are proxying Vireo you
 # still need to turn on "PreserveHost On".
-application.baseUrl=http://www.yourdomain.com/
+application.baseUrl=http://thesis-central.princeton.edu/
 base.url = http://localhost:9000
 
 # Database
