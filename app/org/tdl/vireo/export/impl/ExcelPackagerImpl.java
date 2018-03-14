@@ -7,13 +7,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
@@ -62,7 +56,7 @@ public class ExcelPackagerImpl extends AbstractExcelPackagerImpl {
 
 	/* Global statics */
 	public static final String sheetName = "vireo-export";
-	public static final SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+	public static final SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm");
 
 	/* Global Dynamics */
 	public LinkedHashMap<String, Properties> attachmentAttributes = new LinkedHashMap<String, Properties>();
@@ -268,7 +262,7 @@ public class ExcelPackagerImpl extends AbstractExcelPackagerImpl {
 				break;
 
 			case COMMITTEE_MEMBERS:
-				header.createCell(j).setCellValue("Committee members");
+				header.createCell(j).setCellValue("Advisors");
 				StringBuilder cm = new StringBuilder();
 				int i = 0;
 				for (i = 0; i < sub.getCommitteeMembers().size(); i++) {
@@ -307,14 +301,14 @@ public class ExcelPackagerImpl extends AbstractExcelPackagerImpl {
 				break;
 
 			case PROGRAM:
-				header.createCell(j).setCellValue("Program");
+				header.createCell(j).setCellValue("Certificate Program");
 				if (sub.getProgram() != null)
 					row.createCell(j).setCellValue(sub.getProgram());
 				j++;
 				break;
 
 			case COLLEGE:
-				header.createCell(j).setCellValue("College");
+				header.createCell(j).setCellValue("Thesis Type");
 				if (sub.getCollege() != null)
 					row.createCell(j).setCellValue(sub.getCollege());
 				j++;
@@ -347,7 +341,7 @@ public class ExcelPackagerImpl extends AbstractExcelPackagerImpl {
 				break;
 
 			case DOCUMENT_TYPE:
-				header.createCell(j).setCellValue("Document type");
+				header.createCell(j).setCellValue("Multi Author");
 				if (sub.getDocumentType() != null)
 					row.createCell(j).setCellValue(sub.getDocumentType());
 				j++;
@@ -418,7 +412,7 @@ public class ExcelPackagerImpl extends AbstractExcelPackagerImpl {
 			case LAST_EVENT_TIME:
 				header.createCell(j).setCellValue("Last Event Time");
 				if (sub.getLastLogDate() != null)
-					row.createCell(j).setCellValue(sub.getLastLogDate());
+					row.createCell(j).setCellValue(sdf.format(sub.getLastLogDate()));
 				j++;
 				break;
 			case ORCID:
