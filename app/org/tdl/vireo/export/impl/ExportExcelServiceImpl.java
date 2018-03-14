@@ -239,7 +239,12 @@ public class ExportExcelServiceImpl implements ExportService {
                         }
                         i++;
                     } else {
-                        throw new Exception("Wrong packager type being used for this class or submission is null");
+                        if (null == sub) {
+                            throw new Exception("Packager can't export null submission");
+                        } else {
+                            throw new Exception("Wrong packager type " + packager.getBeanName());
+
+                        }
                     }
 
                     // Immediately save the transaction
