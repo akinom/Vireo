@@ -203,7 +203,7 @@ public class ExcelPackagerImpl extends AbstractExcelPackagerImpl {
 			case PRIMARY_DOCUMENT:
 				header.createCell(j).setCellValue("Primary document");
 				if (null != sub.getPrimaryDocument()) {
-					String url = Play.configuration.getProperty("base.url","http://localhost:9000");
+					String url = Play.configuration.getProperty("application.baseUrl","http://localhost:9000");
 					url = (url + primaryDocUrl).replace("/token", "/" + sub.getSubmissionHash());
 					url = url.replace("/attachmentId", "/" + sub.getPrimaryDocument().getId());
 					url = url.replace("/name", "/" + sub.getPrimaryDocument().getName());
