@@ -277,7 +277,7 @@
 						</li>
 					</ul>
 				</li>				
-				<li class="emailCarbon">
+				<li class="emailCarbon noreviewer">
 					<ul class="unstyled" style="padding-left:15px;">
 						<li class="cc_recipients_toggle">
                             <input data-modal-name="add-file-modal" type="checkbox" name="primary_recipients_toggle" class="checkbox"
