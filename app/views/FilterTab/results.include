@@ -8,8 +8,12 @@ in results.
 }*
 
 #{if results != null && results.getResults() != null }
+
+<p class="comment">
+    ${results.getTotal()} matching records displayed.
+</p>
+
 <table id="results-table" class="table table-striped table-bordered table-condensed">
-    <thead>
         <tr>
         %{
         def routeArgs = new java.util.HashMap<String,String>();
@@ -43,7 +47,7 @@ in results.
         navArgs.put("nav",nav);
         String modifyFilterURL = play.mvc.Router.reverse("FilterTab.ModifyFilters",navArgs).url;
 
-        
+
         for(def object : results.getResults()) {
                       
            def sub = null;
