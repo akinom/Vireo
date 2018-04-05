@@ -330,7 +330,12 @@ wget -O -   thesis-central-qa.aws.princeton.edu/shibboleth
 
 
 # RPM 
-#extract files from rpm 
+# list installed
+rpm -qa
+
+rpm -qlp techrx.rpm
+
+#extract files from rpm
 cd /tmp 
 mkdir RPM 
 cd RPM
