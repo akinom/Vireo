@@ -3,67 +3,85 @@ import logging
 import openpyxl
 import sys
 import importlib
-# importlib.reload(certificateProgramSplit)
 
+def interactive():
+    importlib.reload(certificateProgramSplit)
+    wb = openpyxl.load_workbook(filename = 'ExcelExport.xlsx')
+    sheet = wb.worksheets[0]
+    header = next(sheet.iter_rows(min_row=1, max_row=1))
 
-
-wb = openpyxl.load_workbook(filename = 'ExcelExport.xlsx')
-sheet = wb.worksheets[0]
-header = next(sheet.iter_rows(min_row=1, max_row=1))
 
 class ArgParser(argparse.ArgumentParser):
     def parse_args(self):
         args= argparse.ArgumentParser.parse_args(self)
-        args.wb = openpyxl.load_workbook(filename = args.excel)
-        if (1 != len(args.wb.worksheets)) :
-            self.error("Workbook '%s' should have exactly one sheet" % (args.excel))
-        args.sheet = args.wb.worksheets[0]
-        args.split_col_name = 'Certificate Program'
-        args.split_col = _col_index_of(args.sheet, args.split_col_name)
-        if (None == args.split_col):
-            self.error("Workbook '%s' does not contain a '%s' column" % (args.excel, column))
+        args.vireo = Vireo(args)
         return args
 
-def _col_index_of(ws, title):
-    for row in ws.iter_rows(min_row=1, max_row=1):
-        for cell in  row:
-            if (cell.value == title):
-                return cell.col_idx -1;
-    return None;
+class Vireo:
+    def __init__(self, args):
+        self.filename = args.excel
+        self.wb = openpyxl.load_workbook(filename = args.excel)
+        if (1 != len(self.wb.worksheets)) :
+            args.error("Workbook '%s' should have exactly one sheet" % (args.excel))
+        self.sheet = self.wb.worksheets[0]
+        self.split_col_name = 'Certificate Program'
+        self.split_col = self._col_index_of(self.split_col_name)
+        if (None == self.split_col):
+            args.error("Workbook '%s' does not contain a '%s' column" % (args.excel, self.split_col_name))
+        self.id_col_name = 'ID'
+        self.id_col = self._col_index_of(self.id_col_name)
+        if (None == self.id_col):
+            args.error("Workbook '%s' does not contain a '%s' column" % (args.excel, self.id_col_name))
 
-def _dump_sheet(ws):
-    for row in ws.iter_rows(min_row=1, max_row=1):
-        for cell in  row:
-            print("%s" % (cell.value))
-        print("---")
+    def print_info(self):
+        print("filename %s" % self.filename)
+        print("workbook %s" % self.sheet.title)
+        print("id column: %s (%d)" % (self.id_col_name,  self.id_col))
+        print("splitting on value in column: %s (%d)" % (self.split_col_name,  self.split_col))
 
+    def _col_index_of(self, title):
+        for row in self.sheet.iter_rows(min_row=1, max_row=1):
+            for cell in  row:
+                if (cell.value == title):
+                    return cell.col_idx -1;
+        return None;
 
-def _split_sheet(ws, column):
-    splits = {};
-    for row in ws.iter_rows(min_row=2):
-        col_val = row[column].value
-        if (not col_val): continue
-        if (col_val in splits):
-            splits[col_val].append(row);
-        else:
-            splits[col_val] = [row];
-    return splits
-
-def _print_tsv(name, header, rows):
-    print("> Print %s" % name);
-    file_name = name.replace(' ', '-')
-    if not file_name:
-        file_name = 'None'
-    out =open(file_name + ".tsv", 'w')
-    _print_row(header, out)
-    for r in rows:
-        _print_row(r, out)
-    out.close();
-    print("< Print %s" % name);
+    def _dump_sheet(self):
+        for row in self.sheet.iter_rows(min_row=1, max_row=1):
+            for cell in  row:
+                print("%s" % (cell.value))
+            print("---")
 
 
-def _print_row(row, out):
-    print('\t'.join([(c.value if None != c.value else '') for c in row]), file=out)
+    def split_sheet(self):
+        splits = {};
+        for row in self.sheet.iter_rows(min_row=2):
+            col_val = row[self.split_col].value
+            if (None != col_val):
+                if (col_val in splits):
+                    splits[col_val].append(row);
+                else:
+                    splits[col_val] = [row];
+        return splits
+
+    def print_tsv(self, name, rows):
+        print("> Print %s (%d)" % (name, len(rows)));
+        file_name = name.replace(' ', '-')
+        if not file_name:
+            file_name = 'None'
+        out =open(file_name + ".tsv", 'w')
+        Vireo._print_row(self._header(), out)
+        for r in rows:
+            Vireo._print_row(r, out)
+        out.close();
+        print("< Print %s" % name);
+
+    def _header(self):
+        return next(self.sheet.iter_rows(min_row=1, max_row=1))
+
+    def _print_row(row, out):
+        #print('\t'.join([c.value for c in row]), file=out)
+        print('\t'.join([(str(c.value) if None != c.value else 'None') for c in row]), file=out)
 
 def main():
     description = """split vireo excel export file into multiple files based on first column value
@@ -74,21 +92,16 @@ def main():
     parser.add_argument("--excel", "-s", default=None, required=True, help="excel export file from vireo")
     parser.add_argument("--loglevel", choices=loglevels,  default=logging.ERROR, help="log level  - default: ERROR")
     args = parser.parse_args()
+    vireo = args.vireo;
 
     logging.getLogger().setLevel(args.loglevel)
     logging.basicConfig()
 
-    print("opened %s" % args.excel)
-    print("opened workbook with %s sheet" % args.sheet.title)
-    print("splitting on value in column: %s (col %d)" % (args.split_col_name, args.split_col))
+    vireo.print_info();
 
-    splits = _split_sheet(args.sheet, args.split_col);
-    header =  next(args.sheet.iter_rows(min_row=1, max_row=1))
+    splits = vireo.split_sheet();
     for k in splits.keys():
-        _print_tsv(k, header, splits[k])
+        vireo.print_tsv(k, splits[k])
 
 if __name__ == "__main__":
     main()
-
-
-name = 'ExcelExport.xlsx'
