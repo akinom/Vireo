@@ -1,4 +1,6 @@
 import argparse
+from argparse import ArgumentError
+
 import logging
 import openpyxl
 import sys
@@ -14,7 +16,10 @@ def interactive():
 class ArgParser(argparse.ArgumentParser):
     def parse_args(self):
         args= argparse.ArgumentParser.parse_args(self)
-        args.vireo = Vireo(args)
+        try:
+            args.vireo = Vireo(args)
+        except Exception as e:
+            raise e
         return args
 
 class Vireo:
@@ -22,16 +27,16 @@ class Vireo:
         self.filename = args.excel
         self.wb = openpyxl.load_workbook(filename = args.excel)
         if (1 != len(self.wb.worksheets)) :
-            args.error("Workbook '%s' should have exactly one sheet" % (args.excel))
+            raise Exception("Workbook '%s' should have exactly one sheet" % (args.excel))
         self.sheet = self.wb.worksheets[0]
         self.split_col_name = 'Certificate Program'
         self.split_col = self._col_index_of(self.split_col_name)
         if (None == self.split_col):
-            args.error("Workbook '%s' does not contain a '%s' column" % (args.excel, self.split_col_name))
+            raise Exception("Workbook '%s' does not contain a '%s' column" % (args.excel, self.split_col_name))
         self.id_col_name = 'ID'
         self.id_col = self._col_index_of(self.id_col_name)
         if (None == self.id_col):
-            args.error("Workbook '%s' does not contain a '%s' column" % (args.excel, self.id_col_name))
+            raise Exception("Workbook '%s' does not contain a '%s' column" % (args.excel, self.id_col_name))
 
     def print_info(self):
         print("filename %s" % self.filename)
@@ -92,16 +97,19 @@ def main():
     parser.add_argument("--excel", "-s", default=None, required=True, help="excel export file from vireo")
     parser.add_argument("--loglevel", choices=loglevels,  default=logging.ERROR, help="log level  - default: ERROR")
     args = parser.parse_args()
-    vireo = args.vireo;
+    try:
+        vireo = args.vireo;
 
-    logging.getLogger().setLevel(args.loglevel)
-    logging.basicConfig()
+        logging.getLogger().setLevel(args.loglevel)
+        logging.basicConfig()
 
-    vireo.print_info();
+        vireo.print_info();
 
-    splits = vireo.split_sheet();
-    for k in splits.keys():
-        vireo.print_tsv(k, splits[k])
+        splits = vireo.split_sheet();
+        for k in splits.keys():
+            vireo.print_tsv(k, splits[k])
+    except Exception as e:
+        print(e, file = sys.stderr)
 
 if __name__ == "__main__":
     main()
