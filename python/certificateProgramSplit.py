@@ -37,6 +37,8 @@ class Vireo:
         self.id_col = self._col_index_of(self.id_col_name)
         if (None == self.id_col):
             raise Exception("Workbook '%s' does not contain a '%s' column" % (args.excel, self.id_col_name))
+        self.id_rows = {}
+        self._id_rows()
 
     def print_info(self):
         print("filename %s" % self.filename)
@@ -69,22 +71,30 @@ class Vireo:
                     splits[col_val] = [row];
         return splits
 
+    def _id_rows(self):
+        if not self.id_rows:
+            for row in self.sheet.iter_rows(min_row=2):
+                id = row[self.id_col].value
+                if (id in self.id_rows):
+                    raise "duplicate id %s" % str(id)
+                self.id_rows[id] = row
+
     def print_tsv(self, name, rows):
         print("> Print %s (%d)" % (name, len(rows)));
         file_name = name.replace(' ', '-')
         if not file_name:
             file_name = 'None'
         out =open(file_name + ".tsv", 'w')
-        Vireo._print_row(self._header(), out)
+        Vireo._print_tsv_row(self._header(), out)
         for r in rows:
-            Vireo._print_row(r, out)
+            Vireo._print_tsv_row(r, out)
         out.close();
         print("< Print %s" % name);
 
     def _header(self):
         return next(self.sheet.iter_rows(min_row=1, max_row=1))
 
-    def _print_row(row, out):
+    def _print_tsv_row(row, out):
         #print('\t'.join([c.value for c in row]), file=out)
         print('\t'.join([(str(c.value) if None != c.value else 'None') for c in row]), file=out)
 
