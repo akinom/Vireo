@@ -23,38 +23,63 @@ class ArgParser(argparse.ArgumentParser):
         return args
 
 class Vireo:
+    CERTIFICATE_PROGRAM = 'Certificate Program'
+    STUDENT_EMAIL = 'Student email'
+    ID = 'ID'
+
     def __init__(self, args):
         self.thesis_file = args.thesis
-        self.thesis_wb = openpyxl.load_workbook(filename = args.thesis)
+        self.thesis_wb = openpyxl.load_workbook(filename = self.thesis_file)
         if (1 != len(self.thesis_wb.worksheets)) :
-            raise Exception("Workbook '%s' should have exactly one sheet" % (args.thesis_excel))
+            raise Exception("Workbook '%s' should have exactly one sheet" % (self.thesis_file))
         self.thesis = self.thesis_wb.worksheets[0]
+
         self.split_col_name = 'Certificate Program'
-        self.split_col = self._col_index_of(self.split_col_name)
+        self.split_col = self._col_index_of(self.thesis, self.split_col_name)
         if (None == self.split_col):
-            raise Exception("Workbook '%s' does not contain a '%s' column" % (args.thesis_excel, self.split_col_name))
-        self.id_col_name = 'ID'
-        self.id_col = self._col_index_of(self.id_col_name)
+            raise Exception("Workbook '%s' does not contain a '%s' column" % (self.thesis_file, self.split_col_name))
+
+        self.id_col = self._col_index_of(self.thesis, Vireo.ID)
         if (None == self.id_col):
-            raise Exception("Workbook '%s' does not contain a '%s' column" % (args.thesis_excel, self.id_col_name))
+            raise Exception("Workbook '%s' does not contain a '%s' column" % (self.thesis_file, Vireo.ID))
+
+        if (args.add_certs):
+            self.add_certs_file = args.add_certs
+            self.add_certs_wb = openpyxl.load_workbook(filename = self.add_certs_file)
+            if (1 != len(self.add_certs_wb.worksheets)) :
+                raise Exception("Workbook '%s' should have exactly one sheet" % (self.add_certs_file))
+            self.add_certs = self.add_certs_wb.worksheets[0]
+
+            if (None == self._col_index_of(self.add_certs, Vireo.ID)):
+                raise Exception("Workbook '%s' does not contain a '%s' column" % (self.add_certs_file, Vireo.ID))
+            if (None == self._col_index_of(self.add_certs, Vireo.STUDENT_EMAIL)):
+                raise Exception("Workbook '%s' does not contain a '%s' column" % (self.add_certs_file, Vireo.STUDENT_EMAIL))
+            if (None == self._col_index_of(self.thesis, Vireo.STUDENT_EMAIL)):
+                raise Exception("Workbook '%s' does not contain a '%s' column" % (self.thesis_file, Vireo.STUDENT_EMAIL))
+
         self.id_rows = {}
         self._id_rows()
 
     def print_info(self):
-        print("filename %s" % self.thesis_file)
-        print("workbook %s" % self.thesis.title)
-        print("id column: %s (%d)" % (self.id_col_name,  self.id_col))
-        print("splitting on value in column: %s (%d)" % (self.split_col_name,  self.split_col))
+        print("thesis filename %s" % self.thesis_file)
+        print("thesis workbook %s" % self.thesis.title)
+        print("thsis id column: %s (%d)" % (Vireo.ID,  self.id_col))
+        print("thsis split column: %s (%d)" % (self.split_col_name, self.split_col));
+        if (self.add_certs):
+            print("thesis check column: %s (%d)" % (Vireo.STUDENT_EMAIL,  self._col_index_of(self.thesis, Vireo.STUDENT_EMAIL)))
+            print("add_certs id column: %s (%d)" % (Vireo.ID,  self._col_index_of(self.add_certs, Vireo.ID)))
+            print("add_certs check column: %s (%d)" % (Vireo.STUDENT_EMAIL,  self._col_index_of(self.add_certs, Vireo.STUDENT_EMAIL)))
+            print("add_certs certs column: %s (%d)" % (Vireo.CERTIFICATE_PROGRAM,  self._col_index_of(self.add_certs, Vireo.CERTIFICATE_PROGRAM)))
 
-    def _col_index_of(self, title):
-        for row in self.thesis.iter_rows(min_row=1, max_row=1):
+    def _col_index_of(self, sheet, title):
+        for row in sheet.iter_rows(min_row=1, max_row=1):
             for cell in  row:
-                if (cell.value == title):
+                if (cell.value.strip() == title):
                     return cell.col_idx -1;
         return None;
 
-    def _dump_sheet(self):
-        for row in self.thesis.iter_rows(min_row=1, max_row=1):
+    def _dump_sheet(self, sheet):
+        for row in sheet.iter_rows(min_row=1, max_row=1):
             for cell in  row:
                 print("%s" % (cell.value))
             print("---")
