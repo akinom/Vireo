@@ -2,9 +2,11 @@ import argparse
 from argparse import ArgumentError
 
 import logging
+import traceback
 import openpyxl
 import sys
 import importlib
+from copy import deepcopy;
 
 def interactive():
     importlib.reload(certificateProgramSplit)
@@ -17,6 +19,7 @@ class ArgParser(argparse.ArgumentParser):
     def parse_args(self):
         args= argparse.ArgumentParser.parse_args(self)
         try:
+            args.split_col_name = Vireo.CERTIFICATE_PROGRAM;
             args.vireo = Vireo(args)
         except Exception as e:
             raise e
@@ -28,44 +31,43 @@ class Vireo:
     ID = 'ID'
 
     def __init__(self, args):
-        self.thesis_file = args.thesis
-        self.thesis_wb = openpyxl.load_workbook(filename = self.thesis_file)
-        if (1 != len(self.thesis_wb.worksheets)) :
-            raise Exception("Workbook '%s' should have exactly one sheet" % (self.thesis_file))
-        self.thesis = self.thesis_wb.worksheets[0]
+        thesis_file = args.thesis
+        thesis_wb = openpyxl.load_workbook(filename = thesis_file)
+        if (1 != len(thesis_wb.worksheets)) :
+            raise Exception("Workbook '%s' should have exactly one sheet" % (thesis_file))
+        self.thesis = thesis_wb.worksheets[0]
 
-        self.split_col_name = 'Certificate Program'
-        self.split_col = self._col_index_of(self.thesis, self.split_col_name)
-        if (None == self.split_col):
-            raise Exception("Workbook '%s' does not contain a '%s' column" % (self.thesis_file, self.split_col_name))
+        self.thesis_id_col = self._col_index_of(self.thesis, Vireo.ID)
+        if (None == self.thesis_id_col):
+            raise Exception("Workbook '%s' does not contain a '%s' column" % (thesis_file, Vireo.ID))
 
-        self.id_col = self._col_index_of(self.thesis, Vireo.ID)
-        if (None == self.id_col):
-            raise Exception("Workbook '%s' does not contain a '%s' column" % (self.thesis_file, Vireo.ID))
+        self._split_col = self._col_index_of(self.thesis, args.split_col_name)
+        if (None == self._split_col):
+            raise Exception("Workbook '%s' does not contain a '%s' column" % (thesis_file, args.split_col_name))
 
         if (args.add_certs):
-            self.add_certs_file = args.add_certs
-            self.add_certs_wb = openpyxl.load_workbook(filename = self.add_certs_file)
-            if (1 != len(self.add_certs_wb.worksheets)) :
-                raise Exception("Workbook '%s' should have exactly one sheet" % (self.add_certs_file))
-            self.add_certs = self.add_certs_wb.worksheets[0]
+            add_certs_file = args.add_certs
+            add_certs_wb = openpyxl.load_workbook(filename = add_certs_file)
+            if (1 != len(add_certs_wb.worksheets)) :
+                raise Exception("Workbook '%s' should have exactly one sheet" % (add_certs_file))
+            self.add_certs = add_certs_wb.worksheets[0]
 
             if (None == self._col_index_of(self.add_certs, Vireo.ID)):
-                raise Exception("Workbook '%s' does not contain a '%s' column" % (self.add_certs_file, Vireo.ID))
+                raise Exception("Workbook '%s' does not contain a '%s' column" % (add_certs_file, Vireo.ID))
             if (None == self._col_index_of(self.add_certs, Vireo.STUDENT_EMAIL)):
-                raise Exception("Workbook '%s' does not contain a '%s' column" % (self.add_certs_file, Vireo.STUDENT_EMAIL))
+                raise Exception("Workbook '%s' does not contain a '%s' column" % (add_certs_file, Vireo.STUDENT_EMAIL))
             if (None == self._col_index_of(self.thesis, Vireo.STUDENT_EMAIL)):
-                raise Exception("Workbook '%s' does not contain a '%s' column" % (self.thesis_file, Vireo.STUDENT_EMAIL))
+                raise Exception("Workbook '%s' does not contain a '%s' column" % (thesis_file, Vireo.STUDENT_EMAIL))
 
         self.id_rows = {}
         self._id_rows()
 
     def print_info(self):
-        print("thesis filename %s" % self.thesis_file)
+        header = Vireo._header(self.thesis);
         print("thesis workbook %s" % self.thesis.title)
-        print("thsis id column: %s (%d)" % (Vireo.ID,  self.id_col))
-        print("thsis split column: %s (%d)" % (self.split_col_name, self.split_col));
-        if (self.add_certs):
+        print("thsis id column: %s (%d)" % (Vireo.ID,  self.thesis_id_col))
+        print("thsis split column: %s (%d)" % (header[self._split_col].value, self._split_col));
+        if ('add_certs' in dir(self)):
             print("thesis check column: %s (%d)" % (Vireo.STUDENT_EMAIL,  self._col_index_of(self.thesis, Vireo.STUDENT_EMAIL)))
             print("add_certs id column: %s (%d)" % (Vireo.ID,  self._col_index_of(self.add_certs, Vireo.ID)))
             print("add_certs check column: %s (%d)" % (Vireo.STUDENT_EMAIL,  self._col_index_of(self.add_certs, Vireo.STUDENT_EMAIL)))
@@ -84,11 +86,20 @@ class Vireo:
                 print("%s" % (cell.value))
             print("---")
 
+    def _add_certificates(self):
+        if ('add_certs' in dir(self)):
+            certs_id_col = self._col_index_of(self.add_certs, Vireo.ID);
+            certs_email_col = self._col_index_of(self.add_certs, Vireo.STUDENT_EMAIL)
+            thesis_email_col = self._col_index_of(self.thesis, Vireo.STUDENT_EMAIL)
+            if (certs_id_col == None or certs_email_col == None or thesis_email_col == None):
+                raise RuntimeError("programming error: should never get here - see checks in constructor")
+
 
     def split_sheet(self):
+        self._add_certificates()
         splits = {};
         for row in self.thesis.iter_rows(min_row=2):
-            col_val = row[self.split_col].value
+            col_val = row[self._split_col].value
             if (None != col_val):
                 if (col_val in splits):
                     splits[col_val].append(row);
@@ -99,10 +110,14 @@ class Vireo:
     def _id_rows(self):
         if not self.id_rows:
             for row in self.thesis.iter_rows(min_row=2):
-                id = row[self.id_col].value
+                id = row[self.thesis_id_col].value
                 if (id in self.id_rows):
                     raise "duplicate id %s" % str(id)
                 self.id_rows[id] = row
+
+
+    def _header(sheet):
+        return next(sheet.iter_rows(min_row=1, max_row=1))
 
     def print_tsv(self, name, rows):
         print("> Print %s (%d)" % (name, len(rows)));
@@ -110,14 +125,11 @@ class Vireo:
         if not file_name:
             file_name = 'None'
         out =open(file_name + ".tsv", 'w')
-        Vireo._print_tsv_row(self._header(), out)
+        Vireo._print_tsv_row(Vireo._header(self.thesis), out)
         for r in rows:
             Vireo._print_tsv_row(r, out)
         out.close();
         print("< Print %s" % name);
-
-    def _header(self):
-        return next(self.thesis.iter_rows(min_row=1, max_row=1))
 
     def _print_tsv_row(row, out):
         #print('\t'.join([c.value for c in row]), file=out)
@@ -140,12 +152,12 @@ def main():
         logging.basicConfig()
 
         vireo.print_info();
-
         splits = vireo.split_sheet();
         for k in splits.keys():
             vireo.print_tsv(k, splits[k])
     except Exception as e:
         print(e, file = sys.stderr)
+        print(traceback.format_exc())
 
 if __name__ == "__main__":
     main()
