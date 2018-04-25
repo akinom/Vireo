@@ -16,6 +16,24 @@ def interactive():
 
 
 class ArgParser(argparse.ArgumentParser):
+    @staticmethod
+    def create():
+        description = """read thesis submission info from file given in --thesis option 
+if --add_certs option is given read info about additional certificate programs from file                  
+               and add appitional entries in the thesis submission list 
+if --split_col is given print tsv table of combined submissions to stdout
+if --split_col is given print to tsv files, one for each value in thegiven column 
+    """
+        loglevels = ['CRITICAL', 'ERROR', 'WARN', 'INFO', 'DEBUG', 'NOTSET']
+
+        parser = ArgParser(description=description, formatter_class=argparse.RawTextHelpFormatter)
+        parser.add_argument("--thesis", "-t", default=None, required=True, help="excel export file from vireo")
+        parser.add_argument("--split_col", "-s", required=False, help="split column name - default %s" % Vireo.CERTIFICATE_PROGRAM)
+        parser.add_argument("--add_certs", "-a", default=None, required=False, help="excep spreadsheet with addituion certificate program info")
+        parser.add_argument("--all_cols", "-A", action='store_true', help="include all columns in printout")
+        parser.add_argument("--loglevel", "-l", choices=loglevels,  default=logging.INFO, help="log level  - default: ERROR")
+        return parser;
+
     def parse_args(self):
         args= argparse.ArgumentParser.parse_args(self)
         try:
@@ -26,9 +44,17 @@ class ArgParser(argparse.ArgumentParser):
 
 class Vireo:
     CERTIFICATE_PROGRAM = 'Certificate Program'
+    STUDENT_NAME = 'Student name'
+    DEPARTMENT = 'Department'
+    SUBMISSION_DATE = 'Submission date'
+    ADVISORS = 'Advisors'
+    DOCUMENT_TITLE = 'Title'
+    PRIMARY_DOCUMENT = 'Primary document'
     THESIS_TYPE = 'Thesis Type'
     STUDENT_EMAIL = 'Student email'
     ID = 'ID'
+
+    PRINT_COLUMNS = [CERTIFICATE_PROGRAM, STUDENT_NAME, DEPARTMENT, SUBMISSION_DATE, ADVISORS, DOCUMENT_TITLE, PRIMARY_DOCUMENT]
 
     NOSPLIT_KEY = '___NO_SPLIT___'
 
@@ -70,6 +96,13 @@ class Vireo:
             if (None == self._col_index_of(self.thesis, Vireo.CERTIFICATE_PROGRAM)):
                 raise Exception("Workbook '%s' does not contain a '%s' column" % (thesis_file, Vireo.CERTIFICATE_PROGRAM))
 
+        thesis_col_names = [v.value for v in Vireo._header(self.thesis)]
+        if (args.all_cols):
+            print_col_names = thesis_col_names
+        else:
+            print_col_names = list(filter(lambda x: x in thesis_col_names, Vireo.PRINT_COLUMNS))
+        self._print_col_ids = [thesis_col_names.index(v) for v in print_col_names]
+
         self.id_rows = {}
         self._id_rows()
 
@@ -80,6 +113,8 @@ class Vireo:
         logging.info("thesis workbook %s" % self.thesis.title)
         logging.info("thsis id column: %s (%d)" % (Vireo.ID,  self.thesis_id_col))
         if (self._split_col): logging.info("thsis split column: %s (%d)" % (header[self._split_col].value, self._split_col));
+        col_names = [str(header[i].value) for i in self._print_col_ids]
+        logging.info("print cols: " + ", ".join(col_names) )
         if ('add_certs' in dir(self)):
             logging.info("thesis check column: %s (%d)" % (Vireo.STUDENT_EMAIL,  self._col_index_of(self.thesis, Vireo.STUDENT_EMAIL)))
             logging.info("thesis certificate column: %s (%d)" % (Vireo.CERTIFICATE_PROGRAM,  self._col_index_of(self.thesis, Vireo.CERTIFICATE_PROGRAM)))
@@ -220,21 +255,11 @@ class Vireo:
         print('\t'.join([(str(c.value) if None != c.value else 'None') for c in row]), file=out)
 
 def main():
-    description = """read thesis submission info from file given in --thesis option 
-if --add_certs option is given read info about additional certificate programs from file                  
-               and add appitional entries in the thesis submission list 
-if --split_col is given print tsv table of combined submissions to stdout
-if --split_col is given print to tsv files, one for each value in thegiven column 
-    """
-    loglevels = ['CRITICAL', 'ERROR', 'WARN', 'INFO', 'DEBUG', 'NOTSET']
 
-    parser = ArgParser(description=description, formatter_class=argparse.RawTextHelpFormatter)
-    parser.add_argument("--thesis", "-t", default=None, required=True, help="excel export file from vireo")
-    parser.add_argument("--split_col", "-s", required=False, help="split column name - default %s" % Vireo.CERTIFICATE_PROGRAM)
-    parser.add_argument("--add_certs", "-a", default=None, required=False, help="excep spreadsheet with addituion certificate program info")
-    parser.add_argument("--loglevel", "-l", choices=loglevels,  default=logging.ERROR, help="log level  - default: ERROR")
-    args = parser.parse_args()
     try:
+        parser = ArgParser.create()
+        args = parser.parse_args()
+
         logging.getLogger().setLevel(args.loglevel)
         logging.basicConfig()
 
