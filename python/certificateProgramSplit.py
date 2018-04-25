@@ -232,7 +232,7 @@ class Vireo:
         logging.info("printing %d tsv files" % len(splits))
         if Vireo.NOSPLIT_KEY in splits:
             logging.info("no splits %s" % Vireo.NOSPLIT_KEY)
-            Vireo._print_tsv(Vireo._header(self.thesis), splits[Vireo.NOSPLIT_KEY], sys.stdout)
+            self._print_tsv(Vireo._header(self.thesis), splits[Vireo.NOSPLIT_KEY], sys.stdout)
         else:
             for k in splits:
                 self.print_tsv(k, splits[k])
@@ -242,17 +242,18 @@ class Vireo:
         if not file_name:
             file_name = 'None'
         out =open(file_name + ".tsv", 'w')
-        Vireo._print_tsv(Vireo._header(self.thesis), rows, out)
+        self._print_tsv(Vireo._header(self.thesis), rows, out)
         out.close();
 
-    def _print_tsv(header, rows, out):
-        Vireo._print_tsv_row(header, out)
+    def _print_tsv(self, header, rows, out):
+        self._print_tsv_row(header, out)
         for r in rows:
-            Vireo._print_tsv_row(r, out)
+            self._print_tsv_row(r, out)
 
 
-    def _print_tsv_row(row, out):
-        print('\t'.join([(str(c.value) if None != c.value else 'None') for c in row]), file=out)
+    def _print_tsv_row(self, row, out):
+        prt_row = [row[i] for i in self._print_col_ids]
+        print('\t'.join([(str(c.value) if None != c.value else 'None') for c in prt_row]), file=out)
 
 def main():
 
