@@ -21,15 +21,13 @@ class ArgParser(argparse.ArgumentParser):
         description = """read thesis submission info from file given in --thesis option 
 if --add_certs option is given read info about additional certificate programs from file                  
                and add appitional entries in the thesis submission list 
-if --split_col is given print tsv table of combined submissions to stdout
-if --split_col is given print to tsv files, one for each value in thegiven column 
     """
         loglevels = ['CRITICAL', 'ERROR', 'WARN', 'INFO', 'DEBUG', 'NOTSET']
 
         parser = ArgParser(description=description, formatter_class=argparse.RawTextHelpFormatter)
         parser.add_argument("--thesis", "-t", default=None, required=True, help="excel export file from vireo")
-        parser.add_argument("--split_col", "-s", required=False, help="split column name - default %s" % Vireo.CERTIFICATE_PROGRAM)
-        parser.add_argument("--add_certs", "-a", default=None, required=False, help="excep spreadsheet with addituion certificate program info")
+        parser.add_argument("--split_col", "-s", required=False, default=Vireo.CERTIFICATE_PROGRAM, help="split column name - default %s" % Vireo.CERTIFICATE_PROGRAM)
+        parser.add_argument("--add_certs", "-a", default=None, required=False, help="excel spreadsheet with additional certificate program info")
         parser.add_argument("--all_cols", "-A", action='store_true', help="include all columns in printout")
         parser.add_argument("--loglevel", "-l", choices=loglevels,  default=logging.INFO, help="log level  - default: ERROR")
         return parser;
