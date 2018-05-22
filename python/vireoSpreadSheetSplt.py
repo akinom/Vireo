@@ -1,5 +1,4 @@
 import argparse
-from argparse import ArgumentError
 
 import logging
 import traceback
@@ -8,9 +7,10 @@ import sys
 import importlib
 from copy import deepcopy;
 
-def interactive():
-    importlib.reload(certificateProgramSplit)
-    wb = openpyxl.load_workbook(filename = 'ExcelExport.xlsx')
+if (False):
+    # code snippet when in case you want to test in interactive python
+    importlib.reload(vireoSpreadSheetSplt)
+    wb = openpyxl.load_workbook(filename = 'Thesis.xlsx')
     sheet = wb.worksheets[0]
     header = next(sheet.iter_rows(min_row=1, max_row=1))
 
@@ -197,26 +197,33 @@ class Vireo:
 
                 thesis_ids = self._id_rows();
                 # go through all data rows in add_certs sheet
+                i = 1  #header row is row one
                 for row in self.add_certs.iter_rows(min_row=2):
-                    sub_id = row[self.thesis_id_col].value
-                    if (sub_id in thesis_ids):
-                        add_cert = deepcopy(thesis_ids[row[self.thesis_id_col].value])
-                        if (add_cert[thesis_email_col].value.strip() != row[certs_email_col].value.strip()):
-                            logging.error("ERROR: %s and %s disagree on student email for submission with ID %s " % (
-                            self.thesis.title, self.add_certs.title, sub_id));
+                    i = i + 1
+                    sub_id = row[certs_id_col].value
+                    if (sub_id):
+                        if (sub_id in thesis_ids):
+                            add_cert = deepcopy(thesis_ids[row[self.thesis_id_col].value])
+                            if (add_cert[thesis_email_col].value.strip() != row[certs_email_col].value.strip()):
+                                logging.error("add_certs/thesis Sheet: %s and %s disagree on student email for submission with ID %s " % (
+                                self.thesis.title, self.add_certs.title, sub_id));
+                            else:
+                                logging.debug("add_cert %d %s->%s %s" % (sub_id,  add_cert[thesis_cert_col].value, row[thesis_cert_col].value, add_cert[thesis_email_col]))
+                                add_cert[thesis_cert_col].value = row[certs_cert_col].value
+                                add_rows.append(add_cert)
                         else:
-                            logging.debug("add_cert %d %s->%s %s" % (sub_id,  add_cert[thesis_cert_col].value, row[thesis_cert_col].value, add_cert[thesis_email_col]))
-                            add_cert[thesis_cert_col].value = row[certs_cert_col].value
-                            add_rows.append(add_cert)
+                                logging.error("add_certs Sheet: No thesis with ID %s found in %s" % (sub_id, self.thesis.title))
                     else:
-                            logging.error("No thesis with ID %s found in %s" % (sub_id, self.thesis.title))
+                        if (row[certs_cert_col].value or row[certs_email_col].value or row[certs_email_col].value):
+                            logging.error("add_certs Sheet: row %d in has no ID but other values" % i)
+
             self._add_rows = add_rows
         return self._add_rows
 
     def _id_rows(self):
         if not self.id_rows:
             for row in self.thesis.iter_rows(min_row=2):
-                id = row[self.thesis_id_col].value
+                id = int(row[self.thesis_id_col].value)
                 if (id in self.id_rows):
                     raise Exception("duplicate id %s" % str(id))
                 self.id_rows[id] = row
