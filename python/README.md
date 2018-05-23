@@ -33,8 +33,56 @@ The script requires openpyxl. It is written in Python3.6
 * test access with browser:; https://thesis-central.princeton.edu/CertificatePrograms/latest 
 
 
-generate certificate program files in teh dated directory 
+generate certificate program files in the dated directory 
 
 ~~~
 python ../vireoSpreadSheetSplt.py  --add_certs xlsx/AdditionalPrograms.xlsx  --thesis xlsx/Thesis.xlsx
 ~~~
+
+
+##  import Vireo data to DataSpace 
+ 
+This is a multi step process. 
+* export spreadsheet of all thesis in all states with all available columns - save to dspace directory - NEED TO ADJUST XSL
+* download spreadsheet with additional certificate program information: [Addional Certificate Data](https://docs.google.com/spreadsheets/d/1XsX5Z_49vJ5ze-0LNlA9UbUgDON_KUVHMqqRIapaJCM/edit#gid=0) and copy to dspace dir 
+* get latest list of restriction requests - - save to dspace directory 
+* enhance restriction request table with vireo IDs - NEED TO WRITE SCRIPT
+* work by department/certificate progranm:
+    * create named subdirectory in  dspace/cert_program or dspace/home_dept/
+    * export spreadsheet of relevant thesis in all states with all available columns - save to named subdir
+    * export same thesis in dspace format - also save in named subdirectory 
+    * enhance with additional certificate information - NEED TO WRITE SCRIPT
+    * combine multi author thesis - NEED TO WRITE SCRIPT
+    
+
+
+
+
+
+### may not need do it that way 
+
+would have to teach [vireoSpreadSheetSplit.py](../vireoSpreadSheetSplit.py)  how to read tsv files
+
+* split submissions into several directories, one for each department and one for each certificate program: 
+    *  dspace/home_dept/<DEPT_NAME> 
+    *  dspace/cert_program/<CERT_NAME> 
+    
+
+split by thesis type 
+~~~
+python ../vireoSpreadSheetSplit.py --thesis Thesis.xlsx --all_cols --split_col 'Thesis Type'
+~~~
+
+split by home department name
+~~~
+python ../../vireoSpreadSheetSplit.py --thesis Certificate-Program-Thesis.tsv --all_cols --split_col 'Department' --format tsv
+~~~
+
+split by certificate program name
+~~~
+python ../../vireoSpreadSheetSplit.py --thesis Certificate-Program-Thesis.tsv --all_cols --split_col 'Department' --format tsv
+~~~
+
+
+
+
