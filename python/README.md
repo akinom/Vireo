@@ -13,24 +13,24 @@ python vireoSpreadSheetSplt.py --help
 The script requires openpyxl. It is written in Python3.6
 
 * export all thesis in submitted and approved and reviewed state with all possible columns from Vireo to excel spreadsheet
-* downlod spreadsheet with additional certificate program information: [Addional Certificate Data](https://docs.google.com/spreadsheets/d/1XsX5Z_49vJ5ze-0LNlA9UbUgDON_KUVHMqqRIapaJCM/edit#gid=0) 
-* mkdir  dated-dir: yyyy-mm-dd 
-* add [HEADER.html](HEADER.html) to directory  and adjust date in file 
-* cd dated-dir 
+* downlod spreadsheet with additional certificate program information: [Addional Certificate Data](https://docs.google.com/spreadsheets/d/1XsX5Z_49vJ5ze-0LNlA9UbUgDON_KUVHMqqRIapaJCM/edit#gid=0)
+* mkdir  dated-dir: yyyy-mm-dd
+* add [HEADER.html](HEADER.html) to directory  and adjust date in file
+* cd dated-dir
 * mkdir xlsx
 * copy Thesis and Certificate spreadsheets to xlsx
-* run script to generate files in date-dir - see command below 
+* run script to generate files in date-dir - see command below
 * move the list of tesis without a certificate program designation tp xlsx:  mv None.tsv xlsx
-* tar/zip dated dir and copy to server 
-* ssh to server     
-* cd /var/www/html/CertificatePrograms/   
-    * unzip tar file and create dated-dir with newly generated files 
+* tar/zip dated dir and copy to server
+* ssh to server
+* cd /var/www/html/CertificatePrograms/
+    * unzip tar file and create dated-dir with newly generated files
     * rm latest
     * ln -s latest dated-dir
-    * make sure permissions are set to be world readable: 
-        * chmod o+r dated-dir/* 
+    * make sure permissions are set to be world readable:
+        * chmod o+r dated-dir/*
         * chmod o+rx dated-dir
-* test access with browser:; https://thesis-central.princeton.edu/CertificatePrograms/latest 
+* test access with browser:; https://thesis-central.princeton.edu/CertificatePrograms/latest
 
 
 generate certificate program files in the dated directory 
@@ -42,7 +42,8 @@ python ../vireoSpreadSheetSplt.py  --add_certs xlsx/AdditionalPrograms.xlsx  --t
 
 ##  import Vireo data to DataSpace 
  
-This is a multi step process. 
+This is a multi step process.
+
 * export spreadsheet of all thesis in all states with all available columns - save to dspace directory - NEED TO ADJUST XSL
 * download spreadsheet with additional certificate program information: [Addional Certificate Data](https://docs.google.com/spreadsheets/d/1XsX5Z_49vJ5ze-0LNlA9UbUgDON_KUVHMqqRIapaJCM/edit#gid=0) and copy to dspace dir 
 * get latest list of restriction requests - - save to dspace directory 
