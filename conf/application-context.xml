@@ -361,8 +361,7 @@
     <property name="templatePaths">
       <util:map>
         <entry key="dublin_core.xml" value="conf/formats/dspace_simple.xml" />
-        <entry key="metadata_thesis.xml" value="conf/formats/dspace_simple.xml" />
-        <entry key="metadata_local.xml" value="conf/formats/dspace_simple.xml" />
+        <entry key="metadata_pu.xml" value="conf/formats/dspace_simple.xml" />
         <entry key="contents" value="conf/formats/dspace_simple.xml" />
       </util:map>
     </property>
