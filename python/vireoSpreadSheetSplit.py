@@ -3,30 +3,41 @@ import argparse
 import logging
 import traceback
 import openpyxl
-import sys
-import importlib
 from copy import deepcopy;
 
-if (False):
+# for the benefit of IDE import two ways
+try:
+    from vireo import VireoSheet
+except Exception:
+    from .vireo import VireoSheet
+
+def snippet():
+    logging.getLogger().setLevel('INFO')
     # code snippet when in case you want to test in interactive python
-    importlib.reload(vireoSpreadSheetSplt)
     wb = openpyxl.load_workbook(filename = 'Thesis.xlsx')
     sheet = wb.worksheets[0]
-    header = next(sheet.iter_rows(min_row=1, max_row=1))
+    v = VireoSheet('Thesis.xlsx')
+    v.log_info()
+    certs = v.readMoreCerts('AdditionalPrograms.xlsx')
+    certs.log_info()
+    return certs
 
 
 class ArgParser(argparse.ArgumentParser):
     @staticmethod
     def create():
-        description = """read thesis submission info from file given in --thesis option 
-if --add_certs option is given read info about additional certificate programs from file                  
-               and add appitional entries in the thesis submission list 
-    """
+        description = """
+read thesis submission info from file given in --thesis option 
+if --add_certs option is given read info about additional certificate programs from file      
+
+generate certificate program specific tsv files with submissions to the relevant program
+home department submissions that have bo certificate progra desifgnation are printed to the file None.tsv
+"""
         loglevels = ['CRITICAL', 'ERROR', 'WARN', 'INFO', 'DEBUG', 'NOTSET']
 
         parser = ArgParser(description=description, formatter_class=argparse.RawTextHelpFormatter)
         parser.add_argument("--thesis", "-t", default=None, required=True, help="excel export file from vireo")
-        parser.add_argument("--split_col", "-s", required=False, default=Vireo.CERTIFICATE_PROGRAM, help="split column name - default %s" % Vireo.CERTIFICATE_PROGRAM)
+        parser.add_argument("--split_col", "-s", required=False, default=VireoSheet.CERTIFICATE_PROGRAM, help="split column name - default %s" % VireoSheet.CERTIFICATE_PROGRAM)
         parser.add_argument("--add_certs", "-a", default=None, required=False, help="excel spreadsheet with additional certificate program info")
         parser.add_argument("--all_cols", "-A", action='store_true', help="include all columns in printout")
         parser.add_argument("--loglevel", "-l", choices=loglevels,  default=logging.INFO, help="log level  - default: ERROR")
@@ -34,231 +45,57 @@ if --add_certs option is given read info about additional certificate programs f
 
     def parse_args(self):
         args= argparse.ArgumentParser.parse_args(self)
-        try:
-            args.vireo = Vireo(args)
-        except Exception as e:
-            raise e
         return args
 
-class Vireo:
-    CERTIFICATE_PROGRAM = 'Certificate Program'
-    STUDENT_NAME = 'Student name'
-    DEPARTMENT = 'Department'
-    SUBMISSION_DATE = 'Submission date'
-    ADVISORS = 'Advisors'
-    DOCUMENT_TITLE = 'Title'
-    PRIMARY_DOCUMENT = 'Primary document'
-    THESIS_TYPE = 'Thesis Type'
-    STUDENT_EMAIL = 'Student email'
-    ID = 'ID'
 
-    PRINT_COLUMNS = [CERTIFICATE_PROGRAM, STUDENT_NAME, DEPARTMENT, SUBMISSION_DATE, ADVISORS, DOCUMENT_TITLE, PRIMARY_DOCUMENT]
+PRINT_COLUMNS = [VireoSheet.CERTIFICATE_PROGRAM, VireoSheet.STUDENT_NAME,
+                 VireoSheet.DEPARTMENT, VireoSheet.SUBMISSION_DATE,
+                 VireoSheet.ADVISORS, VireoSheet.DOCUMENT_TITLE, VireoSheet.PRIMARY_DOCUMENT]
 
-    NOSPLIT_KEY = '___NO_SPLIT___'
+def addToSplits(splits, split_on, split_data, submissions):
+    logging.info("addToSplits %s data=%s submissions=%s" % (split_on, split_data.file_name, submissions.file_name))
+    split_on_data_indx = split_data.col_index_of(split_on, required=True)
+    sub_split_indx = submissions.col_index_of(split_on, required=True)
+    for id in split_data.id_rows:
+        matching_submission = submissions.id_rows[id][0]
+        for data_row in split_data.id_rows[id]:
+            col_val = data_row[split_on_data_indx].value
+            if None == col_val:
+                col_val = ''
+            col_val = col_val.strip()
+            if (split_data != submissions):
+                add = [v for v in matching_submission]
+                add[sub_split_indx] = data_row[split_on_data_indx]
+            else:
+                add = matching_submission
+            if not col_val in splits:
+                splits[col_val] = [add ]
+            else:
+                splits[col_val].append(add)
 
-    testing = False;
+def print_splits(splits, print_col_names, print_col_ids):
+    logging.info("#splits %d" % len(splits))
+    for k in splits:
+        _print_tsv(k, print_col_names, print_col_ids, splits[k])
 
-    def __init__(self, args):
-        Vireo.testing = (args.loglevel == logging.getLevelName(logging.DEBUG))
-
-        thesis_file = args.thesis
-        thesis_wb = openpyxl.load_workbook(filename = thesis_file)
-        if (1 != len(thesis_wb.worksheets)) :
-            raise Exception("Workbook '%s' should have exactly one sheet" % (thesis_file))
-        self.thesis = thesis_wb.worksheets[0]
-
-        self.thesis_id_col = self._col_index_of(self.thesis, Vireo.ID)
-        if (None == self.thesis_id_col):
-            raise Exception("Workbook '%s' does not contain a '%s' column" % (thesis_file, Vireo.ID))
-
-        if (args.split_col):
-            self._split_col = self._col_index_of(self.thesis, args.split_col)
-            if (None == self._split_col):
-                raise Exception("Workbook '%s' does not contain a '%s' column" % (thesis_file, args.split_col))
-        else:
-            self._split_col = None
-
-        if (args.add_certs):
-            add_certs_file = args.add_certs
-            add_certs_wb = openpyxl.load_workbook(filename = add_certs_file)
-            if (1 != len(add_certs_wb.worksheets)) :
-                raise Exception("Workbook '%s' should have exactly one sheet" % (add_certs_file))
-            self.add_certs = add_certs_wb.worksheets[0]
-
-            if (None == self._col_index_of(self.add_certs, Vireo.ID)):
-                raise Exception("Workbook '%s' does not contain a '%s' column" % (add_certs_file, Vireo.ID))
-            if (None == self._col_index_of(self.add_certs, Vireo.STUDENT_EMAIL)):
-                raise Exception("Workbook '%s' does not contain a '%s' column" % (add_certs_file, Vireo.STUDENT_EMAIL))
-            if (None == self._col_index_of(self.thesis, Vireo.STUDENT_EMAIL)):
-                raise Exception("Workbook '%s' does not contain a '%s' column" % (thesis_file, Vireo.STUDENT_EMAIL))
-            if (None == self._col_index_of(self.thesis, Vireo.CERTIFICATE_PROGRAM)):
-                raise Exception("Workbook '%s' does not contain a '%s' column" % (thesis_file, Vireo.CERTIFICATE_PROGRAM))
-
-        thesis_col_names = [v.value for v in Vireo._header(self.thesis)]
-        if (args.all_cols):
-            print_col_names = thesis_col_names
-        else:
-            print_col_names = list(filter(lambda x: x in thesis_col_names, Vireo.PRINT_COLUMNS))
-        self._print_col_ids = [thesis_col_names.index(v) for v in print_col_names]
-
-        self.id_rows = {}
-        self._id_rows()
-
-        self._add_rows = None
-
-    def log_info(self):
-        header = Vireo._header(self.thesis);
-        logging.info("thesis workbook %s" % self.thesis.title)
-        logging.info("thsis id column: %s (%d)" % (Vireo.ID,  self.thesis_id_col))
-        if (self._split_col): logging.info("thsis split column: %s (%d)" % (header[self._split_col].value, self._split_col));
-        col_names = [str(header[i].value) for i in self._print_col_ids]
-        logging.info("print cols: " + ", ".join(col_names) )
-        if ('add_certs' in dir(self)):
-            logging.info("thesis check column: %s (%d)" % (Vireo.STUDENT_EMAIL,  self._col_index_of(self.thesis, Vireo.STUDENT_EMAIL)))
-            logging.info("thesis certificate column: %s (%d)" % (Vireo.CERTIFICATE_PROGRAM,  self._col_index_of(self.thesis, Vireo.CERTIFICATE_PROGRAM)))
-            logging.info("add_certs id column: %s (%d)" % (Vireo.ID,  self._col_index_of(self.add_certs, Vireo.ID)))
-            logging.info("add_certs check column: %s (%d)" % (Vireo.STUDENT_EMAIL,  self._col_index_of(self.add_certs, Vireo.STUDENT_EMAIL)))
-            logging.info("add_certs certs column: %s (%d)" % (Vireo.CERTIFICATE_PROGRAM,  self._col_index_of(self.add_certs, Vireo.CERTIFICATE_PROGRAM)))
-
-    def main(args):
-        vireo = Vireo(args);
-        vireo.log_info();
-        splits = vireo.split_sheet()
-        vireo.print(splits);
-
-    def _col_index_of(self, sheet, title):
-        for row in sheet.iter_rows(min_row=1, max_row=1):
-            for cell in  row:
-                if (cell.value.strip() == title):
-                    return cell.col_idx -1;
-        return None;
-
-    def split_sheet(self):
-        splits = {}
-        splits = self._split_rows(splits, self._add_certificates())
-        if (Vireo.testing):
-            num_rows = sum(1 for _ in  self._add_certificates())
-            logging.debug("# %d certificate rows " % num_rows)
-            num_split_rows = self.count_rows("add_certs", splits)
-            if (num_rows != num_split_rows):
-                logging.error("SANITY CHECK FAILED: # cert rows (%d) != #rows in splits (%d)" % (num_rows, num_split_rows))
-
-        splits = self._split_rows(splits, self.thesis.iter_rows(min_row=2))
-        if (Vireo.testing):
-            num_rows = num_rows + sum(1 for _ in  self.thesis.iter_rows(min_row=2))
-            logging.debug("# %d thesis rows + certificate rows " % num_rows)
-            num_split_rows = self.count_rows("thesis", splits)
-            if (num_rows != num_split_rows):
-                logging.error("SANITY CHECK FAILED: #thesis rows (%d) != #rows in splits (%d)" % (num_rows, num_split_rows))
-
-        return splits
-
-    def count_rows(self, label, splits):
-        logging.info("%s #%d split_keys " % (label, len(splits)))
-        s = 0
-        for k in splits:
-            s = s + len(splits[k])
-            logging.debug("#%s: %d entries in '%s'" % (label, len(splits[k]), str(k)))
-        logging.info("%s total entries %d" % (label, s))
-        return s
-
-    def _split_rows(self, splits, iter):
-        if (None != self._split_col):
-            for row in iter:
-                col_val = row[self._split_col].value
-                if (None != col_val):
-                    col_val = col_val.strip()
-                else:
-                    col_val = '';
-                if (col_val in splits):
-                    splits[col_val].append(row);
-                else:
-                    splits[col_val] = [row];
-        else:
-            for row in iter:
-                if (Vireo.NOSPLIT_KEY in splits):
-                    splits[Vireo.NOSPLIT_KEY].append(row);
-                else:
-                    splits[Vireo.NOSPLIT_KEY] = [row];
-
-        return splits
-
-    def _add_certificates(self):
-        if (self._add_rows == None):
-            add_rows = []
-            if ('add_certs' in dir(self)):
-                certs_id_col = self._col_index_of(self.add_certs, Vireo.ID);
-                certs_cert_col = self._col_index_of(self.add_certs, Vireo.CERTIFICATE_PROGRAM)
-                certs_email_col = self._col_index_of(self.add_certs, Vireo.STUDENT_EMAIL)
-                thesis_email_col = self._col_index_of(self.thesis, Vireo.STUDENT_EMAIL)
-                thesis_cert_col = self._col_index_of(self.thesis, Vireo.CERTIFICATE_PROGRAM)
-                if (certs_id_col == None or certs_cert_col == None or certs_email_col == None or thesis_email_col == None or thesis_cert_col == None):
-                    raise RuntimeError("programming error: should never get here - see checks in constructor")
-
-                thesis_ids = self._id_rows();
-                # go through all data rows in add_certs sheet
-                i = 1  #header row is row one
-                for row in self.add_certs.iter_rows(min_row=2):
-                    i = i + 1
-                    sub_id = row[certs_id_col].value
-                    if (sub_id):
-                        if (sub_id in thesis_ids):
-                            add_cert = deepcopy(thesis_ids[row[self.thesis_id_col].value])
-                            if (add_cert[thesis_email_col].value.strip() != row[certs_email_col].value.strip()):
-                                logging.error("add_certs/thesis Sheet: %s and %s disagree on student email for submission with ID %s " % (
-                                self.thesis.title, self.add_certs.title, sub_id));
-                            else:
-                                logging.debug("add_cert %d %s->%s %s" % (sub_id,  add_cert[thesis_cert_col].value, row[thesis_cert_col].value, add_cert[thesis_email_col]))
-                                add_cert[thesis_cert_col].value = row[certs_cert_col].value
-                                add_rows.append(add_cert)
-                        else:
-                                logging.error("add_certs Sheet: No thesis with ID %s found in %s" % (sub_id, self.thesis.title))
-                    else:
-                        if (row[certs_cert_col].value or row[certs_email_col].value or row[certs_email_col].value):
-                            logging.error("add_certs Sheet: row %d in has no ID but other values" % i)
-
-            self._add_rows = add_rows
-        return self._add_rows
-
-    def _id_rows(self):
-        if not self.id_rows:
-            for row in self.thesis.iter_rows(min_row=2):
-                id = int(row[self.thesis_id_col].value)
-                if (id in self.id_rows):
-                    raise Exception("duplicate id %s" % str(id))
-                self.id_rows[id] = row
-        return self.id_rows;
+def _print_tsv(name, col_names, col_ids, rows):
+    file_name = name.replace(' ', '-')
+    if not file_name:
+        file_name = 'None'
+    logging.info("%s: %d entries" % (file_name, len(rows)))
+    out =open(file_name + ".tsv", 'w')
+    # print header row
+    print('\t'.join(col_names), file=out)
+    # print rows with selected columns
+    for row in rows:
+        print('\t'.join(_select_row_values(row, col_ids)), file=out)
+    out.close()
 
 
-    def _header(sheet):
-        return next(sheet.iter_rows(min_row=1, max_row=1))
+def _select_row_values(row, col_ids):
+    sel_row = [row[i] for i in col_ids]
+    return [(str(c.value) if None != c.value else 'None') for c in sel_row]
 
-    def print(self, splits):
-        logging.info("printing %d tsv files" % len(splits))
-        if Vireo.NOSPLIT_KEY in splits:
-            logging.info("no splits %s" % Vireo.NOSPLIT_KEY)
-            self._print_tsv(Vireo._header(self.thesis), splits[Vireo.NOSPLIT_KEY], sys.stdout)
-        else:
-            for k in splits:
-                self.print_tsv(k, splits[k])
-
-    def print_tsv(self, name, rows):
-        file_name = name.replace(' ', '-')
-        if not file_name:
-            file_name = 'None'
-        out =open(file_name + ".tsv", 'w')
-        self._print_tsv(Vireo._header(self.thesis), rows, out)
-        out.close();
-
-    def _print_tsv(self, header, rows, out):
-        self._print_tsv_row(header, out)
-        for r in rows:
-            self._print_tsv_row(r, out)
-
-
-    def _print_tsv_row(self, row, out):
-        prt_row = [row[i] for i in self._print_col_ids]
-        print('\t'.join([(str(c.value) if None != c.value else 'None') for c in prt_row]), file=out)
 
 def main():
 
@@ -269,10 +106,26 @@ def main():
         logging.getLogger().setLevel(args.loglevel)
         logging.basicConfig()
 
-        Vireo.main(args)
+        submissions = VireoSheet(args.thesis)
+        submissions.log_info()
+
+        splits = {}
+        addToSplits(splits, split_on=args.split_col, split_data=submissions, submissions=submissions)
+
+        if (args.add_certs):
+            moreCerts = submissions.readMoreCerts(args.add_certs)
+            addToSplits(splits, split_on=args.split_col, split_data=moreCerts, submissions=submissions)
+
+        if (args.all_cols):
+            print_col_names = submissions.col_names()
+        else:
+            # print cols that are in PRIN_COLUMNS and in submission's col_names
+            print_col_names = list(filter(lambda x: x in submissions.col_names(), PRINT_COLUMNS))
+        print_col_ids = [submissions.col_index_of(name, required=True)  for name in print_col_names]
+        print_splits(splits, print_col_names, print_col_ids)
 
     except Exception as e:
-        logging.error(e, file = sys.stderr)
+        logging.error(e)
         logging.debug(traceback.format_exc())
 
 if __name__ == "__main__":
