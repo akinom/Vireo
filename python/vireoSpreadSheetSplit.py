@@ -3,7 +3,6 @@ import argparse
 import logging
 import traceback
 import openpyxl
-from copy import deepcopy;
 
 # for the benefit of IDE import two ways
 try:
@@ -31,7 +30,7 @@ read thesis submission info from file given in --thesis option
 if --add_certs option is given read info about additional certificate programs from file      
 
 generate certificate program specific tsv files with submissions to the relevant program
-home department submissions that have bo certificate progra desifgnation are printed to the file None.tsv
+home department submissions that have bo certificate program desifgnation are printed to the file None.tsv
 """
         loglevels = ['CRITICAL', 'ERROR', 'WARN', 'INFO', 'DEBUG', 'NOTSET']
 
@@ -63,13 +62,10 @@ def addToSplits(splits, split_on, split_data, submissions):
             if None == col_val:
                 col_val = ''
             col_val = col_val.strip()
-            if (split_data != submissions):
-                add = [v for v in matching_submission]
-                add[sub_split_indx] = data_row[split_on_data_indx]
-            else:
-                add = matching_submission
+            add = [v for v in matching_submission]
+            add[sub_split_indx] = data_row[split_on_data_indx]
             if not col_val in splits:
-                splits[col_val] = [add ]
+                splits[col_val] = [add]
             else:
                 splits[col_val].append(add)
 
