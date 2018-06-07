@@ -1,11 +1,7 @@
 import argparse
 
 import logging
-import traceback
 import openpyxl
-import sys
-from copy import deepcopy;
-import importlib
 
 def snippet():
     logging.getLogger().setLevel('INFO')
@@ -29,7 +25,16 @@ class VireoSheet:
     PRIMARY_DOCUMENT = 'Primary document'
     THESIS_TYPE = 'Thesis Type'
     STUDENT_EMAIL = 'Student email'
+    MULTI_AUTHOR = 'Multi Author'
+    STATUS = 'Status'
+    TITLE = 'Title'
     ID = 'ID'
+
+    #RESTRICTIONS SHEET
+    R_STUDENT_NAME = 'Submitted By'
+    R_TITLE = 'Name'
+    R_WALK_IN = 'Walk In Access'
+    R_EMBARGO = 'Embargo Years'
 
     def __init__(self, thesis_file, unique_ids=True):
         """
@@ -38,6 +43,7 @@ class VireoSheet:
         :param thesis_file:   excel file
         """
         self.file_name = thesis_file
+        self.unique_ids = unique_ids
         thesis_wb = openpyxl.load_workbook(filename = thesis_file)
         if (1 != len(thesis_wb.worksheets)) :
             raise Exception("%s should have exactly one sheet" % (thesis_file))
@@ -46,7 +52,7 @@ class VireoSheet:
         self.id_rows = {}
         for row in self._sheet.iter_rows(min_row=2):
             if not row[self.id_col].value:
-                logging.warning("Row has no ID value: %s" % str.join(',',(str(cell.value).strip() for cell in row)))
+                logging.warning("%s: Row has no ID value: %s" % (self.file_name, str.join(',',(str(cell.value).strip() for cell in row))))
             else:
                 id = int(row[self.id_col].value)
                 if not id in self.id_rows:
@@ -55,8 +61,6 @@ class VireoSheet:
                     raise Exception("%s has duplicate id %s" % (thesis_file, str(id)))
                 else:
                     self.id_rows[id].append(row)
-
-
 
     def col_names(self):
         hdrs = next(self._sheet.iter_rows(min_row=1, max_row=1))
@@ -74,7 +78,7 @@ class VireoSheet:
     def row_values(row):
         return [str(cell.value).strip() for cell in row]
 
-    def readMoreCerts(self, add_certs_file):
+    def readMoreCerts(self, add_certs_file, check_id=True):
         add_certs = VireoSheet(add_certs_file, unique_ids=False)
         # check that required columns are present
         certs_email_col_id = add_certs.col_index_of(VireoSheet.STUDENT_EMAIL, required=True)
@@ -83,8 +87,11 @@ class VireoSheet:
         thesis_cert_col_id = self.col_index_of(VireoSheet.CERTIFICATE_PROGRAM, required=True)
         # look through whether certs file info matches thesis sheet info
         for cert_id in add_certs.id_rows:
-            if not cert_id in  self.id_rows:
-                raise Exception("%s, row with ID %d: there is no such row in %s" % (add_certs.file_name, cert_id, self.file_name))
+            if  not  cert_id in  self.id_rows:
+                if (check_id):
+                    raise Exception("%s, row with ID %d: there is no such row in %s" % (add_certs.file_name, cert_id, self.file_name))
+                else:
+                    continue
             thesis_row = self.id_rows[cert_id][0]
             for row in  add_certs.id_rows[cert_id]:
                 logging.debug("ID %d -> cert_row: %s" % (cert_id, VireoSheet.row_values(row)))
@@ -95,6 +102,23 @@ class VireoSheet:
                 if not row[certs_cert_col_id].value:
                     raise Exception("%s, row with ID %d: row has empty certificate value" % (add_certs.file_name, cert_id))
         return add_certs
+
+    def readRestrictions(self, restriction_file, check_id=True):
+        restrictions = VireoSheet(restriction_file, unique_ids=False)
+        # check that necessary columns are present
+        restrictions.col_index_of(VireoSheet.R_STUDENT_NAME, required=True)
+        restrictions.col_index_of(VireoSheet.R_TITLE, required=True)
+        restrictions.col_index_of(VireoSheet.R_WALK_IN, required=True)
+        restrictions.col_index_of(VireoSheet.R_EMBARGO, required=True)
+        # check wheter restriction IDs make sense
+        # look through whether certs file info matches thesis sheet info
+        for restr_id in restrictions.id_rows:
+            if  not  restr_id in  self.id_rows:
+                if (check_id):
+                    raise Exception("%s, row with ID %d: there is no such row in %s" % (restrictions.file_name, restr_id, self.file_name))
+                else:
+                    continue
+        return restrictions
 
     def log_info(self):
         logging.info(str(self))
