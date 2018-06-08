@@ -15,7 +15,7 @@ def snippet():
     # code snippet when in case you want to test in interactive python
     wb = openpyxl.load_workbook(filename = 'Thesis.xlsx')
     sheet = wb.worksheets[0]
-    v = VireoSheet('Thesis.xlsx')
+    v = VireoSheet.createFromExcelFile('Thesis.xlsx')
     v.log_info()
     certs = v.readMoreCerts('AdditionalPrograms.xlsx')
     certs.log_info()
@@ -102,7 +102,7 @@ def main():
         logging.getLogger().setLevel(args.loglevel)
         logging.basicConfig()
 
-        submissions = VireoSheet(args.thesis)
+        submissions = VireoSheet.VireoSheet(args.thesis)
         submissions.log_info()
 
         splits = {}
