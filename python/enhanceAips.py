@@ -35,21 +35,65 @@ enhance pu-metadata.xml in AIPS in submission_<ID> subdirections of export direc
         parser.add_argument("--add_certs", "-a", required=True, help="excel spreadsheet with additional certificate program info")
         parser.add_argument("--restrictions", "-r", required=True, help="TODO access restrictions")
         parser.add_argument("--aips",  required=True, help="directory with DSPace AIPS")
-        parser.add_argument("--export", required=True, help="directory for enhanced aips")
         parser.add_argument("--loglevel", "-l", choices=loglevels,  default=logging.INFO, help="log level  - default: ERROR")
         return parser;
 
     def parse_args(self):
         args= argparse.ArgumentParser.parse_args(self)
-        # test whether export dir exists
-        if not os.path.isdir(args.export):
-            raise Exception("%s is not a directory" % args.export)
         if not os.path.isdir(args.aips):
             raise Exception("%s is not a directory" % args.aips)
         return args
 
 
-def parse_pu_metadata(xml_file):
+def _enhanceAips(submissions, moreCerts, restrictions, aip_dir):
+    multi_author_indx = submissions.col_index_of(VireoSheet.MULTI_AUTHOR)
+    status_id = submissions.col_index_of(VireoSheet.STATUS)
+    print("\t".join(submissions.col_names()))
+    for sub_id in submissions.id_rows:
+        _confirm_aip_export_dir(aip_dir, sub_id)
+        sub = submissions.id_rows[sub_id][0]
+        status = sub[status_id].value
+
+        print("%s %s %s " % (status, sub[multi_author_indx].value , "\t".join(VireoSheet.row_values(sub))))
+        add_pu_props = {}
+        if (status == "Approved"):
+            if (sub[multi_author_indx].value == 'yes'):
+                logging.warning("%s: submission with ID %d is a multi author thesis" % (submissions.file_name, sub_id))
+            # read aip for submission
+            if (sub_id in moreCerts.id_rows):
+                add_pu_props = _add_cert_props(add_pu_props, sub_id, moreCerts)
+                print("added certificates: %s" % (add_pu_props))
+            if (sub_id in restrictions.id_rows):
+                add_pu_props = _add_restriction_props(add_pu_props, sub_id, restrictions)
+                print("added restriction: %s" % (add_pu_props))
+            print(add_pu_props)
+
+def _confirm_aip_export_dir(aip_dir, sub_id):
+    """
+    raise exception if aipd dir does not contain a aip package for  the given submission
+    :param aip_dir:   path to directory with DSpace aio subdirectories
+    :param sub_id: submission id
+    :return: void
+    """
+    os.stat("%s/submission_%d/contents" % (aip_dir, sub_id))
+
+
+def _add_cert_props(props, sub_id, vireo_sheet):
+    col_id = vireo_sheet.col_index_of(VireoSheet.CERTIFICATE_PROGRAM, required=True)
+    for row in vireo_sheet.id_rows[sub_id]:
+        props['certificate'] = row[col_id].value
+    return props
+
+def _add_restriction_props(props, sub_id, vireo_sheet):
+    walk_id = vireo_sheet.col_index_of(VireoSheet.R_WALK_IN, required=True)
+    embargo_id = vireo_sheet.col_index_of(VireoSheet.R_EMBARGO, required=True)
+    for row in vireo_sheet.id_rows[sub_id]:
+        props['walkin'] = row[walk_id].value
+        props['embargo'] = row[embargo_id].value
+    return props
+
+
+def _parse_pu_metadata(xml_file):
     try:
         root = ET.parse(xml_file).getroot()
     except Exception as e:
@@ -76,7 +120,7 @@ def parse_pu_metadata(xml_file):
     return props
 
 
-def hash_to_pu_metadata(props, xml_file):
+def _hash_to_pu_metadata(props, xml_file):
     root = ET.Element('dublin_core', {'schema' : 'pu'})
     for p in props:
         if (p == 'certificate'):
@@ -87,19 +131,7 @@ def hash_to_pu_metadata(props, xml_file):
     ET.dump(root)
     return root
 
-def enhanceAips(submissions, moreCerts, restrictions, aip_dir, export_dir):
-    multi_author_indx = submissions.col_index_of(VireoSheet.MULTI_AUTHOR)
-    print("\t".join(submissions.col_names()))
-    for sub_id in submissions.id_rows:
-        sub = submissions.id_rows[sub_id][0]
-        print("\t".join(VireoSheet.row_values(sub)))
-        if (sub[multi_author_indx].value == 'yes'):
-            logging.warning("%s: submission with ID %d is a multi author thesis" % (submissions.file_name, sub_id))
-        # read aip for submission
-        if (sub_id in moreCerts.id_rows):
-            print("TODO add certitificates")
-        if (sub_id in restrictions.id_rows):
-            print("TODO add restrictions")
+
 
 def main():
 
@@ -110,17 +142,17 @@ def main():
         logging.getLogger().setLevel(args.loglevel)
         logging.basicConfig()
 
-        submissions = VireoSheet.VireoSheet(args.thesis)
+        submissions = VireoSheet.createFromExcelFile(args.thesis)
         submissions.col_index_of(VireoSheet.MULTI_AUTHOR)
         submissions.log_info()
 
         moreCerts = submissions.readMoreCerts(args.add_certs, check_id=False)
         moreCerts.log_info()
 
-        restrictions = submissions.readRestrictions(args.restrictions, check_id=True)
+        restrictions = submissions.readRestrictions(args.restrictions, check_id=False)
         restrictions.log_info()
 
-        enhanceAips(submissions, moreCerts, restrictions, args.aips, args.export)
+        _enhanceAips(submissions, moreCerts, restrictions, args.aips)
 
 
     except Exception as e:
