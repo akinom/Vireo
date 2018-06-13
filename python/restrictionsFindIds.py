@@ -42,12 +42,12 @@ def choose(matches, vireo, print_col_names):
         i = i + 1
         for p in print_col_names:
             idx = vireo.col_index_of(p)
-            print("option %d -- %s: %s" % (i, p, str(m[idx].value)))
+            print("option %d --  %s" % (i, str(m[idx].value)))
     choice = input("WHAT DO YOU WANT ? (return for now choice) > ").strip()
     try:
         id = int(choice)
         if (id > 0 and id <= i):
-            return matches[id-1]
+            return matches[id - 1]
         else:
             print("%d is invalid - try again" % id)
             return choose(matches, vireo, print_col_names)
@@ -84,7 +84,8 @@ def matchIds(submissions, restrictions):
             s_name = vireoName( r_name )
             matches = submissions.matchingRows(VireoSheet.STUDENT_NAME, s_name)
             m = choose(matches, submissions, [VireoSheet.STUDENT_NAME, VireoSheet.DOCUMENT_TITLE])
-            row[r_id_idx].value = m[0].value
+            if (m != None): 
+                row[r_id_idx].value = m[0].value
             print("--")
         else:
             match = submissions.id_rows[int(s_id)][0]
