@@ -1,3 +1,5 @@
+import xml.etree.ElementTree as ET
+
 import argparse
 
 import logging
@@ -45,6 +47,45 @@ enhance pu-metadata.xml in AIPS in submission_<ID> subdirections of export direc
         if not os.path.isdir(args.aips):
             raise Exception("%s is not a directory" % args.aips)
         return args
+
+
+def parse_pu_metadata(xml_file):
+    try:
+        root = ET.parse(xml_file).getroot()
+    except Exception as e:
+        raise RuntimeError("xml_file %s: %s" % (xml_file, str(e)))
+
+    props = {}
+    for val in ET.parse(xml_file).getroot().findall('dcvalue'):
+        try:
+            attr = val.attrib
+            elem= attr["element"]
+
+            if (elem == "department"):
+                if ('department' in props):  raise RuntimeError("duplicate property")
+                props["department"] = val.text.strip()
+            elif  (elem  == "certificate"):
+                if (not 'certificate' in props):
+                    props['certificate'] = []
+                props['certificate'].append(val.text.strip())
+            elif (elem == "contributor" and attr['qualifier'] == 'authorid'):
+                if ('authorid' in props):  raise RuntimeError("duplicate property")
+                props['authorid'] = val.text.strip()
+        except Exception as e:
+            raise RuntimeError("%s: Unparsable dcvalue '%s' text=%s  <- %s" % (xml_file, val.attrib, val.text.strip() if val.text else 'None', str(e)))
+    return props
+
+
+def hash_to_pu_metadata(props, xml_file):
+    root = ET.Element('dublin_core', {'schema' : 'pu'})
+    for p in props:
+        if (p == 'certificate'):
+            for c in props['certificate']:
+                ET.SubElement(root, 'dcvalue', attrib={'element' : p}).text = c
+        else:
+            ET.SubElement(root, 'dcvalue', {'element' : p}).text = props[p]
+    ET.dump(root)
+    return root
 
 def enhanceAips(submissions, moreCerts, restrictions, aip_dir, export_dir):
     multi_author_indx = submissions.col_index_of(VireoSheet.MULTI_AUTHOR)
