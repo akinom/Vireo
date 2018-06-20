@@ -51,6 +51,7 @@ class VireoSheet:
             self._sheet = self._thesis_wb.worksheets[0]
             self.id_col = self.col_index_of(VireoSheet.ID, required=True)
             self.id_rows = self._derive_id_hash()
+            logging.debug("IDS: " +  ", ".join(str(_) for _  in self.id_rows))
         else:
             raise Exception("invalid workbook")
 
@@ -93,6 +94,9 @@ class VireoSheet:
             if (required):
                 raise Exception("%s does not contain a '%s' column" % (self.file_name, col_header))
         return None;
+
+    def iter_rows(self):
+        return self._sheet.iter_rows(min_row=2)
 
     @staticmethod
     def row_values(row):
@@ -140,12 +144,12 @@ class VireoSheet:
         return id_rows
 
     def readMoreCerts(self, add_certs_file, check_id=True):
+        logging.info("readMoreCerts")
         add_certs = VireoSheet.createFromExcelFile(add_certs_file, unique_ids=False)
         # check that required columns are present
         certs_email_col_id = add_certs.col_index_of(VireoSheet.STUDENT_EMAIL, required=True)
         certs_cert_col_id = add_certs.col_index_of(VireoSheet.CERTIFICATE_PROGRAM, required=True)
         thesis_email_col_id = self.col_index_of(VireoSheet.STUDENT_EMAIL, required=True)
-        thesis_cert_col_id = self.col_index_of(VireoSheet.CERTIFICATE_PROGRAM, required=True)
         # look through whether certs file info matches thesis sheet info
         for cert_id in add_certs.id_rows:
             if  not  cert_id in  self.id_rows:
@@ -184,7 +188,7 @@ class VireoSheet:
         logging.info("%s: headers %s" % (self.file_name, str.join(',', self.col_names())))
         for col in [VireoSheet.STUDENT_EMAIL, VireoSheet.CERTIFICATE_PROGRAM]:
             logging.info("%s column: %s (%s)" % (self.file_name, col, str(self.col_index_of(col))))
-
+        logging.info("---")
     def __str__(self):
         return "%s: ID%s-col:%d, nrows:%d" % (self.file_name, ('(unique)' if self.unique_ids else ''), self.id_col, len(self.id_rows))
 
