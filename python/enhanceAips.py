@@ -1,7 +1,9 @@
-import xml.etree.ElementTree as ET
+
+from lxml import etree as ET
 
 import argparse
 
+import datetime
 import logging
 import traceback
 import os
@@ -50,6 +52,7 @@ class EnhanceAips:
         self.submissions_tbl = self._make_submission_table()
         self.walkin_idx = len(self.submissions_tbl[0]) -1
         self.embargo_idx = self.walkin_idx - 1
+        self.classyear = str(datetime.datetime.now().year)
 
         self._confirm_aip_export_dir()
         try:
@@ -135,60 +138,39 @@ class EnhanceAips:
                         sub[self.embargo_idx] = int(row[embargo_idx].value)
 
     def create_pu_xmls(self):
+        idx = self.submissions.col_index_of(VireoSheet.ID)
         for sub in self.submissions_tbl:
             sub_xml = self._create_pu_xml(sub)
+            self.write_xml_file(sub[idx], sub_xml)
 
-    def  _create_pu_xml(self, sub_id):
-        root = ET.Element('dublin_core', {'schema' : 'pu', 'encoding': "utf-8"})
+
+    def  _create_pu_xml(self, sub):
         author_id_idx = self.submissions.col_index_of(VireoSheet.STUDENT_ID)
+        dept_idx = self.submissions.col_index_of(VireoSheet.DEPARTMENT)
         pgm_idx = self.submissions.col_index_of(VireoSheet.CERTIFICATE_PROGRAM)
+        type_idx = self.submissions.col_index_of(VireoSheet.THESIS_TYPE)
 
+        root = ET.Element('dublin_core', {'schema' : 'pu', 'encoding': "utf-8"})
+        self.add_el(root, 'date.classyear', self.classyear)
+        self.add_el(root, 'contributor.qualifier', sub[author_id_idx])
+        if ('Department' in sub[type_idx]):
+            self.add_el(root, 'department', sub[dept_idx])
+        for p in sub[pgm_idx]:
+            self.add_el(root, 'certificate', p)
+        return root
 
+    def add_el(self, root, metadata, value):
+        splits = metadata.split('.')
+        attrs = { 'element' : splits[0]}
+        if len(splits) > 1:
+            attrs['qualifier'] = splits[1]
+        ET.SubElement(root, 'dcvalue', attrib=attrs).text = value
 
-    @staticmethod
-    def write_file(root, file=sys.stdout):
-        file.write(ET.tostring(root, encoding='utf8', method='xml').decode())
-
-
-
-def _parse_pu_metadata(xml_file):
-    try:
-        root = ET.parse(xml_file).getroot()
-    except Exception as e:
-        raise RuntimeError("xml_file %s: %s" % (xml_file, str(e)))
-
-    props = {}
-    for val in ET.parse(xml_file).getroot().findall('dcvalue'):
-        try:
-            attr = val.attrib
-            elem= attr["element"]
-
-            if (elem == "department"):
-                if ('department' in props):  raise RuntimeError("duplicate property")
-                props["department"] = val.text.strip()
-            elif  (elem  == "certificate"):
-                if (not 'certificate' in props):
-                    props['certificate'] = []
-                props['certificate'].append(val.text.strip())
-            elif (elem == "contributor" and attr['qualifier'] == 'authorid'):
-                if ('authorid' in props):  raise RuntimeError("duplicate property")
-                props['authorid'] = val.text.strip()
-        except Exception as e:
-            raise RuntimeError("%s: Unparsable dcvalue '%s' text=%s  <- %s" % (xml_file, val.attrib, val.text.strip() if val.text else 'None', str(e)))
-    return props
-
-
-def _hash_to_pu_metadata(props, xml_file):
-    root = ET.Element('dublin_core', {'schema' : 'pu'})
-    for p in props:
-        if (p == 'certificate'):
-            for c in props['certificate']:
-                ET.SubElement(root, 'dcvalue', attrib={'element' : p}).text = c
-        else:
-            ET.SubElement(root, 'dcvalue', {'element' : p}).text = props[p]
-    ET.dump(root)
-    return root
-
+    def write_xml_file(self, sub_id, root):
+        f= open("%s/submission_%d/metadata_pu.xml" % (self.aip_dir, sub_id), 'w')
+        logging.info("writing %s" % f.name)
+        f.write(ET.tostring(root, encoding='utf8', method='xml', pretty_print=True).decode())
+        f.close()
 
 
 def main():
@@ -214,13 +196,14 @@ def main():
         enhancer = EnhanceAips(submissions, args.aips)
         enhancer.addCertiticates(moreCerts)
         enhancer.addRestrictions(restrictions)
-        enhancer.print_table(file=sys.stdout)
+        tsv = 'out.tsv'
+        f = open(tsv, 'w')
+        enhancer.print_table(file=f)
+        f.close()
         enhancer.create_pu_xmls()
         #_enhanceAips(submissions, moreCerts, restrictions, args.aips)
 
     except Exception as e:
-        if (enhancer):
-            enhancer.print_table(file=sys.stderr)
         logging.error(e)
         logging.debug(traceback.format_exc())
         sys.exit(1)

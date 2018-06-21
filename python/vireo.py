@@ -23,6 +23,7 @@ def snippet():
 class VireoSheet:
     CERTIFICATE_PROGRAM = 'Certificate Program'
     STUDENT_NAME = 'Student name'
+    STUDENT_ID = 'Student ID'
     DEPARTMENT = 'Department'
     SUBMISSION_DATE = 'Submission date'
     ADVISORS = 'Advisors'
