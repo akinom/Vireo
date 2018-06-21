@@ -72,7 +72,7 @@ class EnhanceAips:
             vals = VireoSheet.row_values(self.submissions.id_rows[sub_id][0])
             vals[idx] = int(vals[idx])
             vals[multi_idx] = not vals[multi_idx] == "no"
-            vals[stud_idx] = [ vals[stud_idx] ]
+            #vals[stud_idx] = [ vals[stud_idx] ]
             cp = vals[cp_idx]
             vals[cp_idx] =  [cp] if (cp) else []
             logging.debug("\t".join(str(_) for _ in vals) + "\n")
@@ -133,6 +133,23 @@ class EnhanceAips:
                         sub[self.embargo_idx] = 0
                     else:
                         sub[self.embargo_idx] = int(row[embargo_idx].value)
+
+    def create_pu_xmls(self):
+        for sub in self.submissions_tbl:
+            sub_xml = self._create_pu_xml(sub)
+
+    def  _create_pu_xml(self, sub_id):
+        root = ET.Element('dublin_core', {'schema' : 'pu', 'encoding': "utf-8"})
+        author_id_idx = self.submissions.col_index_of(VireoSheet.STUDENT_ID)
+        pgm_idx = self.submissions.col_index_of(VireoSheet.CERTIFICATE_PROGRAM)
+
+
+
+    @staticmethod
+    def write_file(root, file=sys.stdout):
+        file.write(ET.tostring(root, encoding='utf8', method='xml').decode())
+
+
 
 def _parse_pu_metadata(xml_file):
     try:
@@ -198,11 +215,12 @@ def main():
         enhancer.addCertiticates(moreCerts)
         enhancer.addRestrictions(restrictions)
         enhancer.print_table(file=sys.stdout)
+        enhancer.create_pu_xmls()
         #_enhanceAips(submissions, moreCerts, restrictions, args.aips)
 
     except Exception as e:
         if (enhancer):
-            enhancer.submissions_tbl.print(file=sys.stderr)
+            enhancer.print_table(file=sys.stderr)
         logging.error(e)
         logging.debug(traceback.format_exc())
         sys.exit(1)
