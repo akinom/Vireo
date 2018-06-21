@@ -22,7 +22,7 @@ ${ attachment.getName() }	bundle:LICENSE
 #{/if}
 #{elseif "dublin_core.xml".equals(template) }
 <?xml version="1.0" encoding="utf-8"?>
-<dublin_core>
+<dublin_core schema="dc">
 
     <!-- dc.contributor.author = Student -->
     <dcvalue element="contributor" qualifier="author">
