@@ -1,6 +1,6 @@
 *{ 
    This is the export format for the DSpace Simple Archive Format. Really, this
-   is three templates in one: dublin_core.xml, metadata_thesis.xml, 
+   is two templates in one: dublin_core.xml, metadata_pu.xml,
    metadata_local.xml, and the contents file. They have just been placed in
    this one file to keep things cleaner on the filesystem. For more information
    about the format see the DSpace documentation: 
@@ -25,8 +25,8 @@ ${ attachment.getName() }	bundle:LICENSE
 <?xml version="1.0" encoding="utf-8"?>
 <dublin_core>
 
-    <!-- dc.creator = Student -->
-    <dcvalue element="creator">
+    <!-- dc.contributor.author = Student -->
+    <dcvalue element="contributor" qualifier="author">
         ${ sub.getStudentFormattedName(org.tdl.vireo.model.NameFormat.LAST_FIRST_MIDDLE_BIRTH)?.escapeXml()?.raw() }
     </dcvalue>
 
@@ -43,19 +43,10 @@ ${ attachment.getName() }	bundle:LICENSE
         ${ sub.getDocumentAbstract()?.escapeXml()?.raw() }
     </dcvalue>
     #{/if}
-    
-    <!-- dc.subject = Document Keywords, split on ";" (multiple) -->
-    #{if sub.getDocumentKeywords() != null } 
-    #{list items:sub.getDocumentKeywords().split(";"), as:'keyword'} 
-    <dcvalue element="subject">
-        ${ keyword.trim()?.escapeXml()?.raw() }
-    </dcvalue>
-    #{/list}
-    #{/if}
 
+    #{list items:sub.getCommitteeMembers(), as:'member'}
     <!-- dc.contributor.advisor = Committee Memmbers who are flagged as chair (may be multiple) -->
-    #{list items:sub.getCommitteeMembers(), as:'member'} 
-    #{if member.hasRole("Chair","Co-Chair","Supervisor","Co-Supervisor","Advisor") } 
+    #{if member.hasRole("Chair","Co-Chair","Supervisor","Co-Supervisor","Advisor") }
     <dcvalue element="contributor" qualifier="advisor">
         ${ member.getFormattedName(org.tdl.vireo.model.NameFormat.LAST_FIRST_MIDDLE_BIRTH)?.escapeXml()?.raw() }
     </dcvalue>
@@ -63,47 +54,19 @@ ${ attachment.getName() }	bundle:LICENSE
     #{/list}
     
     
-    <!-- dc.contributor.committeeMember = Committee Members who are not flagged as chair (likely multiple) -->
     #{list items:sub.getCommitteeMembers(), as:'member'}
-    #{if member.hasNoRole() } 
-    <dcvalue element="contributor" qualifier="committeeMember">
-        ${ member.getFormattedName(org.tdl.vireo.model.NameFormat.LAST_FIRST_MIDDLE_BIRTH)?.escapeXml()?.raw() }$
+    #{if member.hasNoRole() }
+    <!-- dc.contributor.advisor = Committee Members who are not flagged as chair (maybe multiple) -->
+    <dcvalue element="contributor" qualifier="advisor">
+        ${ member.getFormattedName(org.tdl.vireo.model.NameFormat.LAST_FIRST_MIDDLE_BIRTH)?.escapeXml()?.raw() }
     </dcvalue>
     #{/if}
     #{/list}
-    
-    
-    <!-- dc.date.created = Graduation date in "YYYY-MM" format -->
-    <!-- dc.date.submitted = Graduation date in "month YYYY" format -->
-    #{if sub.getGraduationYear() != null } 
+
+    <!-- dc.date.created = Submission date in "YYYY-MM-dd" format -->
     <dcvalue element="date" qualifier="created">
-		%{
-			out.print(sub.getGraduationYear());
-			if (sub.getGraduationMonth() != null) {
-			    out.print("-");
-			    // Jaunary=0, December=11
-			    out.print(String.format("%02d",sub.getGraduationMonth()+1));
-			}
-		}% 
+        ${sub.getSubmissionDate().format("yyyy-MM-dd")}
     </dcvalue>
-    <dcvalue element="date" qualifier="submitted">
-		%{
-			if (sub.getGraduationMonth() != null && sub.getGraduationMonth() >= 0 && sub.getGraduationMonth() <= 11) {
-			   String monthName = new java.text.DateFormatSymbols().getMonths()[sub.getGraduationMonth()]; 
-			   out.print(monthName+" ");
-			}
-			out.print(sub.getGraduationYear());
-		}% 
-    </dcvalue>
-    #{/if}
-    
-    <!-- dc.date.issued = Approval date in "YYYY-MM-DD" format -->
-    #{if sub.getApprovalDate() != null } 
-    <dcvalue element="date" qualifier="issued">
-        ${ sub.getApprovalDate().format("yyyy-MM-dd") }
-    </dcvalue>
-    #{/if}
-    
     
     <!-- dc.format.mimetype = Primary Document's mimetype, almost always "application/pdf" -->
     #{if sub.getPrimaryDocument() != null } 
@@ -117,134 +80,63 @@ ${ attachment.getName() }	bundle:LICENSE
     <dim:field mdschema="dc" element="language" qualifier="iso">${sub.getDocumentLanguage()}</dim:field>
     #{/if}
     
-    <!-- dc.type.material = "text" // constant -->
-    <dcvalue element="type" qualifier="material">text</dcvalue>
-    
-    <!-- dc.type = "thesis" // constant -->
-    <dcvalue element="type">Thesis</dcvalue>
-    
-    <!-- dc.identifier.uri == Deposit ID, this would only be available when re-depositing -->
-    #{if sub.getDepositId() != null } 
-    <dcvalue element="identifier" qualifier="uri">
-        ${ sub.getDepositId()?.escapeXml()?.raw() }
-    </dcvalue>
-    #{/if}
-    
-    <!-- dc.description.proveance = Embargo Notes -->
-       #{if sub.getEmbargoTypeByGuarantor(org.tdl.vireo.model.EmbargoGuarantor.DEFAULT) != null } 
-       
-       #{if sub.getEmbargoTypeByGuarantor(org.tdl.vireo.model.EmbargoGuarantor.DEFAULT).getDuration() == null } 
-       <dcvalue element="description" qualifier="provenance">
-           Submission original under an indefinite embargo labeled '${ sub.getEmbargoTypeByGuarantor(org.tdl.vireo.model.EmbargoGuarantor.DEFAULT).getName()?.escapeXml()?.raw() }'. The submission was exported from vireo on ${ new java.util.Date().format("yyyy-MM-dd") } without embargo terms
-       </dcvalue>
-       #{/if} 
-       #{elseif sub.getEmbargoTypeByGuarantor(org.tdl.vireo.model.EmbargoGuarantor.DEFAULT).getDuration() != 0 } 
-       %{
-           // Calculate the embargo lift date.
-           java.util.Calendar cal = java.util.Calendar.getInstance();
-           
-           if (sub.getGraduationYear() != null) {
-               cal.clear();
-               cal.set(java.util.Calendar.YEAR, sub.getGraduationYear());
-               if (sub.getGraduationMonth() != null)
-                   cal.set(java.util.Calendar.MONTH,sub.getGraduationMonth());
-           }
-           
-           cal.add(java.util.Calendar.MONTH, sub.getEmbargoTypeByGuarantor(org.tdl.vireo.model.EmbargoGuarantor.DEFAULT).getDuration());
-           java.util.Date liftDate = cal.getTime();
-       }% 
-       <dcvalue element="description" qualifier="provenance">
-           Submission published under a ${sub.getEmbargoTypeByGuarantor(org.tdl.vireo.model.EmbargoGuarantor.DEFAULT).getDuration() } month embargo labeled '${ sub.getEmbargoTypeByGuarantor(org.tdl.vireo.model.EmbargoGuarantor.DEFAULT).getName()?.escapeXml()?.raw() }', the embargo will last until ${ liftDate.format("yyyy-MM-dd") }
-       </dcvalue>
-       #{/elseif} 
-       #{else} 
-       <dcvalue element="description" qualifier="provenance">
-           Submission originaly under the a zero month embargo labeled '${ sub.getEmbargoTypeByGuarantor(org.tdl.vireo.model.EmbargoGuarantor.DEFAULT).getName()?.escapeXml()?.raw() }'.
-       </dcvalue>
-       #{/else}
+    <!-- dc.type.material = "Princeton University Senior Theses" /constant-->
+    <dcvalue element="type">Princeton University Senior Theses</dcvalue>
 
-       #{/if} 
-    
-    
-		<!-- dc.description.provenance = License Agreement Date -->
-		#{if sub.getLicenseAgreementDate() != null} 
+    <!-- dc.description.provenance = License Agreement Date -->
+	#{if sub.getLicenseAgreementDate() != null}
        <dcvalue element="description" qualifier="provenance">
 		    The student, ${ sub.getStudentFormattedName(org.tdl.vireo.model.NameFormat.FIRST_LAST)?.escapeXml()?.raw() }, accepted the attached license on ${ sub.getLicenseAgreementDate().format("yyyy-MM-dd 'at' HH:mm") }. 
        </dcvalue>
-		#{/if} 
+	#{/if}
 		
-		<!-- dc.description.provenance = Submission Date -->
-		#{if sub.getSubmissionDate() != null} 
+    <!-- dc.description.provenance = Submission Date -->
+	#{if sub.getSubmissionDate() != null}
        <dcvalue element="description" qualifier="provenance">
-		    The student, ${ sub.getStudentFormattedName(org.tdl.vireo.model.NameFormat.FIRST_LAST)?.escapeXml()?.raw() }, submitted this ${ sub.getDocumentType() == null ? "document" : sub.getDocumentType()?.escapeXml()?.raw() } for approval on ${ sub.getSubmissionDate().format("yyyy-MM-dd 'at' HH:mm") }. 
+		    The student, ${ sub.getStudentFormattedName(org.tdl.vireo.model.NameFormat.FIRST_LAST)?.escapeXml()?.raw() }, submitted this thesis for approval on ${ sub.getSubmissionDate().format("yyyy-MM-dd 'at' HH:mm") }.
        </dcvalue>
-		#{/if} 
-		
-		<!-- dc.description.provenance = Committee Approval Date -->
-		#{if sub.getCommitteeApprovalDate() != null} 
-       <dcvalue element="description" qualifier="provenance">
-		    The committee advisor approved this ${ sub.getDocumentType() == null ? "document" : sub.getDocumentType()?.escapeXml()?.raw() } on ${ sub.getCommitteeApprovalDate().format("yyyy-MM-dd 'at' HH:mm") }. 
-       </dcvalue>
-		#{/if} 
-		
-		<!-- dc.description.provenance = Committee Embargo Approval Date -->
-		#{if sub.getCommitteeEmbargoApprovalDate() != null} 
-       <dcvalue element="description" qualifier="provenance">
-		    The committee advisor approved the embargo selection for this ${ sub.getDocumentType() == null ? "document" : sub.getDocumentType()?.escapeXml()?.raw() } on ${ sub.getCommitteeEmbargoApprovalDate().format("yyyy-MM-dd 'at' HH:mm") }. 
-       </dcvalue>
-		#{/if} 
-		
-		<!-- dc.description.provenance = Approval Date -->
-		#{if sub.getApprovalDate() != null} 
+	#{/if}
+
+    <!-- dc.description.provenance = Approval Date -->
+	#{if sub.getApprovalDate() != null}
        <dcvalue element="description" qualifier="provenance">
 		    This ${ sub.getDocumentType() == null ? "document" : sub.getDocumentType()?.escapeXml()?.raw() } was approved for publication on ${ sub.getApprovalDate().format("yyyy-MM-dd 'at' HH:mm") }. 
        </dcvalue>
-		#{/if} 
+	#{/if}
     
-     <!-- dc.description.provenance = Statement about when this package was generated. -->
-        <dcvalue element="description" qualifier="provenance">
+    <!-- dc.description.provenance = Statement about when this package was generated. -->
+    <dcvalue element="description" qualifier="provenance">
             DSpace METS Submission Ingestion Package generated from Vireo submission #${ sub.getId() } on ${ new java.util.Date().format("yyyy-MM-dd 'at' HH:mm:ss") }
-        </dcvalue>  
+    </dcvalue>
     
 </dublin_core>
 #{/elseif}
-#{elseif "metadata_thesis.xml".equals(template) }
+#{elseif "metadata_pu.xml".equals(template) }
 <?xml version="1.0" encoding="utf-8"?>
-<dublin_core schema="thesis">
-    <!-- thesis.degree.name == Degree -->
-    #{if sub.getDegree() != null } 
-    <dcvalue element="degree" qualifier="name">
-        ${ sub.getDegree()?.escapeXml()?.raw() }
-    </dcvalue>
-    #{/if}
-    
-    <!-- thesis.degree.level = Degree Level (Doctoral, Masters, Undergraduate) -->
-    #{if sub.getDegreeLevel() != null } 
-    <dcvalue element="degree" qualifier="level">
-        ${ sub.getDegreeLevel().name().toLowerCase().capitalizeWords()?.escapeXml()?.raw() }
-    </dcvalue>
-    #{/if}
-    
-    <!-- thesis.degree.discipline = Major -->
-    #{if sub.getMajor() != null } 
-    <dcvalue element="degree" qualifier="discipline">
-        ${ sub.getMajor()?.escapeXml()?.raw() }
-    </dcvalue>
-    #{/if}
-    
-    <!-- thesis.degree.grantor = Global configuration setting (settings tab - application settings) -->
-    #{ if settingRepo.getConfigValue(org.tdl.vireo.constant.AppConfig.GRANTOR) != null } 
-    <dcvalue element="degree" qualifier="grantor">
-        ${ settingRepo.getConfigValue(org.tdl.vireo.constant.AppConfig.GRANTOR) }
-    </dcvalue>
-    #{/if}
-    
-    <!-- thesis.degree.department = Department -->
-    #{if sub.getDepartment() != null } 
-    <dcvalue element="degree" qualifier="department">
+<dublin_core schema="pu">
+    <!-- pu.department -->
+    <!-- export department only if Home department thesis -->
+    #{if sub.getDepartment() != null && sub.getCollege().contains("Department") }
+    <dcvalue element="department">
         ${ sub.getDepartment()?.escapeXml()?.raw() }
     </dcvalue>
     #{/if}
+
+    <!-- pu.certificate  -->
+    #{if sub.getProgram() != null }
+    <dcvalue element="certificate">
+        ${ sub.getProgram()?.escapeXml()?.raw() }
+    </dcvalue>
+    #{/if}
+
+    <!-- submitters aka students  institutional id  -->
+    #{if sub.getSubmitter() != null && sub.getSubmitter().getInstitutionalIdentifier() != null }
+    <dcvalue element="contributor" qualifier="authorid">
+        ${ sub.getSubmitter().getInstitutionalIdentifier()?.escapeXml()?.raw() }
+    </dcvalue>
+    #{/if}
+    
+
     
 </dublin_core>
 #{/elseif}
