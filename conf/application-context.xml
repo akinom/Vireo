@@ -360,8 +360,8 @@
     <property name="format" value="http://www.dspace.org/xmlns/dspace" />
     <property name="templatePaths">
       <util:map>
-        <entry key="dublin_core.xml" value="conf/formats/dspace_simple.xml" />
-        <entry key="metadata_pu.xml" value="conf/formats/dspace_simple.xml" />
+        <entry key="dublin_core.xml" value="conf/formats/dspace_pu_dc.xml" />
+        <entry key="metadata_pu.xml" value="conf/formats/dspace_pu_custom.xml" />
         <entry key="contents" value="conf/formats/dspace_simple.xml" />
       </util:map>
     </property>
