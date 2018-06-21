@@ -102,8 +102,8 @@ Metadata special handling:
 * if mudd walking restrictions
     * dc.rights.accessRights	Walk-in Access. This thesis can only be viewed on computer terminals at the <a href=http://mudd.princeton.edu>Mudd Manuscript Library</a>.
 * if embargo
-    * pu.embargo.lift           07-01-(current-year+embarg-years)
-    * pu.embargo.terms	        07-01-(current-year+embarg-years)
+    * pu.embargo.lift           07-01-(classyear+embargo-years)
+    * pu.embargo.terms	        07-01-(classyear+embargo-years)
 
 ### may not need do it that way
 
