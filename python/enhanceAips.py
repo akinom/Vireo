@@ -62,6 +62,7 @@ class EnhanceAips:
             logging.warning(e)
 
     def print_table(self, sep="\t", file=sys.stdout):
+        print(sep.join(self.submissions.col_names() + [VireoSheet.R_EMBARGO, VireoSheet.R_WALK_IN]), file=file)
         for row in self.submissions_tbl:
             print(sep.join(str(x) for x in row), file=file)
 
@@ -157,6 +158,8 @@ class EnhanceAips:
             self.add_el(root, 'department', sub[dept_idx])
         for p in sub[pgm_idx]:
             self.add_el(root, 'certificate', p)
+
+
         return root
 
     def add_el(self, root, metadata, value):
@@ -196,10 +199,7 @@ def main():
         enhancer = EnhanceAips(submissions, args.aips)
         enhancer.addCertiticates(moreCerts)
         enhancer.addRestrictions(restrictions)
-        tsv = 'out.tsv'
-        f = open(tsv, 'w')
-        enhancer.print_table(file=f)
-        f.close()
+        enhancer.print_table(file=sys.stdout)
         enhancer.create_pu_xmls()
         #_enhanceAips(submissions, moreCerts, restrictions, args.aips)
 
