@@ -45,21 +45,19 @@ enhance pu-metadata.xml in AIPS in submission_<ID> subdirections of export direc
 
 class EnhanceAips:
     EXPORT_STATUS = ['Approved']
+    WALKIN_MSG = 'Walk-in Access. This thesis can only be viewed on computer terminals at the <a href=http://mudd.princeton.edu>Mudd Manuscript Library</a>.'
 
     def __init__(self, submissions, aip_dir):
+        self.error = 0
         self.aip_dir = aip_dir
         self.submissions = submissions
         self.submissions_tbl = self._make_submission_table()
         self.walkin_idx = len(self.submissions_tbl[0]) -1
         self.embargo_idx = self.walkin_idx - 1
-        self.classyear = str(datetime.datetime.now().year)
+        self.classyear = datetime.datetime.now().year
 
         self._confirm_aip_export_dir()
-        try:
-            self._fix_multi_author()
-        except Exception as e:
-            #TODO later
-            logging.warning(e)
+        self._fix_multi_author()
 
     def print_table(self, sep="\t", file=sys.stdout):
         print(sep.join(self.submissions.col_names() + [VireoSheet.R_EMBARGO, VireoSheet.R_WALK_IN]), file=file)
@@ -90,24 +88,27 @@ class EnhanceAips:
         raise an exception if there is no aip directory for one of the submissions
 
         :param aip_dir:   path to directory with DSpace aio subdirectories
-        :return: void
         """
         idx = self.submissions.col_index_of(VireoSheet.ID)
         status_idx = self.submissions.col_index_of(VireoSheet.STATUS)
         for row in self.submissions_tbl:
-            if (row[status_idx] in EnhanceAips.EXPORT_STATUS ):
-                os.stat("%s/submission_%d/contents" % (self.aip_dir, int(float(row[idx]))))
+            if (row[status_idx] in EnhanceAips.EXPORT_STATUS):
+                dir = "%s/submission_%d" % (self.aip_dir, row[idx])
+                if not os.path.isdir(dir):
+                    self._error("AIP dir %s: not a directory" % dir)
+                else:
+                    for file in ["contents", "dublin_core.xml", "metadata_pu.xml", "LICENSE.txt"]:
+                        fname = "%s/%s" % (dir, file)
+                        if not os.path.isfile(fname) or not os.access(fname, os.R_OK):
+                            self._error("AIP dir %s: can't read file %s" % (dir, file))
 
     def _fix_multi_author(self):
-        has_multi = False
+        idx = self.submissions.col_index_of(VireoSheet.ID)
         status_idx = self.submissions.col_index_of(VireoSheet.STATUS)
         multi_idx = self.submissions.col_index_of(VireoSheet.MULTI_AUTHOR)
         for sub in self.submissions_tbl:
             if sub[status_idx] in EnhanceAips.EXPORT_STATUS and sub[multi_idx]:
-                logging.error(("TODO: Can't do multi suthor thesis"))
-                has_multi = True
-        if (has_multi):
-            raise Exception("Multi author - can not do it yet")
+                self._error("submission: %d: can't handle multi author thesis" % (sub[idx]))
 
     def addCertiticates(self, moreCerts):
         idx = self.submissions.col_index_of(VireoSheet.ID)
@@ -138,11 +139,23 @@ class EnhanceAips:
                     else:
                         sub[self.embargo_idx] = int(row[embargo_idx].value)
 
-    def create_pu_xmls(self):
+    def adjust_aip_xmls(self):
         idx = self.submissions.col_index_of(VireoSheet.ID)
         for sub in self.submissions_tbl:
-            sub_xml = self._create_pu_xml(sub)
-            self.write_xml_file(sub[idx], sub_xml)
+            try:
+                logging.info("Processing submission %d" % (sub[idx]))
+                sub_xml = self._create_pu_xml(sub)
+                with open(self._xml_file_name(sub[idx], 'metadata_pu'), 'w') as f:
+                    self._write_xml_file(sub_xml, f)
+                with open(self._xml_file_name(sub[idx], 'dublin_core'), 'r') as f:
+                    root = ET.fromstring(str.encode(f.read()))
+                    if self._adjust_dc_xml(root, sub):
+                        with open(self._xml_file_name(sub[idx], 'dublin_core'), 'w') as f:
+                            self._write_xml_file(root, f)
+                    else:
+                        logging.info("%s unchanged" % f.name)
+            except Exception as e:
+                self._error("Exception submission: %d: %s" % (sub[idx], str(e)))
 
 
     def  _create_pu_xml(self, sub):
@@ -152,34 +165,46 @@ class EnhanceAips:
         type_idx = self.submissions.col_index_of(VireoSheet.THESIS_TYPE)
 
         root = ET.Element('dublin_core', {'schema' : 'pu', 'encoding': "utf-8"})
-        self.add_el(root, 'date.classyear', self.classyear)
-        self.add_el(root, 'contributor.qualifier', sub[author_id_idx])
+        self._add_el(root, 'date.classyear', self.classyear)
+        self._add_el(root, 'contributor.qualifier', sub[author_id_idx])
+        if (sub[self.embargo_idx] > 0):
+            self._add_el(root, 'embargo.lift', self.classyear + sub[self.embargo_idx])
+            self._add_el(root, 'embargo.terms', self.classyear + sub[self.embargo_idx])
         if ('Department' in sub[type_idx]):
-            self.add_el(root, 'department', sub[dept_idx])
+            self._add_el(root, 'department', sub[dept_idx])
         for p in sub[pgm_idx]:
-            self.add_el(root, 'certificate', p)
-
-
+            self._add_el(root, 'certificate', p)
         return root
 
-    def add_el(self, root, metadata, value):
+    def  _adjust_dc_xml(self, root, sub):
+        if (sub[self.walkin_idx]):
+            if (root.find('dcvalue[@element="rights"]') is None):
+                self._add_el(root, 'rights.accessRights', EnhanceAips.WALKIN_MSG)
+                return True
+        logging.debug(" _adjust_dc_xml: no change")
+        return False
+
+    def _add_el(self, root, metadata, value):
+        logging.debug("XML add_el %s=%s" % (metadata, str(value)))
         splits = metadata.split('.')
         attrs = { 'element' : splits[0]}
         if len(splits) > 1:
             attrs['qualifier'] = splits[1]
-        ET.SubElement(root, 'dcvalue', attrib=attrs).text = value
+        ET.SubElement(root, 'dcvalue', attrib=attrs).text = str(value)
 
-    def write_xml_file(self, sub_id, root):
-        f= open("%s/submission_%d/metadata_pu.xml" % (self.aip_dir, sub_id), 'w')
-        logging.info("writing %s" % f.name)
-        f.write(ET.tostring(root, encoding='utf8', method='xml', pretty_print=True).decode())
-        f.close()
+    def _xml_file_name(self, sub_id, name):
+        return "%s/submission_%d/%s.xml" % (self.aip_dir, sub_id, name)
 
+    def _write_xml_file(self, root, file):
+        logging.info("%s writing" % file.name)
+        file.write(ET.tostring(root, encoding='utf8', method='xml', pretty_print=True).decode())
+
+    def _error(self, msg):
+        logging.error(msg)
+        self.error += 1
 
 def main():
     try:
-        enhancer = None
-
         parser = ArgParser.create()
         args = parser.parse_args()
 
@@ -200,11 +225,15 @@ def main():
         enhancer.addCertiticates(moreCerts)
         enhancer.addRestrictions(restrictions)
         enhancer.print_table(file=sys.stdout)
-        enhancer.create_pu_xmls()
+        enhancer.adjust_aip_xmls()
+        if ( enhancer.error > 0):
+            raise RuntimeError("%s errors" % enhancer.error)
         #_enhanceAips(submissions, moreCerts, restrictions, args.aips)
+        sys.exit(0)
 
     except Exception as e:
         logging.error(e)
+
         logging.debug(traceback.format_exc())
         sys.exit(1)
 
