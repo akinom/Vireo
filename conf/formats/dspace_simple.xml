@@ -64,7 +64,7 @@ ${ attachment.getName() }	bundle:LICENSE
 
     <!-- dc.language.iso = Document Language -->
     #{if sub.getDocumentLanguage() != null }
-    <dim:field mdschema="dc" element="language" qualifier="iso">${sub.getDocumentLanguage()}</dim:field>
+    <dcvalue element="language" qualifier="iso">${sub.getDocumentLanguage()}</dcvalue>
     #{/if}
 
     <!-- dc.type.material = "Princeton University Senior Theses" /constant-->
