@@ -72,7 +72,7 @@ class EnhanceAips:
         multi_idx = self.submissions.col_index_of(VireoSheet.MULTI_AUTHOR)
         for sub_id in self.submissions.id_rows:
             vals = VireoSheet.row_values(self.submissions.id_rows[sub_id][0])
-            vals[idx] = int(vals[idx])
+            vals[idx] = int(float(vals[idx]))
             vals[multi_idx] = not vals[multi_idx] == "no"
             #vals[stud_idx] = [ vals[stud_idx] ]
             cp = vals[cp_idx]
@@ -119,7 +119,7 @@ class EnhanceAips:
             if (sub_id in moreCerts.id_rows):
                 for row in moreCerts.id_rows[sub_id]:
                     pgm = VireoSheet.row_values(row)[more_cp_idx]
-                    logging.debug("ADDING cert program '%s' to submission with ID %d" %(pgm, sub[idx]))
+                    logging.info("ADDING cert program '%s' to submission with ID %d" %(pgm, sub[idx]))
                     sub[cp_idx].append(pgm)
 
     def addRestrictions(self, vireo_sheet):
@@ -132,12 +132,12 @@ class EnhanceAips:
             sub_id = sub[idx]
             if (sub_id in vireo_sheet.id_rows):
                 for row in vireo_sheet.id_rows[sub_id]:
-                    logging.debug("ADDING restriction submission with ID %d" %(sub[idx]))
                     sub[self.walkin_idx] = ("Yes" == row[walkin_idx].value)
                     if ( "N/A" == row[embargo_idx].value):
                         sub[self.embargo_idx] = 0
                     else:
                         sub[self.embargo_idx] = int(row[embargo_idx].value)
+                    logging.info("ADDING restriction submission with ID %d: walkin %s, embargo %d" %(sub[idx], str(sub[self.walkin_idx]), sub[self.embargo_idx]))
 
     def adjust_aip_xmls(self):
         idx = self.submissions.col_index_of(VireoSheet.ID)
