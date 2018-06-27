@@ -1,0 +1,13 @@
+#!/bin/tcsh  -e
+set dept_dir = $1 
+set dept = `basename $dept_dir`
+cd `dirname $0`
+pwd 
+set py = python
+/bin/cp export/AdditionalPrograms.xlsx export/RestrictionsFinalWithId.xlsx $dept_dir 
+(python $py/enhanceAips.py --thesis $dept_dir/ExcelExport*.xlsx -r $dept_dir/RestrictionsFinalWithId.xlsx --add_certs $dept_dir/AdditionalPrograms.xlsx --aips $dept_dir  -l INFO  > $dept_dir/$dept.tsv ) |& tee  $dept_dir/enhancedAips.trace 
+python $py/sortByStatus.py  --thesis $dept_dir/ExcelExport*.xlsx --aips $dept_dir
+(cd export; tar cfz $dept.tgz ./$dept) 
+
+echo scp export/$dept.tgz monikasu@arizona.princeton.edu:/scratch/monikasu:$dept.tgz 
+scp export/$dept.tgz monikasu@arizona.princeton.edu:/scratch/monikasu:$dept.tgz 
