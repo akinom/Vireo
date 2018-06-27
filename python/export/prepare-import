@@ -1,0 +1,9 @@
+#!/bin/tcsh 
+set echo 
+set dept = $1 
+cd `dirname $0`
+pwd 
+/bin/cp AdditionalPrograms.xlsx RestrictionsFinalWithId.xlsx $dept 
+(python ../enhanceAips.py --thesis $dept/ExcelExport*.xlsx -r $dept/RestrictionsFinalWithId.xlsx --add_certs $dept/AdditionalPrograms.xlsx --aips $dept  -l INFO  > $dept/$dept-list.tsv ) |& tee $dept/$dept-enhanceAips.trace 
+python ../sortByStatus.py  --thesis $dept/ExcelExport*.xlsx --aips $dept
+

@@ -51,9 +51,11 @@ ${ attachment.getName() }	bundle:LICENSE
     #{/list}
 
     <!-- dc.date.created = Submission date in "YYYY-MM-dd" format -->
+    #{if sub.getSubmissionDate() != null }
     <dcvalue element="date" qualifier="created">
         ${sub.getSubmissionDate().format("yyyy-MM-dd")}
     </dcvalue>
+    #{/if}
 
     <!-- dc.format.mimetype = Primary Document's mimetype, almost always "application/pdf" -->
     #{if sub.getPrimaryDocument() != null }
