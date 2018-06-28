@@ -11,3 +11,4 @@ python $py/sortByStatus.py  --thesis $dept_dir/ExcelExport*.xlsx --aips $dept_di
 
 echo scp export/$dept.tgz monikasu@arizona.princeton.edu:/scratch/monikasu:$dept.tgz 
 scp export/$dept.tgz monikasu@arizona.princeton.edu:/scratch/monikasu:$dept.tgz 
+ssh monikasu@arizona.princeton.edu chmod o+r /scratch/monikasu/$dept.tgz
