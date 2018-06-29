@@ -1,4 +1,5 @@
 #!/bin/tcsh  -e
+set echo 
 set dept_dir = $1 
 set dept = `basename $dept_dir`
 cd `dirname $0`
@@ -10,5 +11,5 @@ python $py/sortByStatus.py  --thesis $dept_dir/ExcelExport*.xlsx --aips $dept_di
 (cd export; tar cfz $dept.tgz ./$dept) 
 
 echo scp export/$dept.tgz monikasu@arizona.princeton.edu:/scratch/monikasu:$dept.tgz 
-scp export/$dept.tgz monikasu@arizona.princeton.edu:/scratch/monikasu:$dept.tgz 
+scp export/$dept.tgz monikasu@arizona.princeton.edu:/scratch/monikasu/$dept.tgz
 ssh monikasu@arizona.princeton.edu chmod o+r /scratch/monikasu/$dept.tgz
