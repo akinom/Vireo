@@ -8,6 +8,8 @@ import logging
 import traceback
 import os
 import sys
+from shutil import copyfile
+
 
 # for the benefit of IDE import two ways
 try:
@@ -34,6 +36,7 @@ enhance pu-metadata.xml in AIPS in submission_<ID> subdirections of export direc
         parser.add_argument("--add_certs", "-a", required=True, help="excel spreadsheet with additional certificate program info")
         parser.add_argument("--restrictions", "-r", required=True, help="TODO access restrictions")
         parser.add_argument("--aips",  required=True, help="directory with DSPace AIPS")
+        parser.add_argument("--cover_page", "-c",  required=True, help="cwpdf cover page to glue pon 'top' of primary submission pdf")
         parser.add_argument("--loglevel", "-l", choices=loglevels,  default=logging.INFO, help="log level  - default: ERROR")
         return parser;
 
@@ -46,10 +49,12 @@ enhance pu-metadata.xml in AIPS in submission_<ID> subdirections of export direc
 class EnhanceAips:
     EXPORT_STATUS = ['Approved']
     WALKIN_MSG = 'Walk-in Access. This thesis can only be viewed on computer terminals at the <a href=http://mudd.princeton.edu>Mudd Manuscript Library</a>.'
+    GLUE_CMD ="gs -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite \"-sOutputFile=%s\" %s %s"
 
-    def __init__(self, submissions, aip_dir):
+    def __init__(self, submissions, aip_dir, pdf_cover_page):
         self.error = 0
         self.aip_dir = aip_dir
+        self.cover_pdf_path = pdf_cover_page
         self.submissions = submissions
         self.submissions_tbl = self._make_submission_table()
         self.walkin_idx = len(self.submissions_tbl[0]) -1
@@ -139,12 +144,13 @@ class EnhanceAips:
                         sub[self.embargo_idx] = int(row[embargo_idx].value)
                     logging.info("ADDING restriction submission with ID %d: walkin %s, embargo %d" %(sub[idx], str(sub[self.walkin_idx]), sub[self.embargo_idx]))
 
-    def adjust_aip_xmls(self):
+    def adjust_aips(self):
         idx = self.submissions.col_index_of(VireoSheet.ID)
         for sub in self.submissions_tbl:
             try:
                 logging.info("Processing submission %d" % (sub[idx]))
-                sub_xml = self._create_pu_xml(sub)
+                glued = self._glue_cover_page(int(sub[idx]))
+                sub_xml = self._create_pu_xml(sub, glued)
                 with open(self._xml_file_name(sub[idx], 'metadata_pu'), 'w') as f:
                     self._write_xml_file(sub_xml, f)
                 with open(self._xml_file_name(sub[idx], 'dublin_core'), 'r') as f:
@@ -155,10 +161,31 @@ class EnhanceAips:
                     else:
                         logging.info("%s unchanged" % f.name)
             except Exception as e:
-                self._error("Exception submission: %d: %s" % (sub[idx], str(e)))
+                self._error("Exception submission aip: %d: %s" % (sub[idx], str(e)))
+                logging.debug(traceback.format_exc())
 
 
-    def  _create_pu_xml(self, sub):
+    def _glue_cover_page(self, sub_id):
+        """
+            return true cover was glued successfully
+            return false if there was no primary doc to cover
+            error out if glue operation fails
+        """
+        primary_path  = self._primary_doc_path(sub_id)
+        if (not primary_path):
+            logging.warning("submission %d has no primary document" % sub_id)
+            return False
+
+        copy_path = "%s/ORIG-%s" % (os.path.dirname(primary_path), os.path.basename(primary_path))
+        copyfile(primary_path, copy_path)
+        cmd = EnhanceAips.GLUE_CMD % (primary_path, self.cover_pdf_path, copy_path)
+        logging.debug(cmd)
+        rc = os.system(EnhanceAips.GLUE_CMD % (primary_path, self.cover_pdf_path, copy_path))
+        if (rc != 0):
+            self._error("FAILED to exec: %s" % cmd)
+        return True
+
+    def  _create_pu_xml(self, sub, glued):
         author_id_idx = self.submissions.col_index_of(VireoSheet.STUDENT_ID)
         dept_idx = self.submissions.col_index_of(VireoSheet.DEPARTMENT)
         pgm_idx = self.submissions.col_index_of(VireoSheet.CERTIFICATE_PROGRAM)
@@ -166,7 +193,9 @@ class EnhanceAips:
 
         root = ET.Element('dublin_core', {'schema' : 'pu', 'encoding': "utf-8"})
         self._add_el(root, 'date.classyear', self.classyear)
-        self._add_el(root, 'contributor.qualifier', sub[author_id_idx])
+        self._add_el(root, 'contributor.authorid', sub[author_id_idx])
+        if (glued):
+            self._add_el(root, 'pdf.coverpage', 'SeniorThesisCoverPage')
         if (sub[self.embargo_idx] > 0):
             self._add_el(root, 'embargo.lift', self.classyear + sub[self.embargo_idx])
             self._add_el(root, 'embargo.terms', self.classyear + sub[self.embargo_idx])
@@ -177,12 +206,13 @@ class EnhanceAips:
         return root
 
     def  _adjust_dc_xml(self, root, sub):
+        changed = False
         if (sub[self.walkin_idx]):
             if (root.find('dcvalue[@element="rights"]') is None):
                 self._add_el(root, 'rights.accessRights', EnhanceAips.WALKIN_MSG)
-                return True
-        logging.debug(" _adjust_dc_xml: no change")
-        return False
+                changed = True
+        logging.debug(" _adjust_dc_xml: changed=%s" % str(changed))
+        return changed
 
     def _add_el(self, root, metadata, value):
         logging.debug("XML add_el %s=%s" % (metadata, str(value)))
@@ -194,6 +224,12 @@ class EnhanceAips:
 
     def _xml_file_name(self, sub_id, name):
         return "%s/submission_%d/%s.xml" % (self.aip_dir, sub_id, name)
+
+    def _primary_doc_path(self, sub_id):
+        for line in open("%s/submission_%d/contents" % ( self.aip_dir, sub_id)):
+            if "primary:true" in line:
+                return "%s/submission_%d/%s" % (self.aip_dir, sub_id, line.split("\t")[0])
+        return None
 
     def _write_xml_file(self, root, file):
         logging.info("%s writing" % file.name)
@@ -221,11 +257,11 @@ def main():
         restrictions = submissions.readRestrictions(args.restrictions, check_id=False)
         restrictions.log_info()
 
-        enhancer = EnhanceAips(submissions, args.aips)
+        enhancer = EnhanceAips(submissions, args.aips, args.cover_page)
         enhancer.addCertiticates(moreCerts)
         enhancer.addRestrictions(restrictions)
         enhancer.print_table(file=sys.stdout)
-        enhancer.adjust_aip_xmls()
+        enhancer.adjust_aips()
         if ( enhancer.error > 0):
             raise RuntimeError("%s errors" % enhancer.error)
         #_enhanceAips(submissions, moreCerts, restrictions, args.aips)
