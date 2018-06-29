@@ -9,9 +9,6 @@
     autocrlf = input
     whitespace = -trailing-space,-indent-with-non-tab,-tab-in-indent
     excludesfile = /Users/monikam/.gitignore_global
-[user]
-    name = Monika Mevenkamp
-    email = monikam@princeton.edu
 [alias]
     co = checkout
     cp = cherry-pick

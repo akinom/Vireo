@@ -1,0 +1,14 @@
+#!/bin/tcsh  -e
+umask u=rwx,g=rwx,o=rx
+
+ls /dspace/www/thesis_central | fgrep -v html  | more
+echo -n "enter dept directory> " 
+set dept = $< 
+cd  /dspace/www/thesis_central/$dept 
+pwd 
+
+echo -n "enter collection handle > " 
+set hdl =  $< 
+
+/dspace/bin/dspace import -a -c $hdl -e monikam@princeton.edu -m import-map.txt -s Approved -w >& import-trace.txt
+cat import-trace.txt

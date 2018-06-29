@@ -11,7 +11,7 @@
 }*
 #{if "contents".equals(template) }
 #{if sub.getPrimaryDocument() != null }
-${ sub.getPrimaryDocument().getName() }	bundle:CONTENT	primary:true
+${ sub.getPrimaryDocument().getName() }	bundle:ORIGINAL	primary:true
 #{/if}
 #{list items:sub.getAttachmentsByType(org.tdl.vireo.model.AttachmentType.SUPPLEMENTAL,org.tdl.vireo.model.AttachmentType.SOURCE), as:'attachment'}
 ${ attachment.getName() }	bundle:CONTENT
@@ -99,32 +99,6 @@ ${ attachment.getName() }	bundle:LICENSE
     </dcvalue>
 
 </dublin_core>
-#{/elseif}
-#{elseif "metadata_pu.xml".equals(template) }
-    <?xml version="1.0" encoding="utf-8"?>
-    <dublin_core schema="pu">
-    <!-- pu.department -->
-    <!-- export department only if Home department thesis -->
-    #{if sub.getDepartment() != null && sub.getCollege().contains("Department") }
-    <dcvalue element="department">
-        ${ sub.getDepartment()?.escapeXml()?.raw() }
-    </dcvalue>
-    #{/if}
-
-    <!-- pu.certificate  -->
-    #{if sub.getProgram() != null }
-    <dcvalue element="certificate">
-        ${ sub.getProgram()?.escapeXml()?.raw() }
-    </dcvalue>
-    #{/if}
-
-    <!-- submitters aka students  institutional id  -->
-    #{if sub.getSubmitter() != null && sub.getSubmitter().getInstitutionalIdentifier() != null }
-    <dcvalue element="contributor" qualifier="authorid">
-        ${ sub.getSubmitter().getInstitutionalIdentifier()?.escapeXml()?.raw() }
-    </dcvalue>
-    #{/if}
-    </dublin_core>
 #{/elseif}
 #{else}
 This file, ${template}, is not supported by the DSpace Simple Archive format.
