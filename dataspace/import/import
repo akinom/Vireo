@@ -1,5 +1,6 @@
 #!/bin/tcsh  -e
-umask u=rwx,g=rwx,o=rx
+# u+rwx g+rx o+r
+umask 003 
 
 ls /dspace/www/thesis_central | fgrep -v html  | more
 echo -n "enter dept directory> " 
