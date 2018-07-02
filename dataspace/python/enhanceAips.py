@@ -149,7 +149,7 @@ class EnhanceAips:
         for sub in self.submissions_tbl:
             try:
                 logging.info("Processing submission %d" % (sub[idx]))
-                glued = self._glue_cover_page(int(sub[idx]))
+                glued = self._glue_cover_page(sub)
                 sub_xml = self._create_pu_xml(sub, glued)
                 with open(self._xml_file_name(sub[idx], 'metadata_pu'), 'w') as f:
                     self._write_xml_file(sub_xml, f)
@@ -165,15 +165,19 @@ class EnhanceAips:
                 logging.debug(traceback.format_exc())
 
 
-    def _glue_cover_page(self, sub_id):
+    def _glue_cover_page(self, sub):
         """
             return true cover was glued successfully
             return false if there was no primary doc to cover
             error out if glue operation fails
         """
+        status_idx = self.submissions.col_index_of(VireoSheet.STATUS)
+        sub_id = sub[self.submissions.col_index_of(VireoSheet.ID)]
         primary_path  = self._primary_doc_path(sub_id)
         if (not primary_path):
-            logging.warning("submission %d has no primary document" % sub_id)
+            logging.debug("submission %d has no primary document" % sub_id)
+            if (sub[status_idx] in EnhanceAips.EXPORT_STATUS):
+                logging.warning("submission %d has no primary document (status=%s)" % (sub_id, sub[status_idx]))
             return False
 
         copy_path = "%s/ORIG-%s" % (os.path.dirname(primary_path), os.path.basename(primary_path))
@@ -183,6 +187,8 @@ class EnhanceAips:
         rc = os.system(EnhanceAips.GLUE_CMD % (primary_path, self.cover_pdf_path, copy_path))
         if (rc != 0):
             self._error("FAILED to exec: %s" % cmd)
+        else:
+            logging.info("%s covered" % primary_path)
         return True
 
     def  _create_pu_xml(self, sub, glued):
