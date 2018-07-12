@@ -25,7 +25,7 @@ read thesis submission info from file given in --thesis option
 read additional certificate programs from  --add_certs file 
 read access restriction info from --restrictions file 
 
-warn when encounterig a multi author thesis 
+warn when encountering a multi author thesis 
 
 enhance pu-metadata.xml in AIPS in submission_<ID> subdirections of export directory where needed
 """
@@ -205,6 +205,8 @@ class EnhanceAips:
         if (sub[self.embargo_idx] > 0):
             self._add_el(root, 'embargo.lift', self.classyear + sub[self.embargo_idx])
             self._add_el(root, 'embargo.terms', self.classyear + sub[self.embargo_idx])
+        if (bool(sub[self.walkin_idx])):
+            self._add_el(root, 'mudd.walkin', 'yes')
         if ('Department' in sub[type_idx]):
             self._add_el(root, 'department', sub[dept_idx])
         for p in sub[pgm_idx]:
