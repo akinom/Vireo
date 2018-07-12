@@ -42,7 +42,7 @@ def choose(matches, vireo, print_col_names):
         i = i + 1
         for p in print_col_names:
             idx = vireo.col_index_of(p)
-            print("option %d --  %s" % (i, str(m[idx].value)))
+            print("option %d --  %s" % (i, str(m[idx].value).strip()))
     choice = input("WHAT DO YOU WANT ? (return for now choice) > ").strip()
     try:
         id = int(choice)
@@ -78,7 +78,7 @@ def matchIds(submissions, restrictions):
     for row in iter:
         r_name = str(row[r_name_idx].value)
         print("----------------------------------------------")
-        print("RESTRICTION Requested\n%s\n%s" %(r_name,  str(row[r_title_idx].value)))
+        print("RESTRICTION Requested\n%s\n         --  %s" %(r_name,  str(row[r_title_idx].value)))
         s_id = row[r_id_idx].value
         if (None == s_id):
             s_name = vireoName( r_name )
@@ -90,7 +90,7 @@ def matchIds(submissions, restrictions):
         else:
             match = submissions.id_rows[int(s_id)][0]
             print("\nMATCHED Submission")
-            print("\n".join([str(match[id].value) for id in s_col_ids]))
+            print("\n         --  ".join([str(match[id].value) for id in s_col_ids]))
             input("\nENTER to continue > ")
     print("----------------------------------------------")
     save(restrictions)
