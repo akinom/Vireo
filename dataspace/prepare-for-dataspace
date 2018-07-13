@@ -1,0 +1,19 @@
+#!/bin/tcsh  -e
+set restrictions = RestrictionsFinalWithId.xlsx 
+set certs =  AdditionalPrograms.xlsx
+
+echo "Restrictions:             export/$restrictions " 
+echo "Additional Cert Programs: export/$certs" 
+
+set dept_dir = $1 
+set dept = `basename $dept_dir`
+cd `dirname $0`
+pwd 
+/bin/cp export/$certs export/$restrictions $dept_dir
+(python python/enhanceAips.py --thesis $dept_dir/ExcelExport*.xlsx -r $dept_dir/$restrictions --cover_page export/SeniorThesisCoverPage.pdf --add_certs $dept_dir/$certs --aips $dept_dir  -l INFO  > $dept_dir/$dept.tsv ) |& tee  $dept_dir/enhancedAips.trace
+python python/sortByStatus.py  --thesis $dept_dir/ExcelExport*.xlsx --aips $dept_dir
+(cd export; tar cfz $dept.tgz ./$dept) 
+
+echo scp export/$dept.tgz monikasu@arizona.princeton.edu:/scratch/monikasu:$dept.tgz 
+scp export/$dept.tgz monikasu@arizona.princeton.edu:/scratch/monikasu/$dept.tgz
+ssh monikasu@arizona.princeton.edu chmod o+r /scratch/monikasu/$dept.tgz

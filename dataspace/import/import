@@ -1,0 +1,17 @@
+#!/bin/tcsh 
+# u+rwx g+rx o+r
+umask 003 
+
+ls /dspace/www/thesis_central | fgrep -v html  | more
+echo -n "enter dept directory> " 
+set dept = $< 
+cd  /dspace/www/thesis_central/$dept 
+pwd 
+
+echo -n "enter collection handle > " 
+set hdl =  $< 
+
+/dspace/bin/dspace import -a -c $hdl -e monikam@princeton.edu -m import-map.txt -s Approved -w >& import-trace.txt
+cat import-trace.txt
+echo "--"
+egrep '^[0-9]'  import-trace.txt

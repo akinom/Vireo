@@ -29,6 +29,7 @@ import play.Play;
 import play.templates.Template;
 import play.templates.TemplateLoader;
 import play.vfs.VirtualFile;
+import play.Logger;
 
 /**
  * Generic packager that uses the standard play templating system to generate
@@ -213,7 +214,7 @@ public class MultipleTemplatePackagerImpl extends AbstractPackagerImpl {
 			throw new IllegalStateException("Unable to generate package because no package format name has been defined.");
 
 		try {
-			
+			Logger.debug("ExportPackge " + submission.getId());
 			//Set String Replacement Parameters
 			Map<String, String> parameters = new HashMap<String, String>();
 			parameters = StringVariableReplacement.setParameters(submission);
