@@ -43,7 +43,7 @@ def choose(matches, vireo, print_col_names):
         for p in print_col_names:
             idx = vireo.col_index_of(p)
             print("option %d --  %s" % (i, str(m[idx].value).strip()))
-    choice = input("WHAT DO YOU WANT ? (return for now choice) > ").strip()
+    choice = input("WHAT DO YOU WANT ? (return or now choice) > ").strip()
     try:
         id = int(choice)
         if (id > 0 and id <= i):
@@ -59,6 +59,8 @@ def save(vireo):
     choice = input("SAVE to File ? enter filename (return to not save) > ").strip()
     if ("" != choice):
         vireo.save(choice)
+    else:
+        vireo.save("/tmp/save.xlsx")
 
 def vireoName(r_name):
     splts = r_name.split();
