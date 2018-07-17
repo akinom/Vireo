@@ -203,7 +203,6 @@ class EnhanceAips:
         if (glued):
             self._add_el(root, 'pdf.coverpage', 'SeniorThesisCoverPage')
         if (sub[self.embargo_idx] > 0):
-            self._add_el(root, 'embargo.lift', "%d-07-01" % (self.classyear + sub[self.embargo_idx]))
             self._add_el(root, 'embargo.terms', "%d-07-01"  % (self.classyear + sub[self.embargo_idx]))
         if (bool(sub[self.walkin_idx])):
             self._add_el(root, 'mudd.walkin', 'yes')
