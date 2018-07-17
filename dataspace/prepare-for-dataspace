@@ -1,5 +1,5 @@
 #!/bin/tcsh  -e
-set restrictions = RestrictionsFinalWithId.xlsx 
+set restrictions = RestrictionsWithId.xlsx 
 set certs =  AdditionalPrograms.xlsx
 
 echo "Restrictions:             export/$restrictions " 
