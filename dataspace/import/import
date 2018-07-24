@@ -15,3 +15,6 @@ set hdl =  $<
 cat import-trace.txt
 echo "--"
 egrep '^[0-9]'  import-trace.txt
+
+egrep '^[0-9]'  import-trace.txt |   mutt -s "TC Import $dept -> $hdl"  -- thesiscentral@princeton.edu
+
