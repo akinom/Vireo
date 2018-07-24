@@ -186,7 +186,7 @@ class EnhanceAips:
         logging.debug(cmd)
         rc = os.system(EnhanceAips.GLUE_CMD % (primary_path, self.cover_pdf_path, copy_path))
         if (rc != 0):
-            self._error("FAILED to exec: %s" % cmd)
+            self._error("***\nFAILED to exec: %s" % cmd)
         else:
             logging.info("%s covered" % primary_path)
         return True
@@ -203,8 +203,7 @@ class EnhanceAips:
         if (glued):
             self._add_el(root, 'pdf.coverpage', 'SeniorThesisCoverPage')
         if (sub[self.embargo_idx] > 0):
-            self._add_el(root, 'embargo.lift', self.classyear + sub[self.embargo_idx])
-            self._add_el(root, 'embargo.terms', self.classyear + sub[self.embargo_idx])
+            self._add_el(root, 'embargo.terms', "%d-07-01"  % (self.classyear + sub[self.embargo_idx]))
         if (bool(sub[self.walkin_idx])):
             self._add_el(root, 'mudd.walkin', 'yes')
         if ('Department' in sub[type_idx]):
