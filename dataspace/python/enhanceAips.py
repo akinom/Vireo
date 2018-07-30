@@ -77,7 +77,7 @@ class EnhanceAips:
         for sub_id in self.submissions.id_rows:
             vals = VireoSheet.row_values(self.submissions.id_rows[sub_id][0])
             vals[idx] = int(float(vals[idx]))
-            vals[multi_idx] = not vals[multi_idx] == "no"
+            vals[multi_idx] = vals[multi_idx].upper() == "YES"
             #vals[stud_idx] = [ vals[stud_idx] ]
             cp = vals[cp_idx]
             vals[cp_idx] =  [cp] if (cp) else []
