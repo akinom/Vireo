@@ -105,7 +105,10 @@ class EnhanceAips:
                     for file in ["contents", "dublin_core.xml", "metadata_pu.xml", "LICENSE.txt"]:
                         fname = "%s/%s" % (dir, file)
                         if not os.path.isfile(fname) or not os.access(fname, os.R_OK):
-                            self._error("AIP dir %s: can't read file %s" % (dir, file))
+                            if (file != "LICENSE.txt"):
+                                self._error("AIP dir %s: can't read file %s" % (dir, file))
+                            else:
+                                logging.warning("AIP dir %s: can't read file %s - probably submittted by admin on behalf of student" % (dir, file))
 
     def _fix_multi_author(self):
         idx = self.submissions.col_index_of(VireoSheet.ID)
@@ -181,14 +184,17 @@ class EnhanceAips:
             return False
 
         copy_path = "%s/ORIG-%s" % (os.path.dirname(primary_path), os.path.basename(primary_path))
-        copyfile(primary_path, copy_path)
-        cmd = EnhanceAips.GLUE_CMD % (primary_path, self.cover_pdf_path, copy_path)
-        logging.debug(cmd)
-        rc = os.system(EnhanceAips.GLUE_CMD % (primary_path, self.cover_pdf_path, copy_path))
-        if (rc != 0):
-            self._error("***\nFAILED to exec: %s" % cmd)
+        if not os.path.isfile(copy_path):
+            copyfile(primary_path, copy_path)
+            cmd = EnhanceAips.GLUE_CMD % (primary_path, self.cover_pdf_path, copy_path)
+            logging.debug(cmd)
+            rc = os.system(EnhanceAips.GLUE_CMD % (primary_path, self.cover_pdf_path, copy_path))
+            if (rc != 0):
+                self._error("***\nFAILED to exec: %s" % cmd)
+            else:
+                logging.info("%s covered" % primary_path)
         else:
-            logging.info("%s covered" % primary_path)
+            logging.info("%s already covered" % primary_path)
         return True
 
     def  _create_pu_xml(self, sub, glued):
