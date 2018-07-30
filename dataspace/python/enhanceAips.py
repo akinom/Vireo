@@ -62,7 +62,6 @@ class EnhanceAips:
         self.classyear = datetime.datetime.now().year
 
         self._confirm_aip_export_dir()
-        self._fix_multi_author()
 
     def print_table(self, sep="\t", file=sys.stdout):
         print(sep.join(self.submissions.col_names() + [VireoSheet.R_EMBARGO, VireoSheet.R_WALK_IN]), file=file)
@@ -116,7 +115,7 @@ class EnhanceAips:
         multi_idx = self.submissions.col_index_of(VireoSheet.MULTI_AUTHOR)
         for sub in self.submissions_tbl:
             if sub[status_idx] in EnhanceAips.EXPORT_STATUS and sub[multi_idx]:
-                self._error("submission: %d: can't handle multi author thesis" % (sub[idx]))
+                logging.warning("submission: %d: skipping multi author thesis" % (sub[idx]))
 
     def addCertiticates(self, moreCerts):
         idx = self.submissions.col_index_of(VireoSheet.ID)
