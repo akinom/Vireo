@@ -4,7 +4,8 @@ umask 003
 
 ls -t /dspace/www/thesis_central | fgrep -v html  | more
 echo -n "enter directory > " 
-set dept = $< 
+
+set dept = $<
 cd  /dspace/www/thesis_central/$dept 
 pwd 
 
