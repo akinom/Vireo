@@ -1,8 +1,8 @@
 # Export from Vireo - Import to DataSpace #
 
 ## export to laptop 
-add  spreadsheet list of all submitted, approved, and under review thesis to export directory
-add ID column to restriction request spreadsheet exported from Sharepoint
+add  spreadsheet list of all thesis to export directory; 
+add ID column to restriction request spreadsheet exported from Sharepoint;
 use [python/restrictionsFindIds.py] to add vireo submission IDs to restriction speadsheet
 
 place prerequisite files into export directory
