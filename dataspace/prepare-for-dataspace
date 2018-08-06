@@ -12,14 +12,19 @@ pwd
 /bin/cp export/$certs export/$restrictions $dept_dir
 (python python/enhanceAips.py --thesis $dept_dir/ExcelExport*.xlsx -r $dept_dir/$restrictions --cover_page export/SeniorThesisCoverPage.pdf --add_certs $dept_dir/$certs --aips $dept_dir  -l INFO  > $dept_dir/$dept.tsv ) |& tee  $dept_dir/enhancedAips.trace
 python python/sortByStatus.py  --thesis $dept_dir/ExcelExport*.xlsx --aips $dept_dir
-foreach f (`find $dept_dir/* -type d -and -name '[A-Z]'\*`)
-   echo -n "$f :" 
-   ls -d $f/submission* | wc -l 
+foreach f ($dept_dir/Approved $dept_dir/Cancelled $dept_dir/Submitted $dept_dir/Not-Submitted $dept_dir/Under-Review)
+   if (-e $f) then
+        echo -n "$f :"
+        ls -d $f/*/submission* | wc -l
+   endif
 end
 if -e $dept_dir/Multi-Author then 
 	echo "*** this batch contains multi authors thesis, see $dept_dir/Multi-Author "
 endif
-ls $dept_dir/Approved/sub* | wc -l 
+echo ""
+
+echo "tarring file ..."
+exit 0
 (cd export; tar cfz $dept.tgz ./$dept) 
 
 echo scp export/$dept.tgz monikasu@arizona.princeton.edu:/scratch/monikasu:$dept.tgz 
