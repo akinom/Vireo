@@ -1,5 +1,5 @@
 #!/bin/tcsh  -e
-ls /scratch/monikasu/*.tgz | more
+ls -t /scratch/monikasu/*.tgz | more
 
 echo -n "enter path of tgz in /scratch > " 
 set dept =  $< 
@@ -9,7 +9,7 @@ set dept = $dept:r
 echo $dept 
 
 cd  /dspace/www/thesis_central
-mkdir $dept 
+#mkdir $dept 
 cd $dept 
 echo "extracting /scratch/monikasu/$dept.tgz   into `pwd`"
 
@@ -17,6 +17,11 @@ tar xfz /scratch/monikasu/$dept.tgz
 mv $dept tc_export 
 ln -s tc_export/$dept.tsv . 
 ln -s tc_export/Approved . 
+# count ORIG*pdf files in Approved submissiom directories 
+echo -n "\n#Approved/submission_*/ORIG*.pdf " ; 
+ls Approved/submission_*/ORIG*.pdf | wc -l 
+echo ""
+
 
 #make all directories readable
 find . -type d -exec chmod o+rx {} \;
@@ -24,7 +29,7 @@ find . -type d -exec chmod o+rx {} \;
 find .  -type f -exec chmod o+r {} \;
 
 # remove read permission in submission directories 
-# except for contents LICENSE.txt and xml files non xml / conteents  and LICENE.ysy
+# except for contents LICENSE.txt and xml files 
 chmod o-rwx tc_export/*/submission_*/*
 foreach f (`find . -name submission_\* `) 
     (cd $f; chmod o-r * ; chmod o+r contents L*.txt *.xml )
