@@ -2,11 +2,14 @@
 # u+rwx g+rx o+r
 umask 003 
 
-ls /dspace/www/thesis_central | fgrep -v html  | more
+ls -t /dspace/www/thesis_central | fgrep -v html  | more
 echo -n "enter dept directory> " 
 set dept = $< 
 cd  /dspace/www/thesis_central/$dept 
 pwd 
+
+fgrep EEROR tc_export/enhancedAips.trace 
+fgrep WARNING tc_export/enhancedAips.trace 
 
 echo -n "enter collection handle > " 
 set hdl =  $< 
