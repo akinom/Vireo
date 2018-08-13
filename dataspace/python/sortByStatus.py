@@ -61,7 +61,8 @@ class SortByStatus():
             if (vals[multi_author_idx].upper() == "YES"):
                 subdir = 'Multi-Author'
             else:
-                subdir = vals[status_idx].replace(' ', '-')
+                subdir = ''
+            subdir = subdir + "/" + vals[status_idx].replace(' ', '-')
             dept = vals[department_idx]
             #print(sub_id, vals[multi_author_idx].upper(), subdir)
             sub_dir_name = "%s/%s/%s" % ( self.aip_dir, subdir, dept.replace(" ", "_"))
