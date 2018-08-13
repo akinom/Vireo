@@ -212,7 +212,7 @@ class EnhanceAips:
         if (bool(sub[self.walkin_idx])):
             self._add_el(root, 'mudd.walkin', 'yes')
         if ('Department' in sub[type_idx]):
-            self._add_el(root, 'department', sub[dept_idx])
+            self._add_el(root, 'department', self._department(sub[dept_idx]))
         for p in sub[pgm_idx]:
             self._add_el(root, 'certificate', p)
         return root
@@ -225,6 +225,16 @@ class EnhanceAips:
                 changed = True
         logging.debug(" _adjust_dc_xml: changed=%s" % str(changed))
         return changed
+
+
+    def _department(self, name):
+        # remove everthing after '(' including '('
+        name = name.rsplit('(', 1)[0]
+        # replace & with and
+        name = name.replace('&', 'and')
+        # replace & with and
+        name = name.replace('Engr', 'Engineering')
+        return name
 
     def _add_el(self, root, metadata, value):
         logging.debug("XML add_el %s=%s" % (metadata, str(value)))
