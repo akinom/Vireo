@@ -24,7 +24,6 @@ endif
 echo ""
 
 echo "tarring file ..."
-exit 0
 (cd export; tar cfz $dept.tgz ./$dept) 
 
 echo scp export/$dept.tgz monikasu@arizona.princeton.edu:/scratch/monikasu:$dept.tgz 
