@@ -1,0 +1,37 @@
+#!/bin/tcsh 
+set dir = $1
+
+cp $dir/dublin_core.xml $dir/SINGLE-dublin_core.xml 
+
+foreach sub ($dir/subm*) 
+   fgrep -A 2 author $sub/dublin_core.xml
+end 
+
+echo -n  "copy so you can paste into dublin-core" 
+$< 
+echo ""
+vi  $dir/dublin_core.xml 
+xmllint $dir/dublin_core.xml
+
+
+echo "working on LICENSE" 
+cp $dir/LICENSE.txt $dir/SINGLE-LICENSE.txt
+
+foreach sub ($dir/subm*) 
+   echo ""  >> $dir/LICENSE.txt
+   echo "==================================================================================================" >> $dir/LICENSE.txt
+   echo ""  >> $dir/LICENSE.txt
+   cat $sub//LICENSE.txt  >> $dir/LICENSE.txt
+end 
+
+
+echo "working on file name" 
+
+set f = `fgrep primary $dir/contents | awk '{print $1}'`
+set f = $f:r
+mv $dir/$f.pdf   $dir/$f"-etal.pdf"
+
+cp  $dir/contents  $dir/SINGLE-contents
+sed "s/$f/$f-etal/"  $dir/SINGLE-contents >  $dir/contents
+cat  $dir/contents
+	

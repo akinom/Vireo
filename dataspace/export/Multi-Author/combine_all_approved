@@ -1,0 +1,8 @@
+#!/bin/tcsh 
+
+foreach dir (Approved/*/submission*) 
+   echo $dir 
+   combine_one $dir 
+   echo -n "return to move to next" 
+   $< 
+end
