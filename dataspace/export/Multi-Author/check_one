@@ -1,0 +1,8 @@
+#!/bin/tcsh 
+set dir = $1
+
+   fgrep -A 1 author $dir/dublin_core.xml | tail -1
+   foreach sub ($dir/subm*) 
+     fgrep -A 1 author $sub/dublin_core.xml | tail -1
+   end 
+   open $dir/ORIG*pdf 
