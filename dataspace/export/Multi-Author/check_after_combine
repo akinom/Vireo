@@ -16,6 +16,17 @@ foreach dir (Approved/*/submission*)
      fgrep -A 1 author $sub/dublin_core.xml | tail -1
    end
 
+   echo "" 
+   echo "" 
+
+   echo "*** certificates in $dir/metadata_pu.xml"
+   fgrep certificate  $dir/metadata_pu.xml
+   echo ""
+   echo "+++ certificates "
+   foreach sub ($dir/sub*) 
+     fgrep certificate  $sub/metadata_pu.xml
+   end
+
    echo -n "return to move to next" 
    $< 
    echo "" 

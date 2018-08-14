@@ -1,19 +1,35 @@
 #!/bin/tcsh 
 set dir = $1
 
+echo "DUBLIN-CORE"
+echo ""
 cp $dir/dublin_core.xml $dir/SINGLE-dublin_core.xml 
-
 foreach sub ($dir/subm*) 
    fgrep -A 2 author $sub/dublin_core.xml
 end 
-
+echo ""
 echo -n  "copy so you can paste into dublin-core" 
 $< 
 echo ""
 vi  $dir/dublin_core.xml 
 xmllint $dir/dublin_core.xml
 
+echo "CERTIFICATES"
+echo ""
+cp $dir/metadata_pu.xml $dir/SINGLE-metadata_pu.xml 
+fgrep  certificate  $dir/metadata_pu.xml
+echo "additional certificates:" 
+echo ""
+foreach sub ($dir/subm*) 
+   fgrep  certificate  $sub/metadata_pu.xml
+end 
+echo ""
+echo -n  "copy so you can paste into metadata_pu.xml " 
+$< 
+vi  $dir/metadata_pu.xml
+xmllint $dir/metadata_pu.xml
 
+echo ""
 echo "working on LICENSE" 
 cp $dir/LICENSE.txt $dir/SINGLE-LICENSE.txt
 
