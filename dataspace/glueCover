@@ -1,0 +1,8 @@
+#!/bin/tcsh 
+echo -n "Original pdf "
+set in = $<
+echo -n "Output file "
+set out = $<
+gs -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite "-sOutputFile=$out" export/SeniorThesisCoverPage.pdf  $in
+open $out 
+echo $out 
