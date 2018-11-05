@@ -62,7 +62,6 @@ class EnhanceAips:
         self.classyear = datetime.datetime.now().year
 
         self._confirm_aip_export_dir()
-        self._fix_multi_author()
 
     def print_table(self, sep="\t", file=sys.stdout):
         print(sep.join(self.submissions.col_names() + [VireoSheet.R_EMBARGO, VireoSheet.R_WALK_IN]), file=file)
@@ -78,7 +77,7 @@ class EnhanceAips:
         for sub_id in self.submissions.id_rows:
             vals = VireoSheet.row_values(self.submissions.id_rows[sub_id][0])
             vals[idx] = int(float(vals[idx]))
-            vals[multi_idx] = not vals[multi_idx] == "no"
+            vals[multi_idx] = vals[multi_idx].upper() == "YES"
             #vals[stud_idx] = [ vals[stud_idx] ]
             cp = vals[cp_idx]
             vals[cp_idx] =  [cp] if (cp) else []
@@ -105,7 +104,10 @@ class EnhanceAips:
                     for file in ["contents", "dublin_core.xml", "metadata_pu.xml", "LICENSE.txt"]:
                         fname = "%s/%s" % (dir, file)
                         if not os.path.isfile(fname) or not os.access(fname, os.R_OK):
-                            self._error("AIP dir %s: can't read file %s" % (dir, file))
+                            if (file != "LICENSE.txt"):
+                                self._error("AIP dir %s: can't read file %s" % (dir, file))
+                            else:
+                                logging.warning("AIP dir %s: can't read file %s - probably submittted by admin on behalf of student" % (dir, file))
 
     def _fix_multi_author(self):
         idx = self.submissions.col_index_of(VireoSheet.ID)
@@ -113,7 +115,7 @@ class EnhanceAips:
         multi_idx = self.submissions.col_index_of(VireoSheet.MULTI_AUTHOR)
         for sub in self.submissions_tbl:
             if sub[status_idx] in EnhanceAips.EXPORT_STATUS and sub[multi_idx]:
-                self._error("submission: %d: can't handle multi author thesis" % (sub[idx]))
+                logging.warning("submission: %d: skipping multi author thesis" % (sub[idx]))
 
     def addCertiticates(self, moreCerts):
         idx = self.submissions.col_index_of(VireoSheet.ID)
@@ -181,14 +183,17 @@ class EnhanceAips:
             return False
 
         copy_path = "%s/ORIG-%s" % (os.path.dirname(primary_path), os.path.basename(primary_path))
-        copyfile(primary_path, copy_path)
-        cmd = EnhanceAips.GLUE_CMD % (primary_path, self.cover_pdf_path, copy_path)
-        logging.debug(cmd)
-        rc = os.system(EnhanceAips.GLUE_CMD % (primary_path, self.cover_pdf_path, copy_path))
-        if (rc != 0):
-            self._error("***\nFAILED to exec: %s" % cmd)
+        if not os.path.isfile(copy_path):
+            copyfile(primary_path, copy_path)
+            cmd = EnhanceAips.GLUE_CMD % (primary_path, self.cover_pdf_path, copy_path)
+            logging.debug(cmd)
+            rc = os.system(EnhanceAips.GLUE_CMD % (primary_path, self.cover_pdf_path, copy_path))
+            if (rc != 0):
+                self._error("***\nFAILED to exec: %s" % cmd)
+            else:
+                logging.info("%s covered" % primary_path)
         else:
-            logging.info("%s covered" % primary_path)
+            logging.info("%s already covered" % primary_path)
         return True
 
     def  _create_pu_xml(self, sub, glued):
@@ -207,7 +212,7 @@ class EnhanceAips:
         if (bool(sub[self.walkin_idx])):
             self._add_el(root, 'mudd.walkin', 'yes')
         if ('Department' in sub[type_idx]):
-            self._add_el(root, 'department', sub[dept_idx])
+            self._add_el(root, 'department', self._department(sub[dept_idx]))
         for p in sub[pgm_idx]:
             self._add_el(root, 'certificate', p)
         return root
@@ -220,6 +225,16 @@ class EnhanceAips:
                 changed = True
         logging.debug(" _adjust_dc_xml: changed=%s" % str(changed))
         return changed
+
+
+    def _department(self, name):
+        # remove everthing after '(' including '('
+        name = name.rsplit('(', 1)[0]
+        # replace & with and
+        name = name.replace('&', 'and')
+        # replace & with and
+        name = name.replace('Engr', 'Engineering')
+        return name
 
     def _add_el(self, root, metadata, value):
         logging.debug("XML add_el %s=%s" % (metadata, str(value)))

@@ -1,5 +1,6 @@
 package org.tdl.vireo.model.jpa;
 
+import antlr.StringUtils;
 import org.apache.commons.codec.binary.Base64;
 
 import java.io.File;
@@ -470,8 +471,9 @@ public class JpaSubmissionImpl extends JpaAbstractModel<JpaSubmissionImpl> imple
 
 	@Override
 	public void setDocumentAbstract(String docAbstract) {
-
 		assertReviewerOrOwner(submitter);
+		if (org.apache.commons.lang.StringUtils.isBlank(docAbstract))
+			docAbstract = null;
 		if (!equals(this.documentAbstract, docAbstract)) {
 			docAbstract = Utilities.sanitizeString(docAbstract);
 			if (!equals(this.documentAbstract, docAbstract)) {

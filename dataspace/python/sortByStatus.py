@@ -53,10 +53,19 @@ class SortByStatus():
         """
         idx = self.submissions.col_index_of(VireoSheet.ID)
         status_idx = self.submissions.col_index_of(VireoSheet.STATUS)
+        department_idx = self.submissions.col_index_of(VireoSheet.DEPARTMENT)
+        multi_author_idx = self.submissions.col_index_of(VireoSheet.MULTI_AUTHOR)
         for sub_id in self.submissions.id_rows:
             vals = VireoSheet.row_values(self.submissions.id_rows[sub_id][0])
             sub_id = int(float(vals[idx]))
-            sub_dir_name = "%s/%s" % ( self.aip_dir, vals[status_idx].replace(' ', '-'))
+            if (vals[multi_author_idx].upper() == "YES"):
+                subdir = 'Multi-Author'
+            else:
+                subdir = ''
+            subdir = subdir + "/" + vals[status_idx].replace(' ', '-')
+            dept = vals[department_idx]
+            #print(sub_id, vals[multi_author_idx].upper(), subdir)
+            sub_dir_name = "%s/%s/%s" % ( self.aip_dir, subdir, dept.replace(" ", "_"))
             if not os.path.exists(sub_dir_name):
                 os.makedirs(sub_dir_name)
             cur_dir = "%s/submission_%d" % (self.aip_dir, sub_id)

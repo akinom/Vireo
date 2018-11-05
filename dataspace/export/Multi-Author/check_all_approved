@@ -1,0 +1,9 @@
+#!/bin/tcsh 
+
+foreach dir (Approved/*/submission*) 
+   echo $dir 
+
+   check_one $dir 
+   echo -n "return to move to next" 
+   $< 
+end

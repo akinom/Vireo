@@ -1,0 +1,36 @@
+#!/bin/tcsh 
+
+foreach dir (Approved/*/submission*) 
+   echo $dir 
+
+   ls $dir/*pdf 
+   fgrep primary $dir/contents
+   echo "--" 
+   echo "" 
+
+   echo "*** author in $dir/dublin_core.xml " 
+   fgrep -A 2 author $dir/dublin_core.xml  
+   echo ""
+   foreach sub ($dir/sub*) 
+     echo "+++ author in $sub/dublin_core.xml " 
+     fgrep -A 1 author $sub/dublin_core.xml | tail -1
+   end
+
+   echo "" 
+   echo "" 
+
+   echo "*** certificates in $dir/metadata_pu.xml"
+   fgrep certificate  $dir/metadata_pu.xml
+   echo ""
+   echo "+++ certificates "
+   foreach sub ($dir/sub*) 
+     fgrep certificate  $sub/metadata_pu.xml
+   end
+
+   echo -n "return to move to next" 
+   $< 
+   echo "" 
+   echo "" 
+   echo "" 
+
+end

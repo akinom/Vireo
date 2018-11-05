@@ -2,19 +2,36 @@
 # u+rwx g+rx o+r
 umask 003 
 
-ls /dspace/www/thesis_central | fgrep -v html  | more
-echo -n "enter dept directory> " 
-set dept = $< 
+ls -t /dspace/www/thesis_central | fgrep -v html  | more
+echo -n "enter directory > " 
+
+set dept = $<
 cd  /dspace/www/thesis_central/$dept 
 pwd 
 
-echo -n "enter collection handle > " 
-set hdl =  $< 
+fgrep EEROR tc_export/enhancedAips.trace 
+fgrep WARNING tc_export/enhancedAips.trace 
 
-/dspace/bin/dspace import -a -c $hdl -e monikam@princeton.edu -m import-map.txt -s Approved -w >& import-trace.txt
-cat import-trace.txt
-echo "--"
-egrep '^[0-9]'  import-trace.txt
+foreach dir (Approved/*) 
+   set name = `basename $dir`
+   echo $name
+   echo -n "enter collection handle > " 
+   set hdl =  $< 
 
-egrep '^[0-9]'  import-trace.txt |   mutt -s "TC Import $dept -> $hdl"  -- thesiscentral@princeton.edu
+   set trace = import-trace-$name.txt
+   set map = import-map-$name.txt
+
+   echo /dspace/bin/dspace import -a -c $hdl -e monikam@princeton.edu -m $map -s $dir -w 
+   echo  -n "Enter to continue"; $< 
+
+   /dspace/bin/dspace import -a -c $hdl -e monikam@princeton.edu -m $map -s $dir -w >& $trace
+   cat $trace
+   echo "--"
+   egrep '^[0-9]'  $trace
+end
+
+egrep '^[0-9]' import-trace-*.txt | sed 's/import-trace-//' | sed s'/.txt:/   /' |  mutt -s "TC Import $dept -> $hdl"  -- thesiscentral@princeton.edu
+
+exit 0
+
 
