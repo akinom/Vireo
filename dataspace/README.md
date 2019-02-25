@@ -77,3 +77,13 @@ cd ~/thesiscentral-vireo/dataspace/import
 
 #then import to dspace - follow prompts 
 ./import
+
+
+
+# Data Backup  2018 
+
+CISDR ADMIN account || Amazon S3/thesis-central-data/2018 
+	Export ODOC restriction request system 
+	Speradsheet that with additional certificate programs 
+
+    generated AIP packges and traces of relevant scripts 
